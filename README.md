@@ -1,5 +1,5 @@
 # ucsdflyers
-Download <a href="https://www.vagrantup.com/">vagrant</a> and <a href="https://www.virtualbox.org/wiki/Downloads">virtualbox</a> Then run the following command
+Run the following command to get a copy of this repository
 ```
 mkdir esl-cse110
 cd esl-cse110
