@@ -1,14 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-class HelloWorld extends React.Component {
-    render(){
-        return <h1> {this.props.who} says hello world </h1>
-    }
-}
-
+import { TopBar } from './components/TopBar';
 
 ReactDOM.render(
-    <HelloWorld who='Ryan' do='sda'/>,
+    <TopBar/>,
     document.getElementById('app') 
 )
