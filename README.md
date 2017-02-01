@@ -9,3 +9,4 @@ Run the following command to start the the project
 ```
 npm start
 ```
+Go to your browser (Chrome recommended) and typle ```localhost:3000```
