@@ -26,7 +26,7 @@ class EventList extends React.Component {
 
     render(){
         return (
-            <div>
+            <div className='container'>
               {this.getEventList()}
             </div>
         );

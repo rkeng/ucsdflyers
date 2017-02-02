@@ -4,13 +4,13 @@ import { NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 
-//<NavLink to="" title="" eventKay=number>
+//<NavLink to="" title=""/>
 class NavLink extends React.Component { 
 
     render(){
         return (
             <LinkContainer to={this.props.to}>
-                <NavItem eventKey={this.props.eventKey} href='#'>{this.props.title}</NavItem> 
+                <NavItem>{this.props.title}</NavItem> 
             </LinkContainer>
         );
     }

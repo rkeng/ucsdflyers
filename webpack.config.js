@@ -1,4 +1,3 @@
-const path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
     template: __dirname + '/src/index.html',
