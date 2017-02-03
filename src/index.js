@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 
 import { FlyersApp } from './components/FlyersApp';
 import { EventList } from './components/EventList';
@@ -14,7 +14,7 @@ const events = [
 ReactDOM.render(
     <Router history={browserHistory}>
         <Route path='/' component={FlyersApp}>
-            <IndexRoute component={() => <EventList events={events}/>}/>
+            <IndexRedirect to='/events'/>
             <Route path='events' component={() => <EventList events={events}/>}/>
         </Route>
     </Router>,
