@@ -11,4 +11,5 @@ npm start
 ```
 Go to your browser (Chrome recommended) and typle ```localhost:3000```
 <hr/>
-When you are working on the project, please create a new branch. And when you are done with your construction, make a pull request to the master branch
+When you are working on the project, please create a new branch. And when you are done with your construction, make a pull request to the master branch.<br/>
+We will mainly use <a href="https://react-bootstrap.github.io/components.html">bootstrap</a> for out UI. Find your favorite to do your task
