@@ -32,4 +32,6 @@ for x in soup.find_all("h2"):
 pp.pprint(clubs)
 
 with open('clubs.json', 'w') as f:
+    f.write("{ clubs: ")
     json.dump(clubs, f)
+    f.write("}")
