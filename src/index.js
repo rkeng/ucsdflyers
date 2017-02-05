@@ -4,6 +4,8 @@ import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 
 import { FlyersApp } from './components/FlyersApp';
 import { EventList } from './components/EventList';
+import { Org } from './components/Org';
+import { About } from './components/About';
 
 const events = [
     {name:'Pokemon Day', date:'Feb 20, 2017', location:'PC', description:'Everyone handout to catch pokemons'},
@@ -16,6 +18,8 @@ ReactDOM.render(
         <Route path='/' component={FlyersApp}>
             <IndexRedirect to='/events'/>
             <Route path='events' component={() => <EventList events={events}/>}/>
+            <Route path='org' component={Org}/>
+            <Route path='about' component={About}/>
         </Route>
     </Router>,
     document.getElementById('app') 
