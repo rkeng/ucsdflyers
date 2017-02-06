@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import { FlyersApp } from './components/FlyersApp';
 import { EventList } from './components/EventList';
+import { NotFound } from './components/NotFound'
 import { Login } from './components/Login'
 import { About } from './components/About';
 import { Register } from './components/Register'
@@ -13,6 +14,7 @@ const events = [
     {name:'Water Fun', date:'Feb 02, 2017', location:'Sun God', description:'Get wet and swag'}
 ]
 
+
 ReactDOM.render(
     <Router history={browserHistory}>
         <Route path='/' component={FlyersApp}>
@@ -22,6 +24,7 @@ ReactDOM.render(
             <Route path='login' component={Login}/>
             <Route path='register' component={Register}/>
         </Route>
+        <Route path='*' component={NotFound}/>
     </Router>,
     document.getElementById('app')
 )

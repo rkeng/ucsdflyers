@@ -3,7 +3,7 @@ import { Badge, Panel } from 'react-bootstrap';
 
 
 
-class EventList extends React.Component { 
+class EventList extends React.Component {
 
     getEventList(){
         return this.props.events.map((event) => {
@@ -19,7 +19,7 @@ class EventList extends React.Component {
                     <Badge>{location}</Badge>
                 </div>
             );
-          
+
             return <Panel key={name} bsStyle='info' header={header}>{description}</Panel>;
         });
     }
