@@ -6,7 +6,8 @@ import { EventList } from './components/EventList';
 import { NotFound } from './components/NotFound'
 import { Login } from './components/Login'
 import { About } from './components/About';
-import { Register } from './components/Register'
+import { Register } from './components/Register';
+import { Feedback } from './components/Feedback'
 
 const events = [
     {name:'p Day', date:'Feb 20, 2017', location:'PC', description:'Everyone handout to catch pokemons'},
@@ -23,6 +24,7 @@ ReactDOM.render(
             <Route path='about' component={About}/>
             <Route path='login' component={Login}/>
             <Route path='register' component={Register}/>
+            <Route path='feedback' component={Feedback}/>
         </Route>
         <Route path='*' component={NotFound}/>
     </Router>,
