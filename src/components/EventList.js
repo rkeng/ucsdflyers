@@ -3,15 +3,14 @@ import { Badge, Panel } from 'react-bootstrap';
 
 
 
-class EventList extends React.Component {
+class EventList extends React.Component { 
 
-    //Generates a list of feedbacks
     getEventList(){
         return this.props.events.map((event) => {
             let name = event.name;
             let date = event.date;
-            let description = event.description;
             let location = event.location;
+            let description = event.description;
 
             let header = (
                 <div>
@@ -19,7 +18,6 @@ class EventList extends React.Component {
                     <Badge>{date}</Badge>
                     <Badge>{location}</Badge>
                 </div>
-
             );
 
             return <Panel key={name} bsStyle='info' header={header}>{description}</Panel>;
@@ -29,7 +27,7 @@ class EventList extends React.Component {
     render(){
         return (
             <div className='container'>
-              {this.getEventList()}
+              {this.getEventList()}    
             </div>
         );
     }
