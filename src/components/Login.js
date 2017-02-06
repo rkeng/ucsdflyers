@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { TopBar } from './TopBar';
-import {FormControl, Checkbox, Button, ControlLabel,
-Grid, Row, Col} from 'react-bootstrap'
+import { FormControl, Checkbox, Button, ControlLabel,
+Grid, Row, Col } from 'react-bootstrap'
 
   class Login extends React.Component{
     render(){
