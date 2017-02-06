@@ -19,10 +19,11 @@ class EventList extends React.Component {
                     <Badge>{location}</Badge>
                 </div>
             );
-
+          
             return <Panel key={name} bsStyle='info' header={header}>{description}</Panel>;
         });
     }
+
 
     render(){
         return (
