@@ -6,6 +6,8 @@ import { EventList } from './components/EventList';
 
 import { About } from './components/About';
 
+import { Register } from './components/Register'
+
 const events = [
     {name:'p Day', date:'Feb 20, 2017', location:'PC', description:'Everyone handout to catch pokemons'},
     {name:'Hack Day', date:'Jan 31, 2017', location:'CSE building', description:'Hack into others computer'},
@@ -19,8 +21,9 @@ ReactDOM.render(
             <Route path='events' component={() => <EventList events={events}/>}/>
 
             <Route path='about' component={About}/>
-        
+            <Route path='register' component={Register}/>
         </Route>
     </Router>,
-    document.getElementById('app') 
+
+    document.getElementById('app')
 )
