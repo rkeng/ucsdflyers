@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { TopBar } from './TopBar';
 
-
-
 class FlyersApp extends React.Component {
     render(){
         return (

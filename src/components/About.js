@@ -1,15 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
-
-class About extends React.Component {
-
+class About extends React.Component{
     render(){
-        return (
+        return(
             <div>
                 About us
                 <hr/>
-                  groupname
+                WE ARE ESL
             </div>
         )
     }
