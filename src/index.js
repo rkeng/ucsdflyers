@@ -21,6 +21,8 @@ ReactDOM.render(
             <Route path='events' component={() => <EventList events={events}/>}/>
             <Route path='about' component={About}/>
         </Route>
+
+        <Route path='*' component={NotFound}/>
     </Router>,
     document.getElementById('app')
 )
