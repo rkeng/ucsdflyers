@@ -2,7 +2,7 @@ import React from 'react';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 
-class TopBar extends React.Component { 
+class TopBar extends React.Component {
     constructor(props){
         super(props);
         this.changeRoute = this.changeRoute.bind(this);
@@ -26,12 +26,13 @@ class TopBar extends React.Component {
 
                 <Navbar.Collapse>
                     <Nav>
-                        <NavItem onClick={this.changeRoute} id='events'>Events</NavItem> 
-                        <NavItem onClick={this.changeRoute} id='org'>Organizations</NavItem> 
-                        <NavItem onClick={this.changeRoute} id='about'>About Us</NavItem> 
+                        <NavItem onClick={this.changeRoute} id='events'>Events</NavItem>
+                        <NavItem onClick={this.changeRoute} id='org'>Organizations</NavItem>
+                        <NavItem onClick={this.changeRoute} id='about'>About Us</NavItem>
                     </Nav>
                     <Nav pullRight>
-                        <NavItem onClick={this.changeRoute} id='login'>Login</NavItem> 
+                        <NavItem onClick={this.changeRoute} id='login'>Login</NavItem>
+                        <NavItem onClick={this.changeRoute} id='register'>New User</NavItem>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
