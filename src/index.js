@@ -3,11 +3,8 @@ import ReactDOM from 'react-dom';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import { FlyersApp } from './components/FlyersApp';
 import { EventList } from './components/EventList';
-import {About} from './components/About'
-import {Login} from './components/Login'
-
+import { Login } from './components/Login'
 import { About } from './components/About';
-
 import { Register } from './components/Register'
 
 const events = [
@@ -15,8 +12,6 @@ const events = [
     {name:'Hack Day', date:'Jan 31, 2017', location:'CSE building', description:'Hack into others computer'},
     {name:'Water Fun', date:'Feb 02, 2017', location:'Sun God', description:'Get wet and swag'}
 ]
-
-
 
 ReactDOM.render(
     <Router history={browserHistory}>
