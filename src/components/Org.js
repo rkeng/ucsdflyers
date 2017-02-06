@@ -1,13 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { Panel, PanelGroup } from 'react-bootstrap';
 
 class Org extends React.Component {
+
+    getOrgList(){
+        return this.props.orgs.map((org, index) => {
+            let name = org.name;
+            let estdate = org.estdate;
+            let description = org.description;
+
+            return (
+                <Panel header={name} eventKey={index}>Establishment date: {estdate} <br/>{description}</Panel>
+            );
+
+        });
+    }
+
     render(){
         return (
-            <div >
-                UCSD Student Orgs
+            <div className='container'>
+                <h1>UCSD Student Orgs</h1>
+                <p>Click on the orgs to see details.</p>
                 <hr/>
-                There's are no orgs to show.
+                <PanelGroup defaultActiveKey accordion>
+                    {this.getOrgList()}
+                </PanelGroup>
             </div >
         );
     }
