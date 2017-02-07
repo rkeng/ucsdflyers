@@ -1,12 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { TopBar } from './TopBar';
 import { FormControl, Checkbox, Button, ControlLabel,
-Grid, Row, Col } from 'react-bootstrap'
+Grid, Row, Col } from 'react-bootstrap';
 
-  class Login extends React.Component{
-    render(){
-        return(
+class Login extends React.Component {
+    render () {
+        return (
           <Grid>
             <Row className = "show-login">
               <Col lg={6} lgPush={3}>
@@ -32,8 +30,8 @@ Grid, Row, Col } from 'react-bootstrap'
               </Col>
             </Row>
           </Grid>
-    )
-  }
+        );
+    }
 }
 
 export { Login };

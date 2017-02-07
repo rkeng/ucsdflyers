@@ -22,7 +22,8 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --content-base dist --inline --port 3000 --history-api-fallback",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "babel-core": "^6.22.1",

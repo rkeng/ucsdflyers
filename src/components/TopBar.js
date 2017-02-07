@@ -1,20 +1,20 @@
 import React from 'react';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 
 class TopBar extends React.Component {
-    constructor(props){
+    constructor (props) {
         super(props);
         this.changeRoute = this.changeRoute.bind(this);
     }
 
-    changeRoute(e){
+    changeRoute (e) {
         e.preventDefault();
         const newRoute = e.target.id;
         browserHistory.push(newRoute);
     }
 
-    render(){
+    render () {
         return (
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
@@ -36,8 +36,8 @@ class TopBar extends React.Component {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-        )
+        );
     }
 }
 
-export { TopBar }
+export { TopBar };
