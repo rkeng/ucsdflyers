@@ -11,45 +11,35 @@ class NewOrganizations extends React.Component{
       <Grid>
         <Row className = "show-registration">
           <Col lg={6} lgPush={3}>
-            <h1> Sign up as students: </h1>
+            <h1> Sign up as organizations: </h1>
             <form>
               <form inline>
+
                 <div class="form-group">
                   <br></br>
-                  <ControlLabel for="firstName">First Name </ControlLabel>
+                  <ControlLabel for="firstName">Organization Name </ControlLabel>
                   {'  '}
                   <input type="text" class="form-control" id="firstName" placeholder="Enriching" />
                 </div>
-               
-                <div class="form-group">
-                  <ControlLabel for="lastName">Last Name</ControlLabel>
-                  {'  '}
-                  <input type="text" class="form-control" id="lastName" placeholder="Life" />
-                </div>
-                
-                <div class="form-group">
-                  <ControlLabel for="middleName">Middle Name</ControlLabel>
-                  {'  '}
-                  <input type="text" class="form-control" id="middleName" placeholder="Student" />
-                </div>
+
               </form>
               <br/>
               
               <div class="checkbox ">
-                <ControlLabel>Your Gender</ControlLabel>
+                <ControlLabel>Student Type</ControlLabel>
                 {'  '}
               </div>
 
               <div class="checkbox ">
-                <ControlLabel class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value=" " />Female</ControlLabel>
+                <ControlLabel class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value=" " />Undergraduates</ControlLabel>
               </div>
 
               <div class="checkbox">
-                <ControlLabel class="checkbox-inline"><input type="checkbox" id="inlineCheckbox2" value=" " />Male</ControlLabel>
+                <ControlLabel class="checkbox-inline"><input type="checkbox" id="inlineCheckbox2" value=" " />Graduates</ControlLabel>
               </div>
 
               <div class="checkbox">
-                <ControlLabel class="checkbox-inline"><input type="checkbox" id="inlineCheckbox3" value=" " />Wish not to tell</ControlLabel>
+                <ControlLabel class="checkbox-inline"><input type="checkbox" id="inlineCheckbox3" value=" " />All Studens</ControlLabel>
               </div>
               <br/>
 
@@ -80,7 +70,7 @@ class NewOrganizations extends React.Component{
               <br/>
 
               <div class="form-group">
-                <ControlLabel for="College">Choose Your College:</ControlLabel>
+                <ControlLabel for="College">Category:</ControlLabel>
                 {'  '}
 
                 <select class="form-control" id="College">
