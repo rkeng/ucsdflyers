@@ -7,6 +7,7 @@ import { NotFound } from './components/NotFound'
 import { Login } from './components/Login'
 import { About } from './components/About';
 import { Register } from './components/Register'
+import { NewOrganizations } from './components/NewOrganizations'
 
 const events = [
     {name:'p Day', date:'Feb 20, 2017', location:'PC', description:'Everyone handout to catch pokemons'},
