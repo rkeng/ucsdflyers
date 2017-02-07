@@ -4,7 +4,7 @@ import {FormControl, Checkbox, Button, ControlLabel, Grid, Row, Col, select, But
 
 const buttonStyles = {maxWidth: 800};
 
-class NewStudents extends React.Component{
+class NewOrganizations extends React.Component{
 
   render(){
     return(
@@ -139,4 +139,4 @@ class NewStudents extends React.Component{
 }
 
 
-export { NewStudents };
+export { NewOrganizations };
