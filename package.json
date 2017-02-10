@@ -21,7 +21,9 @@
   "homepage": "https://github.com/xiqianglin/ucsdflyers#readme",
   "scripts": {
     "build": "webpack",
-    "start": "webpack-dev-server --contentBase dist --inline --port 3000 --history-api-fallback"
+    "start": "webpack-dev-server --content-base dist --inline --port 3000 --history-api-fallback",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "babel": "^6.5.2",
@@ -35,14 +37,19 @@
     "react": "^15.4.2",
     "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
     "react-router": "^3.0.2",
-    "react-router-bootstrap": "^0.23.1",
-    "react-search": "^2.0.5",
-    "react-search-bar": "^1.1.4",
+    "redux": "^3.6.0",
     "webpack": "^2.2.1"
   },
   "devDependencies": {
-    "babel-preset-react-hmre": "^1.1.1",
+    "babel-plugin-transform-class-properties": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.22.0",
+    "eslint": "^3.15.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-react": "^6.9.0",
+    "eslint-plugin-standard": "^2.0.1",
     "webpack-dev-server": "^1.16.2"
   }
 }

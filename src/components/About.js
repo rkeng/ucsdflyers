@@ -1,15 +1,17 @@
 import React from 'react';
 
 class About extends React.Component {
-    render(){
+
+    render () {
         return (
-            <div >
+            <div>
                 About us
                 <hr/>
-                We are ESL.
-            </div >
+                WE ARE ESL
+            </div>
+
         );
     }
 }
 
-export{About};
+export { About };

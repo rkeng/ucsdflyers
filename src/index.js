@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
-
 import { FlyersApp } from './components/FlyersApp';
 import { EventList } from './components/EventList';
 import { Org } from './components/Org';
 import { About } from './components/About';
+import { NotFound } from './components/NotFound';
+import { Login } from './components/Login';
+import { About } from './components/About';
+import { Register } from './components/Register';
 
 // Get a reference to the database service
-var database = firebase.database();
+//var database = firebase.database();
 
 /*
 const orgs = [];
@@ -30,10 +33,10 @@ ReadOrgData();
 
 
 const events = [
-    {name:'Pokemon Day', date:'Feb 20, 2017', location:'PC', description:'Everyone handout to catch pokemons'},
-    {name:'Hack Day', date:'Jan 31, 2017', location:'CSE building', description:'Hack into others computer'},
-    {name:'Water Fun', date:'Feb 02, 2017', location:'Sun God', description:'Get wet and swag'}
-]
+    {name: 'p Day', date: 'Feb 20, 2017', location: 'PC', description: 'Everyone handout to catch pokemons'},
+    {name: 'Hack Day', date: 'Jan 31, 2017', location: 'CSE building', description: 'Hack into others computer'},
+    {name: 'Water Fun', date: 'Feb 02, 2017', location: 'Sun God', description: 'Get wet and swag'}
+];
 
 
 const orgs = [
@@ -50,7 +53,10 @@ ReactDOM.render(
             <Route path='events' component={() => <EventList events={events}/>}/>
             <Route path='org' component={()=> <Org orgs={orgs}/>}/>
             <Route path='about' component={About}/>
+            <Route path='login' component={Login}/>
+            <Route path='register' component={Register}/>
         </Route>
+        <Route path='*' component={NotFound}/>
     </Router>,
-    document.getElementById('app') 
-)
+    document.getElementById('app')
+);
