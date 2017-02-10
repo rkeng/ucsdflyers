@@ -6,7 +6,7 @@ class Login extends React.Component {
     render () {
         return (
           <Grid>
-            <Row className = "show-login">
+            <Row className="show-login">
               <Col lg={6} lgPush={3}>
                 <form>
                   <ControlLabel>Email address</ControlLabel>

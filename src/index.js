@@ -1,16 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
-import { FlyersApp } from './components/FlyersApp';
 import { EventList } from './components/EventList';
 import { Org } from './components/Org';
-import { About } from './components/About';
 import { Register } from './components/Register';
 import { Feedback } from './components/Feedback'
 import { NotFound } from './components/NotFound';
 import { Login } from './components/Login';
 import { About } from './components/About';
-
+import { FlyersApp } from './components/FlyersApp';
+import { firebaseStateReducer } from 'react-redux-firebase';
 
 // Get a reference to the database service
 //var database = firebase.database();

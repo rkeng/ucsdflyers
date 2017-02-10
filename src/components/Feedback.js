@@ -1,7 +1,5 @@
 import React from 'react';
 import { Form, FormGroup, FormControl, ControlLabel, PageHeader, HelpBlock, Col, Button } from 'react-bootstrap';
-import { Link } from 'react-router';
-
 
 class Feedback extends React.Component {
     constructor(props) {

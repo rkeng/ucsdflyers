@@ -1,9 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { TopBar } from './TopBar';
-import {Thumbnail, ListGroupItem, ListGroup, span, ControlLabel, Grid, PageHeader, Jumbotron, Button} from 'react-bootstrap';
-
-
+import { Thumbnail, ListGroupItem, ListGroup, Grid, Jumbotron } from 'react-bootstrap';
 
 class About extends React.Component {
 
