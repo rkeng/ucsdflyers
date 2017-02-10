@@ -37,7 +37,7 @@ class About extends React.Component {
 						    <ListGroupItem>
 						    	<br/>
 						        <center>
-						        <img alt="..." width="120" height="130" src="IwdfeL3J_400x400.png"/>
+						        <img alt="..." width="120" height="130" src="pikachu.png"/>
 						        </center>
 						        <ul class="name">
 						            <h3><strong>PROJECT MANAGER</strong></h3>
