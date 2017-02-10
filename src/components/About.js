@@ -12,24 +12,12 @@ class About extends React.Component {
 
         return (
 
-
-
-
-
-
-
-
-
-
-
         	<Grid>
 				<Jumbotron>
-				<Thumbnail alt="" src="WechatIMG1.jpg"/>
 				    <h2><strong>About ESL</strong></h2>
 				    <br/>
 				    <Grid>
 				    <ListGroupItem>
-
 					    <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
 				    </ListGroupItem>
 				    </Grid>
@@ -42,16 +30,19 @@ class About extends React.Component {
 
 
 				    <h2><strong>Who Are We</strong></h2>
+
                     <br/>
 			        <Grid>
 						<ListGroup>
-						    <ListGroupItem header="Project Manager">
+						    <ListGroupItem>
+						    	<br/>
+						        <center>
+						        <img alt="..." width="120" height="130" src="IwdfeL3J_400x400.png"/>
+						        </center>
 						        <ul class="name">
-							    	<h4><em>Xiqiang Lin</em></h4>
-							    	<ul class="list-group">
-									  <li class="list-group-item"><small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself</small></li>
-									 
-									</ul>
+						            <h3><strong>PROJECT MANAGER</strong></h3>
+							    	<ul><h4><em><large>Xiqiang Lin</large></em></h4></ul>
+									  <ul><ul><p><em><small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself</small></em></p></ul></ul>
 								</ul>
 						    </ListGroupItem>
 
