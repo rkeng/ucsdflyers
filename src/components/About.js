@@ -17,10 +17,10 @@ class About extends React.Component {
 				<h2><strong>About ESL</strong></h2>
 				    	<br/>
 				    	<Grid>
-				    	<ListGroupItem>
-						<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-				    	</ListGroupItem>
-		</Grid>
+				    		<ListGroupItem>
+							<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+				    		</ListGroupItem>
+					</Grid>
 
 		<br/>
 		<br/>			
