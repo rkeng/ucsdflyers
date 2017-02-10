@@ -9,7 +9,6 @@ import { NotFound } from './components/NotFound';
 import { Login } from './components/Login';
 import { About } from './components/About';
 import { FlyersApp } from './components/FlyersApp';
-import { firebaseStateReducer } from 'react-redux-firebase';
 
 // Get a reference to the database service
 //var database = firebase.database();
