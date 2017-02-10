@@ -8,21 +8,21 @@ var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 
 module.exports = {
     entry: [
-          path.resolve(__dirname, 'src/index.js')
-            ],
+        path.resolve(__dirname, 'src/index.js')
+    ],
 
     module: {
-          loaders: [
-                      {test: /\.js$/,
-                       exclude: /node_modules/,
-                       loader:'babel-loader'}
-                    ]
-            },
+        loaders: [
+            {test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'}
+        ]
+    },
 
     output: {
-          filename: "index_bundle.js",
-          path: path.resolve(__dirname, 'dist')
-            },
+        filename: 'index_bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    },
 
     plugins: [HTMLWebpackPluginConfig]
 };

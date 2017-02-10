@@ -1,11 +1,11 @@
 import React from 'react';
 import { Badge, Panel } from 'react-bootstrap';
 
-
-
 class EventList extends React.Component {
 
-    getEventList(){
+    //Generates a list of feedbacks
+
+    getEventList () {
         return this.props.events.map((event) => {
             let name = event.name;
             let date = event.date;
@@ -24,11 +24,10 @@ class EventList extends React.Component {
         });
     }
 
-
-    render(){
+    render () {
         return (
             <div className='container'>
-              {this.getEventList()}    
+              {this.getEventList()}
             </div>
         );
     }
@@ -37,6 +36,6 @@ class EventList extends React.Component {
 
 EventList.propTypes = {
     events: React.PropTypes.array.isRequired
-}
+};
 
 export { EventList };

@@ -4,9 +4,9 @@ import { Link } from 'react-router';
 
 const wellStyles = {maxWidth: 520, margin: '0 auto 20px'};
 
-class Register extends React.Component{
-    render(){
-        return(
+class Register extends React.Component {
+    render () {
+        return (
             <div>
                 <h1> <center> Register As: </center> </h1>
                 <hr/>
@@ -20,9 +20,8 @@ class Register extends React.Component{
                     </Link>
                 </div>
             </div>
-        )
+        );
     }
 }
-
 
 export { Register };
