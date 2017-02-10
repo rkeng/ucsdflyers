@@ -1,6 +1,7 @@
 import React from 'react';
 
 class About extends React.Component {
+
     render () {
         return (
             <div>
@@ -8,6 +9,7 @@ class About extends React.Component {
                 <hr/>
                 WE ARE ESL
             </div>
+
         );
     }
 }

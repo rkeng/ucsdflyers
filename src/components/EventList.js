@@ -3,6 +3,8 @@ import { Badge, Panel } from 'react-bootstrap';
 
 class EventList extends React.Component {
 
+    //Generates a list of feedbacks
+
     getEventList () {
         return this.props.events.map((event) => {
             let name = event.name;
