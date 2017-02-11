@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { FlyersApp } from './DumbComponents/FlyersApp';
+import { store } from './State/store';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from'react-router-redux';
 import { Provider } from 'react-redux';
@@ -11,8 +13,7 @@ import { Feedback } from './DumbComponents/Feedback'
 import { NotFound } from './DumbComponents/NotFound';
 import { Login } from './DumbComponents/Login';
 import { About } from './DumbComponents/About';
-import { FlyersApp } from './DumbComponents/FlyersApp';
-import { store } from './State/store';
+import { NewStudents } from './DumbComponents/NewStudents';
 
 //combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
@@ -62,6 +63,7 @@ ReactDOM.render(
                 <Route path='login' component={Login}/>
                 <Route path='register' component={Register}/>
                 <Route path='feedback' component={Feedback}/>
+                <Route path='register-student' component={NewStudents}/>
             </Route>
             <Route path='*' component={NotFound}/>
         </Router>
