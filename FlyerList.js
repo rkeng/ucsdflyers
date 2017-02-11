@@ -1,15 +1,10 @@
 import React from 'react';
 import { Badge, Panel } from 'react-bootstrap';
-import Search from 'react-search'
-
 
 
 class FlyerList extends React.Component {
 
     //Generates a list of feedbacks
-    /*HiItems(items) {
-      console.log(items)
-    }*/
     constructor(props) {
         super(props);
         this.state = { search: '',
@@ -24,7 +19,8 @@ class FlyerList extends React.Component {
         console.log('flyers?', this.props.flyers)
         let filteredFlyer=this.state.flyers.filter(
           (flyer)=>{
-            return flyer.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+            return flyer.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+            || flyer.location.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
           }
         );
         return filteredFlyer.map((flyer) => {
@@ -46,14 +42,6 @@ class FlyerList extends React.Component {
     }
 
     render () {
-
-      /*[
-        { id: 0, value: 'Pokemon' },
-        { id: 1, value: 'Hackday' },
-        { id: 2, value: 'Water fun' },
-        { id: 3, value: 'food festival' },
-        { id: 4, value: 'winter vacation' }
-      ]*/
         return (
             <div className='container'>
               <input type = "text"
