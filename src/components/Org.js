@@ -1,16 +1,16 @@
 import React from 'react';
-import { Panel, PanelGroup } from 'react-bootstrap';
+import { Panel, PanelGroup, Button } from 'react-bootstrap';
 
 class Org extends React.Component {
 
     getOrgList(){
         return this.props.orgs.map((org, index) => {
-            let name = org.name;
-            let estdate = org.estdate;
-            let description = org.description;
+            let name = org["name"];
+            //let estdate = org.estdate;
+            let description = org["description"];
 
             return (
-                <Panel header={name} eventKey={index}>Establishment date: {estdate} <br/>{description}</Panel>
+                <Panel header={name} eventKey={index} key={index}>{description}<br/><Button href="#">Expand</Button></Panel>
             );
 
         });
@@ -28,6 +28,11 @@ class Org extends React.Component {
             </div >
         );
     }
+    
 }
 
-export{Org};
+Org.propTypes = {
+    orgs: React.PropTypes.array.isRequired
+}
+
+export { Org };
