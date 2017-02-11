@@ -19,14 +19,14 @@ class TopBar extends React.Component {
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="/">Flyers</a>
+                        <a href="/">LOGO</a>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
 
                 <Navbar.Collapse>
                     <Nav>
-                        <NavItem onClick={this.changeRoute} id='events'>Events</NavItem>
+                        <NavItem onClick={this.changeRoute} id='events'>Flyers</NavItem>
                         <NavItem onClick={this.changeRoute} id='org'>Organizations</NavItem>
                         <NavItem onClick={this.changeRoute} id='about'>About Us</NavItem>
                     </Nav>
