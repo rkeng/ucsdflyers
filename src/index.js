@@ -5,9 +5,8 @@ import { store } from './State/store';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from'react-router-redux';
 import { Provider } from 'react-redux';
-import { FlyerList } from './DumbComponents/FlyerList';
+import { OrgListContainer} from './SmartComponents/OrgListContainer';
 import { FlyerListContainer } from './SmartComponents/FlyerListContainer';
-import { Org } from './DumbComponents/Org';
 import { Register } from './DumbComponents/Register';
 import { Feedback } from './DumbComponents/Feedback'
 import { NotFound } from './DumbComponents/NotFound';
@@ -36,29 +35,13 @@ function ReadOrgData (){
 ReadOrgData();
 */
 
-
-
-const events = [
-    {name: 'p Day', date: 'Feb 20, 2017', location: 'PC', description: 'Everyone handout to catch pokemons'},
-    {name: 'Hack Day', date: 'Jan 31, 2017', location: 'CSE building', description: 'Hack into others computer'},
-    {name: 'Water Fun', date: 'Feb 02, 2017', location: 'Sun God', description: 'Get wet and swag'}
-];
-
-
-const orgs = [
-    {name: 'Kappa Kappa Kappa', estdate: 'Jan 1, 2017', description:'Dummy club'},
-    {name: 'United Taiwanese Association', estdate: 'Oct 10, 1911', description:'948794Kuang'},
-    {name: 'ESL', estdate: 'Jan 9, 2017', description:'Enrich Student Life'}
-]
-
-
 ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
             <Route path='/' component={FlyersApp}>
                 <IndexRedirect to='/events'/>
                 <Route path='events' component={FlyerListContainer}/>
-                <Route path='org' component={()=> <Org orgs={orgs}/>}/>
+                <Route path='org' component={OrgListContainer}/>
                 <Route path='about' component={About}/>
                 <Route path='login' component={Login}/>
                 <Route path='register' component={Register}/>

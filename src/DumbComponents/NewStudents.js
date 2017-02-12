@@ -84,7 +84,7 @@ class NewStudentsForm extends React.Component{
                   </FormGroup>
                   <FormGroup>
                     <Col>
-                      <ControlLabel>Last Name</ControlLabel>
+                      <ControlLabel>Re-Enter Password</ControlLabel>
                       <FormControl type="password" placeholder="Re-Enter password" />
                     </Col>
                   </FormGroup>

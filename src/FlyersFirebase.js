@@ -1,11 +1,11 @@
 import * as firebase from 'firebase';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCZ1XQNGATdZvIsDp2lKxhqrkpxdy6xthE",
-    authDomain: "fir-react-redux-auth-test.firebaseapp.com",
-    databaseURL: "https://fir-react-redux-auth-test.firebaseio.com",
-    storageBucket: "fir-react-redux-auth-test.appspot.com",
-    messagingSenderId: "1027700903294"
+    apiKey: "AIzaSyChSsnK4JgnlhG0Hrr-aL3xh1M-1rHaMUc",
+    authDomain: "ucsd-flyers.firebaseapp.com",
+    databaseURL: "https://ucsd-flyers.firebaseio.com",
+    storageBucket: "ucsd-flyers.appspot.com",
+    messagingSenderId: "733909365468"
 };
 
 firebase.initializeApp(firebaseConfig);
