@@ -1,17 +1,16 @@
 import React from 'react';
 import { Badge, Panel } from 'react-bootstrap';
 
-
-
-class EventList extends React.Component { 
+class FlyerList extends React.Component {
 
     //Generates a list of feedbacks
-    getEventList(){
-        return this.props.events.map((event) => {
-            let name = event.name;
-            let date = event.date;
-            let location = event.location;
-            let description = event.description;
+    getFlyerList () {
+        console.log('flyers?', this.props.flyers)
+        return this.props.flyers.map((flyer) => {
+            let name = flyer.name;
+            let date = flyer.date;
+            let location = flyer.location;
+            let description = flyer.description;
 
             let header = (
                 <div>
@@ -25,18 +24,18 @@ class EventList extends React.Component {
         });
     }
 
-    render(){
+    render () {
         return (
             <div className='container'>
-              {this.getEventList()}
+              {this.getFlyerList()}
             </div>
         );
     }
 
 }
 
-EventList.propTypes = {
-    events: React.PropTypes.array.isRequired
-}
+FlyerList.propTypes = {
+    flyers: React.PropTypes.array.isRequired
+};
 
-export { EventList };
+export { FlyerList };

@@ -1,42 +1,55 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { FlyersApp } from './DumbComponents/FlyersApp';
+import { store } from './State/store';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
+import { syncHistoryWithStore } from'react-router-redux';
+import { Provider } from 'react-redux';
+import { OrgListContainer} from './SmartComponents/OrgListContainer';
+import { FlyerListContainer } from './SmartComponents/FlyerListContainer';
+import { Register } from './DumbComponents/Register';
+import { Feedback } from './DumbComponents/Feedback'
+import { NotFound } from './DumbComponents/NotFound';
+import { Login } from './DumbComponents/Login';
+import { About } from './DumbComponents/About';
+import { NewStudents } from './DumbComponents/NewStudents';
 
-import { FlyersApp } from './components/FlyersApp';
-import { EventList } from './components/EventList';
-import { Org } from './components/Org';
-import { About } from './components/About';
+//combine store and react-router history
+const history = syncHistoryWithStore(browserHistory, store);
 
-const orgs =[];
+/*
+const orgs = [];
 
-var orgRef = firebase.database().ref('clubs/');
+var orgId = 0;
+function ReadOrgData (){
+    return database.ref('/clubs/' + orgId).once('value').then(function(snapshot) {
+        console.log("snapsss",snapshot);
+        var orgName = snapshot.val().name;
+        var orgDes = snapshot.val().description;
+        orgs.push({name: {orgName}, description: {orgDes}});
+        orgId++;
+        // ...
+    });
+}
 
-orgRef.on("child_added", function(data) {
-   var newOrg = data.val();
-   var obj = {
-       name: newOrg.name,
-       description: newOrg.description
-   }
-   orgs.push(obj);
-}, function (error) {
-   console.log("Error: " + error.code);
-});
-
-const events = [
-    {name:'Pokemon Day', date:'Feb 20, 2017', location:'PC', description:'Everyone handout to catch pokemons'},
-    {name:'Hack Day', date:'Jan 31, 2017', location:'CSE building', description:'Hack into others computer'},
-    {name:'Water Fun', date:'Feb 02, 2017', location:'Sun God', description:'Get wet and swag'}
-]
-
+ReadOrgData();
+*/
 
 ReactDOM.render(
-    <Router history={browserHistory}>
-        <Route path='/' component={FlyersApp}>
-            <IndexRedirect to='/events'/>
-            <Route path='events' component={() => <EventList events={events}/>}/>
-            <Route path='org' component={()=> <Org orgs={orgs}/>}/>
-            <Route path='about' component={About}/>
-        </Route>
-    </Router>,
-    document.getElementById('app') 
-)
+    <Provider store={store}>
+        <Router history={history}>
+            <Route path='/' component={FlyersApp}>
+                <IndexRedirect to='/events'/>
+                <Route path='events' component={FlyerListContainer}/>
+                <Route path='org' component={OrgListContainer}/>
+                <Route path='about' component={About}/>
+                <Route path='login' component={Login}/>
+                <Route path='register' component={Register}/>
+                <Route path='feedback' component={Feedback}/>
+                <Route path='register-student' component={NewStudents}/>
+            </Route>
+            <Route path='*' component={NotFound}/>
+        </Router>
+    </Provider>,
+    document.getElementById('app')
+);

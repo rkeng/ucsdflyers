@@ -1,0 +1,69 @@
+import React from 'react';
+import { findDOMNode } from 'react-dom';
+import { connect } from 'react-redux';
+import { Form, FormControl, Checkbox, Button, ControlLabel,
+Grid, Row, Col } from 'react-bootstrap';
+import { LoginUserAction } from '../State/actions';
+
+class LoginForm extends React.Component {
+    constructor(props){
+      super(props);
+      this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    onSubmit(event){
+      event.preventDefault();
+
+      const email = findDOMNode(this.email).value;
+      const password = findDOMNode(this.password).value;
+
+      // console.log('email textfield', email);
+      // console.log('ps fi', password);
+      const { dispatch } = this.props;
+      // dispatch(   LoginUserAction(email, password)   )
+      var loginAction = {
+        type: 'LOGIN_USER',
+        state: {
+          email: email,
+          password: password
+        }
+      }
+      dispatch(loginAction);
+    }
+
+    render () {
+        return (
+          <Grid>
+            <Row className="show-login">
+              <Col lg={6} lgPush={3}>
+                <Form onSubmit={this.onSubmit}>
+                  <ControlLabel>Email address</ControlLabel>
+                  <FormControl
+                    id="formControlsEmail"
+                    type="email"
+                    label="Email address"
+                    placeholder="Enter email"
+                    ref={(node) => {this.email = node}}
+                  />
+                  <ControlLabel>Password</ControlLabel>
+                  <FormControl
+                    id="formControlsPassword"
+                    label="Password"
+                    type="password"
+                    placeholder="Enter password"
+                    ref={(node) => {this.password = node}}
+                  />
+                  <Checkbox checked readOnly>Remember me</Checkbox>
+                  <Button type="submit">Login</Button>
+                  <Button>Forget Password</Button>
+                </Form>
+              </Col>
+            </Row>
+          </Grid>
+        );
+    }
+}
+
+const Login = connect()(LoginForm);
+
+export { Login };
