@@ -13,42 +13,19 @@ class NewOrganizations extends React.Component{
           <Col lg={6} lgPush={3}>
             <h1> Sign up as organizations: </h1>
             <form>
-              <form inline>
-
                 <div class="form-group">
-                  <br></br>
-                  <ControlLabel for="firstName">Organization Name </ControlLabel>
+                  <ControlLabel for="organizationName">Organization Name</ControlLabel>
                   {'  '}
-                  <input type="text" class="form-control" id="firstName" placeholder="Enriching" />
+                  <input type="text" class="form-control" id="organizationName" placeholder="Please Enter Organization Name" />
                 </div>
-
-              </form>
               <br/>
+
               
-              <div class="checkbox ">
-                <ControlLabel>Student Type</ControlLabel>
-                {'  '}
-              </div>
-
-              <div class="checkbox ">
-                <ControlLabel class="checkbox-inline"><input type="checkbox" id="inlineCheckbox1" value=" " />Undergraduates</ControlLabel>
-              </div>
-
-              <div class="checkbox">
-                <ControlLabel class="checkbox-inline"><input type="checkbox" id="inlineCheckbox2" value=" " />Graduates</ControlLabel>
-              </div>
-
-              <div class="checkbox">
-                <ControlLabel class="checkbox-inline"><input type="checkbox" id="inlineCheckbox3" value=" " />All Studens</ControlLabel>
-              </div>
-              <br/>
-
               <ControlLabel>Email address</ControlLabel>
-
               <FormControl
                 id="formControlsEmail"
                 type="email"
-                label="Email address"
+                label="Email address"   
                 placeholder="Enter email"
                 />
 
@@ -70,46 +47,43 @@ class NewOrganizations extends React.Component{
               <br/>
 
               <div class="form-group">
-                <ControlLabel for="College">Category:</ControlLabel>
+                <ControlLabel for="Category">Choose Category:</ControlLabel>
                 {'  '}
 
                 <select class="form-control" id="College">
-                  <option>Revelle College</option>
-                  <option>John Muir College</option>
-                  <option>Thurgood Marshall College</option>
-                  <option>Earl Warren College</option>
-                  <option>Eleanor Roosevelt College</option>
-                  <option>Sixth College</option>
+                  <option>Academic</option>
+                  <option>Co-Ops/Enterprise</option>
+                  <option>Cultural</option>
+                  <option>Dance</option>
+                  <option>Educational</option>
+                  <option>Health Professional</option>
+                  <option>Interfraternity Council(IFC)</option>
+                  <option>Martial Arts</option>
+                  <option>Media</option>
+                  <option>Multi-Cultural Greek Council(MCG)-Fraternity</option>
+                  <option>Multi-Cultural Greek Council(MCG)-Sorority</option>
+                  <option>Panhellenic</option>
+                  <option>Political</option>
+                  <option>Pre-Professional</option>
+                  <option>Recreation (Must Utilize Campus Recreation Facilities)</option>
+                  <option>Service</option>
+                  <option>Social</option>
+                  <option>Spiritual</option>
+                  <option>Student Affirmative Action Committe(SAAC)</option>
+                  <option>Others</option>
                 </select>
               </div>
 
               <div class="form-group">
-                <ControlLabel for="Grade Level">Choose Your Grade:</ControlLabel>
+                <ControlLabel for="studentType">Choose Student Type:</ControlLabel>
                 {'  '}
 
                 <select class="form-control" id="Grade Level">
-                  <option>Freshman</option>
-                  <option>Sophomore</option>
-                  <option>Junior</option>
-                  <option>Senior</option>
+                  <option>Undergraduates</option>
+                  <option>Graduates</option>
+                  <option>All Students</option>
                 </select>
               </div>
-
-
-
-              <div class="form-group">
-                <ControlLabel for="Major">Choose Your Major:</ControlLabel>
-                {'  '}
-
-                <select class="form-control" id="Major">
-                  <option>Anthropology</option>
-                  <option>Bioengineering</option>
-                  <option>Biological Sciences</option>
-                  <option>Chemistry and Biochemistry</option>
-                  <option>Chinese Studies</option>
-                </select>
-              </div>
-
               <br/>
 
               <div className="Button" style={buttonStyles}>
@@ -120,6 +94,7 @@ class NewOrganizations extends React.Component{
                 </ButtonToolbar>
               </div>
               <br/>
+
             </form>
           </Col>
         </Row>
