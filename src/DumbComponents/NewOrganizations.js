@@ -1,13 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 import {FormControl, Checkbox, Button, ControlLabel, Grid, Row, Col, select, ButtonToolbar, form} from 'react-bootstrap'
 
-const buttonStyles = {maxWidth: 800};
+const buttonStyles = {maxWidth: 800}
 
-class NewOrganizations extends React.Component{
+class NewOrganizations extends React.Component {
 
-  render(){
-    return(
+  render () {
+    return (
       <Grid>
         <Row className = "show-registration">
           <Col lg={6} lgPush={3}>
@@ -20,12 +20,11 @@ class NewOrganizations extends React.Component{
                 </div>
               <br/>
 
-              
               <ControlLabel>Email address</ControlLabel>
               <FormControl
                 id="formControlsEmail"
                 type="email"
-                label="Email address"   
+                label="Email address"
                 placeholder="Enter email"
                 />
 
@@ -103,5 +102,4 @@ class NewOrganizations extends React.Component{
   }
 }
 
-
-export { NewOrganizations };
+export { NewOrganizations }

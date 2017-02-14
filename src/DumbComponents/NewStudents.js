@@ -1,32 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { Form, FormControl, Checkbox, Button, ControlLabel, Grid, Row, Col, select, ButtonToolbar, form, FormGroup} from 'react-bootstrap'
-import { connect } from 'react-redux';
-import { findDOMNode } from 'react-dom';
-import { createUserAction } from '../State/actions';
+import { connect } from 'react-redux'
+import { findDOMNode } from 'react-dom'
+import { createUserAction } from '../State/actions'
 
-const buttonStyles = {maxWidth: 800};
+const buttonStyles = {maxWidth: 800}
 
-class NewStudentsForm extends React.Component{
-  constructor(props){
-    super(props);
-    this.onSubmit = this.onSubmit.bind(this);
+class NewStudentsForm extends React.Component {
+  constructor (props) {
+    super(props)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
-  onSubmit(event){
-    event.preventDefault();
+  onSubmit (event) {
+    event.preventDefault()
     // console.log('button clicked')
-    let email = findDOMNode(this.email).value;
-    let password = findDOMNode(this.password).value;
+    let email = findDOMNode(this.email).value
+    let password = findDOMNode(this.password).value
 
-    let { dispatch } = this.props;
+    let { dispatch } = this.props
 
-    dispatch( createUserAction(email, password) );
-
+    dispatch(createUserAction(email, password))
   }
 
-  render(){
-    return(
+  render () {
+    return (
       <Grid>
         <Row className = "show-registration">
           <Col lg={6} lgPush={3}>
@@ -73,13 +72,13 @@ class NewStudentsForm extends React.Component{
                     <br></br>
                     <Col>
                       <ControlLabel>Email address </ControlLabel>
-                      <FormControl type="email" ref={ (node) => this.email=node } placeholder="Enter email" />
+                      <FormControl type="email" ref={ (node) => this.email = node } placeholder="Enter email" />
                     </Col>
                   </FormGroup>
                   <FormGroup>
                     <Col>
                       <ControlLabel>Password </ControlLabel>
-                      <FormControl type="password" ref={ (node) => this.password=node } placeholder="Enter password" />
+                      <FormControl type="password" ref={ (node) => this.password = node } placeholder="Enter password" />
                     </Col>
                   </FormGroup>
                   <FormGroup>
@@ -192,6 +191,6 @@ class NewStudentsForm extends React.Component{
   }
 }
 
-//new component that listens to state
-const NewStudents = connect()(NewStudentsForm);
-export { NewStudents };
+// new component that listens to state
+const NewStudents = connect()(NewStudentsForm)
+export { NewStudents }

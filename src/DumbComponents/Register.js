@@ -1,12 +1,12 @@
-import React from 'react';
-import {Button} from 'react-bootstrap';
-import { Link } from 'react-router';
+import React from 'react'
+import {Button} from 'react-bootstrap'
+import { Link } from 'react-router'
 
-const wellStyles = {maxWidth: 520, margin: '0 auto 20px'};
+const wellStyles = {maxWidth: 520, margin: '0 auto 20px'}
 
 class Register extends React.Component {
-    render () {
-        return (
+  render () {
+    return (
             <div>
                 <h1> <center> Register As: </center> </h1>
                 <hr/>
@@ -20,8 +20,8 @@ class Register extends React.Component {
                     </Link>
                 </div>
             </div>
-        );
-    }
+    )
+  }
 }
 
-export { Register };
+export { Register }

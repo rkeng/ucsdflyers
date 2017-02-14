@@ -1,23 +1,22 @@
-import React from 'react';
-import { Panel, PanelGroup, Button } from 'react-bootstrap';
+import React from 'react'
+import { Panel, PanelGroup, Button } from 'react-bootstrap'
 
 class Org extends React.Component {
 
-    getOrgList(){
-        return this.props.orgs.map((org, index) => {
-            let name = org["name"];
-            //let estdate = org.estdate;
-            let description = org["description"];
+  getOrgList () {
+    return this.props.orgs.map((org, index) => {
+      let name = org['name']
+            // let estdate = org.estdate;
+      let description = org['description']
 
-            return (
+      return (
                 <Panel header={name} eventKey={index} key={index}>{description}<br/><Button href="#">Expand</Button></Panel>
-            );
+      )
+    })
+  }
 
-        });
-    }
-
-    render(){
-        return (
+  render () {
+    return (
             <div className='container'>
                 <h1>UCSD Student Orgs</h1>
                 <p>Click on the orgs to see details.</p>
@@ -26,13 +25,13 @@ class Org extends React.Component {
                     {this.getOrgList()}
                 </PanelGroup>
             </div >
-        );
-    }
-    
+    )
+  }
+
 }
 
 Org.propTypes = {
-    orgs: React.PropTypes.array.isRequired
+  orgs: React.PropTypes.array.isRequired
 }
 
-export { Org };
+export { Org }
