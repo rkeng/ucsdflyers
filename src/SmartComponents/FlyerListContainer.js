@@ -19,7 +19,6 @@ class FlyerListContainer extends React.Component {
 
     componentWillMount() {
         firebase.database().ref('flyers/').on('child_added', (flyer) => {
-            console.log('myflyer', flyer);
             this.state.flyers.push(flyer);
         })
     }

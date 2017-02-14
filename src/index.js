@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'react-notifications/lib/notifications.css'; //css for notification
 import { FlyersApp } from './DumbComponents/FlyersApp';
 import { store } from './State/store';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
@@ -13,7 +14,7 @@ import { NotFound } from './DumbComponents/NotFound';
 import { Login } from './DumbComponents/Login';
 import { About } from './DumbComponents/About';
 import { NewStudents } from './DumbComponents/NewStudents';
-import { NewOrganizations } from './DumbComponents/NewOrganizations'
+import { NewOrganizations } from './DumbComponents/NewOrganizations';
 
 //combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
