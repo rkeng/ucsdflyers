@@ -17,23 +17,14 @@ class LoginForm extends React.Component {
   }
 
   onSubmit (event) {
-    event.preventDefault()
+    event.preventDefault();
 
-    const email = findDOMNode(this.email).value
-    const password = findDOMNode(this.password).value
+    const email = findDOMNode(this.email).value;
+    const password = findDOMNode(this.password).value;
 
-      // console.log('email textfield', email);
-      // console.log('ps fi', password);
-    const { dispatch } = this.props
-      // dispatch(   LoginUserAction(email, password)   )
-    var loginAction = {
-      type: 'LOGIN_USER',
-      state: {
-        email: email,
-        password: password
-      }
-    }
-    dispatch(loginAction)
+    const { dispatch } = this.props;
+    dispatch(LoginUserAction(email, password));
+
   }
 
   render () {

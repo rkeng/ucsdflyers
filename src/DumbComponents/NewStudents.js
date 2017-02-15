@@ -1,6 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { Form, FormControl, Checkbox, Button, ControlLabel, Grid, Row, Col, select, ButtonToolbar, form, FormGroup} from 'react-bootstrap'
+import { Form, FormControl, Button, ControlLabel, Grid, Row, Col, select, ButtonToolbar, form, FormGroup} from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { findDOMNode } from 'react-dom'
 import { createUserAction } from '../State/actions'
