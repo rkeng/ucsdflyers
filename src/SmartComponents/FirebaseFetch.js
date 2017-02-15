@@ -4,9 +4,9 @@ import { firebase } from '../FlyersFirebase'
 // iterate through an array of flyers to generate jsx for each flyer
 function renderFlyers(flyers) {
     if (flyers.length > 0) {
-        // map flyers to their index in firebase; call the index "key"
+        // map flyers to their index in firebase since we don't generate flyers with ids yet
         return flyers.map((flyer, index) => (
-            <Flyer key={index} flyer={flyer}/> 
+            <Flyer key={index} index={index} flyer={flyer}/> 
         ))
     }
     else {
@@ -17,13 +17,21 @@ function renderFlyers(flyers) {
 // individual flyer divs
 // needed because React doesn't like to render objects on its own
 const Flyer = ({flyer}) => {
+    console.log(flyer)
     return (
-        <div>
-            Name: {flyer.name}<br/>
-            Location: {flyer.location}<br/>
-            Description: {flyer.description}<br/>
-            Place: {flyer.date}
+        <div className="col-sm-4">
+            <div className="panel panel-default">
+                <div className="panel-heading">
+                    {flyer.name}
+                </div>
+                <div className="panel-body">
+                    Location: {flyer.location}<br/>
+                    Description: {flyer.description}<br/>
+                    Place: {flyer.date}
+                </div>
+            </div>
         </div>
+        
     )
 }
 
