@@ -1,10 +1,12 @@
 import React from 'react'
 import { firebase } from '../FlyersFirebase'
 
+// iterate through an array of flyers to generate jsx for each flyer
 function renderFlyers(flyers) {
     if (flyers.length > 0) {
+        // map flyers to their index in firebase; call the index "key"
         return flyers.map((flyer, index) => (
-            <Flyer key={index} flyer={flyer}/>
+            <Flyer key={index} flyer={flyer}/> 
         ))
     }
     else {
@@ -12,6 +14,8 @@ function renderFlyers(flyers) {
     }
 }
 
+// individual flyer divs
+// needed because React doesn't like to render objects on its own
 const Flyer = ({flyer}) => {
     return (
         <div>
@@ -30,13 +34,8 @@ class FirebaseFetch extends React.Component {
       flyers: []
     }
   }
-
-//  componentWillMount () {
-//    firebase.database().ref('flyers/').on('child_added', (flyer) => {
-//      this.state.flyers.push(flyer)
-//    })
-//  }
     
+  // when component mounts, load from the database
   componentDidMount() {
       // get reference to 'flyers' array in firebase
       const flyersRef = firebase.database().ref().child('flyers')
@@ -51,6 +50,7 @@ class FirebaseFetch extends React.Component {
   }
 
   render () {
+        // generate jsx for flyers using data in this.state.flyers (:4)
         var renderedFlyers = renderFlyers(this.state.flyers)
     return (
             <div className="container">
