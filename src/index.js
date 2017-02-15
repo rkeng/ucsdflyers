@@ -8,6 +8,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux'
 import { OrgListContainer} from './SmartComponents/OrgListContainer'
 import { FlyerListContainer } from './SmartComponents/FlyerListContainer'
+import { FirebaseFetch } from './SmartComponents/FirebaseFetch'
 import { Register } from './DumbComponents/Register'
 import { Feedback } from './DumbComponents/Feedback'
 import { NotFound } from './DumbComponents/NotFound'
@@ -32,6 +33,7 @@ ReactDOM.render(
                 <Route path='feedback' component={Feedback}/>
                 <Route path='register-student' component={NewStudents}/>
                 <Route path='register-org' component={NewOrganizations}/>
+                <Route path='firebase-fetch' component={FirebaseFetch}/>
             </Route>
             <Route path='*' component={NotFound}/>
         </Router>
