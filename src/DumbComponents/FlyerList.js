@@ -5,7 +5,6 @@ class FlyerList extends React.Component {
 
     // Generates a list of feedbacks
   getFlyerList () {
-    console.log('flyers?', this.props.flyers)
     return this.props.flyers.map((flyer) => {
       let name = flyer.name
       let date = flyer.date
