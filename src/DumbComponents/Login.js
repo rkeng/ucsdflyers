@@ -5,6 +5,7 @@ import { Form, FormControl, Checkbox, Button, ControlLabel,
 Grid, Row, Col } from 'react-bootstrap'
 import { LoginUserAction } from '../State/actions'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
+import { Link } from 'react-router';
 
 class LoginForm extends React.Component {
   constructor (props) {
@@ -50,12 +51,15 @@ class LoginForm extends React.Component {
                     ref={(node) => { this.password = node }}
                   />
                   <Checkbox checked readOnly>Remember me</Checkbox>
-                  <Button type="submit">Login</Button>
-                  <Button onClick={() => this.testNotification()}>Forget Password</Button>
+                  <Button type="submit" bsStyle="success">Login</Button>
+                  <Button bsStyle="warning" onClick={() => this.testNotification()}>Forget Password</Button>
+                  <Link to="/Register" className="btn btn-link"> New User? </Link>
                   <NotificationContainer/>
                 </Form>
               </Col>
             </Row>
+            <hr/>
+
           </Grid>
     )
   }
