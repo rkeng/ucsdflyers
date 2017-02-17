@@ -32,7 +32,6 @@ class TopBar extends React.Component {
                     </Nav>
                     <Nav pullRight>
                         <NavItem onClick={this.changeRoute} id='login'>Login</NavItem>
-                        <NavItem onClick={this.changeRoute} id='register'>New User</NavItem>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
