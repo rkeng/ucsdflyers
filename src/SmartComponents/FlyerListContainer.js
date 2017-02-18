@@ -2,12 +2,9 @@ import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
 import { firebase } from '../FlyersFirebase'
 
-// dummy data
-const flyers = [
-    {name: 'p Day', date: 'Feb 20, 2017', location: 'PC', description: 'Everyone handout to catch pokemons'},
-    {name: 'Hack Day', date: 'Jan 31, 2017', location: 'CSE building', description: 'Hack into others computer'},
-    {name: 'Water Fun', date: 'Feb 02, 2017', location: 'Sun God', description: 'Get wet and swag'}
-]
+const flyers = []
+
+var flyersRef = firebase.database().ref('events/')
 
 class FlyerListContainer extends React.Component {
   constructor (props) {
@@ -18,17 +15,33 @@ class FlyerListContainer extends React.Component {
   }
 
   componentWillMount () {
-    firebase.database().ref('flyers/').on('child_added', (flyer) => {
-      this.state.flyers.push(flyer)
-    })
+    // define the dataHandler
+    function dataHandler (data) {
+      // an array of all flyers
+      var newFlyersList = data.val() 
+
+      this.setState({
+        flyers: newFlyersList
+      })
+    }
+
+    // This will make the "this" in above function refer to the component
+    dataHandler = dataHandler.bind(this)
+
+    // define error handler
+    function errorHandler (error) {
+      console.log('error', error.code)
+    }
+
+    // call the database
+    flyersRef.on('value', dataHandler, errorHandler)     
   }
 
   render () {
     return (
-            <FlyerList flyers={flyers}/>
+            <FlyerList flyers={this.state.flyers}/>
     )
   }
-
 }
 
 export { FlyerListContainer }

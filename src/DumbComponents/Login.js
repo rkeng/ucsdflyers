@@ -1,6 +1,7 @@
 import React from 'react'
+import { Notification } from 'react-notifications'
 import { connect } from 'react-redux'
-import { ui, uiConfig } from '../FlyersFirebase'
+import { firebase, ui, uiConfig } from '../FlyersFirebase'
 
 class LoginForm extends React.Component {
 
@@ -9,7 +10,7 @@ class LoginForm extends React.Component {
   }
 
   render () {
-    ui.start('#app', uiConfig)
+    ui.start('#app', uiConfig);
     return (
       <div> Login Page</div>
     )

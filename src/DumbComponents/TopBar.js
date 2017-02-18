@@ -9,7 +9,7 @@ class TopBar extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-        topbar: <TopBarGuest/>,
+        topbar: <TopBarGuest/>
     }
   }
 
@@ -37,7 +37,9 @@ class TopBar extends React.Component {
   }
 
   render () {
-      return <div>{this.state.topbar}</div>
+      return (
+          <div>{this.state.topbar}</div>
+    );
   }
 }
 
