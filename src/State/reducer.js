@@ -1,7 +1,6 @@
-import { firebase } from '../FlyersFirebase';
-import { routerReducer } from 'react-router-redux';
-import { combineReducers } from 'redux';
-
+import { firebase } from '../FlyersFirebase'
+import { routerReducer } from 'react-router-redux'
+import { combineReducers } from 'redux'
 /*
     A reducer is a function that takes the existing state and an action and then
     generate a new state;
@@ -11,48 +10,49 @@ import { combineReducers } from 'redux';
             return Object.assign({}, state, ...)
 */
 
-function userStateReducer(state={}, action){
-
-    switch(action.type){
+function userStateReducer (state={}, action) {
+    switch (action.type) {
         case 'SIGN_UP_USER': {
-            const email = action.state.email;
-            const password = action.state.password;
+            const email = action.state.email
+            const password = action.state.password
 
-            //old syntax
             firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then(function(){ 
-                console.log('Account Creation Succeeded') 
-            })
-            .catch(function(error){ 
-                console.log('Account Creation Failed', error.message) 
-            });
-
-            return Object.assign({}, state);
+                .then(function () {
+                console.log('Account Creation Succeeded')
+                })
+                .catch(function (error) {
+                console.log('Account Creation Failed', error.message)
+                })
+            return Object.assign({}, state)
         }
-        case 'LOGIN_USER':{
-            const email = action.state.email;
-            const password = action.state.password;
+        case 'LOGIN_USER': {
+            const email = action.state.email
+            const password = action.state.password
+            var newState = {};
 
-            //new syntax
             firebase.auth().signInWithEmailAndPassword(email, password)
-
-            .then(function(user) {
-                // console.log('Dose FB sign give me a user when signin succeed?', user);
-                return Object.assign( {}, state, action.state );
-            })
-            .catch(function(error){
-                console.log('Login Fail', error.message);
-                return state;//error
-            });
+                .then(function (user) {
+                    const { 
+                        displayName, email, emailVerified, isAnonymous, photoURL, providerData 
+                    } = user
+                    Object.assign(newState, state, 
+                        { currentUser: { displayName, email, emailVerified, isAnonymous, photoURL, providerData } }
+                    );
+                    })
+                .catch(function (error) {
+                console.log('Login Fail', error.message)
+                newState = state
+                })
+            return newState
         }
         default:
-            return state;
+        return state
     }
 }
 
 const rootReducer = combineReducers({
-    routing: routerReducer, //connect routing with application state
-    userStateReducer
+  routing: routerReducer, // connect routing with application state
+  userStateReducer
 })
 
-export { rootReducer };
+export { rootReducer }

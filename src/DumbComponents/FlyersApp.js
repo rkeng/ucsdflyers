@@ -1,19 +1,19 @@
-import React from 'react';
-import { TopBar } from './TopBar';
+import React from 'react'
+import { TopBar } from './TopBar'
 
 class FlyersApp extends React.Component {
-    render () {
-        return (
+  render () {
+    return (
             <div>
                 <TopBar/>
                 {this.props.children}
             </div>
-        );
-    }
+    )
+  }
 }
 
 FlyersApp.propTypes = {
-    children: React.PropTypes.any
-};
+  children: React.PropTypes.any
+}
 
-export { FlyersApp };
+export { FlyersApp }
