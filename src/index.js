@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'react-notifications/lib/notifications.css' // css for notification
+import 'firebaseui/dist/firebaseui.css'
 import { FlyersApp } from './DumbComponents/FlyersApp'
 import { store } from './State/store'
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
@@ -16,8 +17,9 @@ import { About } from './DumbComponents/About'
 import { NewStudents } from './DumbComponents/NewStudents'
 import { NewOrganizations } from './DumbComponents/NewOrganizations'
 
+
 // combine store and react-router history
-const history = syncHistoryWithStore(browserHistory, store)
+const history = syncHistoryWithStore(browserHistory, store);
 
 ReactDOM.render(
     <Provider store={store}>
@@ -27,12 +29,12 @@ ReactDOM.render(
                 <Route path='events' component={FlyerListContainer}/>
                 <Route path='org' component={OrgListContainer}/>
                 <Route path='about' component={About}/>
-                <Route path='login' component={Login}/>
                 <Route path='register' component={Register}/>
                 <Route path='feedback' component={Feedback}/>
                 <Route path='register-student' component={NewStudents}/>
                 <Route path='register-org' component={NewOrganizations}/>
             </Route>
+            <Route path='login' component={Login}/>
             <Route path='*' component={NotFound}/>
         </Router>
     </Provider>,
