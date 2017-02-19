@@ -7,125 +7,88 @@ import {Thumbnail, ListGroupItem, ListGroup, span, ControlLabel, Grid, PageHeade
 
 class About extends React.Component {
 
+  render(){
 
-    render(){
+    return (
 
-        return (
+      <Grid>
+        <Jumbotron>
+          <h2><strong>About ESL</strong></h2>
+          <br/>
+        
+          <Grid>
+          	<ListGroupItem>
+            	<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+          	</ListGroupItem>
+          </Grid>
 
-        	<Grid>
-			<Jumbotron>
-				<h2><strong>About ESL</strong></h2>
-				    	<br/>
-				    	<Grid>
-				    		<ListGroupItem>
-							<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-				    		</ListGroupItem>
-					</Grid>
+          <br/>
+          <br/>			
+          <br/>
 
-		<br/>
-		<br/>			
-		<br/>
-		<h2><strong>Who Are We</strong></h2>
-                <br/>
-		<Grid>
-			<ListGroup>
-				<ListGroupItem>
-					<br/>
-					<center>
-					<img alt="..." width="120" height="130" src="pikachu.png"/>
-					</center>
-					<ul class="name">
-					    <h3><strong>PROJECT MANAGER</strong></h3>
-						<ul><h4><em><large>Xiqiang Lin</large></em></h4></ul>
-							  <ul><ul><p><em><small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself</small></em></p></ul></ul>
-						</ul>
-			   	</ListGroupItem>
+          <h2><strong>Who Are We</strong></h2>
+          <br/>
+          <Grid>
+            <ListGroup>
+              <ListGroupItem header="Project Manager">
+                  <u><em>Xiqiang Lin</em></u>
+                  <br/>
+                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
+              </ListGroupItem>
+              <ListGroupItem header="Bussiness Analyst">
+                  <u><em>Sheng Zhang</em></u>
+                  <br/>
+                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
+              </ListGroupItem>
+              <ListGroupItem header="Senior System Analyst">
+                  <u><em>Ryan Keng</em></u>
+                  <br/>
+                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
+              </ListGroupItem>
+              <ListGroupItem header="Software Architect">
+                  <u><em>Yuqian Cheng</em></u>
+                  <br/>
+                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
+              </ListGroupItem>
+              <ListGroupItem header="Software Development Lead">
+                  <u><em>Aravind Sridhar</em></u>
+                  <br/>
+                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
+              </ListGroupItem>
+              <ListGroupItem header="Algorithm Specialist">
+                  <u><em>Haoming Wang</em></u>
+                  <br/>
+                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
+              </ListGroupItem>
+              <ListGroupItem header="Database Specialist">
+                  <u><em>Vanna Phong</em></u>
+                  <br/>
+                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
+              </ListGroupItem>
+              <ListGroupItem header="Quality Assurance Lead">
+                  <u><em>Ying Wu</em></u>
+                  <br/>
+                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
+              </ListGroupItem>
+              <ListGroupItem header="Project Manager">
+                  <u><em>Xinrui Zhou</em></u>
+                  <br/>
+                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
+              </ListGroupItem>
+              <ListGroupItem header="User Interface Specialist">
+                  <u><em>Xiqiang Lin</em></u>
+                  <br/>
+                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
+              </ListGroupItem>
 
-				<ListGroupItem header="Bussiness Analyst">
-					<ul class="name">
-						<h4><em>Sheng Zhang</em></h4>
-						<ul class="list-group">
-							  <li class="list-group-item"><small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small></li>
-							</ul>
-						</ul>
-				</ListGroupItem>
+             
+              </ListGroup>
+              </Grid>
 
-				<ListGroupItem header="Senior System Analyst">
-					<ul class="name">
-						<h4><em>Ryan Keng</em></h4>
-							<ul class="list-group">
-								<li class="list-group-item"><small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself!</small></li>
-							</ul>
-					</ul>
-				</ListGroupItem>
-
-				<ListGroupItem header="Software Architect">
-				<ul class="name">
-					<h4><em>Yuqian Cheng</em></h4>
-					<ul class="list-group">
-						  <li class="list-group-item"><small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself!</small></li>
-						</ul>
-					</ul>
-				</ListGroupItem>
-
-				<ListGroupItem header="Software Development Lead">
-				<ul class="name">
-				<h4><em>Aravind Sridhar</em></h4>
-				<ul class="list-group">
-				  <li class="list-group-item"><small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself!</small></li>
-				</ul>
-				</ul>
-				</ListGroupItem>
-
-				<ListGroupItem header="Algorithm Specialist">
-				<ul class="name">
-				<h4><em>Haoming Wang</em></h4>
-				<ul class="list-group">
-				  <li class="list-group-item"><small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself!</small></li>
-				</ul>
-				</ul>	
-				</ListGroupItem>
-
-				<ListGroupItem header="Database Specialist">
-				<ul class="name">
-				<h4><em>Vanna Phong</em></h4>
-				<ul class="list-group">
-				  <li class="list-group-item"><small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself!</small></li>
-				</ul>
-				</ul>
-				</ListGroupItem>
-
-				<ListGroupItem header="Quality Assurance Lead">
-				<ul class="name">
-				<h4><em>Ying Wu</em></h4>
-				<ul class="list-group">
-				  <li class="list-group-item"><small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself!</small></li>
-				</ul>
-				</ul>
-				</ListGroupItem>
-
-				<ListGroupItem header="User Interface Specialist">
-				<ul class="name">
-				<h4><em>Jialin Lou</em></h4>
-				<ul class="list-group">
-				  <li class="list-group-item"><small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself!</small></li>
-				</ul>
-				</ul>
-				</ListGroupItem>
-
-				<ListGroupItem header="User Interface Specialist">
-				<ul class="name">
-				<h4><em>Xinrui Zhou</em></h4>
-				<ul class="list-group">
-				  <li class="list-group-item"><small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself!</small></li>
-				</ul>
-				</ul>
-				</ListGroupItem>
-
-			</ListGroup>
-		</Grid>
-	</Jumbotron>
-</Grid>
-)}}
+        </Jumbotron>
+      </Grid>
+    )
+  }
+}
 
 export { About };
