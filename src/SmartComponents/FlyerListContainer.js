@@ -4,7 +4,8 @@ import { firebase } from '../FlyersFirebase'
 
 const flyers = []
 
-var flyersRef = firebase.database().ref('flyers/')
+//get reference to "flyers" array in firebase
+var flyersRef = firebase.database().ref('flyers/events/')
 
 class FlyerListContainer extends React.Component {
   constructor (props) {
@@ -40,7 +41,7 @@ class FlyerListContainer extends React.Component {
   render () {
     return (
             <FlyerList flyers={this.state.flyers}/>
-    )
+    )   
   }
 }
 
