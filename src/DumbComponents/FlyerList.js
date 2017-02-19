@@ -1,7 +1,10 @@
 import React from 'react'
-import { Badge, Panel } from 'react-bootstrap'
+import { Badge, Panel, Button } from 'react-bootstrap'
+import { CreateFlyer } from './CreateFlyer'
+
 
 class FlyerList extends React.Component {
+
 
     // Generates a list of feedbacks
   getFlyerList () {

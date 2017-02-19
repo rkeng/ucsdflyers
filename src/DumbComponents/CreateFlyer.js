@@ -13,7 +13,7 @@ class CreateFlyer extends React.Component {
       title: "",
       date: "",
       description: "",
-      location: ""
+      location: "",
     }
   }
 
@@ -25,7 +25,7 @@ onPreview(event){
   const title = findDOMNode(this.title).value;
   this.setState({ title: title  })
   const date = findDOMNode(this.date).value;
-  this.setSate({ date: date })
+  this.setState({ date: date })
   const description = findDOMNode(this.description).value;
   this.setState({ description: description })
   const location = findDOMNode(this.location).value;
@@ -37,12 +37,13 @@ getFlyer () {
     let header = (
               <div>
                   <Badge>{this.state.title}</Badge>
-                  <Badge>{this.state.title}</Badge>
-                  <Badge>{this.state.title}</Badge>
+                  <Badge>{this.state.date}</Badge>
+                  <Badge>{this.state.location}</Badge>
               </div>
           )
 
-    return <Panel key={this.state.title} bsStyle='info' header={header}>{this.state.title}</Panel>
+    return <Panel key={this.state.title} bsStyle='info'
+    header={header}>{this.state.description}</Panel>
 
 }
 
@@ -60,7 +61,6 @@ getFlyer () {
           <FormControl
             type="text"
             placeholder="Enter title"
-            onChange={this.handleChange}
             ref={(node) => {this.title = node}}
           />
         </FormGroup>
@@ -69,7 +69,6 @@ getFlyer () {
           <FormControl
             type="text"
             placeholder="Enter date"
-            onChange={this.handleChange}
             ref={(node) => {this.date = node}}
 
           />
@@ -79,17 +78,15 @@ getFlyer () {
           <FormControl
             type="text"
             placeholder="Enter description"
-            onChange={this.handleChange}
             ref={(node) => {this.description = node}}
           />
           </FormGroup>
-          <FormGroup bsSize='large'>
 
+          <FormGroup bsSize='large'>
           <ControlLabel>Location</ControlLabel>
           <FormControl
             type="text"
             placeholder="Enter location"
-            onChange={this.handleChange}
             ref={(node) => {this.location = node}}
           />
           <FormControl.Feedback />
@@ -109,9 +106,6 @@ getFlyer () {
                  <div>
                  {this.getFlyer()}
                  </div>
-
-                <p> this is used for testing </p>
-                <span>{this.state.title}</span>
                  </Modal.Body>
                  <Modal.Footer>
                    <Button onClick={() => this.setState({show: false})}>Close</Button>
