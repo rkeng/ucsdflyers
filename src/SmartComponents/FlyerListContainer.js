@@ -5,7 +5,7 @@ import { firebase } from '../FlyersFirebase'
 const flyers = []
 
 //get reference to "flyers" array in firebase
-var flyersRef = firebase.database().ref('flyers/events/')
+var flyersRef = firebase.database().ref('events/')
 
 class FlyerListContainer extends React.Component {
   constructor (props) {
