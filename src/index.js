@@ -16,6 +16,7 @@ import { Login } from './DumbComponents/Login'
 import { About } from './DumbComponents/About'
 import { NewStudents } from './DumbComponents/NewStudents'
 import { NewOrganizations } from './DumbComponents/NewOrganizations'
+import { CreateRecruitment } from './DumbComponents/CreateRecruitment'
 
 
 // combine store and react-router history
@@ -33,6 +34,7 @@ ReactDOM.render(
                 <Route path='feedback' component={Feedback}/>
                 <Route path='register-student' component={NewStudents}/>
                 <Route path='register-org' component={NewOrganizations}/>
+                <Route path='org/create-recruitment' component={CreateRecruitment}/>
             </Route>
             <Route path='login' component={Login}/>
             <Route path='*' component={NotFound}/>
