@@ -1,6 +1,6 @@
 import React from 'react'
-
-const Flyer = ({flyer}) => {
+import { Panel } from 'react-bootstrap'
+/*const Flyer = ({flyer}) => {
   console.log(flyer)
   return(
     <div className="col-sm-6">
@@ -9,12 +9,25 @@ const Flyer = ({flyer}) => {
           {flyer.name}
         </div>
         <div className="panel-body">
-          Location: {flyer.location}<br/>
-          Description: {flyer.description}<br/>
-          Place: {flyer.date}
+            Location: {flyer.location}<br/>
+            Description: {flyer.description}<br/>
+            Place: {flyer.date}
         </div>
       </div>
     </div>
+  )
+}*/
+
+const Flyer = ({flyer}) => {
+  console.log(flyer)
+  return(
+      <div className="col-sm-6">
+        <Panel header={flyer.name} bsStyle="success">
+              Location: {flyer.location}<br/>
+              Description: {flyer.description}<br/>
+              Place: {flyer.date}
+        </Panel>
+      </div>
   )
 }
 
