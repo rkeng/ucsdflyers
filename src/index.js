@@ -14,9 +14,7 @@ import { Feedback } from './DumbComponents/Feedback'
 import { NotFound } from './DumbComponents/NotFound'
 import { Login } from './DumbComponents/Login'
 import { About } from './DumbComponents/About'
-import { NewStudents } from './DumbComponents/NewStudents'
 import { NewOrganizations } from './DumbComponents/NewOrganizations'
-
 
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
@@ -25,16 +23,15 @@ ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
             <Route path='/' component={FlyersApp}>
-                <IndexRedirect to='/events'/>
+                <IndexRedirect to='events'/>
                 <Route path='events' component={FlyerListContainer}/>
                 <Route path='org' component={OrgListContainer}/>
                 <Route path='about' component={About}/>
                 <Route path='register' component={Register}/>
                 <Route path='feedback' component={Feedback}/>
-                <Route path='register-student' component={NewStudents}/>
                 <Route path='register-org' component={NewOrganizations}/>
+                <Route path='login' component={Login}/>
             </Route>
-            <Route path='login' component={Login}/>
             <Route path='*' component={NotFound}/>
         </Router>
     </Provider>,

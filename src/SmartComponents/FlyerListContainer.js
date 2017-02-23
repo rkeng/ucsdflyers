@@ -1,12 +1,11 @@
 import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
-import { firebase } from '../FlyersFirebase'
+import { firebase } from '../models/FlyersFirebase'
+import { connect } from 'react-redux'
 
-const flyers = []
+var flyersRef = firebase.database().ref('events')
 
-var flyersRef = firebase.database().ref('flyers/')
-
-class FlyerListContainer extends React.Component {
+class FlyerListContainerPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -15,18 +14,16 @@ class FlyerListContainer extends React.Component {
   }
 
   componentWillMount () {
+    const that = this
     // define the dataHandler
     function dataHandler (data) {
       // an array of all flyers
       var newFlyersList = data.val() 
 
-      this.setState({
+      that.setState({
         flyers: newFlyersList
       })
     }
-
-    // This will make the "this" in above function refer to the component
-    dataHandler = dataHandler.bind(this)
 
     // define error handler
     function errorHandler (error) {
@@ -35,6 +32,16 @@ class FlyerListContainer extends React.Component {
 
     // call the database
     flyersRef.on('value', dataHandler, errorHandler)     
+
+    /*
+      use the fetchDataOn('...') method in the models:
+      1. add:  import { fetchDataOn } from '../models'
+      2. usage:
+               fetchDataOn('events')
+               .then(function(events){
+                  ... //events is the array of all flyers
+               })
+    */
   }
 
   render () {
@@ -43,5 +50,7 @@ class FlyerListContainer extends React.Component {
     )
   }
 }
+
+const FlyerListContainer = connect()(FlyerListContainerPage)
 
 export { FlyerListContainer }

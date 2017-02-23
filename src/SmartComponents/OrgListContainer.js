@@ -1,12 +1,12 @@
 import React from 'react'
 import { Org } from '../DumbComponents/Org'
-import { firebase } from '../FlyersFirebase'
-
-const orgs = []
+import { firebase } from '../models/FlyersFirebase'
+import { NotificationContainer } from 'react-notifications'
+import { connect } from 'react-redux'
 
 var orgRef = firebase.database().ref('clubs/')
 
-class OrgListContainer extends React.Component {
+class OrgListContainerPage extends React.Component {
 
   constructor (props) {
     super(props)
@@ -16,18 +16,16 @@ class OrgListContainer extends React.Component {
   }
 
   componentWillMount () {
+    const that = this
         // define the dataHandler
     function dataHandler (data) {
       var newOrgList = data.val() // an array of all orgs
             // The 'this' below refers to the function itself,
             // but we want it to refer to the component OrgListContainer
-      this.setState({
+      that.setState({
         orgs: newOrgList
       })
     }
-
-        // This will make the "this" in above function refer to the component
-    dataHandler = dataHandler.bind(this)
 
         // define error handler
     function errorHandler (error) {
@@ -36,13 +34,28 @@ class OrgListContainer extends React.Component {
 
         // call the database
     orgRef.on('value', dataHandler, errorHandler)
+
+    /*
+      use the fetchDataOn('...') method in the models:
+      1. add:  import { fetchDataOn } from '../models'
+      2. usage:
+               fetchDataOn('clubs')
+               .then(function(clubs){
+                  ... //clubs is the array of all clubs
+               })
+    */
   }
 
   render () {
     return (
+        <div>
             <Org orgs={this.state.orgs}/>
+            <NotificationContainer/>
+        </div>
     )
   }
 }
 
-export {OrgListContainer}
+const OrgListContainer = connect()(OrgListContainerPage)
+
+export { OrgListContainer }

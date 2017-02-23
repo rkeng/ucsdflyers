@@ -1,7 +1,8 @@
 import React from 'react'
 import { Thumbnail, ListGroupItem, ListGroup, Grid, Jumbotron } from 'react-bootstrap'
+import { connect } from 'react-redux'
 
-class About extends React.Component {
+class AboutPage extends React.Component {
 
   render () {
     return (
@@ -125,5 +126,7 @@ class About extends React.Component {
     )
   }
 }
+
+const About = connect()(AboutPage)
 
 export { About }

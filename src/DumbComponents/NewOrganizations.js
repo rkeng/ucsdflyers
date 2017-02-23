@@ -1,6 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import {FormControl, Checkbox, Button, ControlLabel, Grid, Row, Col, select, ButtonToolbar, form} from 'react-bootstrap'
+import {FormControl, Button, ControlLabel, Grid, Row, Col, select, ButtonToolbar, form} from 'react-bootstrap'
 
 const buttonStyles = {maxWidth: 800}
 
@@ -9,7 +8,7 @@ class NewOrganizations extends React.Component {
   render () {
     return (
       <Grid>
-        <Row className = "show-registration">
+        <Row className="show-registration">
           <Col lg={6} lgPush={3}>
             <h1> Sign up as organizations: </h1>
             <form>
