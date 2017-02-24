@@ -1,28 +1,17 @@
 import React from 'react'
 import { Panel } from 'react-bootstrap'
-/*const Flyer = ({flyer}) => {
-  console.log(flyer)
-  return(
-    <div className="col-sm-6">
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          {flyer.name}
-        </div>
-        <div className="panel-body">
-            Location: {flyer.location}<br/>
-            Description: {flyer.description}<br/>
-            Place: {flyer.date}
-        </div>
-      </div>
-    </div>
-  )
-}*/
+import { Thumbnail } from 'react-bootstrap'
+import { Col } from 'react-bootstrap'
 
 const Flyer = ({flyer}) => {
-  console.log(flyer)
+  //console.log(flyer)
   return(
       <div className="col-sm-6">
+      
         <Panel header={flyer.name} bsStyle="success">
+              <Col xs={6} md={6}>
+                <Thumbnail src="../DumbComponents/RED.jpg"/>
+              </Col> 
               Location: {flyer.location}<br/>
               Description: {flyer.description}<br/>
               Place: {flyer.date}
@@ -30,6 +19,7 @@ const Flyer = ({flyer}) => {
       </div>
   )
 }
+
 
 class FlyerList extends React.Component {
   
