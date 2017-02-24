@@ -1,10 +1,7 @@
 import React from 'react'
 import { Org } from '../DumbComponents/Org'
-import { firebase } from '../FlyersFirebase'
-
-const orgs = []
-
-var orgRef = firebase.database().ref('clubs/')
+import { fetchDataOn } from '../models'
+import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 class OrgListContainer extends React.Component {
 
@@ -16,31 +13,27 @@ class OrgListContainer extends React.Component {
   }
 
   componentWillMount () {
-        // define the dataHandler
-    function dataHandler (data) {
-      var newOrgList = data.val() // an array of all orgs
-            // The 'this' below refers to the function itself,
-            // but we want it to refer to the component OrgListContainer
-      this.setState({
-        orgs: newOrgList
-      })
-    }
+    const that = this;
 
-        // This will make the "this" in above function refer to the component
-    dataHandler = dataHandler.bind(this)
-
-        // define error handler
-    function errorHandler (error) {
-      console.log('error', error.code)
-    }
-
-        // call the database
-    orgRef.on('value', dataHandler, errorHandler)
+    fetchDataOn('clubs')
+    .then(function(clubs){
+        console.log('what is the clubs?', clubs)
+        var newOrgList = clubs.val()
+        that.setState({
+            orgs: newOrgList
+        })
+    })
+    .catch(function(error){
+        NotificationManager.error('Something is wrong', 'Opps!', 2222);
+    })
   }
 
   render () {
     return (
+        <div>
             <Org orgs={this.state.orgs}/>
+            <NotificationContainer/>
+        </div>
     )
   }
 }

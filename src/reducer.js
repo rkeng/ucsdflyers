@@ -1,4 +1,4 @@
-import { firebase } from './FlyersFirebase'
+import { firebase } from './models/FlyersFirebase'
 import { routerReducer } from 'react-router-redux'
 import { combineReducers } from 'redux'
 

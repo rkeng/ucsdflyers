@@ -1,5 +1,5 @@
 import React from 'react'
-import { firebase } from '../FlyersFirebase'
+import { onAuthStateChanged } from '../models'
 import { TopBarGuest } from './TopBarGuest';
 import { TopBarStudent } from './TopBarStudent';
 // import { TopBarOrg } from './TopBarOrg';
@@ -14,7 +14,7 @@ class TopBar extends React.Component {
 
   componentWillMount(){
     const that = this;
-    firebase.auth().onAuthStateChanged(function(user) {
+    onAuthStateChanged(function(user) {
         if (user) {
             that.setState({
                 topbar: <TopBarStudent/>

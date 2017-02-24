@@ -1,10 +1,7 @@
 import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
-import { firebase } from '../FlyersFirebase'
-
-const flyers = []
-
-var flyersRef = firebase.database().ref('flyers/')
+import { fetchDataOn } from '../models'
+import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 class FlyerListContainer extends React.Component {
   constructor (props) {
@@ -15,31 +12,26 @@ class FlyerListContainer extends React.Component {
   }
 
   componentWillMount () {
-    // define the dataHandler
-    function dataHandler (data) {
-      // an array of all flyers
-      var newFlyersList = data.val() 
+    const that = this;
 
-      this.setState({
-        flyers: newFlyersList
-      })
-    }
-
-    // This will make the "this" in above function refer to the component
-    dataHandler = dataHandler.bind(this)
-
-    // define error handler
-    function errorHandler (error) {
-      console.log('error', error.code)
-    }
-
-    // call the database
-    flyersRef.on('value', dataHandler, errorHandler)     
+    fetchDataOn('events')
+    .then(function(events){
+        var newFlyersList = events.val()
+        that.setState({
+            flyers: newFlyersList
+        })
+    })
+    .catch(function(error){
+        NotificationManager.error('Something is wrong', 'Opps!', 2222);
+    })
   }
 
   render () {
     return (
+        <div>
             <FlyerList flyers={this.state.flyers}/>
+            <NotificationContainer/>
+        </div>
     )
   }
 }

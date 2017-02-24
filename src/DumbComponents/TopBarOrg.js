@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import { browserHistory } from 'react-router'
-import { firebase } from '../FlyersFirebase'
+import { signOutUser } from '../models'
 
 class TopBarOrg extends React.Component {
   constructor (props) {
@@ -13,7 +13,7 @@ class TopBarOrg extends React.Component {
     e.preventDefault()
     const newRoute = e.target.id
     if(newRoute === 'logout'){
-        firebase.auth().signOut()
+        signOutUser()
         .then(() => {console.log('Signed Out')})
         .catch((error) => {console.error('Sign Out Error', error)});
     } else {
