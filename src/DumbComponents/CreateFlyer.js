@@ -1,22 +1,27 @@
 import React from 'react'
 import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal } from 'react-bootstrap'
-import { Button, tooltip, Badge, Panel } from 'react-bootstrap';
+import { Button, Badge, Panel } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
+import DatePicker from 'react-bootstrap-date-picker'
+import TimePicker from 'rc-time-picker';
+
 
 
 class CreateFlyer extends React.Component {
   constructor (props) {
     super(props)
     this.onPreview = this.onPreview.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+
     this.state = {
       show: false,
       title: "",
-      date: "",
+      date: new Date().toISOString(),
       description: "",
       location: "",
+      time: 0,
     }
   }
-
 
 onPreview(event){
   event.preventDefault();
@@ -24,8 +29,6 @@ onPreview(event){
 
   const title = findDOMNode(this.title).value;
   this.setState({ title: title  })
-  const date = findDOMNode(this.date).value;
-  this.setState({ date: date })
   const description = findDOMNode(this.description).value;
   this.setState({ description: description })
   const location = findDOMNode(this.location).value;
@@ -33,11 +36,16 @@ onPreview(event){
 
 }
 
+
+
 getFlyer () {
+    var ourDate = this.state.date
+    var x = ourDate.substring(0,10)
+
     let header = (
               <div>
                   <Badge>{this.state.title}</Badge>
-                  <Badge>{this.state.date}</Badge>
+                  <Badge>{x}</Badge>
                   <Badge>{this.state.location}</Badge>
               </div>
           )
@@ -47,16 +55,26 @@ getFlyer () {
 
 }
 
+handleChange(value){
+  this.setState({
+    date:value
+  })
+}
+
+handleTimeChange(time){
+  this.setState({time});
+}
+
 
   render() {
     return (
       <Grid>
-          <Row className="show-404">
+          <Row className="create-flyer">
               <Col md={8} mdOffset={2}>
 
       <PageHeader>Create Event Flyer <small>Name of organization</small></PageHeader>
       <Form>
-        <FormGroup bsSize='large'>
+        <FormGroup>
           <ControlLabel>Title</ControlLabel>
           <FormControl
             type="text"
@@ -64,38 +82,38 @@ getFlyer () {
             ref={(node) => {this.title = node}}
           />
         </FormGroup>
-        <FormGroup bsSize='large'>
-          <ControlLabel>Date</ControlLabel>
-          <FormControl
-            type="text"
-            placeholder="Enter date"
-            ref={(node) => {this.date = node}}
 
-          />
-          </FormGroup>
-          <FormGroup bsSize='large'>
+        <FormGroup>
+          <ControlLabel>Date</ControlLabel>
+          <DatePicker onChange={this.handleChange} value={this.state.date} />
+        </FormGroup>
+
+        <FormGroup>
           <ControlLabel>Description</ControlLabel>
           <FormControl
-            type="text"
+            componentClass="textarea"
             placeholder="Enter description"
             ref={(node) => {this.description = node}}
           />
-          </FormGroup>
+        </FormGroup>
 
-          <FormGroup bsSize='large'>
+        <FormGroup>
           <ControlLabel>Location</ControlLabel>
           <FormControl
-            type="text"
+            componentClass="textarea"
             placeholder="Enter location"
             ref={(node) => {this.location = node}}
           />
           <FormControl.Feedback />
         </FormGroup>
+
       </Form>
+
+
 
       <Button
           bsStyle="primary"
-          bsSize="large"
+          bsSize="small"
           onClick={this.onPreview}
         >
           Preview flyer page

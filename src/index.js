@@ -34,7 +34,7 @@ ReactDOM.render(
                 <Route path='feedback' component={Feedback}/>
                 <Route path='register-student' component={NewStudents}/>
                 <Route path='register-org' component={NewOrganizations}/>
-                <Route path='cFlyer' component={CreateFlyer}/>
+                <Route path='create-flyer' component={CreateFlyer}/>
 
             </Route>
             <Route path='login' component={Login}/>
