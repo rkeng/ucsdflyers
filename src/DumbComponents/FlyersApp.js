@@ -1,7 +1,8 @@
 import React from 'react'
 import { TopBar } from './TopBar'
+import { connect } from 'react-redux'
 
-class FlyersApp extends React.Component {
+class FlyersAppForm extends React.Component {
   render () {
     return (
             <div>
@@ -12,8 +13,10 @@ class FlyersApp extends React.Component {
   }
 }
 
-FlyersApp.propTypes = {
+FlyersAppForm.propTypes = {
   children: React.PropTypes.any
 }
+
+const FlyersApp = connect()(FlyersAppForm)
 
 export { FlyersApp }

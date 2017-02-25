@@ -1,7 +1,8 @@
 import React from 'react'
 import { Form, FormGroup, FormControl, ControlLabel, PageHeader, HelpBlock, Col, Button } from 'react-bootstrap'
+import { connect } from 'react-redux'
 
-class Feedback extends React.Component {
+class FeedbackPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = { email: ''}
@@ -68,5 +69,7 @@ class Feedback extends React.Component {
     )
   }
 }
+
+const Feedback = connect()(FeedbackPage)
 
 export { Feedback }

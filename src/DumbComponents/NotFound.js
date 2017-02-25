@@ -1,7 +1,8 @@
 import React from 'react'
 import {Grid, Row, Col} from 'react-bootstrap'
+import { connect } from 'react-redux'
 
-class NotFound extends React.Component {
+class NotFoundPage extends React.Component {
   render () {
     return (
         <Grid>
@@ -14,5 +15,7 @@ class NotFound extends React.Component {
     )
   }
 }
+
+const NotFound = connect()(NotFoundPage)
 
 export { NotFound }
