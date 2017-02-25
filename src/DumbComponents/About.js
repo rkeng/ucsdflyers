@@ -67,13 +67,13 @@ class AboutPage extends React.Component {
                   <br/>
                   <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
               </ListGroupItem>
-              <ListGroupItem header="Project Manager">
-                  <u><em>Xinrui Zhou</em></u>
+              <ListGroupItem header="User Interface Specialist">
+                  <u><em>Jialin Lou</em></u>
                   <br/>
                   <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
               </ListGroupItem>
               <ListGroupItem header="User Interface Specialist">
-                  <u><em>Xiqiang Lin</em></u>
+                  <u><em>Xinrui Zhou</em></u>
                   <br/>
                   <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
               </ListGroupItem>
