@@ -4,8 +4,6 @@ import { connect } from 'react-redux'
 import { fetchDataOn } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 
-var flyersRef = firebase.database().ref('events/')
-
 class FlyerListContainerPage extends React.Component {
 
   constructor (props) {
