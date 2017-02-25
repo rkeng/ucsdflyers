@@ -33,9 +33,6 @@ class TopBarGuestNoState extends React.Component {
                 </Nav>
                 <Nav pullRight>
                     <NavItem onClick={this.changeRoute} id='login'>Login</NavItem>
-                                        <NavItem onClick={() => {
-                        console.log('our state', this.props.state)
-                    }} id='ldsadast'>Test</NavItem>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

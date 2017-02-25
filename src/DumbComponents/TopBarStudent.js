@@ -40,9 +40,6 @@ class TopBarStudentNoState extends React.Component {
                 </Nav>
                 <Nav pullRight>
                     <NavItem onClick={this.changeRoute} id='logout'>Log out</NavItem>                    
-                    <NavItem onClick={() => {
-                        console.log('our state', this.props.state)
-                    }} id='ldsadast'>Test</NavItem>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

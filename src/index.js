@@ -19,6 +19,8 @@ import { NewOrganizations } from './DumbComponents/NewOrganizations'
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 
+
+
 ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>

@@ -1,11 +1,11 @@
 import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
-import { firebase } from '../models/FlyersFirebase'
 import { connect } from 'react-redux'
-
-var flyersRef = firebase.database().ref('events')
+import { fetchDataOn } from '../models'
+import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 class FlyerListContainerPage extends React.Component {
+
   constructor (props) {
     super(props)
     this.state = {
@@ -14,39 +14,26 @@ class FlyerListContainerPage extends React.Component {
   }
 
   componentWillMount () {
-    const that = this
-    // define the dataHandler
-    function dataHandler (data) {
-      // an array of all flyers
-      var newFlyersList = data.val() 
+    const that = this;
 
-      that.setState({
-        flyers: newFlyersList
-      })
-    }
-
-    // define error handler
-    function errorHandler (error) {
-      console.log('error', error.code)
-    }
-
-    // call the database
-    flyersRef.on('value', dataHandler, errorHandler)     
-
-    /*
-      use the fetchDataOn('...') method in the models:
-      1. add:  import { fetchDataOn } from '../models'
-      2. usage:
-               fetchDataOn('events')
-               .then(function(events){
-                  ... //events is the array of all flyers
-               })
-    */
+    fetchDataOn('events')
+    .then(function(events){
+        var newFlyersList = events.val()
+        that.setState({
+            flyers: newFlyersList
+        })
+    })
+    .catch(function(error){
+        NotificationManager.error('Something is wrong', 'Opps!', 2222);
+    })
   }
 
   render () {
     return (
+        <div>
             <FlyerList flyers={this.state.flyers}/>
+            <NotificationContainer/>
+        </div>
     )
   }
 }

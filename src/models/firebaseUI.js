@@ -1,8 +1,5 @@
 import { firebase } from './FlyersFirebase'
 import firebaseui from 'firebaseui'
-import { LoginUserAction } from '../State/actions' 
-import { store } from '../State/store'
-
 
 // FirebaseUI config.
 const uiConfig = {
@@ -13,15 +10,6 @@ const uiConfig = {
         firebase.auth.FacebookAuthProvider.PROVIDER_ID,        
         firebase.auth.TwitterAuthProvider.PROVIDER_ID,
     ],
-    callbacks: {
-          signInSuccess: function(currentUser, credential, redirectUrl) {
-            store.dispatch(LoginUserAction())
-            // Do something.
-            // Return type determines whether we continue the redirect automatically
-            // or whether we leave that to developer to handle.
-            return true;
-          }
-        },
     // Terms of service url.
     tosUrl: '/About'
 };

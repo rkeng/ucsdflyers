@@ -13,6 +13,7 @@ export function fetchDataOn(node){
     return db.ref(node).once('value')
 }
 
+
 //sign out user
 export function signOutUser(){
     return firebase.auth().signOut()
