@@ -3,23 +3,23 @@ import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, 
 import { Button, Badge, Panel } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker'
-import TimePicker from 'rc-time-picker';
-
+import { createNew } from '../models/index.js'
 
 
 class CreateFlyer extends React.Component {
   constructor (props) {
     super(props)
     this.onPreview = this.onPreview.bind(this);
+    this.onCreate = this.onCreate.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
       show: false,
       title: "",
       date: new Date().toISOString(),
+      time: "",
       description: "",
       location: "",
-      time: 0,
     }
   }
 
@@ -34,6 +34,16 @@ onPreview(event){
   const location = findDOMNode(this.location).value;
   this.setState({ location: location})
 
+}
+
+onCreate(event){
+  event.preventDefault();
+
+  const flyer = {
+    title: findDOMNode(this.title).value,
+    description: findDOMNode(this.description).value
+  }
+  createNew('events',flyer)
 }
 
 
@@ -86,6 +96,12 @@ handleTimeChange(time){
         <FormGroup>
           <ControlLabel>Date</ControlLabel>
           <DatePicker onChange={this.handleChange} value={this.state.date} />
+          <ControlLabel>Time</ControlLabel>
+          <FormControl
+            type="text"
+            placeholder="Enter time"
+            ref={(node) => {this.time = node}}
+          />
         </FormGroup>
 
         <FormGroup>
@@ -109,7 +125,13 @@ handleTimeChange(time){
 
       </Form>
 
-
+      <Button
+          bsStyle="primary"
+          bsSize="small"
+          onClick={this.onCreate}
+        >
+        CreateFlyer
+      </Button>
 
       <Button
           bsStyle="primary"

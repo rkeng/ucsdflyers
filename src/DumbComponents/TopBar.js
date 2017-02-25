@@ -1,10 +1,11 @@
 import React from 'react'
-import { firebase } from '../FlyersFirebase'
+import { onAuthStateChanged } from '../models'
 import { TopBarGuest } from './TopBarGuest';
 import { TopBarStudent } from './TopBarStudent';
+import { connect } from 'react-redux'
 // import { TopBarOrg } from './TopBarOrg';
 
-class TopBar extends React.Component {
+class TopBarSelect extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -14,7 +15,7 @@ class TopBar extends React.Component {
 
   componentWillMount(){
     const that = this;
-    firebase.auth().onAuthStateChanged(function(user) {
+    onAuthStateChanged(function(user) {
         if (user) {
             that.setState({
                 topbar: <TopBarStudent/>
@@ -31,5 +32,7 @@ class TopBar extends React.Component {
       return <div>{this.state.topbar}</div>
   }
 }
+
+const TopBar = connect()(TopBarSelect)
 
 export { TopBar }

@@ -1,9 +1,10 @@
 import React from 'react'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import { browserHistory } from 'react-router'
-import { firebase } from '../FlyersFirebase'
+import { signOutUser } from '../models'
+import { connect } from 'react-redux'
 
-class TopBarStudent extends React.Component {
+class TopBarStudentNoState extends React.Component {
   constructor (props) {
     super(props)
     this.changeRoute = this.changeRoute.bind(this)
@@ -13,7 +14,7 @@ class TopBarStudent extends React.Component {
     e.preventDefault()
     const newRoute = e.target.id
     if(newRoute === 'logout'){
-        firebase.auth().signOut()
+        signOutUser()
         .then(() => {console.log('Signed Out')})
         .catch((error) => {console.error('Sign Out Error', error)});
     } else {
@@ -39,12 +40,20 @@ class TopBarStudent extends React.Component {
                     <NavItem onClick={this.changeRoute} id='create-flyer'>Create Flyer</NavItem>
                 </Nav>
                 <Nav pullRight>
-                    <NavItem onClick={this.changeRoute} id='logout'>Log out</NavItem>
+                    <NavItem onClick={this.changeRoute} id='logout'>Log out</NavItem>                    
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
     )
   }
 }
+
+function mapStateToProps(state){
+    return {
+        state: state
+    }
+}
+
+const TopBarStudent = connect(mapStateToProps)(TopBarStudentNoState)
 
 export { TopBarStudent }

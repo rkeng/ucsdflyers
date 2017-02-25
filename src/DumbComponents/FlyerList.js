@@ -1,6 +1,5 @@
 import React from 'react'
-import { Badge, Panel, Button } from 'react-bootstrap'
-import { CreateFlyer } from './CreateFlyer'
+import { Badge, Panel } from 'react-bootstrap'
 
 
 class FlyerList extends React.Component {
@@ -8,7 +7,7 @@ class FlyerList extends React.Component {
 
     // Generates a list of feedbacks
   getFlyerList () {
-    return this.props.flyers.map((flyer) => {
+    return this.props.flyers.map((flyer, index) => {
       let name = flyer.name
       let date = flyer.date
       let location = flyer.location
@@ -22,7 +21,7 @@ class FlyerList extends React.Component {
                 </div>
             )
 
-      return <Panel key={name} bsStyle='info' header={header}>{description}</Panel>
+      return <Panel key={index} bsStyle='info' header={header}>{description}</Panel>
     })
   }
 
