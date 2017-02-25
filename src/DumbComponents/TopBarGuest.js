@@ -1,8 +1,9 @@
 import React from 'react'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import { browserHistory } from 'react-router'
+import { connect } from 'react-redux'
 
-class TopBarGuest extends React.Component {
+class TopBarGuestNoState extends React.Component {
   constructor (props) {
     super(props)
     this.changeRoute = this.changeRoute.bind(this)
@@ -38,5 +39,13 @@ class TopBarGuest extends React.Component {
     )
   }
 }
+
+function mapStateToProps(state){
+    return {
+        state: state
+    }
+}
+
+const TopBarGuest = connect(mapStateToProps)(TopBarGuestNoState)
 
 export { TopBarGuest }

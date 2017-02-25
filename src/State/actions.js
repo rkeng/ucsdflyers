@@ -14,12 +14,15 @@ export function createUserAction (email, password) {
   }
 }
 
-export function LoginUserAction (email, password) {
+export function LoginUserAction () {
   return {
     type: 'LOGIN_USER',
-    state: {
-      email: email,
-      password: password
-    }
   }
 }
+
+export function LogoutUserAction(){
+  return {
+    type: 'LOGOUT_USER'
+  }
+}
+

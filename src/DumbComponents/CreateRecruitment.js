@@ -2,6 +2,7 @@ import React from 'react'
 import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal } from 'react-bootstrap'
 import { Button, ButtonToolbar, tooltip, Badge, Panel } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
+import { createNew } from '../models/index.js';
 
 const buttonStyles = {maxWidth: 800}
 const textStyles={height:200}
@@ -29,8 +30,9 @@ class CreateRecruitment extends React.Component {
     this.setState({ title: title })
     const description = findDOMNode(this.description).value;
     this.setState({ description: description })
-
   }
+
+
 
   getRecruitments () {
     let header = (
@@ -91,9 +93,9 @@ class CreateRecruitment extends React.Component {
       </div>
 
       </Modal.Body>
-      <Modal.Footer>
-      <Button onClick={() => this.setState({show: false})}>Close</Button>
-      </Modal.Footer>
+        <Modal.Footer>
+          <Button onClick={() => this.setState({show: false})}>Close</Button>
+        </Modal.Footer>
       </Modal>
       </Col>
       </Row>
