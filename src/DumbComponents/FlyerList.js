@@ -14,6 +14,7 @@ const Flyer = ({flyer}) => {
   )
 }
 
+
 class FlyerList extends React.Component {
   
  // iterate through an array of flyers to generate jsx for each flyer
