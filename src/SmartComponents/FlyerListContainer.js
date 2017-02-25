@@ -40,7 +40,7 @@ class FlyerListContainer extends React.Component {
   render () {
     return (
             <FlyerList flyers={this.state.flyers}/>
-    )
+    )   
   }
 }
 
