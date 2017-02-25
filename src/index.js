@@ -15,6 +15,8 @@ import { NotFound } from './DumbComponents/NotFound'
 import { Login } from './DumbComponents/Login'
 import { About } from './DumbComponents/About'
 import { NewOrganizations } from './DumbComponents/NewOrganizations'
+import { CreateRecruitment } from './DumbComponents/CreateRecruitment'
+import { CreateFlyer } from './DumbComponents/CreateFlyer'
 
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
@@ -32,6 +34,8 @@ ReactDOM.render(
                 <Route path='register' component={Register}/>
                 <Route path='feedback' component={Feedback}/>
                 <Route path='register-org' component={NewOrganizations}/>
+                <Route path='org/create-recruitment' component={CreateRecruitment}/>
+                <Route path='create-flyer' component={CreateFlyer}/>
                 <Route path='login' component={Login}/>
             </Route>
             <Route path='*' component={NotFound}/>

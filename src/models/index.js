@@ -25,7 +25,7 @@ export function signOutUser(){
 export function onAuthStateChanged(handler){
     firebase.auth().onAuthStateChanged(function(user){
         handler(user);
-    }) 
+    })
 }
 
 //gives you the current user
@@ -43,4 +43,12 @@ export function getCurrentUser(){
 
 export function startFirebaseUI(){
     return firebaseUI.start('#app', uiConfig)
+}
+
+export function createNew(node, item){
+  db.ref(node).once('value').then((list)=>{
+    const path = node + '/' + list.val().length
+    // console.log('what is my list?', list)
+    db.ref(path).set(item)
+  })
 }
