@@ -1,8 +1,7 @@
 import React from 'react'
 import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal } from 'react-bootstrap'
-import { Button, ButtonToolbar, tooltip, Badge, Panel } from 'react-bootstrap';
+import { Button, ButtonToolbar, Badge, Panel } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
-import { createNew } from '../models/index.js';
 
 const buttonStyles = {maxWidth: 800}
 const textStyles={height:200}

@@ -1,5 +1,4 @@
 import React from 'react'
-import { Notification } from 'react-notifications'
 import { connect } from 'react-redux'
 import { firebaseUI, uiConfig } from '../models/firebaseUI';
 

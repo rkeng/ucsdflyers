@@ -1,5 +1,5 @@
 import React from 'react'
-import { Thumbnail, ListGroupItem, ListGroup, Grid, Jumbotron } from 'react-bootstrap'
+import { ListGroupItem, ListGroup, Grid, Jumbotron } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
 class AboutPage extends React.Component {
