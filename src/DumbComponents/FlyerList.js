@@ -7,7 +7,7 @@ const Flyer = ({flyer}) => {
         <Panel header={flyer.name} bsStyle="success">
               Location: {flyer.location}<br/>
               Description: {flyer.description}<br/>
-              Place: {flyer.date}
+              Date: {flyer.date}
         </Panel>
       </div>
   )
@@ -15,7 +15,7 @@ const Flyer = ({flyer}) => {
 
 
 class FlyerList extends React.Component {
-  
+
  // iterate through an array of flyers to generate jsx for each flyer
  renderFlyers () {
     if(this.props.flyers.length > 0){
