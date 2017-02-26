@@ -2,7 +2,6 @@ import React from 'react'
 import { Panel } from 'react-bootstrap'
 
 const Flyer = ({flyer}) => {
-  console.log(flyer)
   return(
       <div className="col-sm-6">
         <Panel header={flyer.name} bsStyle="success">
