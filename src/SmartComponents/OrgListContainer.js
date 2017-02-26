@@ -1,39 +1,43 @@
-import React from 'react';
-import { Org } from '../DumbComponents/Org';
-import { firebase } from '../FlyersFirebase';
+import React from 'react'
+import { Org } from '../DumbComponents/Org'
+import { connect } from 'react-redux'
+import { fetchDataOn } from '../models'
+import { NotificationContainer, NotificationManager } from 'react-notifications'
 
-const orgs = [];
+class OrgListContainerPage extends React.Component {
 
-var orgRef = firebase.database().ref('clubs/');
-
-class OrgListContainer extends React.Component {
-    /*
-    constructor(props){
-        super(props);
-        this.state = {
-            orgs: []
-        }
+  constructor (props) {
+    super(props)
+    this.state = {
+      orgs: []
     }
-    */
+  }
 
-    componentWillMount() {
-        orgRef.on("child_added", function (data) {
-            var newOrg = data.val();
-            var obj = {
-                name: newOrg.name,
-                description: newOrg.description
-            }
-            orgs.push(obj);
-        }, function (error) {
-            console.log("Error: " + error.code);
-        });
-    }
+  componentWillMount () {
+    const that = this;
 
-    render () {
-        return (
-            <Org orgs={orgs}/>
-        );
-    }
+    fetchDataOn('clubs')
+    .then(function(clubs){
+        var newOrgList = clubs.val()
+        that.setState({
+            orgs: newOrgList
+        })
+    })
+    .catch(function(error){
+        NotificationManager.error('Something is wrong', 'Opps!', 2222);
+    })
+  }
+
+  render () {
+    return (
+        <div>
+            <Org orgs={this.state.orgs}/>
+            <NotificationContainer/>
+        </div>
+    )
+  }
 }
 
-export {OrgListContainer};
+const OrgListContainer = connect()(OrgListContainerPage)
+
+export { OrgListContainer }

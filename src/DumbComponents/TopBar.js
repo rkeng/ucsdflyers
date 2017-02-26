@@ -1,29 +1,42 @@
-import React from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import { browserHistory } from 'react-router';
+import React from 'react'
+import { connect } from 'react-redux'
+import { onAuthStateChanged } from '../models'
+import { TopBarGuest } from './TopBarGuest';
+import { TopBarStudent } from './TopBarStudent';
+// import { TopBarOrg } from './TopBarOrg';
 
-class TopBar extends React.Component {
-    constructor (props) {
-        super(props);
-        this.changeRoute = this.changeRoute.bind(this);
+class TopBarSelect extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+        topbar: <TopBarGuest/>
     }
+  }
 
-    changeRoute (e) {
-        e.preventDefault();
-        const newRoute = e.target.id;
-        browserHistory.push(newRoute);
-    }
+  componentWillMount(){
+    const that = this;
+    onAuthStateChanged(function(user) {
+        if (user) {
+            if(!user.emailVerified) {
+                user.sendEmailVerification().then(function() {
+                    console.log('Email sent.');
+                }, function(error) {
+                    console.log('An error happened.');
+                });
+            } else {
+                that.setState({
+                    topbar: <TopBarStudent/>
+                })
+            }
+        } else {
+            that.setState({
+                topbar: <TopBarGuest/>
+            })
+        }
+    })
+  }
 
-    render () {
-        return (
-            <Navbar inverse collapseOnSelect>
-                <Navbar.Header>
-                    <Navbar.Brand>
-                        <a href="/">LOGO</a>
-                    </Navbar.Brand>
-                    <Navbar.Toggle />
-                </Navbar.Header>
-
+<<<<<<< HEAD
                 <Navbar.Collapse>
                     <Nav>
                         <NavItem onClick={this.changeRoute} id='events'>Flyers</NavItem>
@@ -39,6 +52,15 @@ class TopBar extends React.Component {
             </Navbar>
         );
     }
+=======
+  render () {
+      return (
+          <div>{this.state.topbar}</div>
+    );
+  }
+>>>>>>> df42135baa79ef919e818d0fe1815925b8630f7f
 }
 
-export { TopBar };
+const TopBar = connect()(TopBarSelect)
+
+export { TopBar }

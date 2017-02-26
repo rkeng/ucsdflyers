@@ -1,35 +1,43 @@
-import React from 'react';
-import { FlyerList } from '../DumbComponents/FlyerList';
-import { firebase } from '../FlyersFirebase';
+import React from 'react'
+import { FlyerList } from '../DumbComponents/FlyerList'
+import { connect } from 'react-redux'
+import { fetchDataOn } from '../models'
+import { NotificationContainer, NotificationManager } from 'react-notifications'
 
-// dummy data
-const flyers = [
-    {name: 'p Day', date: 'Feb 20, 2017', location: 'PC', description: 'Everyone handout to catch pokemons'},
-    {name: 'Hack Day', date: 'Jan 31, 2017', location: 'CSE building', description: 'Hack into others computer'},
-    {name: 'Water Fun', date: 'Feb 02, 2017', location: 'Sun God', description: 'Get wet and swag'}
-];
+class FlyerListContainerPage extends React.Component {
 
-class FlyerListContainer extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            flyers: []
-        }
+  constructor (props) {
+    super(props)
+    this.state = {
+      flyers: []
     }
+  }
 
-    componentWillMount() {
-        firebase.database().ref().child('flyers').on('child_added', (flyer) => {
-            console.log('myflyer', flyer);
-            this.state.flyers.push(flyer);
+  componentWillMount () {
+    const that = this;
+
+    fetchDataOn('events')
+    .then(function(events){
+        var newFlyersList = events.val()
+        that.setState({
+            flyers: newFlyersList
         })
-    }
+    })
+    .catch(function(error){
+        NotificationManager.error('Something is wrong', 'Opps!', 2222);
+    })
+  }
 
-    render () {
-        return (
-            <FlyerList flyers={flyers}/>
-        );
-    }
-
+  render () {
+    return (
+        <div>
+            <FlyerList flyers={this.state.flyers}/>
+            <NotificationContainer/>
+        </div>
+    )
+  }
 }
 
-export { FlyerListContainer };
+const FlyerListContainer = connect()(FlyerListContainerPage)
+
+export { FlyerListContainer }

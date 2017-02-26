@@ -1,19 +1,22 @@
-import React from 'react';
-import { TopBar } from './TopBar';
+import React from 'react'
+import { TopBar } from './TopBar'
+import { connect } from 'react-redux'
 
-class FlyersApp extends React.Component {
-    render () {
-        return (
+class FlyersAppForm extends React.Component {
+  render () {
+    return (
             <div>
                 <TopBar/>
                 {this.props.children}
             </div>
-        );
-    }
+    )
+  }
 }
 
-FlyersApp.propTypes = {
-    children: React.PropTypes.any
-};
+FlyersAppForm.propTypes = {
+  children: React.PropTypes.any
+}
 
-export { FlyersApp };
+const FlyersApp = connect()(FlyersAppForm)
+
+export { FlyersApp }
