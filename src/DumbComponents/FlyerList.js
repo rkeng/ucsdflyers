@@ -1,25 +1,5 @@
 import React from 'react'
-import { Panel } from 'react-bootstrap'
-import { Thumbnail } from 'react-bootstrap'
-import { Col } from 'react-bootstrap'
-
-const Flyer = ({flyer}) => {
-  //console.log(flyer)
-  return(
-      <div className="col-sm-6">
-      
-        <Panel header={flyer.name} bsStyle="success">
-              <Col xs={6} md={6}>
-                <Thumbnail src="../DumbComponents/RED.jpg"/>
-              </Col> 
-              Location: {flyer.location}<br/>
-              Description: {flyer.description}<br/>
-              Place: {flyer.date}
-        </Panel>
-      </div>
-  )
-}
-
+import { Flyer } from './Flyer.js'
 
 class FlyerList extends React.Component {
   
@@ -27,7 +7,7 @@ class FlyerList extends React.Component {
  renderFlyers () {
     if(this.props.flyers.length > 0){
         return this.props.flyers.map((flyer, index) =>
-          (<Flyer key={index} index={index} flyer={flyer}/>)
+          (<Flyer key={index} flyer={flyer}/>)
       )
     }
     else{
