@@ -18,7 +18,6 @@ class OrgListContainerPage extends React.Component {
 
     fetchDataOn('clubs')
     .then(function(clubs){
-        console.log('what is the clubs?', clubs)
         var newOrgList = clubs.val()
         that.setState({
             orgs: newOrgList
