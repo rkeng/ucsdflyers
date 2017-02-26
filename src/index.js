@@ -17,7 +17,7 @@ import { About } from './DumbComponents/About'
 import { NewOrganizations } from './DumbComponents/NewOrganizations'
 import { CreateRecruitment } from './DumbComponents/CreateRecruitment'
 import { CreateFlyer } from './DumbComponents/CreateFlyer'
-
+import './Navbar.css'
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 

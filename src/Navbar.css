@@ -1,0 +1,8 @@
+.myNavbar {
+  background:#blue;
+  color:white ;
+}
+
+:local(.navitem) {
+  color:white ;
+}
