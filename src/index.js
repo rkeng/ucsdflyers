@@ -7,6 +7,7 @@ import { syncHistoryWithStore } from'react-router-redux';
 import { Provider } from 'react-redux';
 import { OrgListContainer} from './SmartComponents/OrgListContainer';
 import { FlyerListContainer } from './SmartComponents/FlyerListContainer';
+import { RecruitmentListContainer } from './SmartComponents/RecruitmentListContainer';
 import { Register } from './DumbComponents/Register';
 import { Feedback } from './DumbComponents/Feedback'
 import { NotFound } from './DumbComponents/NotFound';
@@ -47,6 +48,7 @@ ReactDOM.render(
                 <Route path='register' component={Register}/>
                 <Route path='feedback' component={Feedback}/>
                 <Route path='register-student' component={NewStudents}/>
+                <Route path='recruitments' component={RecruitmentListContainer}/>
             </Route>
             <Route path='*' component={NotFound}/>
         </Router>

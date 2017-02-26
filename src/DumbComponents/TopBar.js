@@ -29,6 +29,7 @@ class TopBar extends React.Component {
                         <NavItem onClick={this.changeRoute} id='events'>Flyers</NavItem>
                         <NavItem onClick={this.changeRoute} id='org'>Organizations</NavItem>
                         <NavItem onClick={this.changeRoute} id='about'>About Us</NavItem>
+                        <NavItem onClick={this.changeRoute} id='recruitments'>Recruitment Notes</NavItem>
                     </Nav>
                     <Nav pullRight>
                         <NavItem onClick={this.changeRoute} id='login'>Login</NavItem>
