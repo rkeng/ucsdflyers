@@ -1,4 +1,4 @@
-import { firebase } from '../FlyersFirebase'
+import { firebase } from '../models/FlyersFirebase'
 import { routerReducer } from 'react-router-redux'
 import { combineReducers } from 'redux'
 /*
@@ -26,24 +26,14 @@ function userStateReducer (state={}, action) {
             return Object.assign({}, state)
         }
         case 'LOGIN_USER': {
-            const email = action.state.email
-            const password = action.state.password
-            var newState = {};
-
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then(function (user) {
-                    const { 
-                        displayName, email, emailVerified, isAnonymous, photoURL, providerData 
-                    } = user
-                    Object.assign(newState, state, 
-                        { currentUser: { displayName, email, emailVerified, isAnonymous, photoURL, providerData } }
-                    );
-                    })
-                .catch(function (error) {
-                console.log('Login Fail', error.message)
-                newState = state
-                })
-            return newState
+            return Object.assign({}, state, {
+                isAutheticated: true
+            })
+        }
+        case 'LOGOUT_USER': {
+            return Object.assign({}, state, {
+                isAutheticated: false
+            }) 
         }
         default:
         return state

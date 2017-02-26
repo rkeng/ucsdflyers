@@ -1,21 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { ui, uiConfig } from '../FlyersFirebase'
+import { Glyphicon } from 'react-bootstrap'
+import { firebaseUI, uiConfig } from '../models/firebaseUI';
 
 class LoginForm extends React.Component {
 
   componentWillUnmount(){
-    ui.reset();
+    firebaseUI.reset();
   }
 
   render () {
-    ui.start('#app', uiConfig)
+    firebaseUI.start('#app', uiConfig)
     return (
-      <div> Login Page</div>
+        <div className="text-center">
+            <div>
+                <Glyphicon glyph="flash" />
+                Login to UCSDFlyer
+            </div>
+        </div>
     )
   }
 }
-
 
 const Login = connect()(LoginForm)
 
