@@ -17,6 +17,7 @@ class TopBarStudentNoState extends React.Component {
         signOutUser()
         .then(() => {console.log('Signed Out')})
         .catch((error) => {console.error('Sign Out Error', error)});
+        browserHistory.push('events')
     } else {
         browserHistory.push(newRoute)
     }
