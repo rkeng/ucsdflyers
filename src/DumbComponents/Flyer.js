@@ -16,7 +16,7 @@ class Flyer extends React.Component{
                 <Col xs={6} md={12}>
                     <Panel header={name} bsStyle="success">
                         
-                        <img width={370} height={400} alt="400x400" src={RED}/><br/>
+                        {/*<img width={370} height={400} alt="400x400" src={RED}/><br/>*/}
                             
                         <h3>{name}</h3>
                         <p>
