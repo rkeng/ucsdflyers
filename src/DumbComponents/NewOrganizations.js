@@ -1,6 +1,6 @@
 import React from 'react'
-import {Modal, FormControl, Button, ControlLabel, Row, Col, select, ButtonToolbar, form} from 'react-bootstrap'
-import logo from './logo.jpg'
+import {Modal, FormControl, Button, ControlLabel, Row, Col, select, form} from 'react-bootstrap'
+import logo from './logo.png'
 
 class NewOrganizations extends React.Component {
 

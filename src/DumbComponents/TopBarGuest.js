@@ -21,9 +21,7 @@ class TopBarGuestNoState extends React.Component {
         <Navbar inverse collapseOnSelect>
             <Navbar.Header>
                 <Navbar.Brand>
-                    <a href="/">
-                        <img width={34} height={28} src={logo} alt=""/>
-                    </a>
+                        <img width={60} height={100} src={logo} alt=""/>
                 </Navbar.Brand>
                 <Navbar.Toggle />
             </Navbar.Header>

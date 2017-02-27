@@ -34,21 +34,12 @@ class CreateRecruitment extends React.Component {
   onCreate(event){
     event.preventDefault();
 
-<<<<<<< HEAD
     // const note = {
     //   name: findDOMNode(this.name).value,
     //   title: findDOMNode(this.title).value,
     //   description: findDOMNode(this.description).value
     // }
     // createNew('recruitmentNotes',note)
-=======
-    const note = {
-      name: findDOMNode(this.name).value,
-      title: findDOMNode(this.title).value,
-      description: findDOMNode(this.description).value
-    }
-    createNew('recruitmentNotes',note)
->>>>>>> 83170e1be1dfe340d65fa754e8c6b299dd4abd43
   }
 
   getRecruitments () {

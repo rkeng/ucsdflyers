@@ -1,7 +1,7 @@
 import React from 'react'
 import { ListGroupItem, ListGroup, Grid, Jumbotron } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import logo from './logo.jpg'
+import logo from './logo.png'
 
 class AboutPage extends React.Component {
 

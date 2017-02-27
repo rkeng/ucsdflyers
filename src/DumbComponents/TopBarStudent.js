@@ -3,6 +3,7 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import { browserHistory } from 'react-router'
 import { signOutUser } from '../models'
 import { connect } from 'react-redux'
+import logo from './logo.png'
 
 class TopBarStudentNoState extends React.Component {
   constructor (props) {
@@ -28,7 +29,7 @@ class TopBarStudentNoState extends React.Component {
         <Navbar inverse collapseOnSelect>
             <Navbar.Header>
                 <Navbar.Brand>
-                    <a href="/">LOGO</a>
+                    <img width={60} height={100} src={logo} alt=""/>
                 </Navbar.Brand>
                 <Navbar.Toggle />
             </Navbar.Header>
