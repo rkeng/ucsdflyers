@@ -29,6 +29,7 @@ class TopBarGuestNoState extends React.Component {
                 <Nav>
                     <NavItem onClick={this.changeRoute} id='events'>Flyers</NavItem>
                     <NavItem onClick={this.changeRoute} id='org'>Organizations</NavItem>
+                    <NavItem onClick={this.changeRoute} id='recruitments'>Recruitment Notes</NavItem>
                     <NavItem onClick={this.changeRoute} id='about'>About Us</NavItem>
                 </Nav>
                 <Nav pullRight>
