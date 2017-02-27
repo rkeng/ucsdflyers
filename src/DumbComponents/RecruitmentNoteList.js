@@ -1,32 +1,44 @@
 import React from 'react';
-import { Badge, Panel, Button, Card } from 'react-bootstrap';
+import { Badge, Panel } from 'react-bootstrap';
+import { FaCalendar, FaGroup, FaEnvelope, FaStreetView } from 'react-icons/lib/fa';
+import { Link } from 'react-router'
 
 class RecruitmentNoteList extends React.Component {
 
+
     //Generates a list of feedbacks
     getRecruitmentNoteList () {
-        console.log('recruitmentNotes?', this.props.recruitmentNotes)
-        return this.props.recruitmentNotes.map((recruitmentNotes) => {
-            let name = recruitmentNotes.name;
-            let date = recruitmentNotes.date;
-            let title = recruitmentNotes.title;
-            let description = recruitmentNotes.description;
+        console.log('recruitmentNotes?', this.props.recruitmentNotesList)
+        return this.props.recruitmentNotesList.map((recruitmentNotesList, index) => {
+            let name = recruitmentNotesList.clubName;
+            let date = recruitmentNotesList.dueDate;
+            let title = recruitmentNotesList.seeking;
+            let email = recruitmentNotesList.email;
+
+            const titles = title.map((title, index) => {
+              return <Badge key={index}> {title} </Badge>
+            });
+            let description = recruitmentNotesList.description;
 
             let header = (
                 <div>
-                    <Badge>{name}</Badge>
-                    <Badge>{date}</Badge>
-                    <Badge>{title}</Badge>
+                    <h4>{name}</h4>
                 </div>
             );
 
             return(
-             <div>
-              <Panel key={name} bsStyle='info' header={header}>
-              {description}<br/><br/>
-              <Button bsStyle="default" bsSize="small">Learn more</Button>
-              </Panel>
+             <div key={index}>
+              <Panel bsStyle='info' header={header}>
+              <h5><FaStreetView/> {titles}</h5>
 
+
+              <h5><FaCalendar/> Due date: {date} <br/></h5>
+              <h5><FaGroup/> Organization: {name} <br/></h5>
+              <h5><FaEnvelope/> Email: {email} <br/></h5>
+              <p>{description}</p>
+
+              <Link className='btn btn-success'>Apply Now!</Link>
+              </Panel>
               </div>
 
             )
@@ -44,7 +56,7 @@ class RecruitmentNoteList extends React.Component {
 }
 
 RecruitmentNoteList.propTypes = {
-    recruitmentNotes: React.PropTypes.array.isRequired
+    recruitmentNotesList: React.PropTypes.array.isRequired
 };
 
 export { RecruitmentNoteList };

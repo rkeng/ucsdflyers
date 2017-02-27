@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { FlyersApp } from './DumbComponents/FlyersApp';
-import { store } from './State/store';
-import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
-import { syncHistoryWithStore } from'react-router-redux';
-import { Provider } from 'react-redux';
-import { OrgListContainer} from './SmartComponents/OrgListContainer';
-import { FlyerListContainer } from './SmartComponents/FlyerListContainer';
-import { RecruitmentListContainer } from './SmartComponents/RecruitmentListContainer';
-import { Register } from './DumbComponents/Register';
-=======
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'react-notifications/lib/notifications.css' // css for notification
@@ -22,8 +9,8 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux'
 import { OrgListContainer} from './SmartComponents/OrgListContainer'
 import { FlyerListContainer } from './SmartComponents/FlyerListContainer'
+import { RecruitmentListContainer } from './SmartComponents/RecruitmentListContainer';
 import { Register } from './DumbComponents/Register'
->>>>>>> df42135baa79ef919e818d0fe1815925b8630f7f
 import { Feedback } from './DumbComponents/Feedback'
 import { NotFound } from './DumbComponents/NotFound'
 import { Login } from './DumbComponents/Login'
@@ -47,7 +34,6 @@ ReactDOM.render(
                 <Route path='about' component={About}/>
                 <Route path='register' component={Register}/>
                 <Route path='feedback' component={Feedback}/>
-                <Route path='register-student' component={NewStudents}/>
                 <Route path='register-org' component={NewOrganizations}/>
                 <Route path='recruitments' component={RecruitmentListContainer}/>
                 <Route path='org/create-recruitment' component={CreateRecruitment}/>
@@ -59,8 +45,4 @@ ReactDOM.render(
         </Router>
     </Provider>,
     document.getElementById('app')
-<<<<<<< HEAD
 );
-=======
-)
->>>>>>> df42135baa79ef919e818d0fe1815925b8630f7f
