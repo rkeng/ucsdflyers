@@ -2,7 +2,7 @@ import React from 'react'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
-import logo from './logo.png'
+import logo from '../asset/logo.png'
 
 class TopBarGuestNoState extends React.Component {
   constructor (props) {
