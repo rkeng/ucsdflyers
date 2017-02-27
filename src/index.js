@@ -36,11 +36,12 @@ ReactDOM.render(
                 <Route path='feedback' component={Feedback}/>
                 <Route path='register-org' component={NewOrganizations}/>
                 <Route path='recruitments' component={RecruitmentListContainer}/>
-                <Route path='org/create-recruitment' component={CreateRecruitment}/>
+                <Route path='create-recruitment' component={CreateRecruitment}/>
                 <Route path='create-flyer' component={CreateFlyer}/>
                 <Route path='login' component={Login}/>
 
             </Route>
+            <Route path='register-org' component={NewOrganizations}/>
             <Route path='*' component={NotFound}/>
         </Router>
     </Provider>,
