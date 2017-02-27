@@ -1,6 +1,6 @@
 import React from 'react'
 import {Modal, FormControl, Button, ControlLabel, Grid, Row, Col, select, ButtonToolbar, form} from 'react-bootstrap'
-import logo from './logo.png'
+import logo from './logo.jpg'
 
 const buttonStyles = {maxWidth: 800}
 
