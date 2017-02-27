@@ -2,7 +2,7 @@ import { firebase } from './FlyersFirebase'
 import firebaseui from 'firebaseui'
 import { fetchDataOn } from './index'
 import { browserHistory } from 'react-router'
-
+ 
 // FirebaseUI config.
 const uiConfig = {
     callbacks: {

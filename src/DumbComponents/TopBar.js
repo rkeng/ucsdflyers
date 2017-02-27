@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { onAuthStateChanged } from '../models'
 import { TopBarGuest } from './TopBarGuest';
 import { TopBarStudent } from './TopBarStudent';
+import { LoginUserAction, LogoutUserAction } from '../State/actions'
 // import { TopBarOrg } from './TopBarOrg';
 
 class TopBarSelect extends React.Component {
@@ -15,23 +16,18 @@ class TopBarSelect extends React.Component {
 
   componentWillMount(){
     const that = this;
+    const { dispatch } = this.props;
     onAuthStateChanged(function(user) {
         if (user) {
-            if(!user.emailVerified) {
-                user.sendEmailVerification().then(function() {
-                    console.log('Email sent.');
-                }, function(error) {
-                    console.log('An error happened.');
-                });
-            } else {
-                that.setState({
-                    topbar: <TopBarStudent/>
-                })
-            }
+            that.setState({
+                topbar: <TopBarStudent/>
+            })
+            dispatch(LoginUserAction())
         } else {
             that.setState({
                 topbar: <TopBarGuest/>
             })
+            dispatch(LogoutUserAction())
         }
     })
   }

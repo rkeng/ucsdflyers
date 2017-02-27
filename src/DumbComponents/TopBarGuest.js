@@ -35,6 +35,9 @@ class TopBarGuestNoState extends React.Component {
                 </Nav>
                 <Nav pullRight>
                     <NavItem onClick={this.changeRoute} id='login'>Login</NavItem>
+                    <NavItem onClick={() => {
+                        console.log('show me my state! as a guest', this.props.state)
+                    }} id='logddasdsaut'>test</NavItem>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
