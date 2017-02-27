@@ -1,7 +1,7 @@
 import React from 'react';
 import { RecruitmentNoteList } from '../DumbComponents/RecruitmentNoteList';
 import { connect } from 'react-redux'
-import { fetchDataOn } from '../models'
+import { fetchDataToArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 // dummy data
@@ -22,9 +22,9 @@ class RecruitmentListContainerPage extends React.Component {
     componentWillMount () {
       const that = this;
 
-      fetchDataOn('recruitmentNotes')
+      fetchDataToArray('recruitmentNotes')
       .then(function(recruitmentNotes){
-          var newRecruitmentList = recruitmentNotes.val()
+          var newRecruitmentList = recruitmentNotes
           that.setState({
               recruitmentNotesList: newRecruitmentList
           })

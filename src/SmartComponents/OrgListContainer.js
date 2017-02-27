@@ -1,7 +1,7 @@
 import React from 'react'
 import { Org } from '../DumbComponents/Org'
 import { connect } from 'react-redux'
-import { fetchDataOn } from '../models'
+import { fetchDataToArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 class OrgListContainerPage extends React.Component {
@@ -16,9 +16,9 @@ class OrgListContainerPage extends React.Component {
   componentWillMount () {
     const that = this;
 
-    fetchDataOn('clubs')
+    fetchDataToArray('clubs')
     .then(function(clubs){
-        var newOrgList = clubs.val()
+        var newOrgList = clubs
         that.setState({
             orgs: newOrgList
         })
