@@ -12,6 +12,18 @@ export function fetchDataOn(node){
     return db.ref(node).once('value')
 }
 
+export function fetchDataAsArray(node){
+    return new Promise((resolve, reject) => {
+        db.ref(node).once('value')
+        .then(snap => {
+            var snapshot = snap.val();
+            var keyList = Object.keys(snapshot)
+            var dataArray = keyList.map(key => snapshot[key])
+            resolve(dataArray);
+        })
+        .catch((err) => reject(err))
+    })
+}
 
 //sign out user
 export function signOutUser(){
@@ -41,8 +53,7 @@ export function getCurrentUser(){
 }
 
 export function createNew(node, item){
-  db.ref(node).once('value').then((list)=>{
-    const path = node + '/' + list.val().length
-    db.ref(path).set(item)
-  })
+    const newRef = db.ref(node).push()
+    item['id'] = newRef.key;
+    newRef.set(item)
 }

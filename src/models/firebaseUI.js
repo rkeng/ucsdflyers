@@ -1,34 +1,49 @@
 import { firebase } from './FlyersFirebase'
 import firebaseui from 'firebaseui'
-import { getCurrentUser, fetchDataOn } from './index'
-
-
+import { fetchDataOn } from './index'
+import { browserHistory } from 'react-router'
+ 
 // FirebaseUI config.
 const uiConfig = {
     callbacks: {
-        signInSuccess: function(currentUser, credential, redirectUrl) {
-            getCurrentUser().then(user => {
-                    const userField = 'users/' + user.uid
+        signInSuccess: function(user, credential, redirectUrl) {
 
-                    fetchDataOn(userField).then(userField => {     
-                        if(!userField.val()){    
-                            console.log('show me if you are true')           
-                            const userFieldData = {
-                                displayName: user.displayName,
-                                email: user.email,
-                                emailVerified: user.emailVerified,
-                                isAnonymous: user.isAnonymous,
-                                photoURL: user.photoURL,
-                                providerData: user.providerData,
-                                uid: user.uid          
-                            }
-                            firebase.database().ref('users/' + user.uid).set(userFieldData);
+            /*
+                Below function call: 
+                when user login, check if they are first time user (just signed up).
+                if yes, then create a datafield on db for them.
+                if not, skip~
+            */
+                const userField = 'users/' + user.uid;
+                fetchDataOn(userField).then(userField => {     
+                    if(!userField.val()){    
+                        const userFieldData = {
+                            displayName: user.displayName,
+                            email: user.email,
+                            emailVerified: user.emailVerified,
+                            isAnonymous: user.isAnonymous,
+                            photoURL: user.photoURL,
+                            providerData: user.providerData,
+                            uid: user.uid          
                         }
-                    })
+                        firebase.database().ref('users/' + user.uid).set(userFieldData);
+                        firebase.database().ref('students/' + user.uid).set(user.uid);
+                    }
+                    //manully redict since auto-redirect is not working
+                    browserHistory.push('/events')
                 })
             }
+        /* use below for a custom loader!!!! we love it!
+
+          uiShown: function() {
+            // The widget is rendered.
+            // Hide the loader.
+            document.getElementById('loader').style.display = 'none';
+          }
+        */
     },
     signInSuccessUrl: '/events',
+    signInFlow: 'redirect',
     signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -36,7 +51,7 @@ const uiConfig = {
         firebase.auth.TwitterAuthProvider.PROVIDER_ID,
     ],
     // Terms of service url.
-    tosUrl: '/About'
+    tosUrl: '/events'
 };
 
 // Initialize the FirebaseUI Widget using Firebase.

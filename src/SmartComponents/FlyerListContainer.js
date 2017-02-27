@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
 import { connect } from 'react-redux'
-import { fetchDataOn } from '../models'
+import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { FaSearch } from 'react-icons/lib/fa'
 
@@ -17,9 +17,9 @@ class FlyerListContainerPage extends React.Component {
   componentWillMount () {
     const that = this;
 
-    fetchDataOn('events')
+    fetchDataAsArray('events')
     .then(function(events){
-        var newFlyersList = events.val()
+        var newFlyersList = events
         that.setState({
             flyers: newFlyersList
         })
