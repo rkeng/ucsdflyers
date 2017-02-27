@@ -8,11 +8,10 @@ const uiConfig = {
     callbacks: {
         signInSuccess: function(currentUser, credential, redirectUrl) {
             getCurrentUser().then(user => {
-                    const userField = 'users/' + user.uid
+                    const userField = 'users/' + user.uid;
 
                     fetchDataOn(userField).then(userField => {     
                         if(!userField.val()){    
-                            console.log('show me if you are true')           
                             const userFieldData = {
                                 displayName: user.displayName,
                                 email: user.email,
@@ -23,6 +22,7 @@ const uiConfig = {
                                 uid: user.uid          
                             }
                             firebase.database().ref('users/' + user.uid).set(userFieldData);
+                            firebase.database().ref('students/' + user.uid).set(user.uid);
                         }
                     })
                 })

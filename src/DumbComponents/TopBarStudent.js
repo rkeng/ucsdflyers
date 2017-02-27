@@ -3,7 +3,7 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import { browserHistory } from 'react-router'
 import { signOutUser } from '../models'
 import { connect } from 'react-redux'
-import logo from './logo.png'
+import logo from '../asset/logo.png'
 
 class TopBarStudentNoState extends React.Component {
   constructor (props) {
