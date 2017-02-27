@@ -1,15 +1,18 @@
 import React from 'react'
 import { ListGroupItem, ListGroup, Grid, Jumbotron } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import logo from './logo.png'
 
 class AboutPage extends React.Component {
 
   render(){
 
     return (
-
-      <Grid>
+      <Grid>        
         <Jumbotron>
+          <div className="row text-center">
+            <img width={400} height={400} src={logo} className="rounded mx-auto d-block" alt=""/>
+          </div>
           <h2><strong>About ESL</strong></h2>
           <br/>
         
