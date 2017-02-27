@@ -1,5 +1,4 @@
 import { firebase } from './FlyersFirebase';
-import { firebaseUI, uiConfig } from './firebaseUI';
 
 
 const db = firebase.database();
@@ -39,10 +38,6 @@ export function getCurrentUser(){
             }
         })
     })
-}
-
-export function startFirebaseUI(){
-    return firebaseUI.start('#app', uiConfig)
 }
 
 export function createNew(node, item){

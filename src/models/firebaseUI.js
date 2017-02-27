@@ -1,8 +1,33 @@
 import { firebase } from './FlyersFirebase'
 import firebaseui from 'firebaseui'
+import { getCurrentUser, fetchDataOn } from './index'
+
 
 // FirebaseUI config.
 const uiConfig = {
+    callbacks: {
+        signInSuccess: function(currentUser, credential, redirectUrl) {
+            getCurrentUser().then(user => {
+                    const userField = 'users/' + user.uid
+
+                    fetchDataOn(userField).then(userField => {     
+                        if(!userField.val()){    
+                            console.log('show me if you are true')           
+                            const userFieldData = {
+                                displayName: user.displayName,
+                                email: user.email,
+                                emailVerified: user.emailVerified,
+                                isAnonymous: user.isAnonymous,
+                                photoURL: user.photoURL,
+                                providerData: user.providerData,
+                                uid: user.uid          
+                            }
+                            firebase.database().ref('users/' + user.uid).set(userFieldData);
+                        }
+                    })
+                })
+            }
+    },
     signInSuccessUrl: '/',
     signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
