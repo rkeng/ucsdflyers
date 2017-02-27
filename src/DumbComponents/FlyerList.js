@@ -21,7 +21,6 @@ class FlyerList extends React.Component {
     var renderedFlyers = this.renderFlyers();
     return (
         <div className='container'>
-          <h1 className="page-header">Data:</h1>
             {renderedFlyers}
         </div>
     )

@@ -1,5 +1,4 @@
 import { firebase } from './FlyersFirebase';
-import { firebaseUI, uiConfig } from './firebaseUI';
 
 
 const db = firebase.database();
@@ -41,14 +40,9 @@ export function getCurrentUser(){
     })
 }
 
-export function startFirebaseUI(){
-    return firebaseUI.start('#app', uiConfig)
-}
-
 export function createNew(node, item){
   db.ref(node).once('value').then((list)=>{
     const path = node + '/' + list.val().length
-    // console.log('what is my list?', list)
     db.ref(path).set(item)
   })
 }
