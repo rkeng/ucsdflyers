@@ -1,6 +1,6 @@
 import React from 'react'
 import { Panel, Col, Button } from 'react-bootstrap'
-import RED from './RED.jpg'
+// import RED from './RED.jpg'
 
 class Flyer extends React.Component{
     
