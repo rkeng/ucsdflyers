@@ -16,7 +16,9 @@ export function fetchDataAsArray(node){
     return new Promise((resolve, reject) => {
         db.ref(node).once('value')
         .then(snap => {
-            var dataArray = Object.values(snap.val())
+            var snapshot = snap.val();
+            var keyList = Object.keys(snapshot)
+            var dataArray = keyList.map(key => snapshot[key])
             resolve(dataArray);
         })
         .catch((err) => reject(err))
