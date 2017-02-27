@@ -1,36 +1,30 @@
 import React from 'react'
-import { Badge, Panel } from 'react-bootstrap'
+import { Flyer } from './Flyer.js'
+
+
 
 class FlyerList extends React.Component {
-
-    // Generates a list of feedbacks
-  getFlyerList () {
-    return this.props.flyers.map((flyer, index) => {
-      let name = flyer.name
-      let date = flyer.date
-      let location = flyer.location
-      let description = flyer.description
-
-      let header = (
-                <div>
-                    <Badge>{name}</Badge>
-                    <Badge>{date}</Badge>
-                    <Badge>{location}</Badge>
-                </div>
-            )
-
-      return <Panel key={index} bsStyle='info' header={header}>{description}</Panel>
-    })
+  
+ // iterate through an array of flyers to generate jsx for each flyer
+ renderFlyers () {
+    if(this.props.flyers.length > 0){
+        return this.props.flyers.map((flyer, index) =>
+          (<Flyer key={index} flyer={flyer}/>)
+      )
+    }
+    else{
+      return [];
+    }
   }
 
   render () {
+    var renderedFlyers = this.renderFlyers();
     return (
-            <div className='container'>
-              {this.getFlyerList()}
-            </div>
+        <div className='container'>
+            {renderedFlyers}
+        </div>
     )
   }
-
 }
 
 FlyerList.propTypes = {
