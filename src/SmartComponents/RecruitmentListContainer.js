@@ -3,6 +3,7 @@ import { RecruitmentNoteList } from '../DumbComponents/RecruitmentNoteList';
 import { connect } from 'react-redux'
 import { fetchDataOn } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
+import { FaSearch } from 'react-icons/lib/fa'
 
 // dummy data
 // const recruitmentNotesList = [
@@ -38,6 +39,12 @@ class RecruitmentListContainerPage extends React.Component {
     render () {
         return (
           <div>
+            <div className='container'>
+              <FaSearch />
+              <input type = "text"
+                   placeholder = "Search For Notes"/>
+            </div>
+            <p></p>
             <RecruitmentNoteList recruitmentNotesList={this.state.recruitmentNotesList}/>
             <NotificationContainer/>
             </div>
