@@ -34,8 +34,8 @@ class OrgListContainerPage extends React.Component {
         <div>
           <div className='container'>
             <FaSearch />
-            <input type = "text"
-                 placeholder = "Search For Orgs"/>
+            <input type="text"
+                 placeholder="Search For Orgs"/>
             </div>
             <Org orgs={this.state.orgs}/>
             <NotificationContainer/>

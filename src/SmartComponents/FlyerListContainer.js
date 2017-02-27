@@ -34,8 +34,8 @@ class FlyerListContainerPage extends React.Component {
         <div>
           <div className='container'>
             <FaSearch />
-            <input type = "text"
-                   placeholder = "Search For Flyers"/>
+            <input type="text"
+                   placeholder="Search For Flyers"/>
          </div>
          <p></p>
             <FlyerList flyers={this.state.flyers}/>

@@ -41,8 +41,8 @@ class RecruitmentListContainerPage extends React.Component {
           <div>
             <div className='container'>
               <FaSearch />
-              <input type = "text"
-                   placeholder = "Search For Notes"/>
+              <input type="text"
+                   placeholder="Search For Notes"/>
             </div>
             <p></p>
             <RecruitmentNoteList recruitmentNotesList={this.state.recruitmentNotesList}/>
