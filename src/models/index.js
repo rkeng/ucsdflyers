@@ -46,4 +46,8 @@ export function startFirebaseUI(){
 }
 
 export function createNew(node, item){
+  db.ref(node).once('value').then((list)=>{
+    const path = node + '/' + list.val().length
+    db.ref(path).set(item)
+  })
 }

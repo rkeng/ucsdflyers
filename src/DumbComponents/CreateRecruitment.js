@@ -32,7 +32,16 @@ class CreateRecruitment extends React.Component {
     this.setState({ description: description })
   }
 
+  onCreate(event){
+    event.preventDefault();
 
+    const note = {
+      name: findDOMNode(this.name).value,
+      title: findDOMNode(this.title).value,
+      description: findDOMNode(this.description).value
+    }
+    createNew('recruitmentNotes',note)
+  }
 
   getRecruitments () {
     let header = (
@@ -80,7 +89,7 @@ class CreateRecruitment extends React.Component {
       <div className="Button" style={buttonStyles}>
         <ButtonToolbar>
           <Button onClick={this.onPreview} bsStyle="info" type='submit'>Preview</Button>
-          <Button bsStyle="success" type='submit'>Submit</Button>
+          <Button onClick={this.onCreate} bsStyle="success" type='submit'>Submit</Button>
           <Button bsStyle="danger">Cancel</Button>
         </ButtonToolbar>
       </div>
