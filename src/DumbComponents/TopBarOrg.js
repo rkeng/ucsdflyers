@@ -4,6 +4,9 @@ import { browserHistory } from 'react-router'
 import { signOutUser } from '../models'
 import { connect } from 'react-redux'
 
+const navBar ={backgroundColor: '#135dad'}
+const navBarText = {color: "#fce705"}
+
 class TopBarOrgNoState extends React.Component {
   constructor (props) {
     super(props)
@@ -24,7 +27,7 @@ class TopBarOrgNoState extends React.Component {
 
   render () {
     return (
-        <Navbar inverse collapseOnSelect>
+        <Navbar style={navBar}>
             <Navbar.Header>
                 <Navbar.Brand>
                     <a href="/">LOGO</a>
@@ -34,11 +37,11 @@ class TopBarOrgNoState extends React.Component {
 
             <Navbar.Collapse>
                 <Nav>
-                    <NavItem onClick={this.changeRoute} id='events'>Flyers</NavItem>
-                    <NavItem onClick={this.changeRoute} id='about'>About Us</NavItem>
+                    <NavItem onClick={this.changeRoute} id='events'><strong style={navBarText}>Flyers</strong></NavItem>
+                    <NavItem onClick={this.changeRoute} id='about'><strong style={navBarText}>About Us</strong></NavItem>
                 </Nav>
                 <Nav pullRight>
-                    <NavItem onClick={this.changeRoute} id='logout'>Logout</NavItem>
+                    <NavItem onClick={this.changeRoute} id='logout'><strong style={navBarText}>Logout</strong></NavItem>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
