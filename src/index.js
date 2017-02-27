@@ -40,6 +40,7 @@ ReactDOM.render(
                 <Route path='create-flyer' component={CreateFlyer}/>
                 <Route path='login' component={Login}/>
             </Route>
+            <Route path='register-org' component={NewOrganizations}/>
             <Route path='*' component={NotFound}/>
         </Router>
     </Provider>,
