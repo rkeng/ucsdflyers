@@ -12,12 +12,11 @@ export function fetchDataOn(node){
     return db.ref(node).once('value')
 }
 
-export function fetchDataToArray(node){
+export function fetchDataAsArray(node){
     return new Promise((resolve, reject) => {
         db.ref(node).once('value')
         .then(snap => {
             var dataArray = Object.values(snap.val())
-            console.log('did I sucessfully convert it to array?',dataArray)
             resolve(dataArray);
         })
         .catch((err) => reject(err))

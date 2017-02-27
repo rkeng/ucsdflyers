@@ -8,7 +8,6 @@ class RecruitmentNoteList extends React.Component {
 
     //Generates a list of feedbacks
     getRecruitmentNoteList () {
-        console.log('recruitmentNotes?', this.props.recruitmentNotesList)
         return this.props.recruitmentNotesList.map((recruitmentNotesList, index) => {
             let name = recruitmentNotesList.clubName;
             let date = recruitmentNotesList.dueDate;
