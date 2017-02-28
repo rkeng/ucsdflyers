@@ -3,6 +3,7 @@ import { FlyerList } from '../DumbComponents/FlyerList'
 import { connect } from 'react-redux'
 import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
+import { FormControl } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/lib/fa'
 
 class FlyerListContainerPage extends React.Component {
@@ -34,7 +35,7 @@ class FlyerListContainerPage extends React.Component {
         <div>
           <div className='container'>
             <FaSearch />
-            <input type="text"
+            <FormControl type="text"
                    placeholder="Search For Flyers"/>
          </div>
          <p></p>

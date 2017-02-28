@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { FaSearch } from 'react-icons/lib/fa'
+import { FormControl } from 'react-bootstrap';
 
 class OrgListContainerPage extends React.Component {
 
@@ -34,7 +35,7 @@ class OrgListContainerPage extends React.Component {
         <div>
           <div className='container'>
             <FaSearch />
-            <input type="text"
+            <FormControl type="text"
                  placeholder="Search For Orgs"/>
             </div>
             <Org orgs={this.state.orgs}/>

@@ -3,6 +3,7 @@ import { RecruitmentNoteList } from '../DumbComponents/RecruitmentNoteList';
 import { connect } from 'react-redux'
 import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
+import { FormControl } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/lib/fa'
 
 class RecruitmentListContainerPage extends React.Component {
@@ -34,7 +35,7 @@ class RecruitmentListContainerPage extends React.Component {
           <div>
             <div className='container'>
               <FaSearch />
-              <input type="text"
+              <FormControl type="text"
                    placeholder="Search For Notes"/>
             </div>
             <p></p>
