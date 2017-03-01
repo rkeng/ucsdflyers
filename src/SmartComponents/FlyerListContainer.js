@@ -1,8 +1,10 @@
 import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
 import { connect } from 'react-redux'
-import { fetchDataOn } from '../models'
+import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
+import { FormControl } from 'react-bootstrap';
+import { FaSearch } from 'react-icons/lib/fa'
 
 class FlyerListContainerPage extends React.Component {
 
@@ -16,9 +18,9 @@ class FlyerListContainerPage extends React.Component {
   componentWillMount () {
     const that = this;
 
-    fetchDataOn('events')
+    fetchDataAsArray('events')
     .then(function(events){
-        var newFlyersList = events.val()
+        var newFlyersList = events
         that.setState({
             flyers: newFlyersList
         })
@@ -31,6 +33,12 @@ class FlyerListContainerPage extends React.Component {
   render () {
     return (
         <div>
+          <div className='container'>
+            <FaSearch />
+            <FormControl type="text"
+                   placeholder="Search For Flyers"/>
+         </div>
+         <p></p>
             <FlyerList flyers={this.state.flyers}/>
             <NotificationContainer/>
         </div>

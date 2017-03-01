@@ -1,4 +1,3 @@
-import { firebase } from '../models/FlyersFirebase'
 import { routerReducer } from 'react-router-redux'
 import { combineReducers } from 'redux'
 /*
@@ -12,6 +11,7 @@ import { combineReducers } from 'redux'
 
 function userStateReducer (state={}, action) {
     switch (action.type) {
+        /* we shouldn't have the sign up funtion ever used
         case 'SIGN_UP_USER': {
             const email = action.state.email
             const password = action.state.password
@@ -25,6 +25,7 @@ function userStateReducer (state={}, action) {
                 })
             return Object.assign({}, state)
         }
+        */
         case 'LOGIN_USER': {
             return Object.assign({}, state, {
                 isAutheticated: true

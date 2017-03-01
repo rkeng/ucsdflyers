@@ -1,8 +1,6 @@
 import React from 'react'
-import {Modal, FormControl, Button, ControlLabel, Grid, Row, Col, select, ButtonToolbar, form} from 'react-bootstrap'
-import logo from './logo.jpg'
-
-const buttonStyles = {maxWidth: 800}
+import {Modal, FormControl, Button, ControlLabel, Row, Col, select, form} from 'react-bootstrap'
+import logo from '../asset/logo.png'
 
 class NewOrganizations extends React.Component {
 
@@ -11,7 +9,7 @@ class NewOrganizations extends React.Component {
         <div className="modal-dialog modal-sm" style={{height:100}}>
 
             <Modal.Dialog className="modal-backdrop">
-              <Modal.Header style={{bgcolor:'gray'}}>
+              <Modal.Header style={{color: "white"}}>
                 <div className="row text-center">
                   <img width={100} height={100} src={logo} className="rounded mx-auto d-block" alt=""/>
                   <Modal.Title>Sign Up As An Organization</Modal.Title>
@@ -60,6 +58,7 @@ class NewOrganizations extends React.Component {
                         {'  '}
 
                         <select className="form-control" id="College">
+                          <option>--</option>
                           <option>Academic</option>
                           <option>Co-Ops/Enterprise</option>
                           <option>Cultural</option>
@@ -88,6 +87,7 @@ class NewOrganizations extends React.Component {
                         {'  '}
 
                         <select className="form-control" id="Grade Level">
+                          <option>--</option>
                           <option>Undergraduates</option>
                           <option>Graduates</option>
                           <option>All Students</option>
@@ -100,12 +100,13 @@ class NewOrganizations extends React.Component {
               </Modal.Body>
 
               <Modal.Footer>
-              <div className='wrapper text-center'>
-                <ButtonToolbar className='wrapper text-center'>
-                  <Button bsStyle="success">Submit</Button>
-                  <Button bsStyle="danger">Cancel</Button>
-                  <Button bsStyle="primary">Return to Homepage</Button>
-                </ButtonToolbar>
+                <div id='toolbar'>
+                  <div class='wrapper text-center'>
+                    <div class="btn-group">
+                      <Button>Return to Homepage</Button>
+                      <Button bsStyle="primary">Submit</Button>
+                    </div>
+                  </div>
                 </div>
               </Modal.Footer>
 

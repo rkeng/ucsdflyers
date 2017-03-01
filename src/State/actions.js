@@ -4,6 +4,8 @@
 -One action-generator is responsible to generate one type of action,
     and attach its parameters to the state field.
 */
+
+/* signup user shouldn't ever be used
 export function createUserAction (email, password) {
   return {
     type: 'SIGN_UP_USER',
@@ -13,6 +15,7 @@ export function createUserAction (email, password) {
     }
   }
 }
+*/
 
 export function LoginUserAction () {
   return {

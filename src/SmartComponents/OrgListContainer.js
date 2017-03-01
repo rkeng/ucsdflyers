@@ -1,8 +1,10 @@
 import React from 'react'
 import { Org } from '../DumbComponents/Org'
 import { connect } from 'react-redux'
-import { fetchDataOn } from '../models'
+import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
+import { FaSearch } from 'react-icons/lib/fa'
+import { FormControl } from 'react-bootstrap';
 
 class OrgListContainerPage extends React.Component {
 
@@ -16,9 +18,9 @@ class OrgListContainerPage extends React.Component {
   componentWillMount () {
     const that = this;
 
-    fetchDataOn('clubs')
+    fetchDataAsArray('clubs')
     .then(function(clubs){
-        var newOrgList = clubs.val()
+        var newOrgList = clubs
         that.setState({
             orgs: newOrgList
         })
@@ -31,6 +33,11 @@ class OrgListContainerPage extends React.Component {
   render () {
     return (
         <div>
+          <div className='container'>
+            <FaSearch />
+            <FormControl type="text"
+                 placeholder="Search For Orgs"/>
+            </div>
             <Org orgs={this.state.orgs}/>
             <NotificationContainer/>
         </div>
