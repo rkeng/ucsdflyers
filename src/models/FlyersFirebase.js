@@ -2,11 +2,11 @@ import * as firebase from 'firebase'
 
 // firebase config
 const firebaseConfig = {
-  apiKey: 'AIzaSyChSsnK4JgnlhG0Hrr-aL3xh1M-1rHaMUc',
-  authDomain: 'ucsd-flyers.firebaseapp.com',
-  databaseURL: 'https://ucsd-flyers.firebaseio.com',
-  storageBucket: 'ucsd-flyers.appspot.com',
-  messagingSenderId: '733909365468'
+    apiKey: "AIzaSyBFZS-a-fdoNEhPBpi232WaNRtEKayWNWU",
+    authDomain: "ucsd-flyers-development.firebaseapp.com",
+    databaseURL: "https://ucsd-flyers-development.firebaseio.com",
+    storageBucket: "ucsd-flyers-development.appspot.com",
+    messagingSenderId: "166142450370"
 }
 
 // initialize our firebase app
