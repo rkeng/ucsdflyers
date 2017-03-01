@@ -26,9 +26,16 @@ function userStateReducer (state={}, action) {
             return Object.assign({}, state)
         }
         */
-        case 'LOGIN_USER': {
+        case 'LOGIN_STUDENT': {
             return Object.assign({}, state, {
-                isAutheticated: true
+                isAutheticated: true,
+                isOrg: false
+            })
+        }
+        case 'LOGIN_ORG': {
+            return Object.assign({}, state, {
+                isAutheticated: true,
+                isOrg: true
             })
         }
         case 'LOGOUT_USER': {
@@ -43,7 +50,7 @@ function userStateReducer (state={}, action) {
 
 const rootReducer = combineReducers({
   routing: routerReducer, // connect routing with application state
-  userStateReducer
+  user: userStateReducer
 })
 
 export { rootReducer }

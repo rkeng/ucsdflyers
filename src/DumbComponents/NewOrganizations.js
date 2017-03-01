@@ -1,6 +1,7 @@
 import React from 'react'
-import {Modal, FormControl, Button, ControlLabel, Row, Col, select, form} from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import logo from '../asset/logo.png'
+import { OrgLogin } from './OrgLogin'
 
 class NewOrganizations extends React.Component {
 
@@ -12,11 +13,15 @@ class NewOrganizations extends React.Component {
               <Modal.Header style={{color: "white"}}>
                 <div className="row text-center">
                   <img width={100} height={100} src={logo} className="rounded mx-auto d-block" alt=""/>
-                  <Modal.Title>Sign Up As An Organization</Modal.Title>
+                  <Modal.Title>Signin As An Organization</Modal.Title>
                 </div>
               </Modal.Header>
 
               <Modal.Body>
+                <OrgLogin/>
+              </Modal.Body>
+
+              {/*
                 <Row className="show-registration">
                   <Col lg={6} lgPush={3}>
                     <form>
@@ -109,7 +114,7 @@ class NewOrganizations extends React.Component {
                   </div>
                 </div>
               </Modal.Footer>
-
+            */}
             </Modal.Dialog>
           </div>
     )

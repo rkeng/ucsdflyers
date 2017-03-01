@@ -29,3 +29,14 @@ export function LogoutUserAction(){
   }
 }
 
+export function LoginStudentAction(){
+  return {
+    type: 'LOGIN_STUDENT'
+  }
+}
+
+export function LoginOrgAction(){
+  return {
+    type: 'LOGIN_ORG'
+  }
+}
