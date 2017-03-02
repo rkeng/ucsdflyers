@@ -1,7 +1,7 @@
 import React from 'react';
 import { NotificationManager } from 'react-notifications'
 import { FaImage, FaClose } from 'react-icons/lib/fa'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Row, Col } from 'react-bootstrap'
 import { firebase } from '../models/FlyersFirebase'
 import Dropzone from 'react-dropzone'
 //import * as storage from '@google-cloud/storage'
@@ -93,7 +93,7 @@ class UploadPhotoPage extends React.Component {
     render() {
         let previews = this.state.files.map((file, index) => (
             <div className="pull-left img-thumbnail" style={{width: 125, position: "relative"}} key={index}>
-                <Button style={{position: "absolute", top: 0, right: 0}} onClick={() => this.deleteFile(file,index)}> 
+                <Button style={{position: "absolute", top: 3, right: 3, width: 25, height: 25, padding: 0}} bsStyle="danger" bsSize="xsmall" onClick={() => this.deleteFile(file,index)}> 
                     <FaClose size={20}/> 
                 </Button>
                 <img src={file.preview} style={{width: 125, height: "auto"}} alt={file.name}/>
@@ -102,19 +102,23 @@ class UploadPhotoPage extends React.Component {
                              
         return(
         
-            <Form onSubmit={this.uploadPhoto}>
-            
-                <Dropzone onDrop={this.onDrop}>
-                    <FaImage size={100}/>
-                  <div>Try dropping some files here, or click to select files to upload.</div>
+            <Form onSubmit={this.uploadPhoto} className="container">
+                <Row>
+                <Col sm={4}>
+                <Dropzone onDrop={this.onDrop} accept={"image/*"} style={{width: "auto", border: "2px solid #ccc", borderRadius: 3, backgroundColor: "#eee", paddingBottom: 10}}>
+                  <div className="text-center">
+                    <FaImage size={100}/> 
+                    <br/>Drop images or click to select them here.</div>
                 </Dropzone>
+                </Col>
                 {this.state.files != null ?
-                    <div>{previews}</div>
+                    <Col sm={8}>{previews}</Col>
                     : null
                 }
+                </Row>
                              
                              
-                <Button type="submit">
+                <br/><Button type="submit">
                     Upload
                 </Button>
                              
