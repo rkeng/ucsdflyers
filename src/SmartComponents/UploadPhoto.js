@@ -77,15 +77,16 @@ class UploadPhotoPage extends React.Component {
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-            $imagePreview = (<img src={imagePreviewUrl}/> );
+            $imagePreview = (<img src={imagePreviewUrl} className="img-thumbnail" style={{width: 150, height: "auto"}}/> );
         }
                              
         return(
         
             <Form onSubmit={this.uploadPhoto}>
                 <FormGroup controlId="photo">
-                    <ControlLabel>Photo</ControlLabel>
-                    <FormControl type="file" accept="image/*,capture=camera" onChange={this.selectFile}/>
+                    <ControlLabel className="btn btn-default"><FaImage size={60}/>
+                        <FormControl type="file" accept="image/*,capture=camera" onChange={this.selectFile} style={{display: "none"}}/>
+                    </ControlLabel>
                  </FormGroup>
             
                 <Button type="submit" onClick={this.uploadPhoto}>
