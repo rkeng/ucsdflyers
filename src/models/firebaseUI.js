@@ -24,7 +24,8 @@ const uiConfig = {
                             isAnonymous: user.isAnonymous,
                             photoURL: user.photoURL,
                             providerData: user.providerData,
-                            uid: user.uid          
+                            uid: user.uid,          
+                            isOrg: false
                         }
                         firebase.database().ref('users/' + user.uid).set(userFieldData);
                         firebase.database().ref('students/' + user.uid).set(user.uid);

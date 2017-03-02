@@ -3,6 +3,9 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import { browserHistory } from 'react-router'
 import { signOutUser } from '../models'
 import { connect } from 'react-redux'
+import { LogoutUserAction } from '../State/actions'
+import { FaNewspaperO, FaStickyNoteO, FaChild, FaSignIn } from 'react-icons/lib/fa'
+import logo from '../asset/logo.png'
 
 class TopBarOrgNoState extends React.Component {
   constructor (props) {
@@ -12,11 +15,13 @@ class TopBarOrgNoState extends React.Component {
 
   changeRoute (e) {
     e.preventDefault()
+    const { dispatch } = this.props
     const newRoute = e.target.id
     if(newRoute === 'logout'){
         signOutUser()
         .then(() => {console.log('Signed Out')})
         .catch((error) => {console.error('Sign Out Error', error)});
+        dispatch(LogoutUserAction())
         browserHistory.push('events')
     } else {
         browserHistory.push(newRoute)
@@ -28,19 +33,18 @@ class TopBarOrgNoState extends React.Component {
         <Navbar inverse collapseOnSelect>
             <Navbar.Header>
                 <Navbar.Brand>
-                    <a href="/">LOGO</a>
+                    <img width={60} height={100} src={logo} alt=""/>
                 </Navbar.Brand>
-                <Navbar.Toggle />
             </Navbar.Header>
 
             <Navbar.Collapse>
                 <Nav>
-                    <NavItem onClick={this.changeRoute} id='events'>Flyers</NavItem>
-                    <NavItem onClick={this.changeRoute} id='recruitments'>Recruitment Notes</NavItem>
-                    <NavItem onClick={this.changeRoute} id='about'>About Us</NavItem>
+                    <NavItem onClick={this.changeRoute} id='events'><FaNewspaperO /> EVENTS</NavItem>
+                    <NavItem onClick={this.changeRoute} id='recruitments'><FaStickyNoteO /> RECRUITMENTS</NavItem>
+                    <NavItem onClick={this.changeRoute} id='about'><FaChild /> ABOUT</NavItem>
                 </Nav>
                 <Nav pullRight>
-                    <NavItem onClick={this.changeRoute} id='logout'>Logout</NavItem>
+                    <NavItem onClick={this.changeRoute} id='login'><FaSignIn /> LOGIN</NavItem>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

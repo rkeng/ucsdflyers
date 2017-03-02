@@ -1,5 +1,5 @@
 import { firebase } from './FlyersFirebase';
-
+import { browserHistory } from 'react-router'
 
 const db = firebase.database();
 
@@ -56,4 +56,30 @@ export function createNew(node, item){
     const newRef = db.ref(node).push()
     item['id'] = newRef.key;
     newRef.set(item)
+}
+
+export function signinOrg(provider){
+    firebase.auth().signInWithPopup(provider).then(function(result) { //result has a credential and user
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var user = result.user
+      const userField = 'users/' + user.uid;
+      fetchDataOn(userField).then(userField => {     
+            if(!userField.val()){    
+                const userFieldData = {
+                    displayName: user.displayName,
+                    email: user.email,
+                    emailVerified: user.emailVerified,
+                    isAnonymous: user.isAnonymous,
+                    photoURL: user.photoURL,
+                    providerData: user.providerData,
+                    uid: user.uid,          
+                    isOrg: true
+                }
+                firebase.database().ref('users/' + user.uid).set(userFieldData);
+                firebase.database().ref('organizations/' + user.uid).set(user.uid);
+            }
+            //manully redict since auto-redirect is not working
+            browserHistory.push('/create-flyer')
+        })
+      })
 }
