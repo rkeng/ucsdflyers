@@ -11,8 +11,13 @@ class FlyerListContainerPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      flyers: []
+      flyers: [],
+      search: ""
     }
+  }
+
+  filterSearch(event){
+      this.setState({search: event.target.value.substr(0,20)});
   }
 
   componentWillMount () {
@@ -31,15 +36,23 @@ class FlyerListContainerPage extends React.Component {
   }
 
   render () {
+    let filteredFlyers=this.state.flyers.filter(
+      (flyer)=>{
+        return flyer.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+        || flyer.location.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+      }
+    );
     return (
         <div>
           <div className='container'>
             <FaSearch />
             <FormControl type="text"
-                   placeholder="Search For Flyers"/>
+                   placeholder="Search For Flyers"
+                   value = {this.state.search || ''}
+                   onChange={this.filterSearch.bind(this)}/>
          </div>
          <p></p>
-            <FlyerList flyers={this.state.flyers}/>
+            <FlyerList flyers={filteredFlyers}/>
             <NotificationContainer/>
         </div>
     )

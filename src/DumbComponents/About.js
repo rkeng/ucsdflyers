@@ -2,20 +2,19 @@ import React from 'react'
 import { ListGroupItem, ListGroup, Grid, Jumbotron } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import logo from '../asset/logo.png'
-
 class AboutPage extends React.Component {
 
   render(){
 
     return (
-      <Grid>        
+      <Grid>
         <Jumbotron>
           <div className="row text-center">
             <img width={400} height={400} src={logo} className="rounded mx-auto d-block" alt=""/>
           </div>
           <h2><strong>About ESL</strong></h2>
           <br/>
-        
+
           <Grid>
             <ListGroupItem>
                 <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
@@ -23,7 +22,7 @@ class AboutPage extends React.Component {
           </Grid>
 
           <br/>
-          <br/>         
+          <br/>
           <br/>
 
           <h2><strong>Who Are We</strong></h2>

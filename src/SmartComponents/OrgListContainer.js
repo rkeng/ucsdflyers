@@ -5,14 +5,19 @@ import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { FaSearch } from 'react-icons/lib/fa'
 import { FormControl } from 'react-bootstrap';
-
+import { userAvatar } from '../DumbComponents/Org'
 class OrgListContainerPage extends React.Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      orgs: []
+      orgs: [],
+      search: ''
     }
+  }
+
+  filterSearch(event){
+      this.setState({search: event.target.value.substr(0,20)});
   }
 
   componentWillMount () {
@@ -31,14 +36,23 @@ class OrgListContainerPage extends React.Component {
   }
 
   render () {
+    let filteredOrgs=this.state.orgs.filter(
+      (org)=>{
+        return org.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+        || org.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+      }
+    );
     return (
         <div>
           <div className='container'>
             <FaSearch />
             <FormControl type="text"
-                 placeholder="Search For Orgs"/>
+                 placeholder="Search For Orgs"
+                 value = {this.state.search || ''}
+                 onChange={this.filterSearch.bind(this)}/>
             </div>
-            <Org orgs={this.state.orgs}/>
+            <userAvatar/>
+            <Org orgs={filteredOrgs}/>
             <NotificationContainer/>
         </div>
     )
