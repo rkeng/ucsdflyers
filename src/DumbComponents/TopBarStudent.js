@@ -3,7 +3,7 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import { browserHistory } from 'react-router'
 import { signOutUser } from '../models'
 import { connect } from 'react-redux'
-import logo from '../asset/logo.png'
+import logoText from '../asset/logoText.png'
 import { LogoutUserAction } from '../State/actions'
 import { FaNewspaperO, FaGroup, FaStickyNoteO, FaChild, FaSignIn } from 'react-icons/lib/fa'
 
@@ -33,7 +33,7 @@ class TopBarStudentNoState extends React.Component {
         <Navbar collapseOnSelect>
             <Navbar.Header>
                 <Navbar.Brand>
-                    <img width={60} height={100} src={logo} alt=""/>
+                    <img width={200} height={100} src={logoText} alt=""/>
                 </Navbar.Brand>
             </Navbar.Header>
 
