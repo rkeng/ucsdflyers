@@ -35,6 +35,7 @@ class TopBarStudentNoState extends React.Component {
                 <Navbar.Brand>
                     <img width={200} height={100} src={logoText} alt=""/>
                 </Navbar.Brand>
+                <Navbar.Toggle/>
             </Navbar.Header>
 
             <Navbar.Collapse>
