@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router'
 import { signOutUser } from '../models'
 import { connect } from 'react-redux'
 import { LogoutUserAction } from '../State/actions'
-import { FaNewspaperO, FaStickyNoteO, FaChild, FaSignIn } from 'react-icons/lib/fa'
+import { FaNewspaperO, FaStickyNoteO, FaChild, FaSignIn, FaGroup } from 'react-icons/lib/fa'
 import logoText from '../asset/logoText.png'
 
 class TopBarOrgNoState extends React.Component {
@@ -41,11 +41,12 @@ class TopBarOrgNoState extends React.Component {
             <Navbar.Collapse>
                 <Nav>
                     <NavItem onClick={this.changeRoute} id='events'><FaNewspaperO /> EVENTS</NavItem>
+                    <NavItem onClick={this.changeRoute} id='org'><FaGroup /> ORGANIZATIONS</NavItem>
                     <NavItem onClick={this.changeRoute} id='recruitments'><FaStickyNoteO /> RECRUITMENTS</NavItem>
                     <NavItem onClick={this.changeRoute} id='about'><FaChild /> ABOUT</NavItem>
                 </Nav>
                 <Nav pullRight>
-                    <NavItem onClick={this.changeRoute} id='login'><FaSignIn /> LOGIN</NavItem>
+                    <NavItem onClick={this.changeRoute} id='logout'><FaSignIn /> LOGOUT</NavItem>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

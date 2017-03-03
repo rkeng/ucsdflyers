@@ -46,7 +46,7 @@ class TopBarStudentNoState extends React.Component {
                     <NavItem onClick={this.changeRoute} id='about'><FaChild /> ABOUT</NavItem>
                 </Nav>
                 <Nav pullRight>
-                    <NavItem onClick={this.changeRoute} id='login'><FaSignIn /> LOGIN</NavItem>
+                    <NavItem onClick={this.changeRoute} id='logout'><FaSignIn /> LOUT</NavItem>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
