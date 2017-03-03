@@ -1,16 +1,39 @@
 import React from 'react'
 import { Panel, PanelGroup, Button } from 'react-bootstrap'
+import AnimakitExpander from 'animakit-expander';
 
 class Org extends React.Component {
 
+  constructor (props) {
+    super(props);
+    this.state = {expanded: false};
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick () {
+    this.setState(prevState => ({
+      expanded: !prevState.expanded
+    }));
+  }
+  
   getOrgList () {
+    const that = this;
     return this.props.orgs.map((org, index) => {
       let name = org['name']
-            // let estdate = org.estdate;
       let description = org['description']
 
       return (
-                <Panel header={name} eventKey={index} key={index}>{description}<br/><Button href="#">Expand</Button></Panel>
+                <Panel header={name} eventKey={index} key={index}>
+                  {description}
+                  <br/>
+                  <Button onClick={that.handleClick}>{that.state.expanded ? 'Hide' : 'Expand'}</Button>
+                  <AnimakitExpander expanded={that.state.expanded}>
+                    <div className="text">
+                      More about {name}!
+                    </div>
+                  </AnimakitExpander>
+                </Panel>
       )
     })
   }
