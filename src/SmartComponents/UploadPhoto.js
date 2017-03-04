@@ -39,16 +39,16 @@ class UploadPhotoPage extends React.Component {
         })
     }
 
-    upload(e) {
-        e.preventDefault();
-
-        const that = this
-        console.log(storage)
-        let filePath = that.state.currentUser.uid + '/events/'
-        uploadPhotos(dbImagesRef, filePath, that.state.files)
-
-
-    }
+    // upload(e) {
+    //     e.preventDefault();
+    //
+    //     const that = this
+    //     console.log(storage)
+    //     let filePath = that.state.currentUser.uid + '/events/'
+    //     uploadPhotos(dbImagesRef, filePath, that.state.files)
+    //
+    //
+    // }
 
     onDrop (files) {
         const that = this;
@@ -56,13 +56,9 @@ class UploadPhotoPage extends React.Component {
         console.log('Received files: ', files);
     }
 
-//    FIXME
     deleteFile(file, key) {
         const that = this;
-        console.log('Deleting ' +key + 'th file: ', file)
-        var newFiles = that.state.files.splice(key, 1)
-        that.setState({files: newFiles});
-        console.log(this.state.files)
+        that.setState({files: that.state.files.filter((_, i) => i !== key)});
     }
 
     render() {
@@ -77,7 +73,6 @@ class UploadPhotoPage extends React.Component {
 
         return(
 
-            <Form onSubmit={this.upload} className="container">
                 <Row>
                 <Col sm={4}>
                 <Dropzone onDrop={this.onDrop} accept={"image/*"} style={{width: "auto", border: "2px solid #ccc", borderRadius: 3, backgroundColor: "#eee", paddingBottom: 10}}>
@@ -91,16 +86,6 @@ class UploadPhotoPage extends React.Component {
                     : null
                 }
                 </Row>
-
-
-                <br/><Button type="submit">
-                    Upload
-                </Button>
-
-                <p>{this.state.uploadProgress}</p>
-
-
-            </Form>
 
         );
     }
