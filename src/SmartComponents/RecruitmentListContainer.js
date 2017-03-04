@@ -36,11 +36,15 @@ class RecruitmentListContainerPage extends React.Component {
 
 
     render () {
+
       let filteredNotes=this.state.recruitmentNotesList.filter(
         (recruitmentNote)=>{
+          var titles = recruitmentNote.seeking.map((title, index) => {
+            return title
+          });
           return recruitmentNote.clubName.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
-          || recruitmentNote.seeking[0].toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
-          || recruitmentNote.seeking[1].toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          || titles.toString().toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          || recruitmentNote.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
         }
       );
         return (
@@ -49,7 +53,7 @@ class RecruitmentListContainerPage extends React.Component {
               <FaSearch />
               <FormControl type="text"
                    placeholder="Search For Notes"
-                   value = {this.state.search || ''}
+                   value={this.state.search || ''}
                    onChange={this.filterSearch.bind(this)}/>
             </div>
             <p></p>

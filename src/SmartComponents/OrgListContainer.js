@@ -48,7 +48,7 @@ class OrgListContainerPage extends React.Component {
             <FaSearch />
             <FormControl type="text"
                  placeholder="Search For Orgs"
-                 value = {this.state.search || ''}
+                 value={this.state.search || ''}
                  onChange={this.filterSearch.bind(this)}/>
             </div>
             <userAvatar/>
