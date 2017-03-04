@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
-import AnimakitExpander from '../../node_modules/animakit-expander';
+import AnimakitExpander from 'animakit-expander';
 
 class Org extends React.Component {
 
