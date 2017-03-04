@@ -30,13 +30,13 @@ function userStateReducer (state={}, action) {
             return Object.assign({}, state, {
                 isAutheticated: true,
                 isOrg: false
-            })
+            }, action.userData)
         }
         case 'LOGIN_ORG': {
             return Object.assign({}, state, {
                 isAutheticated: true,
                 isOrg: true
-            })
+            }, action.userData)
         }
         case 'LOGOUT_USER': {
             return Object.assign({}, state, {
