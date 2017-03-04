@@ -1,38 +1,40 @@
 import React from 'react'
-import { Panel, PanelGroup, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
+import AnimakitExpander from 'animakit-expander';
 
 class Org extends React.Component {
 
-  getOrgList () {
-    return this.props.orgs.map((org, index) => {
-      let name = org['name']
-            // let estdate = org.estdate;
-      let description = org['description']
-
-      return (
-                <Panel header={name} eventKey={index} key={index}>{description}<br/><Button href="#">Expand</Button></Panel>
-      )
-    })
+  constructor (props) {
+    super(props);
+    this.state = {expanded: false};
+    this.handleClick = this.handleClick.bind(this);
   }
 
+  handleClick () {
+    this.setState(prevState => ({
+      expanded: !prevState.expanded
+    }));
+  }
+  
   render () {
+	const {
+		name,
+		description
+	} = this.props.org;
+
     return (
-            <div className='container'>
-                <h1>UCSD Student Orgs</h1>
-                <p>Click on the orgs to see details.</p>
-                <hr/>
-                <PanelGroup defaultActiveKey accordion>
-                    {this.getOrgList()}
-                </PanelGroup>
-            </div >
+	  <div>
+          {description}
+          <br/>
+          <Button onClick={this.handleClick}>{this.state.expanded ? 'See less' : 'See more'}</Button>
+          <AnimakitExpander expanded={this.state.expanded}>
+            <div className="text">
+              More about {name}!
+            </div>
+          </AnimakitExpander>
+	  </div>
     )
   }
-
 }
-
-Org.propTypes = {
-  orgs: React.PropTypes.array.isRequired
-}
-
 
 export { Org }
