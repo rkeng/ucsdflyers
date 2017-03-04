@@ -3,6 +3,7 @@ import { NotificationManager } from 'react-notifications'
 import { FaImage, FaClose } from 'react-icons/lib/fa'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { firebase } from '../models/FlyersFirebase'
+import { uploadPhotos } from '../models/index.js'
 import Dropzone from 'react-dropzone'
 //import * as storage from '@google-cloud/storage'
 
@@ -24,63 +25,37 @@ class UploadPhotoPage extends React.Component {
             currentUser: null
         }
         this.deleteFile = this.deleteFile.bind(this);
-        this.uploadPhoto = this.uploadPhoto.bind(this);
+        this.upload = this.upload.bind(this);
         this.onDrop = this.onDrop.bind(this);
     }
-    
+
     componentWillMount() {
         const that = this
         firebase.auth().onAuthStateChanged(function(user) {
-            if (user) { 
+            if (user) {
                 that.setState({currentUser: user})
                 console.log(user)
             }
         })
     }
-    
-    uploadPhoto(e) {
-        e.preventDefault();
-        
-        const that = this
-        
-        var files = that.state.files;
-        // add image to db
-        files.map((file, index) => {
-            dbImagesRef.push({
-                imageUrl: "",
-            }).then(function(data) {
 
-              // Upload the image to Firebase Storage.
-              // file will be under <currentUser.uid> folder in Firebase Storage
-              var filePath = that.state.currentUser.uid + '/' + data.key + '_' + file.name;
-                console.log(data)
-              var imageToStorage = storage.ref(filePath).put(file);
-                imageToStorage.on('state_changed', function(snapshot) {
-                    // in-progress state changes
-                    let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    that.setState({uploadProgress: percentage + "%"})
-                }, function(error) {
-                    // unsuccessful upload
-                }, function() {
-                    // successful upload
-                    data.update({imageUrl: imageToStorage.snapshot.downloadURL})
-                }
-            )}).catch(function(error) {
-              NotificationManager.error(
-                  'There was an error uploading a file to Firebase: ' + error,
-                  "Error", 3000
-              );
-            });
-        })
-        
+    upload(e) {
+        e.preventDefault();
+
+        const that = this
+        console.log(storage)
+        let filePath = that.state.currentUser.uid + '/events/'
+        uploadPhotos(dbImagesRef, filePath, that.state.files)
+
+
     }
-    
+
     onDrop (files) {
         const that = this;
         that.setState({files: files})
         console.log('Received files: ', files);
     }
-    
+
 //    FIXME
     deleteFile(file, key) {
         const that = this;
@@ -89,25 +64,25 @@ class UploadPhotoPage extends React.Component {
         that.setState({files: newFiles});
         console.log(this.state.files)
     }
-    
+
     render() {
         let previews = this.state.files.map((file, index) => (
             <div className="pull-left img-thumbnail" style={{width: 125, position: "relative"}} key={index}>
-                <Button style={{position: "absolute", top: 3, right: 3, width: 25, height: 25, padding: 0}} bsStyle="danger" bsSize="xsmall" onClick={() => this.deleteFile(file,index)}> 
-                    <FaClose size={20}/> 
+                <Button style={{position: "absolute", top: 3, right: 3, width: 25, height: 25, padding: 0}} bsStyle="danger" bsSize="xsmall" onClick={() => this.deleteFile(file,index)}>
+                    <FaClose size={20}/>
                 </Button>
                 <img src={file.preview} style={{width: 125, height: "auto"}} alt={file.name}/>
             </div>
         ))
-                             
+
         return(
-        
-            <Form onSubmit={this.uploadPhoto} className="container">
+
+            <Form onSubmit={this.upload} className="container">
                 <Row>
                 <Col sm={4}>
                 <Dropzone onDrop={this.onDrop} accept={"image/*"} style={{width: "auto", border: "2px solid #ccc", borderRadius: 3, backgroundColor: "#eee", paddingBottom: 10}}>
                   <div className="text-center">
-                    <FaImage size={100}/> 
+                    <FaImage size={100}/>
                     <br/>Drop images or click to select them here.</div>
                 </Dropzone>
                 </Col>
@@ -116,17 +91,17 @@ class UploadPhotoPage extends React.Component {
                     : null
                 }
                 </Row>
-                             
-                             
+
+
                 <br/><Button type="submit">
                     Upload
                 </Button>
-                             
+
                 <p>{this.state.uploadProgress}</p>
-            
-                
+
+
             </Form>
-        
+
         );
     }
 }

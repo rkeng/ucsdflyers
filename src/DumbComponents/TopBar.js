@@ -1,44 +1,36 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { onAuthStateChanged } from '../models'
 import { TopBarGuest } from './TopBarGuest';
 import { TopBarStudent } from './TopBarStudent';
-import { LoginUserAction, LogoutUserAction } from '../State/actions'
-// import { TopBarOrg } from './TopBarOrg';
+import { TopBarOrg } from './TopBarOrg';
 
 class TopBarSelect extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-        topbar: <TopBarGuest/>
-    }
-  }
-
-  componentWillMount(){
-    const that = this;
-    const { dispatch } = this.props;
-    onAuthStateChanged(function(user) {
-        if (user) {
-            that.setState({
-                topbar: <TopBarStudent/>
-            })
-            dispatch(LoginUserAction())
-        } else {
-            that.setState({
-                topbar: <TopBarGuest/>
-            })
-            dispatch(LogoutUserAction())
-        }
-    })
-  }
 
   render () {
+      const { isAutheticated, isOrg } = this.props;
+      var selectedTopBar;
+      //select bars
+      if(isAutheticated && !isOrg)
+        selectedTopBar = <TopBarStudent/>
+      else if(isAutheticated && isOrg)
+        selectedTopBar = <TopBarOrg/>
+      else 
+        selectedTopBar = <TopBarGuest/>
+      //show bar
       return (
-          <div>{this.state.topbar}</div>
+          <div>{selectedTopBar}</div>
     );
   }
 }
 
-const TopBar = connect()(TopBarSelect)
+function mapStateToProps(state){
+  return{
+    state: state,
+    isAutheticated: state.user.isAutheticated,
+    isOrg: state.user.isOrg
+  }
+}
+
+const TopBar = connect(mapStateToProps)(TopBarSelect)
 
 export { TopBar }
