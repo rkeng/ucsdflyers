@@ -10,8 +10,13 @@ class RecruitmentListContainerPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            recruitmentNotesList: []
+            recruitmentNotesList: [],
+            search: ""
         }
+    }
+
+    filterSearch(event){
+        this.setState({search: event.target.value.substr(0,20)});
     }
 
     componentWillMount () {
@@ -31,15 +36,24 @@ class RecruitmentListContainerPage extends React.Component {
 
 
     render () {
+      let filteredNotes=this.state.recruitmentNotesList.filter(
+        (recruitmentNote)=>{
+          return recruitmentNote.clubName.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          || recruitmentNote.seeking[0].toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          || recruitmentNote.seeking[1].toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+        }
+      );
         return (
           <div>
             <div className='container'>
               <FaSearch />
               <FormControl type="text"
-                   placeholder="Search For Notes"/>
+                   placeholder="Search For Notes"
+                   value = {this.state.search || ''}
+                   onChange={this.filterSearch.bind(this)}/>
             </div>
             <p></p>
-            <RecruitmentNoteList recruitmentNotesList={this.state.recruitmentNotesList}/>
+            <RecruitmentNoteList recruitmentNotesList={filteredNotes}/>
             <NotificationContainer/>
             </div>
         );
