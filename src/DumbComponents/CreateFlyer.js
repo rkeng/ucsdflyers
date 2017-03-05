@@ -4,6 +4,8 @@ import { Button, Panel } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker';
 import { createNew } from '../models/index.js';
+import { NotificationContainer, NotificationManager } from 'react-notifications'
+
 
 
 class CreateFlyer extends React.Component {
@@ -14,8 +16,9 @@ class CreateFlyer extends React.Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
+      success: false,
       show: false,
-        title: "",
+        name: "",
         date: new Date().toISOString(),
         time: "",
         description: "",
@@ -29,16 +32,13 @@ class CreateFlyer extends React.Component {
     this.setState({ files: acceptedFiles})
   }
 
-  onOpenClick(){
-    this.dropzone.open();
-  }
 
   onPreview(event){
     event.preventDefault();
     this.setState({ show: true})
 
-    const title = findDOMNode(this.title).value;
-    this.setState({ title: title  })
+    const name = findDOMNode(this.name).value;
+    this.setState({ name: name  })
     const time = findDOMNode(this.time).value;
     this.setState({ time: time })
     const description = findDOMNode(this.description).value;
@@ -51,13 +51,25 @@ class CreateFlyer extends React.Component {
   onCreate(event){
     event.preventDefault();
       const flyer = {
-        title: findDOMNode(this.title).value,
+        name: findDOMNode(this.name).value,
         time: findDOMNode(this.time).value,
         description: findDOMNode(this.description).value,
         location: findDOMNode(this.location).value,
         date: this.state.date.substring(0,10),
       }
+
+      if(flyer.name == "")
+      NotificationManager.error('Error', 'Please enter valid name!', 2222);
+      else if(flyer.time == "")
+      NotificationManager.error('Error', 'Please enter valid time!', 2222);
+      else if(flyer.description == "")
+      NotificationManager.error('Error', 'Please enter valid time!', 2222);
+      else if(flyer.location == "")
+      NotificationManager.error('Error', 'Please enter valid time!', 2222);
+      else{
       createNew('events',flyer)
+      this.setState({ success: true})
+}
   }
 
 
@@ -67,9 +79,9 @@ class CreateFlyer extends React.Component {
       var x = ourDate.substring(0,10)
 
       return(
-        <Panel key={this.state.title} bsStyle='success'
-            header={this.state.title}>
-          <h3>{this.state.title}</h3>
+        <Panel key={this.state.name} bsStyle='success'
+            header={this.state.name}>
+          <h3>{this.state.name}</h3>
             <p>
               Date: {x} <br />
               Time: {this.state.time}<br />
@@ -98,12 +110,12 @@ class CreateFlyer extends React.Component {
 
           <Form>
             <FormGroup>
-              <ControlLabel>Title</ControlLabel>
+              <ControlLabel>name</ControlLabel>
 
               <FormControl
                 type="text"
-                placeholder="Enter title"
-                ref={(node) => {this.title = node}}
+                placeholder="Enter name"
+                ref={(node) => {this.name = node}}
               />
             </FormGroup>
 
@@ -161,6 +173,20 @@ class CreateFlyer extends React.Component {
             onClick={this.onPreview} >Preview flyer page
           </Button>
 
+          <Modal show={this.state.success} onHide={this.close}>
+
+            <Modal.Body>
+                <div> Success! Flyer was created </div>
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button onClick={() => this.setState({success: false})}>
+              Create another flyer</Button>
+              <Button onClick={() => this.setState({success: false})}>
+              Create another flyer</Button>
+            </Modal.Footer>
+          </Modal>
+
           <Modal show={this.state.show} onHide={this.close}>
 
             <Modal.Body>
@@ -179,7 +205,10 @@ class CreateFlyer extends React.Component {
       <br/>
       <br/>
 
+      <NotificationContainer/>
+
     </Grid>
+
 
     );
   }
