@@ -63,10 +63,18 @@ class FlyerListContainerPage extends React.Component {
   componentWillMount () {
     const that = this;
 
+    function isActive (flyer) {
+      return flyer.active===true;
+    }
+
     fetchDataAsArray('events')
     .then(function(events){
+<<<<<<< HEAD
         var newFlyersList = events
         console.log(newFlyersList)
+=======
+        var newFlyersList = events.filter(isActive);
+>>>>>>> refs/remotes/origin/master
         that.setState({
             flyers: newFlyersList
         })

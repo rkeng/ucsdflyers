@@ -1,6 +1,5 @@
 language: node_js
 node_js:
-  - 4
   - 6
 cache:
   directories:
@@ -9,4 +8,4 @@ script:
   - npm test
   - npm run build
 install:
-  - npm install animakit-expander
+  - npm install
