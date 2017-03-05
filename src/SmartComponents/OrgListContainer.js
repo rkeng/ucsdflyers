@@ -1,5 +1,5 @@
 import React from 'react'
-import { Org } from '../DumbComponents/Org'
+import { OrgList } from '../DumbComponents/OrgList'
 import { connect } from 'react-redux'
 import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
@@ -25,6 +25,7 @@ class OrgListContainerPage extends React.Component {
         that.setState({
             orgs: newOrgList
         })
+        console.log(newOrgList);
     })
     .catch(function(error){
         NotificationManager.error('Something is wrong', 'Opps!', 2222);
@@ -36,10 +37,10 @@ class OrgListContainerPage extends React.Component {
         <Grid>
             <Row>
               <SearchBar placeholder='search orgs'/>
-            </Row>
               <Col>
-                <Org orgs={this.state.orgs}/>
+                <OrgList orgs={this.state.orgs}/>
               </Col>
+            </Row>
             <NotificationContainer/>
         </Grid>
     )
