@@ -1,18 +1,17 @@
 import React from 'react';
-import { NotificationManager } from 'react-notifications'
 import { FaImage, FaClose } from 'react-icons/lib/fa'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Button, Row, Col } from 'react-bootstrap'
 import { firebase } from '../models/FlyersFirebase'
-import { uploadPhotos } from '../models/index.js'
+// import { uploadPhotos } from '../models/index.js'
 import Dropzone from 'react-dropzone'
 //import * as storage from '@google-cloud/storage'
 
 // should point to <endpoint>/images/
-const dbImagesRef = firebase.database().ref("images");
-const storage = firebase.storage();
+// const dbImagesRef = firebase.database().ref("images");
+// const storage = firebase.storage();
 
 
-class UploadPhotoPage extends React.Component {
+export class ImageDropzone extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -25,30 +24,8 @@ class UploadPhotoPage extends React.Component {
             currentUser: null
         }
         this.deleteFile = this.deleteFile.bind(this);
-        this.upload = this.upload.bind(this);
         this.onDrop = this.onDrop.bind(this);
     }
-
-    componentWillMount() {
-        const that = this
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                that.setState({currentUser: user})
-                console.log(user)
-            }
-        })
-    }
-
-    // upload(e) {
-    //     e.preventDefault();
-    //
-    //     const that = this
-    //     console.log(storage)
-    //     let filePath = that.state.currentUser.uid + '/events/'
-    //     uploadPhotos(dbImagesRef, filePath, that.state.files)
-    //
-    //
-    // }
 
     onDrop (files) {
         const that = this;
@@ -59,6 +36,10 @@ class UploadPhotoPage extends React.Component {
     deleteFile(file, key) {
         const that = this;
         that.setState({files: that.state.files.filter((_, i) => i !== key)});
+    }
+
+    handleChange(e) {
+
     }
 
     render() {
@@ -72,23 +53,19 @@ class UploadPhotoPage extends React.Component {
         ))
 
         return(
-
-                <Row>
-                <Col sm={4}>
-                <Dropzone onDrop={this.onDrop} accept={"image/*"} style={{width: "auto", border: "2px solid #ccc", borderRadius: 3, backgroundColor: "#eee", paddingBottom: 10}}>
-                  <div className="text-center">
-                    <FaImage size={100}/>
-                    <br/>Drop images or click to select them here.</div>
-                </Dropzone>
-                </Col>
-                {this.state.files != null ?
-                    <Col sm={8}>{previews}</Col>
-                    : null
-                }
-                </Row>
-
+            <Row>
+            <Col sm={4}>
+            <Dropzone onDrop={this.onDrop} accept={"image/*"} style={{width: "auto", border: "2px solid #ccc", borderRadius: 3, backgroundColor: "#eee", paddingBottom: 10}}>
+              <div className="text-center">
+                <FaImage size={100}/>
+                <br/>Drop images or click to select them here.</div>
+            </Dropzone>
+            </Col>
+            {this.state.files != null ?
+                <Col sm={8}>{previews}</Col>
+                : null
+            }
+            </Row>
         );
     }
 }
-
-export { UploadPhotoPage };

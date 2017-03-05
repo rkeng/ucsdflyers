@@ -3,10 +3,9 @@ import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, 
 import { Button, Panel } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker';
-import { createNew } from '../models/index.js';
-import { getCurrentUser } from '../models/index.js'
+import { createNew, getCurrentUser, uploadImages } from '../models/index.js';
 import { FileUpload } from 'redux-file-upload'
-import { Dropzone } from 'react-dropzone'
+import { ImageDropzone } from './ImageDropzone.js'
 
 class CreateFlyer extends React.Component {
   constructor (props) {
@@ -25,14 +24,6 @@ class CreateFlyer extends React.Component {
         files: "",
 
     }
-  }
-
-  onDrop(acceptedFiles) {
-    this.setState({ files: acceptedFiles})
-  }
-
-  onOpenClick(){
-    this.dropzone.open();
   }
 
   onPreview(event){
@@ -65,6 +56,7 @@ class CreateFlyer extends React.Component {
         clubID: clubID
       }
       createNew('events',flyer)
+      // uploadImages(databaseRef, storageFilePath, files)
     })
   }
 
@@ -145,6 +137,7 @@ class CreateFlyer extends React.Component {
               <FormControl.Feedback />
             </FormGroup>
 
+            <ImageDropzone ref="files"/>
 
           </Form>
         </Col>

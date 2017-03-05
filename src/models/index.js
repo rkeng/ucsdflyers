@@ -52,8 +52,8 @@ export function getCurrentUser(){
     })
 }
 
-export function uploadPhotos(databaseRef, storageFilePath, photos) {
-  var files = photos;
+export function uploadImages(databaseRef, storageFilePath, files) {
+  
   let storage = firebase.storage()
   // add image to db
   files.map((file, index) => {
@@ -79,6 +79,8 @@ export function uploadPhotos(databaseRef, storageFilePath, photos) {
       )}).catch(function(error) {
         console.error('There was an error uploading a file to Firebase: ' + error);
       });
+
+      return true;
   })
 }
 
