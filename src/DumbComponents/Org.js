@@ -1,6 +1,7 @@
 import React from 'react'
 import { Panel, PanelGroup, Button, Col, Row } from 'react-bootstrap'
 import AnimakitExpander from 'animakit-expander';
+import { ColCenter } from '../Commen'
 
 class Org extends React.Component {
 
@@ -23,7 +24,7 @@ class Org extends React.Component {
   	} = this.props.org;
 
     return (
-          <Col sm={12} mdOffset={2} md={8}>
+          <ColCenter>
               {description}
               <br/>
               <Button onClick={this.handleClick}>{this.state.expanded ? 'See less' : 'See more'}</Button>
@@ -32,7 +33,7 @@ class Org extends React.Component {
                   More about {name}!
                 </div>
               </AnimakitExpander>
-          </Col>
+          </ColCenter>
     )
   }
 }

@@ -8,8 +8,8 @@ class RecruitmentNote extends React.Component {
 
     render(){
     return (
-        <ColCenter>
           <Panel bsStyle='info' header={header}>
+            <ColCenter>
                 <h5><FaStreetView/> {titles}</h5>
                 <h5><FaCalendar/> Due date: {date} <br/></h5>
                 <h5><FaGroup/> Organization: {name} <br/></h5>
@@ -17,8 +17,8 @@ class RecruitmentNote extends React.Component {
                 <p>{description}</p>
 
                 <Link className='btn btn-success'>Apply Now!</Link>
+            </ColCenter>
           </Panel>
-        </ColCenter>
       )
     }
 }
