@@ -1,6 +1,6 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
-import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Button, Col } from 'react-bootstrap'
+import { Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 import { FaNewspaperO, FaGroup, FaStickyNoteO, FaChild, FaSignIn, FaSignOut } from 'react-icons/lib/fa'
 import { connect } from 'react-redux'
 import { LogoutUserAction } from '../State/actions'
@@ -82,7 +82,6 @@ class AvatarSelectNoState extends React.Component {
     constructor(props){
         super(props)
         var AvaSize = 40
-        const { displayName } = props
         this.state={
             Ava:  <Avatar {...props} src={person} round size={AvaSize}/>
         }

@@ -3,9 +3,8 @@ import { OrgList } from '../DumbComponents/OrgList'
 import { connect } from 'react-redux'
 import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
-import { FaSearch } from 'react-icons/lib/fa'
-import { FormControl, Grid, Row, Col } from 'react-bootstrap';
-import { ColCenter, SearchBar } from '../Commen'
+import { Grid, Row, Col } from 'react-bootstrap';
+import { SearchBar } from '../Commen'
 
 class OrgListContainerPage extends React.Component {
 
