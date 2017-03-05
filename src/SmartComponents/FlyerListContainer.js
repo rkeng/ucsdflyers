@@ -18,9 +18,13 @@ class FlyerListContainerPage extends React.Component {
   componentWillMount () {
     const that = this;
 
+    function isActive (flyer) {
+      return flyer.active===true;
+    }
+
     fetchDataAsArray('events')
     .then(function(events){
-        var newFlyersList = events
+        var newFlyersList = events.filter(isActive);
         that.setState({
             flyers: newFlyersList
         })
