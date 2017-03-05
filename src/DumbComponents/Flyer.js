@@ -1,6 +1,7 @@
 import React from 'react'
-import { Panel, Col, Button } from 'react-bootstrap'
+import { Panel, Col, Button, Image } from 'react-bootstrap'
 import RED from '../asset/RED.jpg'
+import { ColCenter } from '../Commen'
 
 class Flyer extends React.Component{
 
@@ -12,7 +13,7 @@ class Flyer extends React.Component{
            date
        } = this.props.flyer
         return(
-            <div className="col-sm-6">
+s            <div className="col-sm-6">
                 <Col xs={6} md={12}>
                     <Panel header={name} bsStyle="success">
                         {/*<img width={370} height={400} alt="400x400" src={RED}/><br/>*/}
@@ -31,6 +32,7 @@ class Flyer extends React.Component{
                     </Panel>
                 </Col>
             </div>
+
         )
     }
 }

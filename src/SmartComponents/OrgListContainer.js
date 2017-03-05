@@ -1,10 +1,11 @@
 import React from 'react'
-import { Org } from '../DumbComponents/Org'
+import { OrgList } from '../DumbComponents/OrgList'
 import { connect } from 'react-redux'
 import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { FaSearch } from 'react-icons/lib/fa'
-import { FormControl } from 'react-bootstrap';
+import { FormControl, Grid, Row, Col } from 'react-bootstrap';
+import { ColCenter, SearchBar } from '../Commen'
 
 class OrgListContainerPage extends React.Component {
 
@@ -24,6 +25,7 @@ class OrgListContainerPage extends React.Component {
         that.setState({
             orgs: newOrgList
         })
+        console.log(newOrgList);
     })
     .catch(function(error){
         NotificationManager.error('Something is wrong', 'Opps!', 2222);
@@ -32,15 +34,15 @@ class OrgListContainerPage extends React.Component {
 
   render () {
     return (
-        <div>
-          <div className='container'>
-            <FaSearch />
-            <FormControl type="text"
-                 placeholder="Search For Orgs"/>
-            </div>
-            <Org orgs={this.state.orgs}/>
+        <Grid>
+            <Row>
+              <SearchBar placeholder='search orgs'/>
+              <Col>
+                <OrgList orgs={this.state.orgs}/>
+              </Col>
+            </Row>
             <NotificationContainer/>
-        </div>
+        </Grid>
     )
   }
 }

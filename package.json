@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "babel-preset-env": "^1.2.0",
     "eslint": "^3.15.0",
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-promise": "^3.4.1",
@@ -11,9 +12,11 @@
     "react-scripts": "0.8.5"
   },
   "dependencies": {
+    "animakit-expander": "^2.1.0",
     "eslint-plugin-react": "^6.9.0",
-    "firebase": "^3.6.9",
+    "firebase": "^3.7.0",
     "firebaseui": "^1.0.0",
+    "moment": "^2.17.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-bootstrap": "^0.30.7",
@@ -26,8 +29,9 @@
     "react-redux": "^5.0.2",
     "react-router": "^3.0.2",
     "react-router-redux": "^4.0.8",
-    "redux": "^3.6.0",
-    "redux-file-upload": "0.0.18"
+    "react-simple-dropdown": "^2.0.0",
+    "reactfire": "^1.0.0",
+    "redux": "^3.6.0"
   },
   "scripts": {
     "start": "react-scripts start",

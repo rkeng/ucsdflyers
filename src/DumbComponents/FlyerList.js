@@ -1,5 +1,6 @@
 import React from 'react'
 import { Flyer } from './Flyer.js'
+import { ColCenter } from '../Commen'
 
 
 
@@ -20,9 +21,9 @@ class FlyerList extends React.Component {
   render () {
     var renderedFlyers = this.renderFlyers();
     return (
-        <div className='container'>
+        <ColCenter>
             {renderedFlyers}
-        </div>
+        </ColCenter>
     )
   }
 }

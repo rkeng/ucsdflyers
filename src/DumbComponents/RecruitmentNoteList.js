@@ -1,7 +1,8 @@
 import React from 'react';
-import { Badge, Panel } from 'react-bootstrap';
+import { Badge, Panel, Col } from 'react-bootstrap';
 import { FaCalendar, FaGroup, FaEnvelope, FaStreetView } from 'react-icons/lib/fa';
 import { Link } from 'react-router'
+import { ColCenter } from '../Commen'
 
 class RecruitmentNoteList extends React.Component {
 
@@ -27,29 +28,25 @@ class RecruitmentNoteList extends React.Component {
             );
 
             return(
-             <div key={index}>
               <Panel bsStyle='info' header={header}>
-              <h5><FaStreetView/> {titles}</h5>
-
-
-              <h5><FaCalendar/> Due date: {date} <br/></h5>
-              <h5><FaGroup/> Organization: {name} <br/></h5>
-              <h5><FaEnvelope/> Email: {email} <br/></h5>
-              <p>{description}</p>
-
-              <Link className='btn btn-success'>Apply Now!</Link>
+                <Col sm={12} mdOffset={3} md={8} key={index}>
+                  <h5><FaStreetView/> {titles}</h5>
+                  <h5><FaCalendar/> Due date: {date} <br/></h5>
+                  <h5><FaGroup/> Organization: {name} <br/></h5>
+                  <h5><FaEnvelope/> Email: {email} <br/></h5>
+                  <p>{description}</p>
+                  <Link className='btn btn-success'>Apply Now!</Link>
+                </Col>
               </Panel>
-              </div>
-
             )
         });
     }
 
     render () {
         return (
-            <div className='container'>
+            <ColCenter>
               {this.getRecruitmentNoteList()}
-            </div>
+            </ColCenter>
         );
     }
 
