@@ -23,13 +23,12 @@ class CreateFlyer extends React.Component {
       show: false,
       like: 0,
       go: 0,
-        name: "",
-        date: new Date().toISOString(),
-        time: "",
-        description: "",
-        location: "",
-        files: "",
-
+      name: "",
+      date: new Date().toISOString(),
+      time: "",
+      description: "",
+      location: "",
+      files: "",
     }
   }
 
@@ -68,18 +67,18 @@ class CreateFlyer extends React.Component {
         date: this.state.date.substring(0,10),
       }
 
-      if(flyer.name == "")
+      if(flyer.name === "")
       NotificationManager.error('Error', 'Please enter valid name!', 2222);
-      else if(flyer.time == "")
+      else if(flyer.time === "")
       NotificationManager.error('Error', 'Please enter valid time!', 2222);
-      else if(flyer.description == "")
+      else if(flyer.description === "")
       NotificationManager.error('Error', 'Please enter valid description!', 2222);
-      else if(flyer.location == "")
+      else if(flyer.location === "")
       NotificationManager.error('Error', 'Please enter valid location!', 2222);
       else{
       createNew('events',flyer)
       this.setState({ success: true})
-}
+    }
   }
 
 
@@ -160,7 +159,6 @@ class CreateFlyer extends React.Component {
               <FormControl.Feedback />
             </FormGroup>
 
-
           </Form>
         </Col>
       </Row>
@@ -184,22 +182,18 @@ class CreateFlyer extends React.Component {
           </Button>
 
           <Modal show={this.state.success} onHide={this.close}>
-
             <Modal.Body>
                 <div> Success! Flyer was created </div>
             </Modal.Body>
 
             <Modal.Footer>
-            <Button onClick={this.onClear}>Create another flyer</Button>
-
+              <Button onClick={this.onClear}>Create another flyer</Button>
               <Link className='btn' to='/' onClick={() => this.setState({success: false})}>
               Home Page</Link>
-
             </Modal.Footer>
           </Modal>
 
           <Modal show={this.state.show} onHide={this.close}>
-
             <Modal.Body>
                 <div> { this.getFlyer() } </div>
             </Modal.Body>
