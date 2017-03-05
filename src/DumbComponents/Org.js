@@ -26,7 +26,7 @@ class Org extends React.Component {
 	  <div>
           {description}
           <br/>
-          <Button onClick={this.handleClick}>{this.state.expanded ? 'See less' : 'See more'}</Button>
+          <Button onClick={this.handleClick}>{this.state.expanded ? 'Show less' : 'Show more'}</Button>
           <AnimakitExpander expanded={this.state.expanded}>
             <div className="text">
               More about {name}!

@@ -15,9 +15,6 @@ class OrgList extends React.Component {
     render (){
         return (
             <div className="container">
-                <h1>UCSD Student Orgs</h1>
-                <p>Click on the orgs to see details.</p>
-                <hr/>
                 <PanelGroup defaultActiveKey accordion>
                     {this.getOrgList()}
                 </PanelGroup>
