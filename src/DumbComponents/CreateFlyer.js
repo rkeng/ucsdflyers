@@ -4,9 +4,7 @@ import { Button, Panel } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker';
 import { createNew } from '../models/index.js';
-import { getCurrentUser } from '../models/index.js'
-import { FileUpload } from 'redux-file-upload'
-import { Dropzone } from 'react-dropzone'
+
 
 class CreateFlyer extends React.Component {
   constructor (props) {
@@ -52,20 +50,14 @@ class CreateFlyer extends React.Component {
 
   onCreate(event){
     event.preventDefault();
-
-    getCurrentUser().then((club) => {
-      const clubID = club.uid;
-      console.log('clubID' + clubID);
       const flyer = {
         title: findDOMNode(this.title).value,
         time: findDOMNode(this.time).value,
         description: findDOMNode(this.description).value,
         location: findDOMNode(this.location).value,
         date: this.state.date.substring(0,10),
-        clubID: clubID
       }
       createNew('events',flyer)
-    })
   }
 
 
@@ -74,7 +66,7 @@ class CreateFlyer extends React.Component {
       var ourDate = this.state.date
       var x = ourDate.substring(0,10)
 
-      return
+      return(
         <Panel key={this.state.title} bsStyle='success'
             header={this.state.title}>
           <h3>{this.state.title}</h3>
@@ -85,6 +77,7 @@ class CreateFlyer extends React.Component {
               Location: {this.state.location}
             </p>
         </Panel>
+      )
   }
 
 
@@ -167,36 +160,8 @@ class CreateFlyer extends React.Component {
             bsSize="small"
             onClick={this.onPreview} >Preview flyer page
           </Button>
-{/*
-          <FileUpload
-            allowedFileTypes={['jpg', 'pdf']}
-            data={{ type: 'picture' }}
-            dropzoneId="fileUpload"
-            url="https:/url.org/api/docs/upload"
-          >
-            <button>
-              Click or drag here
-            </button>
-          </FileUpload>
-
-          <div>
-          <Dropzone ref={(node) => { this.dropzone = node; }} onDrop={this.onDrop}>
-                    <div>Try dropping some files here, or click to select files to upload.</div>
-                </Dropzone>
-                <button type="button" onClick={this.onOpenClick}>
-                    Open Dropzone
-                </button>
-                {this.state.files.length > 0 ? <div>
-                <h2>Uploading {this.state.files.length} files...</h2>
-                <div>{this.state.files.map((file) => <img src={file.preview} /> )}</div>
-                </div> : null}
-          </div>*/}
 
           <Modal show={this.state.show} onHide={this.close}>
-          {/*
-            ..Import..
-            <Flyer flyer={this.state.flyer}/>
-          */}
 
             <Modal.Body>
                 <div> { this.getFlyer() } </div>
