@@ -1,10 +1,15 @@
 import React from 'react';
 import { RecruitmentNoteList } from '../DumbComponents/RecruitmentNoteList';
 import { connect } from 'react-redux'
-import { fetchDataAsArray } from '../models'
+import { fetchDataOn } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
-import { FormControl } from 'react-bootstrap';
-import { FaSearch } from 'react-icons/lib/fa'
+
+// dummy data
+// const recruitmentNotesList = [
+//     {name: 'Alpha Phi Omega', date: 'Feb 20, 2017', title: 'VP of Finance', description: 'Looking for talented individuals'},
+//     {name: 'Hack Day', date: 'Jan 31, 2017', title: 'CSE building', description: 'Hack into others computer'},
+//     {name: 'Water Fun', date: 'Feb 02, 2017', title: 'Sun God', description: 'Get wet and swag'}
+// ];
 
 class RecruitmentListContainerPage extends React.Component {
     constructor(props){
@@ -17,9 +22,9 @@ class RecruitmentListContainerPage extends React.Component {
     componentWillMount () {
       const that = this;
 
-      fetchDataAsArray('recruitmentNotes')
+      fetchDataOn('recruitmentNotes')
       .then(function(recruitmentNotes){
-          var newRecruitmentList = recruitmentNotes
+          var newRecruitmentList = recruitmentNotes.val()
           that.setState({
               recruitmentNotesList: newRecruitmentList
           })
@@ -33,12 +38,6 @@ class RecruitmentListContainerPage extends React.Component {
     render () {
         return (
           <div>
-            <div className='container'>
-              <FaSearch />
-              <FormControl type="text"
-                   placeholder="Search For Notes"/>
-            </div>
-            <p></p>
             <RecruitmentNoteList recruitmentNotesList={this.state.recruitmentNotesList}/>
             <NotificationContainer/>
             </div>
