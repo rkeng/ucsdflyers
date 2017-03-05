@@ -11,8 +11,9 @@ class Flyer extends React.Component{
            description,
            date
        } = this.props.flyer
+
         return(
-s            <div className="col-sm-6">
+            <div className="col-sm-6">
                 <Col xs={6} md={12}>
                     <Panel header={name} bsStyle="success">
                         {/*<img width={370} height={400} alt="400x400" src={RED}/><br/>*/}

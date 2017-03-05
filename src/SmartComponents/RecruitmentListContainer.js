@@ -3,7 +3,6 @@ import { RecruitmentNoteList } from '../DumbComponents/RecruitmentNoteList';
 import { connect } from 'react-redux'
 import { fetchDataOn } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
-<<<<<<< HEAD
 
 // dummy data
 // const recruitmentNotesList = [
@@ -11,10 +10,8 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 //     {name: 'Hack Day', date: 'Jan 31, 2017', title: 'CSE building', description: 'Hack into others computer'},
 //     {name: 'Water Fun', date: 'Feb 02, 2017', title: 'Sun God', description: 'Get wet and swag'}
 // ];
-=======
 import { Grid, Row, Col } from 'react-bootstrap';
 import { SearchBar } from '../Commen'
->>>>>>> a678bd603b684e59225349990d95c9fc51374298
 
 class RecruitmentListContainerPage extends React.Component {
     constructor(props){
