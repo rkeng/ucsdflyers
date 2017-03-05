@@ -11,20 +11,20 @@ class OrgListContainerPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      orgs: []
+      orgs: [],
+      hasMoreItems: true
     }
   }
 
   componentWillMount () {
     const that = this;
-
     fetchDataAsArray('clubs')
     .then(function(clubs){
         var newOrgList = clubs
         that.setState({
-            orgs: newOrgList
+            orgs: newOrgList,
+            hasMoreItems: false
         })
-        console.log(newOrgList);
     })
     .catch(function(error){
         NotificationManager.error('Something is wrong', 'Opps!', 2222);
