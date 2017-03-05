@@ -21,6 +21,8 @@ class CreateFlyer extends React.Component {
     this.state = {
       success: false,
       show: false,
+      like: 0,
+      go: 0,
         name: "",
         date: new Date().toISOString(),
         time: "",
@@ -198,9 +200,10 @@ class CreateFlyer extends React.Component {
 
           <Modal show={this.state.show} onHide={this.close}>
 
-            <Modal.Body>
+          <Flyer
+            {/*}<Modal.Body>
                 <div> { this.getFlyer() } </div>
-            </Modal.Body>
+            </Modal.Body>*/}
 
             <Modal.Footer>
               <Button onClick={() => this.setState({show: false})}>Close</Button>
