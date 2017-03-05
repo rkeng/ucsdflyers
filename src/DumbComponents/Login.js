@@ -10,8 +10,19 @@ class LoginForm extends React.Component {
   componentWillUnmount(){
     const { dispatch } = this.props;
     getCurrentUser().then((user)=>{
-      if(user)
-        dispatch(LoginStudentAction())
+      if(user){
+        const userData = {
+            displayName: user.displayName,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            isAnonymous: user.isAnonymous,
+            photoURL: user.photoURL,
+            providerData: user.providerData,
+            uid: user.uid,          
+            isOrg: false
+        }
+        dispatch(LoginStudentAction(userData))
+      }
     })
     firebaseUI.reset();
   }

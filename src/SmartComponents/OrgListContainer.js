@@ -5,8 +5,8 @@ import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { FaSearch } from 'react-icons/lib/fa'
 import { FormControl } from 'react-bootstrap';
-import InfiniteScroll from 'react-infinite-scroller';
-import Spinner from 'react-spinkit';
+import { Grid, Row, Col } from 'react-bootstrap';
+import { SearchBar } from '../Commen'
 
 class OrgListContainerPage extends React.Component {
 
@@ -34,27 +34,16 @@ class OrgListContainerPage extends React.Component {
   }
 
   render () {
-    const spinner = <span><Spinner spinnerName="three-bounce" /></span>
     return (
-        <div>
-          <div className='container'>
-            <FaSearch />
-            <FormControl type="text"
-                 placeholder="Search For Orgs"/>
-            <h1>UCSD Student Orgs</h1>
-            <p>Click on the orgs to see details.</p>
-            <hr/>
-
-            <InfiniteScroll
-                pageStart={0}
-                loadMore={this.componentWillMount.bind(this)}
-                hasMore={this.state.hasMoreItems}
-                loader={spinner}>
+        <Grid>
+            <Row>
+              <SearchBar placeholder='search orgs'/>
+              <Col>
                 <OrgList orgs={this.state.orgs}/>
-            </InfiniteScroll>
-          </div>
+              </Col>
+            </Row>
             <NotificationContainer/>
-        </div>
+        </Grid>
     )
   }
 }

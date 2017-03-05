@@ -12,7 +12,7 @@
     -moz-border-radius-topright: 5px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    background: $blue;
+    background: blue;
  }
 
 .btn:focus, .btn:active:focus, .btn.active:focus {

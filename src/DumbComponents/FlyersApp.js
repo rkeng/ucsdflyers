@@ -1,18 +1,26 @@
 import React from 'react'
 import { TopBar } from './TopBar'
 import { connect } from 'react-redux'
+import { Grid, Row } from 'react-bootstrap'
+import { ColCenter } from '../Commen'
 
 class FlyersAppForm extends React.Component {
   render () {
     return (
-            <div>
-                <TopBar/>
-                {this.props.children}
-            </div>
+            <Grid fluid>
+                <Row>
+                    <ColCenter>
+                        <TopBar fixedTop/>
+                        <TopBar/>{/*This is NOT code duplication!!! It's a UI place holder!!!!!*/}
+                    </ColCenter>
+                </Row>
+                <Row>
+                        {this.props.children}
+                </Row>
+            </Grid>
     )
   }
 }
-
 FlyersAppForm.propTypes = {
   children: React.PropTypes.any
 }

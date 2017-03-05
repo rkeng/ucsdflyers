@@ -1,6 +1,7 @@
 import React from 'react';
 import { Panel, PanelGroup } from 'react-bootstrap';
 import { Org } from './Org';
+import { ColCenter } from '../Commen'
 
 class OrgList extends React.Component {
 
@@ -14,11 +15,14 @@ class OrgList extends React.Component {
 
     render (){
         return (
-            <div className="container">
+            <ColCenter>
+                <h1>UCSD Student Orgs</h1>
+                <p>Click on the orgs to see details.</p>
+                <hr/>
                 <PanelGroup defaultActiveKey accordion>
                     {this.getOrgList()}
                 </PanelGroup>
-            </div >
+            </ColCenter>
         )
     }
 }
