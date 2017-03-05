@@ -11,11 +11,11 @@ class TopBarSelect extends React.Component {
       var selectedTopBar;
       //select bars
       if(isAutheticated && !isOrg)
-        selectedTopBar = <TopBarStudent/>
+        selectedTopBar = <TopBarStudent {...this.props}/>
       else if(isAutheticated && isOrg)
-        selectedTopBar = <TopBarOrg/>
+        selectedTopBar = <TopBarOrg {...this.props}/>
       else 
-        selectedTopBar = <TopBarGuest/>
+        selectedTopBar = <TopBarGuest {...this.props}/>
       //show bar
       return (
           <div>{selectedTopBar}</div>

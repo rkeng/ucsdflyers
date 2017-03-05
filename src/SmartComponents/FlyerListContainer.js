@@ -2,9 +2,9 @@ import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
 import { connect } from 'react-redux'
 import { fetchDataAsArray } from '../models'
+import { SearchBar } from '../Commen'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
-import { FormControl } from 'react-bootstrap';
-import { FaSearch } from 'react-icons/lib/fa'
+import { Grid, Row, Col } from 'react-bootstrap';
 
 class FlyerListContainerPage extends React.Component {
 
@@ -32,16 +32,17 @@ class FlyerListContainerPage extends React.Component {
 
   render () {
     return (
-        <div>
-          <div className='container'>
-            <FaSearch />
-            <FormControl type="text"
-                   placeholder="Search For Flyers"/>
-         </div>
-         <p></p>
-            <FlyerList flyers={this.state.flyers}/>
-            <NotificationContainer/>
-        </div>
+        <Grid>
+          <NotificationContainer/>
+          <Row>
+            <SearchBar placeholder='search for flyers'/>
+         </Row>
+         <Row>
+           <Col>
+              <FlyerList flyers={this.state.flyers}/>
+            </Col>
+          </Row>
+        </Grid>
     )
   }
 }

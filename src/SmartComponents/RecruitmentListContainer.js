@@ -3,8 +3,8 @@ import { RecruitmentNoteList } from '../DumbComponents/RecruitmentNoteList';
 import { connect } from 'react-redux'
 import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
-import { FormControl } from 'react-bootstrap';
-import { FaSearch } from 'react-icons/lib/fa'
+import { Grid, Row, Col } from 'react-bootstrap';
+import { SearchBar } from '../Commen'
 
 class RecruitmentListContainerPage extends React.Component {
     constructor(props){
@@ -32,16 +32,17 @@ class RecruitmentListContainerPage extends React.Component {
 
     render () {
         return (
-          <div>
-            <div className='container'>
-              <FaSearch />
-              <FormControl type="text"
-                   placeholder="Search For Notes"/>
-            </div>
-            <p></p>
-            <RecruitmentNoteList recruitmentNotesList={this.state.recruitmentNotesList}/>
+          <Grid>
+            <Row>
+                <SearchBar/>
+            </Row>
+            <Row>
+              <Col>
+                <RecruitmentNoteList recruitmentNotesList={this.state.recruitmentNotesList}/>
+              </Col>
+            </Row>
             <NotificationContainer/>
-            </div>
+          </Grid>
         );
     }
 

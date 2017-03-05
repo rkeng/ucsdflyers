@@ -17,9 +17,10 @@ export function createUserAction (email, password) {
 }
 */
 
-export function LoginUserAction () {
+export function LoginUserAction (userData) {
   return {
     type: 'LOGIN_USER',
+    userData
   }
 }
 
@@ -29,14 +30,16 @@ export function LogoutUserAction(){
   }
 }
 
-export function LoginStudentAction(){
+export function LoginStudentAction(userData){
   return {
-    type: 'LOGIN_STUDENT'
+    type: 'LOGIN_STUDENT',
+    userData 
   }
 }
 
-export function LoginOrgAction(){
+export function LoginOrgAction(userData){
   return {
-    type: 'LOGIN_ORG'
+    type: 'LOGIN_ORG',
+    userData
   }
 }

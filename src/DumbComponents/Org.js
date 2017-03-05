@@ -1,6 +1,7 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
+import { Panel, PanelGroup, Button, Col, Row } from 'react-bootstrap'
 import AnimakitExpander from 'animakit-expander';
+import { ColCenter } from '../Commen'
 
 class Org extends React.Component {
 
@@ -17,24 +18,23 @@ class Org extends React.Component {
   }
   
   render () {
-	const {
-		name,
-		description
-	} = this.props.org;
+  	const {
+  		name,
+  		description
+  	} = this.props.org;
 
     return (
-	  <div>
-          {description}
-          <br/>
-          <Button onClick={this.handleClick}>{this.state.expanded ? 'See less' : 'See more'}</Button>
-          <AnimakitExpander expanded={this.state.expanded}>
-            <div className="text">
-              More about {name}!
-            </div>
-          </AnimakitExpander>
-	  </div>
+          <ColCenter>
+              {description}
+              <br/>
+              <Button onClick={this.handleClick}>{this.state.expanded ? 'See less' : 'See more'}</Button>
+              <AnimakitExpander expanded={this.state.expanded}>
+                <div className="text">
+                  More about {name}!
+                </div>
+              </AnimakitExpander>
+          </ColCenter>
     )
   }
 }
-
 export { Org }

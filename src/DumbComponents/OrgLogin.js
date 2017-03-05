@@ -45,8 +45,19 @@ class OrgLoginForm extends React.Component {
   componentWillUnmount(){
     const { dispatch } = this.props;
     getCurrentUser().then((user) =>{
-      if(user)
-        dispatch(LoginOrgAction())
+      if(user){
+        const userData = {
+            displayName: user.displayName,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            isAnonymous: user.isAnonymous,
+            photoURL: user.photoURL,
+            providerData: user.providerData,
+            uid: user.uid,          
+            isOrg: true
+        }
+        dispatch(LoginOrgAction(userData))
+      }
     })
   }
 
