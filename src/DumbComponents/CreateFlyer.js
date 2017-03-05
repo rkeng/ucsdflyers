@@ -200,10 +200,9 @@ class CreateFlyer extends React.Component {
 
           <Modal show={this.state.show} onHide={this.close}>
 
-          <Flyer
-            {/*}<Modal.Body>
+            <Modal.Body>
                 <div> { this.getFlyer() } </div>
-            </Modal.Body>*/}
+            </Modal.Body>
 
             <Modal.Footer>
               <Button onClick={() => this.setState({show: false})}>Close</Button>
