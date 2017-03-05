@@ -5,6 +5,7 @@ import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker';
 import { createNew } from '../models/index.js';
 import { NotificationContainer, NotificationManager } from 'react-notifications'
+import { Link } from 'react-router';
 
 
 
@@ -14,6 +15,8 @@ class CreateFlyer extends React.Component {
     this.onPreview = this.onPreview.bind(this);
     this.onCreate = this.onCreate.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.onClear = this.onClear.bind(this);
+
 
     this.state = {
       success: false,
@@ -28,10 +31,15 @@ class CreateFlyer extends React.Component {
     }
   }
 
-  onDrop(acceptedFiles) {
-    this.setState({ files: acceptedFiles})
-  }
+  onClear(event){
+    event.preventDefault();
+    this.setState({ success: false})
 
+    findDOMNode(this.name).value = "";
+    findDOMNode(this.time).value = "";
+    findDOMNode(this.description).value = "";
+    findDOMNode(this.location).value = "";
+  }
 
   onPreview(event){
     event.preventDefault();
@@ -63,9 +71,9 @@ class CreateFlyer extends React.Component {
       else if(flyer.time == "")
       NotificationManager.error('Error', 'Please enter valid time!', 2222);
       else if(flyer.description == "")
-      NotificationManager.error('Error', 'Please enter valid time!', 2222);
+      NotificationManager.error('Error', 'Please enter valid description!', 2222);
       else if(flyer.location == "")
-      NotificationManager.error('Error', 'Please enter valid time!', 2222);
+      NotificationManager.error('Error', 'Please enter valid location!', 2222);
       else{
       createNew('events',flyer)
       this.setState({ success: true})
@@ -180,10 +188,11 @@ class CreateFlyer extends React.Component {
             </Modal.Body>
 
             <Modal.Footer>
-              <Button onClick={() => this.setState({success: false})}>
-              Create another flyer</Button>
-              <Button onClick={() => this.setState({success: false})}>
-              Create another flyer</Button>
+            <Button onClick={this.onClear}>Create another flyer</Button>
+
+              <Link className='btn' to='/' onClick={() => this.setState({success: false})}>
+              Home Page</Link>
+
             </Modal.Footer>
           </Modal>
 
