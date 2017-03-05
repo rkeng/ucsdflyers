@@ -104,8 +104,8 @@ export function compareDates(a,b){
  return 0;
 }
 export function compareClubs(a,b){
-    var d1 = a.club
-    var d2 = b.club
+    var d1 = a.name
+    var d2 = b.name
     if (d1 < d2)
       return -1;
     if (d1 > d2)

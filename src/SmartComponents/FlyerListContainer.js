@@ -66,6 +66,7 @@ class FlyerListContainerPage extends React.Component {
     fetchDataAsArray('events')
     .then(function(events){
         var newFlyersList = events
+        console.log(newFlyersList)
         that.setState({
             flyers: newFlyersList
         })
