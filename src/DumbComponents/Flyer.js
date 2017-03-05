@@ -3,7 +3,7 @@ import { Panel, Col, Button, Image } from 'react-bootstrap'
 import RED from '../asset/RED.jpg'
 
 class Flyer extends React.Component{
-    
+
     render() {
        const {
            name,
@@ -11,22 +11,28 @@ class Flyer extends React.Component{
            description,
            date
        } = this.props.flyer
+
         return(
-                <Panel header={name} bsStyle="success">
-                  <Col sm={12} mdOffset={3} md={8}>
-                    <Image width={370} height={400} alt="400x400" src={RED} responsive/><br/>
-                    <h3>{name}</h3>
-                    <p>
-                        Location: {location}<br/>
-                        Description: {description}<br/>
-                        Date: {date}
-                    </p>
-                    <p>
-                        <Button bsStyle="success">Like</Button>&nbsp;
-                        <Button bsStyle="primary">Wanna Go</Button>
-                    </p>
-                  </Col>
-                </Panel>
+            <div className="col-sm-6">
+                <Col xs={6} md={12}>
+                    <Panel header={name} bsStyle="success">
+                        {/*<img width={370} height={400} alt="400x400" src={RED}/><br/>*/}
+
+                        <h3>{name}</h3>
+                        <p>
+                            Location: {location}<br/>
+                            Description: {description}<br/>
+                            Date: {date}
+                        </p>
+                        <p>
+                            <Button bsStyle="success">Like</Button>&nbsp;
+                            <Button bsStyle="primary">Wanna Go</Button>
+                        </p>
+
+                    </Panel>
+                </Col>
+            </div>
+
         )
     }
 }
