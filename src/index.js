@@ -18,7 +18,6 @@ import { About } from './DumbComponents/About'
 import { NewOrganizations } from './DumbComponents/NewOrganizations'
 import { CreateRecruitment } from './DumbComponents/CreateRecruitment'
 import { CreateFlyer } from './DumbComponents/CreateFlyer'
-import { UploadPhotoPage } from './SmartComponents/UploadPhoto'
 
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
@@ -39,7 +38,6 @@ ReactDOM.render(
                 <Route path='create-recruitment' component={CreateRecruitment}/>
                 <Route path='create-flyer' component={CreateFlyer}/>
                 <Route path='login' component={Login}/>
-                <Route path='upload-photo' component={UploadPhotoPage}/>
                 <Route path='login-org' component={NewOrganizations}/>
             </Route>
             <Route path='*' component={NotFound}/>
