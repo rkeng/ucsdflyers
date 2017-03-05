@@ -1,7 +1,6 @@
 import React from 'react'
 import { Panel, Col, Button, Image } from 'react-bootstrap'
 import RED from '../asset/RED.jpg'
-import { ColCenter } from '../Commen'
 
 class Flyer extends React.Component{
     
