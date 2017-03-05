@@ -10,3 +10,4 @@ script:
   - npm run build
 install:
   - npm install animakit-expander
+  - npm install react-avatar
