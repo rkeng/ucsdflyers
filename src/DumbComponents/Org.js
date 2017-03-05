@@ -1,5 +1,5 @@
 import React from 'react'
-import { Panel, PanelGroup, Button } from 'react-bootstrap'
+import { Panel, PanelGroup, Button, Col, Row } from 'react-bootstrap'
 
 class Org extends React.Component {
 
@@ -17,14 +17,16 @@ class Org extends React.Component {
 
   render () {
     return (
-            <div className='container'>
+            <Row>
+              <Col sm={12} mdOffset={2} md={8}>
                 <h1>UCSD Student Orgs</h1>
                 <p>Click on the orgs to see details.</p>
                 <hr/>
                 <PanelGroup defaultActiveKey accordion>
                     {this.getOrgList()}
                 </PanelGroup>
-            </div >
+              </Col>
+            </Row>
     )
   }
 

@@ -1,19 +1,19 @@
 import React from 'react'
 import { Navbar } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { TopBarIcon, TopBarLeft, TopBarRight } from './TopBarElements'
+import { TopBarIcon, TopBarLeft, TopBarRight, NavbarWrapper } from './TopBarElements'
 
 class TopBarStudentNoState extends React.Component {
 
   render () {
     return (
-        <Navbar collapseOnSelect fixedTop>
+        <NavbarWrapper {...this.props}>
             <TopBarIcon/>
             <Navbar.Collapse>
                 <TopBarLeft/>
                 <TopBarRight/>
             </Navbar.Collapse>
-        </Navbar>
+        </NavbarWrapper>
     )
   }
 }

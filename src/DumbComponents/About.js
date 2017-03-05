@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListGroupItem, ListGroup, Grid, Jumbotron } from 'react-bootstrap'
+import { ListGroupItem, ListGroup, Grid, Jumbotron, Image } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import logo from '../asset/logo.png'
 
@@ -11,7 +11,7 @@ class AboutPage extends React.Component {
       <Grid>        
         <Jumbotron>
           <div className="row text-center">
-            <img width={400} height={400} src={logo} className="rounded mx-auto d-block" alt=""/>
+            <Image width={400} height={400} src={logo} className="rounded mx-auto d-block" alt="" responsive/>
           </div>
           <h2><strong>About ESL</strong></h2>
           <br/>

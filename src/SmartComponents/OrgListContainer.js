@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { FaSearch } from 'react-icons/lib/fa'
-import { FormControl } from 'react-bootstrap';
+import { FormControl, Grid, Row, Col } from 'react-bootstrap';
+import { ColCenter, SearchBar } from '../Commen'
 
 class OrgListContainerPage extends React.Component {
 
@@ -32,15 +33,15 @@ class OrgListContainerPage extends React.Component {
 
   render () {
     return (
-        <div>
-          <div className='container'>
-            <FaSearch />
-            <FormControl type="text"
-                 placeholder="Search For Orgs"/>
-            </div>
-            <Org orgs={this.state.orgs}/>
+        <Grid>
+            <Row>
+              <SearchBar placeholder='search orgs'/>
+            </Row>
+              <Col>
+                <Org orgs={this.state.orgs}/>
+              </Col>
             <NotificationContainer/>
-        </div>
+        </Grid>
     )
   }
 }
