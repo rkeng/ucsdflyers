@@ -17,9 +17,10 @@ export function createUserAction (email, password) {
 }
 */
 
-export function LoginUserAction () {
+export function LoginUserAction (userData) {
   return {
     type: 'LOGIN_USER',
+    userData
   }
 }
 

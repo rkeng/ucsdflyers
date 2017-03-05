@@ -8,7 +8,6 @@ import { signOutUser } from '../models'
 import Avatar from 'react-avatar'
 import logoText from '../asset/logoText.png'
 import person from '../asset/person.jpg'
-import { onAuthStateChanged } from '../models'
 
 
 
@@ -68,52 +67,59 @@ function TopBarIcon(props){
                 <TopBarItem id='org' name='ORGANIZATIONS' icon={<FaGroup />} />
                 <TopBarItem id='recruitments' name='RECRUITMENTS' icon={<FaStickyNoteO />} />
                 <TopBarItem id='about' name='ABOUT' icon={<FaChild />} />
-<Button onClick={() => {
-    console.log('state?', props.state)
-}}> show state</Button>
             </Nav>
         </div>
     )
 }
 /* use this print state; only for development purpose
+<Button onClick={() => {
+    console.log('state?', props.state)
+}}> show state</Button>
 */
 
 
-function AvatarSelectNoState(props){
-    const { isAutheticated, photoURL, displayName } = props.user
-    var AvaSize = 40
-    var Ava = <Avatar {...props} round size={AvaSize}/>
-    var retVal = onAuthStateChanged(function(user){
-        if(user){
-            console.log('onauth isUser executed')
-            const { providerId, uid, displayName } = user.providerData[0]
-            Ava = <Avatar {...props} name={displayName} round size={AvaSize}/>
-            // switch(providerId){
-            //     case'google.com':{
-            //         console.log('user login with google ')
-            //         Ava = <Avatar {...props} name={displayName} round size={AvaSize}/>
-            //         break;
-            //     }
-            //     case'facebook.com': {
-            //         console.log('user login with facebook ')
-            //         Ava = <Avatar {...props} name={displayName} round size={AvaSize}/>
-            //         break;
-            //     }
-            //     case'twitter.com':{
-            //         console.log('user login with twitter ')
-            //         Ava = <Avatar {...props} name={displayName} round size={AvaSize}/>
-            //         break;
-            //     }
-            //     default:
-            //     Ava = <Avatar {...props} name={displayName} round size={AvaSize}/>;
-            // }
-        } else {
-            console.log('onauth isNOOOOOT executed')
-            Ava =  <Avatar {...props} src={person} round size={AvaSize}/>
+class AvatarSelectNoState extends React.Component {
+    constructor(props){
+        super(props)
+        var AvaSize = 40
+        const { displayName } = props
+        this.state={
+            Ava:  <Avatar {...props} src={person} round size={AvaSize}/>
         }
-        return <span>{Ava}</span>
-    })
-    return <span>{retVal}</span>
+    }
+
+    render(){
+        var that = this
+        const { isAutheticated, displayName } = that.props.user
+        var newAva
+        var AvaSize = 40
+        if(isAutheticated){
+            const { providerId, uid } = that.props.user.providerData[0]
+            switch(providerId){
+                case'google.com':{
+                    // console.log('user login with google ')
+                    newAva = <Avatar {...that.props} googleId={uid} name={displayName} round size={AvaSize}/>
+                    break;
+                }
+                case'facebook.com': {
+                    // console.log('user login with facebook ')
+                    newAva = <Avatar {...that.props} facebookId={uid} name={displayName} round size={AvaSize}/>
+                    break;
+                }
+                case'twitter.com':{
+                    // console.log('user login with twitter ')
+                    newAva = <Avatar {...that.props} twitterId={uid} name={displayName} round size={AvaSize}/>
+                    break;
+                }
+                default:
+                newAva = <Avatar {...that.props} src={person} round size={AvaSize}/>;
+            }
+            that.state={
+                Ava:  newAva
+            }
+        }
+        return <span>{this.state.Ava}</span>
+    }
 }
 
 function TopBarRightNoState(props){
@@ -130,7 +136,7 @@ function TopBarRightNoState(props){
     }
     return(
         <div>
-            <Nav pullRight>
+            <Nav pullRight navbar>
                 <NavDropdown id='user-avatar-dropdown' title={<AvatarSelect/>}>
                         <MenuItem>Action</MenuItem>
                         <MenuItem bsRole='toggle' id={id} onClick={(e) => changeRoute(e, props)}>{icon}{name}</MenuItem>

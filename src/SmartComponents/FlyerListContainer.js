@@ -2,10 +2,9 @@ import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
 import { connect } from 'react-redux'
 import { fetchDataAsArray } from '../models'
-import { ColCenter, SearchBar } from '../Commen'
+import { SearchBar } from '../Commen'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
-import { FormControl, Grid, Row, Col, FormGroup, ControlLabel, InputGroup } from 'react-bootstrap';
-import { FaSearch } from 'react-icons/lib/fa'
+import { Grid, Row, Col } from 'react-bootstrap';
 
 class FlyerListContainerPage extends React.Component {
 

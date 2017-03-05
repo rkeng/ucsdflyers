@@ -43,6 +43,11 @@ function userStateReducer (state={}, action) {
                 isAutheticated: false
             }) 
         }
+        case 'LOGIN_USER':{
+            return Object.assign({}, state, {
+                isAutheticated: true,
+            }, action.userData)
+        }
         default:
         return state
     }

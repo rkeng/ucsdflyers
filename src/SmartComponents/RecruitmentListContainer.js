@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Grid, Row, Col } from 'react-bootstrap';
-import { FaSearch } from 'react-icons/lib/fa'
-import { ColCenter, SearchBar } from '../Commen'
+import { SearchBar } from '../Commen'
 
 class RecruitmentListContainerPage extends React.Component {
     constructor(props){
