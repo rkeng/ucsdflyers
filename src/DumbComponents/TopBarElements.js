@@ -133,8 +133,10 @@ function TopBarRightNoState(props){
         name = 'LOGIN'
         icon = <FaSignIn />
     }
+    /* commented out for build
     var dropDownStyle={
     }
+    */
     return(
         <div>
             <Nav pullRight navbar>
