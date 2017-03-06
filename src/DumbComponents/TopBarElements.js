@@ -133,7 +133,6 @@ function TopBarRightNoState(props){
         name = 'LOGIN'
         icon = <FaSignIn />
     }
-    
     return(
         <div>
             <Nav pullRight navbar>
