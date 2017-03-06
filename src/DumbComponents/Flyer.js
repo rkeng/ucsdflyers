@@ -9,7 +9,8 @@ class Flyer extends React.Component{
            name,
            location,
            description,
-           date
+           date,
+           time,
        } = this.props.flyer
         return(
                 <Panel header={name} bsStyle="success">
@@ -19,7 +20,8 @@ class Flyer extends React.Component{
                     <p>
                         Location: {location}<br/>
                         Description: {description}<br/>
-                        Date: {date}
+                        Date: {date}<br/>
+                        Time: {time}
                     </p>
                     <p>
                         <Button bsStyle="success">Like</Button>&nbsp;
