@@ -16,6 +16,7 @@ class FlyerListContainerPage extends React.Component {
       sortDate: false,
       sortClub: false
     }
+
   }
 
   clubSort () {
@@ -41,22 +42,18 @@ class FlyerListContainerPage extends React.Component {
   dateSort () {
       const that = this;
 
-      fetchDataAsArray('events')
-      .then(function(events){
-          console.log("reached 1")
-          var newFlyersList = events.sort(compareDates)
-          console.log("reached 2")
-          console.log({newFlyersList})
-          that.setState({
+      var newFlyersList = that.state.flyers
+
+
+      newFlyersList.sort(compareDates)
+
+      that.setState({
               flyers: newFlyersList,
-              sortDate: true,
+              sortDate: false,
               sortClub: false
-          })
-         console.log("reached 3")
-      })
-      .catch(function(error){
-          NotificationManager.error('Something is wrong', 'Opps!', 2222);
-      })
+     })
+
+
   }
 
 
@@ -70,18 +67,21 @@ class FlyerListContainerPage extends React.Component {
     fetchDataAsArray('events')
     .then(function(events){
 
-        var newFlyersList = events
-        console.log(newFlyersList)
-
         var newFlyersList = events.filter(isActive);
 
         that.setState({
-            flyers: newFlyersList
+            flyers: newFlyersList,
+            sortDate: false,
+            sortClub: false
         })
+        console.log(this)
     })
+
     .catch(function(error){
         NotificationManager.error('Something is wrong', 'Opps!', 2222);
     })
+
+
   }
 
   render () {
@@ -94,7 +94,7 @@ class FlyerListContainerPage extends React.Component {
          <Row>
             <ButtonGroup justified>
                 <ButtonGroup>
-                    <Button onClick={this.clubSort}> Sort by Date </Button>
+                    <Button onClick={this.dateSort.bind(this)}> Sort by Date </Button>
                 </ButtonGroup>
                 <ButtonGroup>
                     <Button> Sort by Club</Button>

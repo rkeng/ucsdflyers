@@ -88,7 +88,7 @@ export function stringtoDate(input){
     var parts = input.split('-');
     //please put attention to the month (parts[0]), Javascript counts months from 0:
     // January - 0, February - 1, etc
-    var mydate = new Date(parts[2],parts[0]-1,parts[1]);
+    var mydate = new Date(parts[0],parts[1]-1,parts[2   ]);
     return mydate
 }
 
