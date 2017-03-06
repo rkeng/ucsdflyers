@@ -69,12 +69,12 @@ class FlyerListContainerPage extends React.Component {
 
     fetchDataAsArray('events')
     .then(function(events){
-<<<<<<< HEAD
+
         var newFlyersList = events
         console.log(newFlyersList)
-=======
+
         var newFlyersList = events.filter(isActive);
->>>>>>> refs/remotes/origin/master
+
         that.setState({
             flyers: newFlyersList
         })
@@ -94,10 +94,10 @@ class FlyerListContainerPage extends React.Component {
          <Row>
             <ButtonGroup justified>
                 <ButtonGroup>
-                    <Button> Sort by Date </Button>
+                    <Button onClick={this.clubSort}> Sort by Date </Button>
                 </ButtonGroup>
                 <ButtonGroup>
-                    <Button onClick={this.clubSort}> Sort by Club</Button>
+                    <Button> Sort by Club</Button>
                 </ButtonGroup>
             </ButtonGroup>
          </Row>
