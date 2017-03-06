@@ -20,6 +20,7 @@ import { CreateRecruitment } from './DumbComponents/CreateRecruitment'
 import { CreateFlyer } from './DumbComponents/CreateFlyer'
 import { onAuthStateChanged } from './models'
 import { LoginUserAction, LogoutUserAction } from './State/actions'
+import { MyFlyers } from './DumbComponents/MyFlyers'
 
 
 // combine store and react-router history
@@ -61,7 +62,7 @@ ReactDOM.render(
                 <Route path='create-flyer' component={CreateFlyer}/>
                 <Route path='login' component={Login}/>
                 <Route path='login-org' component={NewOrganizations}/>
-
+                <Route path='my-flyers' component={MyFlyers}/>
             </Route>
             <Route path='*' component={NotFound}/>
         </Router>
