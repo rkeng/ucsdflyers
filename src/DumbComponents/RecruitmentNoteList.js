@@ -14,10 +14,6 @@ class RecruitmentNoteList extends React.Component {
             let date = recruitmentNotesList.dueDate;
             let title = recruitmentNotesList.seeking;
             let email = recruitmentNotesList.email;
-
-            // const titles = title.map((title, index) => {
-            //   return <Badge key={index}> {title} </Badge>
-            // });
             let description = recruitmentNotesList.description;
 
             let header = (
