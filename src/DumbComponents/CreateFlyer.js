@@ -66,6 +66,7 @@ class CreateFlyer extends React.Component {
         description: findDOMNode(this.description).value,
         location: findDOMNode(this.location).value,
         date: this.state.date.substring(0,10),
+        active: true
       }
 
       if(flyer.name === "")
