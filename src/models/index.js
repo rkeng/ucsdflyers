@@ -52,6 +52,36 @@ export function getCurrentUser(){
     })
 }
 
+export function uploadPhotos(databaseRef, storageFilePath, photos) {
+  var files = photos;
+  let storage = firebase.storage()
+  // add image to db
+  files.map((file, index) => {
+      databaseRef.push({
+          imageUrl: "",
+      }).then(function(data) {
+
+        // Upload the image to Firebase Storage.
+        // file will be under <currentUser.uid> folder in Firebase Storage
+        var filePath = storageFilePath + data.key + '_' + file.name;
+          // console.log(data)
+        var imageToStorage = storage.ref(filePath).put(file);
+          imageToStorage.on('state_changed', function(snapshot) {
+              // in-progress state changes
+              // let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              // that.setState({uploadProgress: percentage + "%"})
+          }, function(error) {
+              // unsuccessful upload
+          }, function() {
+              // successful upload
+              data.update({imageUrl: imageToStorage.snapshot.downloadURL})
+          }
+      )}).catch(function(error) {
+        console.error('There was an error uploading a file to Firebase: ' + error);
+      });
+  })
+}
+
 export function createNew(node, item){
     const newRef = db.ref(node).push()
     item['id'] = newRef.key;
