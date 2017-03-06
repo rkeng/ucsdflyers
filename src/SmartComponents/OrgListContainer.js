@@ -1,23 +1,27 @@
 import React from 'react'
-import { Org } from '../DumbComponents/Org'
+import { OrgList } from '../DumbComponents/OrgList'
 import { connect } from 'react-redux'
 import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
-import { FaSearch } from 'react-icons/lib/fa'
-import { FormControl } from 'react-bootstrap';
+import { Grid, Row, Col } from 'react-bootstrap';
+import { SearchBar } from '../Commen'
 
 class OrgListContainerPage extends React.Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      orgs: []
+      orgs: [],
+      search: ''
     }
+  }
+
+  filterSearch(event){
+      this.setState({search: event.target.value.substr(0,20)});
   }
 
   componentWillMount () {
     const that = this;
-
     fetchDataAsArray('clubs')
     .then(function(clubs){
         var newOrgList = clubs
@@ -31,16 +35,24 @@ class OrgListContainerPage extends React.Component {
   }
 
   render () {
+    let filteredOrgs=this.state.orgs.filter(
+      (org)=>{
+        return org.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+        || org.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+      }
+    );
+
     return (
-        <div>
-          <div className='container'>
-            <FaSearch />
-            <FormControl type="text"
-                 placeholder="Search For Orgs"/>
-            </div>
-            <Org orgs={this.state.orgs}/>
+        <Grid>
+            <Row>
+              <SearchBar placeholder='search orgs' value={this.state.search || ''}
+                 onChange={this.filterSearch.bind(this)}/>
+              <Col>
+                <OrgList orgs={filteredOrgs}/>
+              </Col>
+            </Row>
             <NotificationContainer/>
-        </div>
+        </Grid>
     )
   }
 }
