@@ -83,3 +83,32 @@ export function signinOrg(provider){
         })
       })
 }
+
+export function stringtoDate(input){
+    var parts = input.split('-');
+    //please put attention to the month (parts[0]), Javascript counts months from 0:
+    // January - 0, February - 1, etc
+    var mydate = new Date(parts[2],parts[0]-1,parts[1]);
+    return mydate
+}
+
+
+export function compareDates(a,b){
+ var d1 = stringtoDate(a.date)
+ var d2 = stringtoDate(b.date)
+// console.log(d1 , d2)
+ if (d1 < d2)
+   return -1;
+ if (d1 > d2)
+   return 1;
+ return 0;
+}
+export function compareClubs(a,b){
+    var d1 = a.name
+    var d2 = b.name
+    if (d1 < d2)
+      return -1;
+    if (d1 > d2)
+      return 1;
+    return 0;
+}

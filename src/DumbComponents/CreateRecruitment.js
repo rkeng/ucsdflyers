@@ -2,10 +2,14 @@ import React from 'react'
 import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal } from 'react-bootstrap'
 import { Button, ButtonToolbar, Panel } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
+<<<<<<< HEAD
 import DatePicker from 'react-bootstrap-date-picker'
 import {createNew} from '../models/index.js'
 import {getCurrentUser} from '../models/index.js'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
+=======
+import { createNew } from '../models/index.js';
+>>>>>>> 7ea7788598979636d35322e274ae7e11cba2b9e3
 
 const buttonStyles = {maxWidth: 800}
 const textStyles={height:200}
@@ -42,6 +46,7 @@ class CreateRecruitment extends React.Component {
 
   onCreate(event){
     event.preventDefault();
+<<<<<<< HEAD
       const note = {
         name: findDOMNode(this.name).value,
         seeking: findDOMNode(this.seeking).value,
@@ -61,6 +66,15 @@ class CreateRecruitment extends React.Component {
             createNew('recruitmentNotes',note)
             this.setState({ success: true})
       }
+=======
+
+    const note = {
+      name: findDOMNode(this.name).value,
+      title: findDOMNode(this.title).value,
+      description: findDOMNode(this.description).value
+    }
+    createNew('recruitmentNotes',note)
+>>>>>>> 7ea7788598979636d35322e274ae7e11cba2b9e3
   }
 
   getRecruitments () {
