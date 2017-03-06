@@ -3,7 +3,7 @@ import { Panel, Col, Button, Image } from 'react-bootstrap'
 import RED from '../asset/RED.jpg'
 
 class Flyer extends React.Component{
-    
+
     render() {
        const {
            name,
