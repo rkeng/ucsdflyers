@@ -73,7 +73,7 @@ class FlyerListContainerPage extends React.Component {
         var newFlyersList = events
         console.log(newFlyersList)
 
-        var newFlyersList = events.filter(isActive);
+        newFlyersList = events.filter(isActive);
 
         that.setState({
             flyers: newFlyersList

@@ -29,7 +29,7 @@ function NavbarWrapper(props){
     var wrapper = <Navbar collapseOnSelect> {props.children} </Navbar>
     if(props.fixedTop){
         wrapper = <Navbar collapseOnSelect fixedTop> {props.children} </Navbar>
-    } 
+    }
     return(
         <div>{wrapper}</div>
     )
@@ -40,7 +40,7 @@ function TopBarItem(props){
     var icon = props.icon
     return (
         <NavItem className='navbar-btn' {...props} onClick={(e) => changeRoute(e, props)}>
-            {icon} 
+            {icon}
             {name}
         </NavItem>
     )
@@ -97,7 +97,7 @@ class AvatarSelectNoState extends React.Component {
             switch(providerId){
                 case'google.com':{
                     // console.log('user login with google ')
-                    newAva = <Avatar {...that.props} googleId={uid} name={displayName} round size={AvaSize}/>
+                    newAva = <Avatar {...that.props} name={displayName} round size={AvaSize}/>
                     break;
                 }
                 case'facebook.com': {
@@ -127,17 +127,18 @@ function TopBarRightNoState(props){
     if (isAutheticated) { //user logged in
         id='logout'
         name = 'LOGOUT'
-        icon = <FaSignOut />        
+        icon = <FaSignOut />
     } else{  //user not logged in
         id='login'
         name = 'LOGIN'
         icon = <FaSignIn />
     }
+    
     return(
         <div>
             <Nav pullRight navbar>
                 <NavDropdown id='user-avatar-dropdown' title={<AvatarSelect/>}>
-                        <MenuItem>Action</MenuItem>
+                        <MenuItem bsRole='toggle' id='my-flyers' onClick={(e) => changeRoute(e, props)}>My Flyers</MenuItem>
                         <MenuItem bsRole='toggle' id={id} onClick={(e) => changeRoute(e, props)}>{icon}{name}</MenuItem>
                 </NavDropdown>
             </Nav>

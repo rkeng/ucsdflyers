@@ -12,8 +12,12 @@ class OrgListContainerPage extends React.Component {
     super(props)
     this.state = {
       orgs: [],
-      hasMoreItems: true
+      search: ''
     }
+  }
+
+  filterSearch(event){
+      this.setState({search: event.target.value.substr(0,20)});
   }
 
   componentWillMount () {
@@ -22,8 +26,7 @@ class OrgListContainerPage extends React.Component {
     .then(function(clubs){
         var newOrgList = clubs
         that.setState({
-            orgs: newOrgList,
-            hasMoreItems: false
+            orgs: newOrgList
         })
     })
     .catch(function(error){
@@ -32,12 +35,20 @@ class OrgListContainerPage extends React.Component {
   }
 
   render () {
+    let filteredOrgs=this.state.orgs.filter(
+      (org)=>{
+        return org.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+        || org.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+      }
+    );
+
     return (
         <Grid>
             <Row>
-              <SearchBar placeholder='search orgs'/>
+              <SearchBar placeholder='search orgs' value={this.state.search || ''}
+                 onChange={this.filterSearch.bind(this)}/>
               <Col>
-                <OrgList orgs={this.state.orgs}/>
+                <OrgList orgs={filteredOrgs}/>
               </Col>
             </Row>
             <NotificationContainer/>
