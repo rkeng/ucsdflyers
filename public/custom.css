@@ -32,3 +32,27 @@
     background: #007299;
     box-shadow: none;
 }
+
+
+.modal{
+    display: block !important; /* I added this to see the modal, you don't need this */
+}
+
+/* Important part */
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 400px;
+    overflow-y: auto;
+}
+
+
+body {
+    color: white;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
