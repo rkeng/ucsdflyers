@@ -35,7 +35,7 @@ class Flyer extends React.Component{
 
           }
         )
-        let go = this.props.flyer.go
+        //let go = this.props.flyer.go
 
       }
 
