@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Panel, Col } from 'react-bootstrap';
+import { Panel, Col } from 'react-bootstrap';
 import { FaCalendar, FaGroup, FaEnvelope, FaStreetView } from 'react-icons/lib/fa';
 import { Link } from 'react-router'
 import { ColCenter } from '../Commen'
