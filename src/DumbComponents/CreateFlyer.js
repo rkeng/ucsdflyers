@@ -29,7 +29,7 @@ class CreateFlyer extends React.Component {
         description: "",
         location: "",
         files: "",
-
+        active: true
     }
   }
 
