@@ -63,8 +63,8 @@ export function signinOrg(provider){
       // This gives you a Google Access Token. You can use it to access the Google API.
       var user = result.user
       const userField = 'users/' + user.uid;
-      fetchDataOn(userField).then(userField => {     
-            if(!userField.val()){    
+      fetchDataOn(userField).then(userField => {
+            if(!userField.val()){
                 const userFieldData = {
                     displayName: user.displayName,
                     email: user.email,
@@ -72,7 +72,7 @@ export function signinOrg(provider){
                     isAnonymous: user.isAnonymous,
                     photoURL: user.photoURL,
                     providerData: user.providerData,
-                    uid: user.uid,          
+                    uid: user.uid,
                     isOrg: true
                 }
                 firebase.database().ref('users/' + user.uid).set(userFieldData);
