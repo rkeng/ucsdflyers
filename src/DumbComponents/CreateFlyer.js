@@ -19,6 +19,7 @@ class CreateFlyer extends React.Component {
 
 
     this.state = {
+      active: true,
       success: false,
       show: false,
       like: 0,
