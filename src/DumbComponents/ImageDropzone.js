@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaImage, FaClose } from 'react-icons/lib/fa'
 import { Button, Row, Col } from 'react-bootstrap'
-import { firebase } from '../models/FlyersFirebase'
+// import { firebase } from '../models/FlyersFirebase'
 // import { uploadPhotos } from '../models/index.js'
 import Dropzone from 'react-dropzone'
 //import * as storage from '@google-cloud/storage'

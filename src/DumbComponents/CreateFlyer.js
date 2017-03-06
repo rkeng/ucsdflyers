@@ -4,7 +4,6 @@ import { Button, Panel } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker';
 import { createNew, getCurrentUser, uploadImages } from '../models/index.js';
-import { FileUpload } from 'redux-file-upload'
 import { ImageDropzone } from './ImageDropzone.js'
 
 class CreateFlyer extends React.Component {
@@ -12,7 +11,6 @@ class CreateFlyer extends React.Component {
     super(props)
     this.onPreview = this.onPreview.bind(this);
     this.onCreate = this.onCreate.bind(this);
-    this.handleChange = this.handleChange.bind(this);
 
     this.state = {
       show: false,
@@ -53,10 +51,14 @@ class CreateFlyer extends React.Component {
         description: findDOMNode(this.description).value,
         location: findDOMNode(this.location).value,
         date: this.state.date.substring(0,10),
-        clubID: clubID
+        clubID: clubID,
+        images: {}
       }
-      createNew('events',flyer)
-      // uploadImages(databaseRef, storageFilePath, files)
+      let flyerID = createNew('events',flyer)
+
+      // image uploading
+      let files = this.refs.dropzone.state.files
+      uploadImages("events", flyerID, clubID, files)
     })
   }
 
@@ -80,11 +82,6 @@ class CreateFlyer extends React.Component {
   }
 
 
-  handleChange(value){
-    this.setState({
-      date:value
-    })
-  }
 
 
   render() {
@@ -137,8 +134,8 @@ class CreateFlyer extends React.Component {
               <FormControl.Feedback />
             </FormGroup>
 
-            <ImageDropzone ref="files"/>
-
+            <ImageDropzone ref="dropzone"/>
+            <Button onClick={this.handleChange}> files</Button>
           </Form>
         </Col>
       </Row>
