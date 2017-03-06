@@ -18,7 +18,7 @@ class OrgLoginForm extends React.Component {
   ProviderSelect(id){
     var provider
     switch(id){
-      case'org-google': 
+      case'org-google':
       provider = new firebase.auth.GoogleAuthProvider();
       break;
       case 'org-facebook':
@@ -53,7 +53,8 @@ class OrgLoginForm extends React.Component {
             isAnonymous: user.isAnonymous,
             photoURL: user.photoURL,
             providerData: user.providerData,
-            uid: user.uid,          
+            uid: user.uid,
+            likedFlyers: ' ',        
             isOrg: true
         }
         dispatch(LoginOrgAction(userData))
@@ -64,7 +65,7 @@ class OrgLoginForm extends React.Component {
   render () {
     return (
         <form className="text-center well" style={wellStyles}>
-            <Button type='button' bsStyle='danger' block id='org-google' onClick={this.onSignin}><FaGooglePlusSquare size={30}/>Sign in with Google</Button> 
+            <Button type='button' bsStyle='danger' block id='org-google' onClick={this.onSignin}><FaGooglePlusSquare size={30}/>Sign in with Google</Button>
             <Button type='button' bsStyle='info' block id='org-facebook' onClick={this.onSignin}><FaFacebookSquare size={30}/>Sign in with Facebook</Button>
         </form>
     )

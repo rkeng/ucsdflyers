@@ -11,20 +11,23 @@ class OrgListContainerPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      orgs: []
+      orgs: [],
+      search: ''
     }
+  }
+
+  filterSearch(event){
+      this.setState({search: event.target.value.substr(0,20)});
   }
 
   componentWillMount () {
     const that = this;
-
     fetchDataAsArray('clubs')
     .then(function(clubs){
         var newOrgList = clubs
         that.setState({
             orgs: newOrgList
         })
-        console.log(newOrgList);
     })
     .catch(function(error){
         NotificationManager.error('Something is wrong', 'Opps!', 2222);
@@ -32,12 +35,20 @@ class OrgListContainerPage extends React.Component {
   }
 
   render () {
+    let filteredOrgs=this.state.orgs.filter(
+      (org)=>{
+        return org.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+        || org.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+      }
+    );
+
     return (
         <Grid>
             <Row>
-              <SearchBar placeholder='search orgs'/>
+              <SearchBar placeholder='search orgs' value={this.state.search || ''}
+                 onChange={this.filterSearch.bind(this)}/>
               <Col>
-                <OrgList orgs={this.state.orgs}/>
+                <OrgList orgs={filteredOrgs}/>
               </Col>
             </Row>
             <NotificationContainer/>

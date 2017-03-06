@@ -58,13 +58,28 @@ export function createNew(node, item){
     newRef.set(item)
 }
 
+export function transaction(node, newVal){
+    db.ref(node).transaction(currentVal=>{
+      return newVal
+    })
+}
+
+export function update(node, data){
+    db.ref(node).update(data)
+}
+
+
+export function remove(node){
+    db.ref(node).remove()
+}
+
 export function signinOrg(provider){
     firebase.auth().signInWithPopup(provider).then(function(result) { //result has a credential and user
       // This gives you a Google Access Token. You can use it to access the Google API.
       var user = result.user
       const userField = 'users/' + user.uid;
-      fetchDataOn(userField).then(userField => {     
-            if(!userField.val()){    
+      fetchDataOn(userField).then(userField => {
+            if(!userField.val()){
                 const userFieldData = {
                     displayName: user.displayName,
                     email: user.email,
@@ -72,7 +87,7 @@ export function signinOrg(provider){
                     isAnonymous: user.isAnonymous,
                     photoURL: user.photoURL,
                     providerData: user.providerData,
-                    uid: user.uid,          
+                    uid: user.uid,
                     isOrg: true
                 }
                 firebase.database().ref('users/' + user.uid).set(userFieldData);
@@ -82,4 +97,33 @@ export function signinOrg(provider){
             browserHistory.push('/create-flyer')
         })
       })
+}
+
+export function stringtoDate(input){
+    var parts = input.split('-');
+    //please put attention to the month (parts[0]), Javascript counts months from 0:
+    // January - 0, February - 1, etc
+    var mydate = new Date(parts[2],parts[0]-1,parts[1]);
+    return mydate
+}
+
+
+export function compareDates(a,b){
+ var d1 = stringtoDate(a.date)
+ var d2 = stringtoDate(b.date)
+// console.log(d1 , d2)
+ if (d1 < d2)
+   return -1;
+ if (d1 > d2)
+   return 1;
+ return 0;
+}
+export function compareClubs(a,b){
+    var d1 = a.name
+    var d2 = b.name
+    if (d1 < d2)
+      return -1;
+    if (d1 > d2)
+      return 1;
+    return 0;
 }
