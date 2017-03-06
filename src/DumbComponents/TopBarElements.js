@@ -133,11 +133,13 @@ function TopBarRightNoState(props){
         name = 'LOGIN'
         icon = <FaSignIn />
     }
+    var dropDownStyle={
+    }
     return(
         <div>
             <Nav pullRight navbar>
                 <NavDropdown id='user-avatar-dropdown' title={<AvatarSelect/>}>
-                        <MenuItem>Action</MenuItem>
+                        <MenuItem bsRole='toggle' id='my-flyers' onClick={(e) => changeRoute(e, props)}>My Flyers</MenuItem>
                         <MenuItem bsRole='toggle' id={id} onClick={(e) => changeRoute(e, props)}>{icon}{name}</MenuItem>
                 </NavDropdown>
             </Nav>
