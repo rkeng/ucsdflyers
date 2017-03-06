@@ -1,6 +1,33 @@
 import React from 'react'
-import { Panel, Col, Button, Image } from 'react-bootstrap'
+import { Panel, Carousel, Button, Image} from 'react-bootstrap'
 import RED from '../asset/RED.jpg'
+import { Col} from 'react-bootstrap'
+
+const carouselInstance = (
+  <Carousel>
+    <Carousel.Item>
+       <Image src={RED} responsive/><br/>
+      <Carousel.Caption>
+        <h3>First slide label</h3>
+        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+      </Carousel.Caption>
+    </Carousel.Item>
+    <Carousel.Item>
+       <Image src={RED} responsive/><br/>
+      <Carousel.Caption>
+        <h3>Second slide label</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </Carousel.Caption>
+    </Carousel.Item>
+    <Carousel.Item>
+       <Image src={RED} responsive/><br/>
+      <Carousel.Caption>
+        <h3>Third slide label</h3>
+        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+      </Carousel.Caption>
+    </Carousel.Item>
+  </Carousel>
+);
 
 class Flyer extends React.Component{
     
@@ -12,9 +39,12 @@ class Flyer extends React.Component{
            date
        } = this.props.flyer
         return(
-                <Panel header={name} bsStyle="success">
-                  <Col sm={12} mdOffset={3} md={8}>
-                    <Image width={370} height={400} alt="400x400" src={RED} responsive/><br/>
+                <Col sm={6} md={4}>
+                
+                <Panel footer={name} bsStyle="success">
+                    
+                    {carouselInstance}
+
                     <h3>{name}</h3>
                     <p>
                         Location: {location}<br/>
@@ -25,8 +55,9 @@ class Flyer extends React.Component{
                         <Button bsStyle="success">Like</Button>&nbsp;
                         <Button bsStyle="primary">Wanna Go</Button>
                     </p>
-                  </Col>
                 </Panel>
+                
+                </Col>
         )
     }
 }
