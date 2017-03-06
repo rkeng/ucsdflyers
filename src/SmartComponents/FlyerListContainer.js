@@ -5,14 +5,20 @@ import { fetchDataAsArray } from '../models'
 import { SearchBar } from '../Commen'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Grid, Row, Col } from 'react-bootstrap';
+import { Loader } from '../DumbComponents/Loader'
 
 class FlyerListContainerPage extends React.Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      flyers: []
+      flyers: [],
+      loading: true
     }
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ loading: false }), 2000);
   }
 
   componentWillMount () {
@@ -22,7 +28,7 @@ class FlyerListContainerPage extends React.Component {
     .then(function(events){
         var newFlyersList = events
         that.setState({
-            flyers: newFlyersList
+            flyers: newFlyersList,
         })
     })
     .catch(function(error){
@@ -31,6 +37,9 @@ class FlyerListContainerPage extends React.Component {
   }
 
   render () {
+    if(this.state.loading)
+    return(<Loader />)
+    else{
     return (
         <Grid>
           <NotificationContainer/>
@@ -44,6 +53,7 @@ class FlyerListContainerPage extends React.Component {
           </Row>
         </Grid>
     )
+  }
   }
 }
 

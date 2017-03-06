@@ -2,8 +2,10 @@ import React from 'react';
 import { Panel, PanelGroup } from 'react-bootstrap';
 import { Org } from './Org';
 import { ColCenter } from '../Commen'
-
 class OrgList extends React.Component {
+  constructor (props) {
+    super(props);
+  }
 
     getOrgList () {
         return this.props.orgs.map((org, index) => (
@@ -23,8 +25,8 @@ class OrgList extends React.Component {
                     {this.getOrgList()}
                 </PanelGroup>
             </ColCenter>
-        )
-    }
+          )
+      }
 }
 
 OrgList.propTypes = {

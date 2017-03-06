@@ -5,14 +5,19 @@ import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Grid, Row, Col } from 'react-bootstrap';
 import { SearchBar } from '../Commen'
-
+import { Loader } from '../DumbComponents/Loader'
 class OrgListContainerPage extends React.Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      orgs: []
+      orgs: [],
+      loading: true
     }
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ loading: false }),2000);
   }
 
   componentWillMount () {
@@ -22,7 +27,7 @@ class OrgListContainerPage extends React.Component {
     .then(function(clubs){
         var newOrgList = clubs
         that.setState({
-            orgs: newOrgList
+            orgs: newOrgList,
         })
         console.log(newOrgList);
     })
@@ -32,6 +37,9 @@ class OrgListContainerPage extends React.Component {
   }
 
   render () {
+    if(this.state.loading)
+    return(<Loader />)
+    else{
     return (
         <Grid>
             <Row>
@@ -43,6 +51,7 @@ class OrgListContainerPage extends React.Component {
             <NotificationContainer/>
         </Grid>
     )
+  }
   }
 }
 

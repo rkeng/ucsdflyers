@@ -5,13 +5,18 @@ import { fetchDataAsArray } from '../models'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Grid, Row, Col } from 'react-bootstrap';
 import { SearchBar } from '../Commen'
-
+import { Loader } from '../DumbComponents/Loader'
 class RecruitmentListContainerPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            recruitmentNotesList: []
+            recruitmentNotesList: [],
+            loading: true
         }
+    }
+
+    componentDidMount() {
+      setTimeout(() => this.setState({ loading: false }),2000);
     }
 
     componentWillMount () {
@@ -31,6 +36,9 @@ class RecruitmentListContainerPage extends React.Component {
 
 
     render () {
+      if(this.state.loading)
+      return <Loader />
+      else{
         return (
           <Grid>
             <Row>
@@ -44,6 +52,7 @@ class RecruitmentListContainerPage extends React.Component {
             <NotificationContainer/>
           </Grid>
         );
+      }
     }
 
 }
