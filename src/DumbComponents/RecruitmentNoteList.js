@@ -16,9 +16,9 @@ class RecruitmentNoteList extends React.Component {
             let title = recruitmentNotesList.seeking;
             let email = recruitmentNotesList.email;
 
-            const titles = title.map((title, index) => {
-              return <Badge key={index}> {title} </Badge>
-            });
+            // const titles = title.map((title, index) => {
+            //   return <Badge key={index}> {title} </Badge>
+            // });
             let description = recruitmentNotesList.description;
 
             let header = (
@@ -30,7 +30,7 @@ class RecruitmentNoteList extends React.Component {
             return(
               <Panel bsStyle='info' header={header}>
                 <Col sm={12} mdOffset={3} md={8} key={index}>
-                  <h5><FaStreetView/> {titles}</h5>
+                  <h5><FaStreetView/> {title}</h5>
                   <h5><FaCalendar/> Due date: {date} <br/></h5>
                   <h5><FaGroup/> Organization: {name} <br/></h5>
                   <h5><FaEnvelope/> Email: {email} <br/></h5>
