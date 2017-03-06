@@ -39,7 +39,6 @@ class Flyer extends React.Component{
 
       }
 
-
     render() {
         const {
            name,
@@ -49,6 +48,7 @@ class Flyer extends React.Component{
            like,
            go
          } = this.props.flyer
+          
         return(
                 <Panel header={name} bsStyle="success">
                   <Col sm={12} mdOffset={3} md={8}>

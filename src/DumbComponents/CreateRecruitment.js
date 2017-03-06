@@ -2,6 +2,7 @@ import React from 'react'
 import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal } from 'react-bootstrap'
 import { Button, ButtonToolbar, Badge, Panel } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
+import { createNew } from '../models/index.js';
 
 const buttonStyles = {maxWidth: 800}
 const textStyles={height:200}
@@ -34,12 +35,12 @@ class CreateRecruitment extends React.Component {
   onCreate(event){
     event.preventDefault();
 
-    // const note = {
-    //   name: findDOMNode(this.name).value,
-    //   title: findDOMNode(this.title).value,
-    //   description: findDOMNode(this.description).value
-    // }
-    // createNew('recruitmentNotes',note)
+    const note = {
+      name: findDOMNode(this.name).value,
+      title: findDOMNode(this.title).value,
+      description: findDOMNode(this.description).value
+    }
+    createNew('recruitmentNotes',note)
   }
 
   getRecruitments () {

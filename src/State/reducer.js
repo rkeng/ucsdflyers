@@ -53,6 +53,7 @@ function userStateReducer (state={}, action) {
     }
 }
 
+
 const rootReducer = combineReducers({
   routing: routerReducer, // connect routing with application state
   user: userStateReducer
