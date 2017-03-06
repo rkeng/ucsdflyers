@@ -70,11 +70,11 @@ class CreateFlyer extends React.Component {
 
       if(flyer.name == "")
       NotificationManager.error('Error', 'Please enter valid name!', 2222);
-      else if(flyer.time == "")
+      else if(flyer.time === "")
       NotificationManager.error('Error', 'Please enter valid time!', 2222);
-      else if(flyer.description == "")
+      else if(flyer.description === "")
       NotificationManager.error('Error', 'Please enter valid description!', 2222);
-      else if(flyer.location == "")
+      else if(flyer.location === "")
       NotificationManager.error('Error', 'Please enter valid location!', 2222);
       else{
       createNew('events',flyer)
