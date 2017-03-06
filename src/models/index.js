@@ -59,20 +59,12 @@ export function uploadImages(databaseRef, itemID, userID, files) {
   let storageFilePath = userID + '/' + databaseRef + '/' + itemID
   let storage = firebase.storage()
 
-  var images = {}
-
-  console.log(dbRef)
-  console.log(storage.ref(storageFilePath))
   // add image to db
   files.map((file, index) => {
       dbRef.push({}).then(function(data) {
 
         // Upload the image to Firebase Storage.
-        // var keyString = data.key
-        // console.log(data)
         var filePath = storageFilePath + data.key + '/' + file.name;
-          // console.log(data)
-        // let keyString = data.key
         var imageToStorage = storage.ref(filePath).put(file);
         imageToStorage.on('state_changed', function(snapshot) {
               // in-progress state changes
@@ -82,11 +74,9 @@ export function uploadImages(databaseRef, itemID, userID, files) {
               // unsuccessful upload
         }, function() {
             // successful upload
-            // console.log("keyString: " + keyString)
-
-            images[data.key] = imageToStorage.snapshot.downloadURL
-            // data.update(images)
-            console.log(images)
+            
+            // update in Firebase DB
+            data.update({imageUrl: imageToStorage.snapshot.downloadURL})
       }
       )}).catch(function(error) {
         console.error('There was an error uploading a file to Firebase: ' + error);

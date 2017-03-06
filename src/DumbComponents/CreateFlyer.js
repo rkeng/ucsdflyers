@@ -46,7 +46,7 @@ class CreateFlyer extends React.Component {
       const clubID = club.uid;
       console.log('clubID' + clubID);
       const flyer = {
-        title: findDOMNode(this.title).value,
+        name: findDOMNode(this.title).value,
         time: findDOMNode(this.time).value,
         description: findDOMNode(this.description).value,
         location: findDOMNode(this.location).value,
