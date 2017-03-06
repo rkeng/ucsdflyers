@@ -97,7 +97,7 @@ class AvatarSelectNoState extends React.Component {
             switch(providerId){
                 case'google.com':{
                     // console.log('user login with google ')
-                    newAva = <Avatar {...that.props} googleId={uid} name={displayName} round size={AvaSize}/>
+                    newAva = <Avatar {...that.props} name={displayName} round size={AvaSize}/>
                     break;
                 }
                 case'facebook.com': {
