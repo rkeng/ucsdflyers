@@ -1,7 +1,7 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
-import { Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
-import { FaNewspaperO, FaGroup, FaStickyNoteO, FaChild, FaSignIn, FaSignOut } from 'react-icons/lib/fa'
+import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Image } from 'react-bootstrap'
+import { FaNewspaperO, FaGroup, FaStickyNoteO, FaChild, FaSignIn, FaSignOut, FaHeartO } from 'react-icons/lib/fa'
 import { connect } from 'react-redux'
 import { LogoutUserAction } from '../State/actions'
 import { signOutUser } from '../models'
@@ -31,7 +31,7 @@ function NavbarWrapper(props){
         wrapper = <Navbar collapseOnSelect fixedTop> {props.children} </Navbar>
     } 
     return(
-        <div>{wrapper}</div>
+        <span>{wrapper}</span>
     )
 }
 
@@ -39,7 +39,7 @@ function TopBarItem(props){
     var name = props.name
     var icon = props.icon
     return (
-        <NavItem className='navbar-btn' {...props} onClick={(e) => changeRoute(e, props)}>
+        <NavItem {...props} className='topbar-items' onClick={(e) => changeRoute(e, props)}>
             {icon} 
             {name}
         </NavItem>
@@ -48,27 +48,23 @@ function TopBarItem(props){
 
 function TopBarIcon(props){
     return (
-        <div>
             <Navbar.Header>
-                <Navbar.Brand className='navbar-btn'>
-                    <img width={200} height={140} src={logoText} alt=""/>
+                <Navbar.Brand>
+                    <Image className='icon-img' width={200} height={100} src={logoText} alt=""/>
                 </Navbar.Brand>
                 <Navbar.Toggle/>
             </Navbar.Header>
-        </div>
     )
 }
 
  function TopBarLeftNoState(props){
     return (
-        <div>
-            <Nav>
+            <Nav>   
                 <TopBarItem id='events' name='EVENTS' icon={<FaNewspaperO />} />
                 <TopBarItem id='org' name='ORGANIZATIONS' icon={<FaGroup />} />
                 <TopBarItem id='recruitments' name='RECRUITMENTS' icon={<FaStickyNoteO />} />
                 <TopBarItem id='about' name='ABOUT' icon={<FaChild />} />
             </Nav>
-        </div>
     )
 }
 /* use this print state; only for development purpose
@@ -81,7 +77,7 @@ function TopBarIcon(props){
 class AvatarSelectNoState extends React.Component {
     constructor(props){
         super(props)
-        var AvaSize = 40
+        var AvaSize = 25
         this.state={
             Ava:  <Avatar {...props} src={person} round size={AvaSize}/>
         }
@@ -91,33 +87,33 @@ class AvatarSelectNoState extends React.Component {
         var that = this
         const { isAutheticated, displayName } = that.props.user
         var newAva
-        var AvaSize = 40
+        var AvaSize = 25
         if(isAutheticated){
             const { providerId, uid } = that.props.user.providerData[0]
             switch(providerId){
                 case'google.com':{
                     // console.log('user login with google ')
-                    newAva = <Avatar {...that.props} name={displayName} round size={AvaSize}/>
+                    newAva = <Avatar {...that.props} name={displayName} round size={AvaSize} textSizeRatio={2.5} />
                     break;
                 }
                 case'facebook.com': {
                     // console.log('user login with facebook ')
-                    newAva = <Avatar {...that.props} facebookId={uid} name={displayName} round size={AvaSize}/>
+                    newAva = <Avatar {...that.props} facebookId={uid} name={displayName} round size={AvaSize} textSizeRatio={2.5}/>
                     break;
                 }
                 case'twitter.com':{
                     // console.log('user login with twitter ')
-                    newAva = <Avatar {...that.props} twitterId={uid} name={displayName} round size={AvaSize}/>
+                    newAva = <Avatar {...that.props} twitterId={uid} name={displayName} round size={AvaSize} textSizeRatio={2.5}/>
                     break;
                 }
                 default:
-                newAva = <Avatar {...that.props} src={person} round size={AvaSize}/>;
+                newAva = <Avatar {...that.props} src={person} round />;
             }
             that.state={
                 Ava:  newAva
             }
         }
-        return <span>{this.state.Ava}</span>
+        return <i className='user-avatar-image'>{this.state.Ava}</i>
     }
 }
 
@@ -133,17 +129,14 @@ function TopBarRightNoState(props){
         name = 'LOGIN'
         icon = <FaSignIn />
     }
-    var dropDownStyle={
-    }
+
     return(
-        <div>
-            <Nav pullRight navbar>
-                <NavDropdown id='user-avatar-dropdown' title={<AvatarSelect/>}>
-                        <MenuItem bsRole='toggle' id='my-flyers' onClick={(e) => changeRoute(e, props)}>My Flyers</MenuItem>
-                        <MenuItem bsRole='toggle' id={id} onClick={(e) => changeRoute(e, props)}>{icon}{name}</MenuItem>
+            <Nav pullRight>
+                <NavDropdown id='user-avatar-dropdown' title={<AvatarSelect/>} >
+                        <MenuItem id='my-flyers' onClick={(e) => changeRoute(e, props)}><FaHeartO/>My Flyers</MenuItem>
+                        <MenuItem id={id} onClick={(e) => changeRoute(e, props)}>{icon}{name}</MenuItem>
                 </NavDropdown>
             </Nav>
-        </div>
     )
 }
 

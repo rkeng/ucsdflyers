@@ -79,7 +79,7 @@ export function signinOrg(provider){
                 firebase.database().ref('organizations/' + user.uid).set(user.uid);
             }
             //manully redict since auto-redirect is not working
-            browserHistory.push('/create-flyer')
+            browserHistory.push('/org-profile')
         })
       })
 }
