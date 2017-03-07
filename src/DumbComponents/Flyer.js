@@ -1,5 +1,5 @@
 import React from 'react'
-import { Panel, Carousel, Col, Image, Button, Grid, Row } from 'react-bootstrap'
+import { Carousel, Col, Image, Button } from 'react-bootstrap'
 import { FaThumbsOUp, FaThumbsUp, FaCheckCircleO, FaCheckCircle } from 'react-icons/lib/fa';
 import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import RED from '../asset/RED.jpg'
@@ -70,7 +70,6 @@ class Flyer extends React.Component{
            location,
            description,
            date,
-           time,
            like,
            go
          } = this.props.flyer

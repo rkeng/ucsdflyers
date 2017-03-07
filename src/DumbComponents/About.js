@@ -107,7 +107,7 @@ class InfoCard extends React.Component{
 
     }
    render(){
-          const { name, role, intro, image, color} = this.props.member
+          const { role, intro, image, color} = this.props.member
       return(
 
         <Col sm={6} mdOffset={2} md={3}>
@@ -116,7 +116,7 @@ class InfoCard extends React.Component{
           <br/>
           <br/>
           <div className="text-center">
-            <AnimakitRotator side ={this.state.index} background={color} shadow>
+            <AnimakitRotator side={this.state.index} background={color} shadow>
               <Image key="image" onClick={this.changeFace.bind(this)} width={300} height={300} alt="" src={image} /><br/>
               <div key="role" onClick={this.changeFace.bind(this)}>
                 <h3>{role}</h3>

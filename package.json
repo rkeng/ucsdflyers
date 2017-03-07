@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "animakit-expander": "^2.1.0",
+    "animakit-rotator": "^2.1.0",
     "eslint-plugin-react": "^6.9.0",
     "firebase": "^3.7.0",
     "firebaseui": "^1.0.0",
