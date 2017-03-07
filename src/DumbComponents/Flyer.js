@@ -60,13 +60,15 @@ class OneFlyer extends React.Component{
       this.onLike = this.onLike.bind(this)
     }
 
-      // update('events/'+this.props.flyer.id+'/go', this.state.go
-
     onLike(){
       this.setState({
           liked: !this.state.liked
       })
-      
+      const { id } = this.props.flyer
+      transaction(`events/${id}/likes`).then(likes => {
+        if(!likes)
+          return likes + 10
+      })
     }
 
     componentWillUnmount(){
@@ -76,13 +78,14 @@ class OneFlyer extends React.Component{
       var thisFlyer = {}
       thisFlyer[`${id}`] = id
       if(liked && !userAlreadyLike){
-        update('users/' + uid + '/FlyersLiked', thisFlyer)
-        transaction('events/'+ id +'/like').then(likes => likes + 1)
+        update(`users/${uid}/FlyersLiked`, thisFlyer)
+        console.log('the id of the flyer that I am trying to decrement its count', id)
+        transaction(`events/${id}/likes`).then(likes => likes + 1)
       } 
       if(!liked && userAlreadyLike ){
           // console.log('user unliked the flyer and user has previously liked the flyer')
-          remove('users/' + uid + '/FlyersLiked/', thisFlyer)
-          transaction('events/'+ id +'/like').then(likes => likes - 1)
+          remove(`users/${uid}/FlyersLiked/`, thisFlyer)
+          transaction(`events/${id}/likes`).then(likes => likes - 1)
       }
       //for those flyers that are (!liked && !userAlreadyLike), do nothing with them
     }

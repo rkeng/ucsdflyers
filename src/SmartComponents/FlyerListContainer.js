@@ -24,10 +24,7 @@ class FlyerListContainerPage extends React.Component {
 
       fetchDataAsArray('events')
       .then(function(events){
-          console.log("reached 1")
           var newFlyersList = events.sort(compareClubs)
-          console.log("reached 2")
-          console.log(newFlyersList)
           that.setState({
               flyers: newFlyersList,
               sortDate: false,
@@ -73,7 +70,6 @@ class FlyerListContainerPage extends React.Component {
             sortDate: false,
             sortClub: false
         })
-        console.log(this)
     })
 
     .catch(function(error){

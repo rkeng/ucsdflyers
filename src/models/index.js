@@ -96,9 +96,10 @@ export function createNew(node, item){
 export function transaction(node){
 
     return new Promise((resolve, reject) => {
-      return db.ref(node).transaction(currentVal => {
+      return db.ref(node).transaction((currentVal) => {
+        console.log('what is my currentVal that I am transactioning?', currentVal)
         return resolve(currentVal)
-      })
+      }, function(){}, true)
     })
 }
 
