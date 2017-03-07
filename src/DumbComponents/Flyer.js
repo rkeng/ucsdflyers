@@ -1,7 +1,7 @@
 import React from 'react'
 import { Carousel, Col, Image, Button } from 'react-bootstrap'
 import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
-import { transaction, fetchDataOn, remove, update } from '../models'
+import { fetchDataOn, remove, update, set } from '../models'
 import { connect } from 'react-redux'
 import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
 import RED from '../asset/RED.jpg'
@@ -64,28 +64,36 @@ class OneFlyer extends React.Component{
       this.setState({
           liked: !this.state.liked
       })
+    }
+
+    updateLikes(update){
       const { id } = this.props.flyer
-      transaction(`events/${id}/likes`).then(likes => {
-        if(!likes)
-          return likes + 10
+      fetchDataOn(`events/${id}/likes`).then(snap => {
+          var value = snap.val();
+          if(typeof value === 'object'){
+            throw new Error('Single Update is only allow on non-object field of the database')
+          } else {
+            set(`events/${id}/likes`, value+update)
+          }
       })
     }
 
     componentWillUnmount(){
       const { uid } = this.props.user
       const { id } = this.props.flyer
-      const { liked, userAlreadyLike } = this.state
+      const { liked, userAlreadyLike, isAutheticated } = this.state
       var thisFlyer = {}
       thisFlyer[`${id}`] = id
-      if(liked && !userAlreadyLike){
+      if(liked && !userAlreadyLike && isAutheticated){//only the loggedin user's likes are counted
         update(`users/${uid}/FlyersLiked`, thisFlyer)
-        console.log('the id of the flyer that I am trying to decrement its count', id)
-        transaction(`events/${id}/likes`).then(likes => likes + 1)
+        // transaction(`events/${id}/likes`).then(likes => likes + 1)
+        this.updateLikes(+1)
       } 
       if(!liked && userAlreadyLike ){
           // console.log('user unliked the flyer and user has previously liked the flyer')
           remove(`users/${uid}/FlyersLiked/`, thisFlyer)
-          transaction(`events/${id}/likes`).then(likes => likes - 1)
+          // transaction(`events/${id}/likes`).then(likes => likes - 1)
+          this.updateLikes(-1)
       }
       //for those flyers that are (!liked && !userAlreadyLike), do nothing with them
     }

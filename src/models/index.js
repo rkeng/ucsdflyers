@@ -2,6 +2,7 @@ import { firebase } from './FlyersFirebase';
 import { browserHistory } from 'react-router'
 
 const db = firebase.database();
+let storage = firebase.storage();
 
 
 /* fetch data from database
@@ -35,7 +36,6 @@ export function uploadImages(databaseRef, itemID, userID, files) {
   // let dbRef = db.ref(databaseRef )
   let dbRef = db.ref(databaseRef + '/' + itemID + '/images')
   let storageFilePath = userID + '/' + databaseRef + '/' + itemID
-  let storage = firebase.storage()
 
   // add image to db
   files.map((file, index) => {
@@ -93,14 +93,20 @@ export function createNew(node, item){
     return newRef.key
 }
 
-export function transaction(node){
-
+export function transaction(node, newData){
+    //don't use it
+    /*
     return new Promise((resolve, reject) => {
       return db.ref(node).transaction((currentVal) => {
         console.log('what is my currentVal that I am transactioning?', currentVal)
         return resolve(currentVal)
       }, function(){}, true)
     })
+    */
+}
+
+export function set(node, data){
+    db.ref(node).set(data)
 }
 
 export function update(node, data){
@@ -139,31 +145,3 @@ export function signinOrg(provider){
       })
 }
 
-export function stringtoDate(input){
-    var parts = input.split('-');
-    //please put attention to the month (parts[0]), Javascript counts months from 0:
-    // January - 0, February - 1, etc
-    var mydate = new Date(parts[0],parts[1]-1,parts[2   ]);
-    return mydate
-}
-
-
-export function compareDates(a,b){
- var d1 = stringtoDate(a.date)
- var d2 = stringtoDate(b.date)
-// console.log(d1 , d2)
- if (d1 < d2)
-   return -1;
- if (d1 > d2)
-   return 1;
- return 0;
-}
-export function compareClubs(a,b){
-    var d1 = a.name
-    var d2 = b.name
-    if (d1 < d2)
-      return -1;
-    if (d1 > d2)
-      return 1;
-    return 0;
-}
