@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal } from 'react-bootstrap'
+import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal, Image } from 'react-bootstrap'
 import { Button, Panel } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker';
@@ -8,6 +8,7 @@ import { Link } from 'react-router';
 import { createNew, getCurrentUser, uploadImages } from '../models/index.js';
 import { ImageDropzone } from './ImageDropzone.js';
 import { Flyer } from './Flyer'
+import Logo from '../asset/logoHorizontal.png'
 
 
 
@@ -133,13 +134,13 @@ class CreateFlyer extends React.Component {
     return (
       <Grid>
         <Row className="create-flyer">
-          <Col md={8} mdOffset={2}>
+          <Col sm={12} md={8} mdOffset={2}>
 
           <PageHeader>Create Event <small>Name of club</small></PageHeader>
 
           <Form>
             <FormGroup>
-              <ControlLabel>Name</ControlLabel>
+              <ControlLabel>What is the name of your upcoming event?</ControlLabel>
 
               <FormControl
                 type="text"
@@ -149,7 +150,7 @@ class CreateFlyer extends React.Component {
             </FormGroup>
 
             <FormGroup>
-              <ControlLabel>Date</ControlLabel>
+              <ControlLabel>When will it take place></ControlLabel>
               <DatePicker onChange={this.handleChange} value={this.state.date} />
               <ControlLabel>Time</ControlLabel>
 
@@ -161,7 +162,17 @@ class CreateFlyer extends React.Component {
             </FormGroup>
 
             <FormGroup>
-              <ControlLabel>Description</ControlLabel>
+              <ControlLabel>Where is the new event going to be?</ControlLabel>
+              <FormControl
+                componentClass="text"
+                placeholder="Enter location"
+                ref={(node) => {this.location = node}}
+              />
+              <FormControl.Feedback />
+            </FormGroup>
+
+            <FormGroup>
+              <ControlLabel>Please give students a detail description of your event</ControlLabel>
               <FormControl
                 componentClass="textarea"
                 placeholder="Enter description"
@@ -169,15 +180,6 @@ class CreateFlyer extends React.Component {
               />
             </FormGroup>
 
-            <FormGroup>
-              <ControlLabel>Location</ControlLabel>
-              <FormControl
-                componentClass="textarea"
-                placeholder="Enter location"
-                ref={(node) => {this.location = node}}
-              />
-              <FormControl.Feedback />
-            </FormGroup>
 
             <ImageDropzone ref="dropzone"/>
 
@@ -197,20 +199,21 @@ class CreateFlyer extends React.Component {
           </Button>
         </Col>
 
-        <Col md={1} mdPush={1}>
+        <Col md={1} >
           <Button
             bsStyle="success"
             bsSize="small"
-            onClick={this.onPreview} >Preview flyer page
+            onClick={this.onPreview}>
+            Preview flyer page
           </Button>
 
           <Modal show={this.state.success} onHide={this.close}>
-              <Modal.Header>
-                 <Modal.Title>Success! </Modal.Title>
-               </Modal.Header>
 
             <Modal.Body>
-                <div> Flyer was created </div>
+               <Modal.Title className='text-center' style={{color: 'blue'}}>
+                  <h2>Your event is successfully created!!!</h2> 
+                </Modal.Title>
+               <Image src={Logo} style={{marginTop:100}} responsive/>
             </Modal.Body>
 
             <Modal.Footer>
