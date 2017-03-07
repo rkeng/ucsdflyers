@@ -56,7 +56,7 @@ class FlyerListContainerPage extends React.Component {
 
   render () {
     const sortByWhat = this.state.sortDate ? 'past' : 'recent'
-    const sortBtnName = this.state.sortDate ? 'farthest future' : 'closet upcoming'
+    const sortBtnName = this.state.sortDate ? 'farthest future' : 'closest upcoming'
     return (
         <Grid>
           <NotificationContainer/>

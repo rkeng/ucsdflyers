@@ -119,7 +119,7 @@ class OneFlyer extends React.Component{
           )
         return(
                 <Col sm={12} md={4}>
-                   <Card style={{color:'black'}} raised>
+                   <Card raised>
                     <CardMedia
                       aspectRatio="wide"
                       children={carouselInstance}

@@ -7,6 +7,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router';
 import { createNew, getCurrentUser, uploadImages } from '../models/index.js';
 import { ImageDropzone } from './ImageDropzone.js';
+import { Flyer } from './Flyer'
 
 
 
@@ -70,7 +71,6 @@ class CreateFlyer extends React.Component {
         location: findDOMNode(this.location).value,
         date: this.state.date.substring(0,10),
         active: true,
-        go: 0,
         like: 0,
       }
 
@@ -85,11 +85,10 @@ class CreateFlyer extends React.Component {
       else{
       this.setState({ success: true})
       let flyerID = createNew('events',flyer)
-
-     // image uploading
-     let files = this.refs.dropzone.state.files
-     uploadImages("events", flyerID, clubID, files)
-    }
+       // image uploading
+       let files = this.refs.dropzone.state.files
+       uploadImages("events", flyerID, clubID, files)
+      }
   })
   }
 
@@ -97,21 +96,30 @@ class CreateFlyer extends React.Component {
 
   getFlyer () {
       var ourDate = this.state.date
-      var x = ourDate.substring(0,10)
-
+      var date = ourDate.substring(0,10)
+      const { name, location, description } = this.state
+      const flyerData = {
+        name: name,
+        location: location,
+        description: description,
+        date: date
+      }
       return(
-        <Panel key={this.state.name} bsStyle='success'
-            header={this.state.name}>
-          <h3>{this.state.name}</h3>
-            <p>
-              Date: {x} <br />
-              Time: {this.state.time}<br />
-              Description: {this.state.description}<br />
-              Location: {this.state.location}
-            </p>
-        </Panel>
+          <Col sm={12} md={12}>        
+              <Flyer flyer={flyerData} />
+          </Col>
       )
   }
+        // <Panel key={this.state.name} bsStyle='success'
+        //     header={this.state.name}>
+        //   <h3>{this.state.name}</h3>
+        //     <p>
+        //       Date: {x} <br />
+        //       Time: {this.state.time}<br />
+        //       Description: {this.state.description}<br />
+        //       Location: {this.state.location}
+        //     </p>
+        // </Panel>
 
 
   handleChange(value){
@@ -215,7 +223,7 @@ class CreateFlyer extends React.Component {
           <Modal show={this.state.show} onHide={this.close}>
           {/*}<Flyer flyer={this.state}/>*/}
             <Modal.Body>
-                <div> { this.getFlyer() } </div>
+                { this.getFlyer() }
             </Modal.Body>
 
             <Modal.Footer>
