@@ -30,6 +30,40 @@ export function signOutUser(){
     return firebase.auth().signOut()
 }
 
+// linked to ImageDropzone
+export function uploadImages(databaseRef, itemID, userID, files) {
+  // let dbRef = db.ref(databaseRef )
+  let dbRef = db.ref(databaseRef + '/' + itemID + '/images')
+  let storageFilePath = userID + '/' + databaseRef + '/' + itemID
+  let storage = firebase.storage()
+
+  // add image to db
+  files.map((file, index) => {
+      dbRef.push({}).then(function(data) {
+
+        // Upload the image to Firebase Storage.
+        var filePath = storageFilePath + data.key + '/' + file.name;
+        var imageToStorage = storage.ref(filePath).put(file);
+        imageToStorage.on('state_changed', function(snapshot) {
+              // in-progress state changes
+              // let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              // that.setState({uploadProgress: percentage + "%"})
+        }, function(error) {
+              // unsuccessful upload
+        }, function() {
+            // successful upload
+
+            // update in Firebase DB
+            data.update({imageUrl: imageToStorage.snapshot.downloadURL})
+      }
+      )}).catch(function(error) {
+        console.error('There was an error uploading a file to Firebase: ' + error);
+      });
+
+      return true;
+  })
+
+}
 
 //onAuthStateChange:
 //if you handler uses "this", you need to do binding
@@ -56,6 +90,7 @@ export function createNew(node, item){
     const newRef = db.ref(node).push()
     item['id'] = newRef.key;
     newRef.set(item)
+    return newRef.key
 }
 
 export function signinOrg(provider){

@@ -29,7 +29,7 @@ function NavbarWrapper(props){
     var wrapper = <Navbar collapseOnSelect> {props.children} </Navbar>
     if(props.fixedTop){
         wrapper = <Navbar collapseOnSelect fixedTop> {props.children} </Navbar>
-    } 
+    }
     return(
         <span>{wrapper}</span>
     )
@@ -123,13 +123,12 @@ function TopBarRightNoState(props){
     if (isAutheticated) { //user logged in
         id='logout'
         name = 'LOGOUT'
-        icon = <FaSignOut />        
+        icon = <FaSignOut />
     } else{  //user not logged in
         id='login'
         name = 'LOGIN'
         icon = <FaSignIn />
     }
-
     return(
             <Nav pullRight>
                 <NavDropdown id='user-avatar-dropdown' title={<AvatarSelect/>} >

@@ -45,10 +45,11 @@ class Flyer extends React.Component{
            location,
            description,
            date,
+           time,
            like,
            go
          } = this.props.flyer
-          
+
         return(
                 <Panel header={name} bsStyle="success">
                   <Col sm={12} mdOffset={3} md={8}>
@@ -57,7 +58,8 @@ class Flyer extends React.Component{
                     <p>
                         Location: {location}<br/>
                         Description: {description}<br/>
-                        Date: {date}
+                        Date: {date}<br/>
+                        Time: {time}
                     </p>
 
                     <Grid>
