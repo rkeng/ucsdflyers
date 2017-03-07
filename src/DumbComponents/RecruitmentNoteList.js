@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Panel, Col } from 'react-bootstrap';
+import { Panel, Col } from 'react-bootstrap';
 import { FaCalendar, FaGroup, FaEnvelope, FaStreetView } from 'react-icons/lib/fa';
 import { Link } from 'react-router'
 import { ColCenter } from '../Commen'
@@ -9,15 +9,16 @@ class RecruitmentNoteList extends React.Component {
 
     //Generates a list of feedbacks
     getRecruitmentNoteList () {
+        console.log('recruitmentNotes?', this.props.recruitmentNotesList)
         return this.props.recruitmentNotesList.map((recruitmentNotesList, index) => {
             let name = recruitmentNotesList.clubName;
             let date = recruitmentNotesList.dueDate;
             let title = recruitmentNotesList.seeking;
             let email = recruitmentNotesList.email;
 
-            const titles = title.map((title, index) => {
-              return <Badge key={index}> {title} </Badge>
-            });
+            // const titles = title.map((title, index) => {
+            //   return <Badge key={index}> {title} </Badge>
+            // });
             let description = recruitmentNotesList.description;
 
             let header = (
@@ -29,7 +30,7 @@ class RecruitmentNoteList extends React.Component {
             return(
               <Panel bsStyle='info' header={header}>
                 <Col sm={12} mdOffset={3} md={8} key={index}>
-                  <h5><FaStreetView/> {titles}</h5>
+                  <h5><FaStreetView/> {title}</h5>
                   <h5><FaCalendar/> Due date: {date} <br/></h5>
                   <h5><FaGroup/> Organization: {name} <br/></h5>
                   <h5><FaEnvelope/> Email: {email} <br/></h5>

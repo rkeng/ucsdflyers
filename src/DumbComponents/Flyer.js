@@ -1,7 +1,8 @@
 import React from 'react'
-import { Panel, Carousel, Button, Image} from 'react-bootstrap'
+import { Panel, Carousel, Col, Image, Button, Grid, Row } from 'react-bootstrap'
+import { FaThumbsOUp, FaThumbsUp, FaCheckCircleO, FaCheckCircle } from 'react-icons/lib/fa';
+import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import RED from '../asset/RED.jpg'
-import { Col} from 'react-bootstrap'
 
 const carouselInstance = (
   <Carousel>
@@ -30,36 +31,115 @@ const carouselInstance = (
 );
 
 class Flyer extends React.Component{
-    
+
+
+      constructor(props){
+        super(props)
+        this.state = {
+          clicked1: false
+        };
+        this.state = {
+          clicked2: false
+        };
+        this.setButtonState1 = this.setButtonState1.bind(this)
+        this.setButtonState2 = this.setButtonState2.bind(this)
+
+      }
+
+
+
+      setButtonState1(){
+        this.setState({
+            clicked1: this.state.clicked1? false : true
+          }
+
+        )
+      }
+      setButtonState2(){
+        this.setState({
+            clicked2: this.state.clicked2? false : true
+
+
+          }
+        )
+        //let go = this.props.flyer.go
+
+      }
+
     render() {
-       const {
+        const {
            name,
            location,
            description,
-           date
-       } = this.props.flyer
+           date,
+           time,
+           like,
+           go
+         } = this.props.flyer
+
         return(
                 <Col sm={6} md={4}>
-                
-                <Panel footer={name} bsStyle="success">
-                    
-                    {carouselInstance}
+                 <Card style={{width: '350px'}} raised>
+                  <CardMedia
+                    aspectRatio="wide"
+                    children={carouselInstance}
+                  />
+                  <CardTitle
+                    title={name}
+                    subtitle={`Date: ${date} @${location}`}
+                  />
+                  <CardText>
+                    {description}
+                  </CardText>
+                  <CardActions>
+                      <Col sm={3} md={1} lg={1}>
+                        <Button onClick={this.setButtonState1} bsStyle={this.state.clicked1 ?  "primary" : "success"}>{this.state.clicked1 ?  'Unlike' : 'Like'}
+                          {this.state.clicked1 ?  <FaThumbsUp/> : <FaThumbsOUp/> }
+                          {like}
+                        </Button>&nbsp;
+                      </Col>
+                      &nbsp;
+                      <Col sm={3} md={1} mdOffset={2} lg={1}>
+                        <Button onClick={this.setButtonState2} bsStyle={this.state.clicked2 ?  "primary" : "success"}>{this.state.clicked2 ? 'Going!' : 'Going?'}
+                          {this.state.clicked2 ?  <FaCheckCircle/> : <FaCheckCircleO/> }
+                          {go}
+                        </Button>
+                      </Col>
+                  </CardActions>
+                </Card>
 
-                    <h3>{name}</h3>
-                    <p>
-                        Location: {location}<br/>
-                        Description: {description}<br/>
-                        Date: {date}
-                    </p>
-                    <p>
-                        <Button bsStyle="success">Like</Button>&nbsp;
-                        <Button bsStyle="primary">Wanna Go</Button>
-                    </p>
-                </Panel>
-                
+
                 </Col>
         )
     }
 }
 
 export { Flyer }
+                // <Panel footer={name} bsStyle="success">
+                    
+                //     {carouselInstance}
+
+                //     <h3>{name}</h3>
+                //     <p>
+                //         Location: {location}<br/>
+                //         Description: {description}<br/>
+                //         Date: {date}<br/>
+                //         Time: {time}
+                //     </p>
+                //     <Grid>
+                //     <Row>
+                //       <Col md={1} mdOffset={0}>
+                //         <Button onClick={this.setButtonState1} bsStyle={this.state.clicked1 ?  "danger" : "success"}>{this.state.clicked1 ?  'Unlike' : 'Like'}</Button>&nbsp;
+                //         {this.state.clicked1 ?  <FaThumbsUp/> : <FaThumbsOUp/> }
+                //         {like}
+                //       </Col>
+
+                //       <Col md={1} mdPush={0.5}>
+                //         <Button onClick={this.setButtonState2} bsStyle={this.state.clicked2 ?  "danger" : "primary"}>{this.state.clicked2 ? 'No Longer Wanna Go' : 'Wanna Go'}</Button>
+                //         {this.state.clicked2 ?  <FaCheckCircle/> : <FaCheckCircleO/> }
+                //         {go}
+                //         </Col>
+                //     </Row>
+                //       </Grid>
+
+                // </Panel>

@@ -24,7 +24,6 @@ class FlyerList extends React.Component {
   };
   
   var style = {
-    backgroundColor: 'tomato'
 
   };
 

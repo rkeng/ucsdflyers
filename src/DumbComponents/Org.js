@@ -20,7 +20,8 @@ class Org extends React.Component {
   render () {
   	const {
   		name,
-  		description
+  		description,
+      website
   	} = this.props.org;
 
     return (
@@ -30,7 +31,7 @@ class Org extends React.Component {
               <Button onClick={this.handleClick}>{this.state.expanded ? 'See less' : 'See more'}</Button>
               <AnimakitExpander expanded={this.state.expanded}>
                 <div className="text">
-                  More about {name}!
+                  {name}'s Website: {website==='N/A'? 'N/A':<a id="link" href={website} target="_blank">{website}</a>}
                 </div>
               </AnimakitExpander>
           </ColCenter>
