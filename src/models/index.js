@@ -30,6 +30,40 @@ export function signOutUser(){
     return firebase.auth().signOut()
 }
 
+// linked to ImageDropzone
+export function uploadImages(databaseRef, itemID, userID, files) {
+  // let dbRef = db.ref(databaseRef )
+  let dbRef = db.ref(databaseRef + '/' + itemID + '/images')
+  let storageFilePath = userID + '/' + databaseRef + '/' + itemID
+  let storage = firebase.storage()
+
+  // add image to db
+  files.map((file, index) => {
+      dbRef.push({}).then(function(data) {
+
+        // Upload the image to Firebase Storage.
+        var filePath = storageFilePath + data.key + '/' + file.name;
+        var imageToStorage = storage.ref(filePath).put(file);
+        imageToStorage.on('state_changed', function(snapshot) {
+              // in-progress state changes
+              // let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              // that.setState({uploadProgress: percentage + "%"})
+        }, function(error) {
+              // unsuccessful upload
+        }, function() {
+            // successful upload
+
+            // update in Firebase DB
+            data.update({imageUrl: imageToStorage.snapshot.downloadURL})
+      }
+      )}).catch(function(error) {
+        console.error('There was an error uploading a file to Firebase: ' + error);
+      });
+
+      return true;
+  })
+
+}
 
 //onAuthStateChange:
 //if you handler uses "this", you need to do binding
@@ -56,11 +90,15 @@ export function createNew(node, item){
     const newRef = db.ref(node).push()
     item['id'] = newRef.key;
     newRef.set(item)
+    return newRef.key
 }
 
-export function transaction(node, newVal){
-    db.ref(node).transaction(currentVal=>{
-      return newVal
+export function transaction(node){
+
+    return new Promise((resolve, reject) => {
+      return db.ref(node).transaction(currentVal => {
+        return resolve(currentVal)
+      })
     })
 }
 
@@ -77,6 +115,7 @@ export function signinOrg(provider){
     firebase.auth().signInWithPopup(provider).then(function(result) { //result has a credential and user
       // This gives you a Google Access Token. You can use it to access the Google API.
       var user = result.user
+      console.log('sigin org result?', result)
       const userField = 'users/' + user.uid;
       fetchDataOn(userField).then(userField => {
             if(!userField.val()){
@@ -94,7 +133,7 @@ export function signinOrg(provider){
                 firebase.database().ref('organizations/' + user.uid).set(user.uid);
             }
             //manully redict since auto-redirect is not working
-            browserHistory.push('/create-flyer')
+            browserHistory.push('/org-profile')
         })
       })
 }
@@ -103,7 +142,7 @@ export function stringtoDate(input){
     var parts = input.split('-');
     //please put attention to the month (parts[0]), Javascript counts months from 0:
     // January - 0, February - 1, etc
-    var mydate = new Date(parts[2],parts[0]-1,parts[1]);
+    var mydate = new Date(parts[0],parts[1]-1,parts[2   ]);
     return mydate
 }
 

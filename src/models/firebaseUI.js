@@ -14,7 +14,7 @@ const uiConfig = {
                 if yes, then create a datafield on db for them.
                 if not, skip~
             */
-                const userField = 'users/' + user.uid;
+                const userField = `users/${user.uid}`;
                 fetchDataOn(userField).then(userField => {     
                     if(!userField.val()){    
                         const userFieldData = {
@@ -25,6 +25,7 @@ const uiConfig = {
                             photoURL: user.photoURL,
                             providerData: user.providerData,
                             uid: user.uid,          
+                            FlyersLiked: 'N/A',
                             isOrg: false
                         }
                         firebase.database().ref('users/' + user.uid).set(userFieldData);

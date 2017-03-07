@@ -45,10 +45,10 @@ class OrgListContainerPage extends React.Component {
     return (
         <Grid>
             <Row>
-              <SearchBar placeholder='search orgs' value={this.state.search || ''}
-                 onChange={this.filterSearch.bind(this)}/>
+                <SearchBar placeholder='search orgs' value={this.state.search || ''}
+                   onChange={this.filterSearch.bind(this)}/>
               <Col>
-                <OrgList orgs={filteredOrgs}/>
+                  <OrgList orgs={filteredOrgs}/>
               </Col>
             </Row>
             <NotificationContainer/>

@@ -18,33 +18,13 @@ import { About } from './DumbComponents/About'
 import { NewOrganizations } from './DumbComponents/NewOrganizations'
 import { CreateRecruitment } from './DumbComponents/CreateRecruitment'
 import { CreateFlyer } from './DumbComponents/CreateFlyer'
-import { onAuthStateChanged } from './models'
-import { LoginUserAction, LogoutUserAction } from './State/actions'
 import { MyFlyers } from './DumbComponents/MyFlyers'
+import { OrgProfile } from './DumbComponents/OrgProfile'
 
 
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 
-onAuthStateChanged((user) => {
-    if(user){
-        console.log('user logged in')
-        const userData = {
-            displayName: user.displayName,
-            email: user.email,
-            emailVerified: user.emailVerified,
-            isAnonymous: user.isAnonymous,
-            photoURL: user.photoURL,
-            providerData: user.providerData,
-            uid: user.uid,
-            isOrg: true
-        }
-        store.dispatch(LoginUserAction(userData))
-    } else {
-        console.log('no user')
-        store.dispatch(LogoutUserAction())
-    }
-})
 
 
 ReactDOM.render(
@@ -61,8 +41,9 @@ ReactDOM.render(
                 <Route path='create-recruitment' component={CreateRecruitment}/>
                 <Route path='create-flyer' component={CreateFlyer}/>
                 <Route path='login' component={Login}/>
-                <Route path='login-org' component={NewOrganizations}/>
+                <Route path='org-login' component={NewOrganizations}/>
                 <Route path='my-flyers' component={MyFlyers}/>
+                <Route path='org-profile' component={OrgProfile}/>
             </Route>
             <Route path='*' component={NotFound}/>
         </Router>

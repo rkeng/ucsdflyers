@@ -30,12 +30,6 @@ class OrgLoginForm extends React.Component {
     return provider
   }
 
-  signWithRedirect(provider){
-    return new Promise((resolve, reject)=>{
-      firebase.auth().signInWithRedirect(provider)
-    })
-  }
-
   onSignin(e){
     e.preventDefault();
     var provider = this.ProviderSelect(e.target.id)

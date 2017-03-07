@@ -1,82 +1,91 @@
 import React from 'react'
-import { Panel, Col, Button, Image, Grid, Row } from 'react-bootstrap'
-import RED from '../asset/RED.jpg'
-import { FaThumbsOUp, FaThumbsUp, FaCheckCircleO, FaCheckCircle } from 'react-icons/lib/fa';
-import {  transaction, fetchDataOn, createNew, remove, update } from '../models'
+import { Carousel, Col, Image, Button } from 'react-bootstrap'
+import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
+import { transaction, fetchDataOn, remove, update } from '../models'
 import { connect } from 'react-redux'
-import { NotificationManager, NotificationContainer } from 'react-notifications'
+import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
+import RED from '../asset/RED.jpg'
+
+const carouselInstance = (
+  <Carousel>
+    <Carousel.Item>
+       <Image src={RED} responsive/><br/>
+      <Carousel.Caption>
+        <h3>First slide label</h3>
+        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+      </Carousel.Caption>
+    </Carousel.Item>
+    <Carousel.Item>
+       <Image src={RED} responsive/><br/>
+      <Carousel.Caption>
+        <h3>Second slide label</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </Carousel.Caption>
+    </Carousel.Item>
+    <Carousel.Item>
+       <Image src={RED} responsive/><br/>
+      <Carousel.Caption>
+        <h3>Third slide label</h3>
+        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+      </Carousel.Caption>
+    </Carousel.Item>
+  </Carousel>
+);
 
 class OneFlyer extends React.Component{
 
-      constructor(props){
-        super(props)
-        const { id } = this.props.flyer
-        const { uid } = this.props.user
+    constructor(props){
+      super(props)
+
+      const { id } = this.props.flyer
+      const { isAutheticated, uid } = this.props.user
+      const flyerID = id;
       const newData = {};
-      newData[`${id}`] = id
-        this.state = {
-          userLiked: false,
-          userGo: false,
-          like: this.props.flyer.like,
-          go: this.props.flyer.go
-        };
-        fetchDataOn('users/' + uid).then(userData => {
-          if(userData.likedFlyers.newData){
-            this.setState({userLiked:true})
+      newData[`${flyerID}`] = flyerID
+      this.state = {
+        liked: false, //liked tells us whether this flyer is liked by the logged in user
+        userAlreadyLike: false
+      }
+      if(isAutheticated){
+        fetchDataOn('users/' + uid).then(snap => {
+          const userData = snap.val()
+          if(userData.FlyersLiked && userData.FlyersLiked[`${flyerID}`]){
+            this.setState({
+              liked:true, //setting this will make all flyers that user already liked still appear liked
+              userAlreadyLike: true //used to update database => see componentWillUnmount
+            })
           }
         })
-
-        this.setButtonState1 = this.setButtonState1.bind(this)
-        this.setButtonState2 = this.setButtonState2.bind(this)
-
       }
+      this.onLike = this.onLike.bind(this)
+    }
 
-        // update('events/'+this.props.flyer.id+'/go', this.state.go
+      // update('events/'+this.props.flyer.id+'/go', this.state.go
 
-      setButtonState1(){
-        const { id } = this.props.flyer
-        const { uid } = this.props.user
-        const newData = {};
-        newData[`${id}`] = id
-        if(this.state.userLiked === false){
-        update('users/' + uid + '/likedFlyers', newData)
+    onLike(){
+      this.setState({
+          liked: !this.state.liked
+      })
+      
+    }
+
+    componentWillUnmount(){
+      const { uid } = this.props.user
+      const { id } = this.props.flyer
+      const { liked, userAlreadyLike } = this.state
+      var thisFlyer = {}
+      thisFlyer[`${id}`] = id
+      if(liked && !userAlreadyLike){
+        update('users/' + uid + '/FlyersLiked', thisFlyer)
+        transaction('events/'+ id +'/like').then(likes => likes + 1)
+      } 
+      if(!liked && userAlreadyLike ){
+          // console.log('user unliked the flyer and user has previously liked the flyer')
+          remove('users/' + uid + '/FlyersLiked/', thisFlyer)
+          transaction('events/'+ id +'/like').then(likes => likes - 1)
       }
-      else{
-        remove('users/' + uid + 'likedFlyers/', newData)
-      }
-      console.log(this.state)
-        this.setState({
-            userLiked: this.state.userLiked? false : true,
-            like: this.state.userLiked ? (this.state.like-1) : (this.state.like+1)
-        })
-        console.log(this.state)
-          transaction('events/'+ id +'/like',this.state.like)
-      }
-
-
-
-
-
-
-      setButtonState2(){
-        const { id } = this.props.flyer
-        const { uid } = this.props.user
-        const newData = {};
-        newData[`${id}`] = id
-        if(this.state.userGo === false){
-          update('users/' + uid + '/WTGFlyers', newData)
-        }
-        else{
-          remove('users/' + uid + '/WTGFlyers', newData)
-        }
-
-        this.setState({
-            userGo: this.state.userGo? false : true,
-            go: this.state.userGo? (this.state.go-1) : (this.state.go+1)
-          }
-        )
-          transaction('events/'+id+'/go',this.state.go)
-      }
+      //for those flyers that are (!liked && !userAlreadyLike), do nothing with them
+    }
 
     render() {
         const {
@@ -85,38 +94,35 @@ class OneFlyer extends React.Component{
            description,
            date
          } = this.props.flyer
-
+         const btnColor = this.state.liked ? 'danger' : 'info'
+         const HeatIcon =  this.state.liked ?  FaHeart : FaHeartO 
+         const titleAndBtn = (
+            <div>
+                {name}
+                <span className='pull-right'>
+                  <Button onClick={this.onLike} bsStyle={btnColor}>
+                        <HeatIcon/>
+                  </Button>
+                </span>
+            </div>
+          )
         return(
-                <Panel header={name} bsStyle="success">
-                  <NotificationContainer/>
-                  <Col sm={12} mdOffset={3} md={8}>
-                    <Image width={370} height={400} alt="400x400" src={RED} responsive/><br/>
-                    <h3>{name}</h3>
-                    <p>
-                        Location: {location}<br/>
-                        Description: {description}<br/>
-                        Date: {date}
-                    </p>
-
-                    <Grid>
-                    <Row>
-                      <Col md={1} >
-                        <Button onClick={this.setButtonState1} bsStyle={this.state.userLiked ?  "danger" : "success"}>{this.state.userLiked ?  'Unlike' : 'Like'}</Button>&nbsp;
-                        {this.state.userLiked ?  <FaThumbsUp/> : <FaThumbsOUp/> }
-                        {this.state.like}
-                      </Col>
-
-                      <Col md={1} mdPush={0.5}>
-                        <Button onClick={this.setButtonState2} bsStyle={this.state.userGo ?  "danger" : "primary"}>{this.state.userGo ? 'No Longer Wanna Go' : 'Wanna Go'}</Button>
-                        {this.state.userGo ?  <FaCheckCircle/> : <FaCheckCircleO/> }
-                        {this.state.go}
-                        </Col>
-                    </Row>
-                      </Grid>
-
-                  </Col>
-                </Panel>
-        )
+                <Col sm={12} md={4}>
+                   <Card style={{color:'black'}} raised>
+                    <CardMedia
+                      aspectRatio="wide"
+                      children={carouselInstance}
+                    />
+                    <CardTitle
+                      title={titleAndBtn}
+                      subtitle={`Date: ${date} @${location}`}
+                    />
+                    <CardText>
+                      {description}
+                    </CardText>
+                  </Card>
+                </Col>
+          )
     }
 }
 

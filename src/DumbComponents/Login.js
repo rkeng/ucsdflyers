@@ -19,7 +19,6 @@ class LoginForm extends React.Component {
             photoURL: user.photoURL,
             providerData: user.providerData,
             uid: user.uid,
-            likedFlyers: ' ',          
             isOrg: false
         }
         dispatch(LoginStudentAction(userData))
