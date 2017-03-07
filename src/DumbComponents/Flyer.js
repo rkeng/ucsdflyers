@@ -36,10 +36,8 @@ class Flyer extends React.Component{
       constructor(props){
         super(props)
         this.state = {
-          clicked1: false
-        };
-        this.state = {
-          clicked2: false
+          like: false,
+          go: false
         };
         this.setButtonState1 = this.setButtonState1.bind(this)
         this.setButtonState2 = this.setButtonState2.bind(this)
@@ -48,9 +46,9 @@ class Flyer extends React.Component{
 
 
 
-      setButtonState1(){
+      onLike(){
         this.setState({
-            clicked1: this.state.clicked1? false : true
+            like: this.state.clicked1? false : true
           }
 
         )
@@ -79,7 +77,7 @@ class Flyer extends React.Component{
 
         return(
                 <Col sm={6} md={4}>
-                 <Card style={{width: '350px'}} raised>
+                 <Card style={{width: '350px', border: '10px'}} raised>
                   <CardMedia
                     aspectRatio="wide"
                     children={carouselInstance}
@@ -115,31 +113,3 @@ class Flyer extends React.Component{
 }
 
 export { Flyer }
-                // <Panel footer={name} bsStyle="success">
-                    
-                //     {carouselInstance}
-
-                //     <h3>{name}</h3>
-                //     <p>
-                //         Location: {location}<br/>
-                //         Description: {description}<br/>
-                //         Date: {date}<br/>
-                //         Time: {time}
-                //     </p>
-                //     <Grid>
-                //     <Row>
-                //       <Col md={1} mdOffset={0}>
-                //         <Button onClick={this.setButtonState1} bsStyle={this.state.clicked1 ?  "danger" : "success"}>{this.state.clicked1 ?  'Unlike' : 'Like'}</Button>&nbsp;
-                //         {this.state.clicked1 ?  <FaThumbsUp/> : <FaThumbsOUp/> }
-                //         {like}
-                //       </Col>
-
-                //       <Col md={1} mdPush={0.5}>
-                //         <Button onClick={this.setButtonState2} bsStyle={this.state.clicked2 ?  "danger" : "primary"}>{this.state.clicked2 ? 'No Longer Wanna Go' : 'Wanna Go'}</Button>
-                //         {this.state.clicked2 ?  <FaCheckCircle/> : <FaCheckCircleO/> }
-                //         {go}
-                //         </Col>
-                //     </Row>
-                //       </Grid>
-
-                // </Panel>

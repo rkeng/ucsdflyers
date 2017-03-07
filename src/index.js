@@ -41,7 +41,7 @@ ReactDOM.render(
                 <Route path='create-recruitment' component={CreateRecruitment}/>
                 <Route path='create-flyer' component={CreateFlyer}/>
                 <Route path='login' component={Login}/>
-                <Route path='login-org' component={NewOrganizations}/>
+                <Route path='org-login' component={NewOrganizations}/>
                 <Route path='my-flyers' component={MyFlyers}/>
                 <Route path='org-profile' component={OrgProfile}/>
             </Route>

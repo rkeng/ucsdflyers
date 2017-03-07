@@ -50,7 +50,7 @@ function TopBarIcon(props){
     return (
             <Navbar.Header>
                 <Navbar.Brand>
-                    <Image className='icon-img' width={200} height={100} src={logoText} alt=""/>
+                    <Image className='icon-img' style={{marginTop:'3px'}} width={200} height={100} src={logoText} alt=""/>
                 </Navbar.Brand>
                 <Navbar.Toggle/>
             </Navbar.Header>

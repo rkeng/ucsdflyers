@@ -97,6 +97,7 @@ export function signinOrg(provider){
     firebase.auth().signInWithPopup(provider).then(function(result) { //result has a credential and user
       // This gives you a Google Access Token. You can use it to access the Google API.
       var user = result.user
+      console.log('sigin org result?', result)
       const userField = 'users/' + user.uid;
       fetchDataOn(userField).then(userField => {
             if(!userField.val()){
