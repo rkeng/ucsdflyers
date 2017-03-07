@@ -25,6 +25,7 @@ const uiConfig = {
                             photoURL: user.photoURL,
                             providerData: user.providerData,
                             uid: user.uid,          
+                            FlyersLiked: 'N/A',
                             isOrg: false
                         }
                         firebase.database().ref('users/' + user.uid).set(userFieldData);

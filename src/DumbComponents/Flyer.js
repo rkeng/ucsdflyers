@@ -1,7 +1,9 @@
 import React from 'react'
 import { Carousel, Col, Image, Button } from 'react-bootstrap'
-import { FaThumbsOUp, FaThumbsUp, FaCheckCircleO, FaCheckCircle } from 'react-icons/lib/fa';
-import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
+import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
+import { transaction, fetchDataOn, remove, update } from '../models'
+import { connect } from 'react-redux'
+import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
 import RED from '../asset/RED.jpg'
 
 const carouselInstance = (
@@ -30,85 +32,106 @@ const carouselInstance = (
   </Carousel>
 );
 
-class Flyer extends React.Component{
+class OneFlyer extends React.Component{
 
+    constructor(props){
+      super(props)
 
-      constructor(props){
-        super(props)
-        this.state = {
-          like: false,
-          go: false
-        };
-        this.setButtonState1 = this.setButtonState1.bind(this)
-        this.setButtonState2 = this.setButtonState2.bind(this)
-
+      const { id } = this.props.flyer
+      const { isAutheticated, uid } = this.props.user
+      const flyerID = id;
+      const newData = {};
+      newData[`${flyerID}`] = flyerID
+      this.state = {
+        liked: false, //liked tells us whether this flyer is liked by the logged in user
+        userAlreadyLike: false
       }
-
-
-
-      onLike(){
-        this.setState({
-            like: this.state.clicked1? false : true
+      if(isAutheticated){
+        fetchDataOn('users/' + uid).then(snap => {
+          const userData = snap.val()
+          if(userData.FlyersLiked && userData.FlyersLiked[`${flyerID}`]){
+            this.setState({
+              liked:true, //setting this will make all flyers that user already liked still appear liked
+              userAlreadyLike: true //used to update database => see componentWillUnmount
+            })
           }
-
-        )
+        })
       }
-      setButtonState2(){
-        this.setState({
-            clicked2: this.state.clicked2? false : true
+      this.onLike = this.onLike.bind(this)
+    }
 
+      // update('events/'+this.props.flyer.id+'/go', this.state.go
 
-          }
-        )
-        //let go = this.props.flyer.go
+    onLike(){
+      this.setState({
+          liked: !this.state.liked
+      })
+      
+    }
 
+    componentWillUnmount(){
+      const { uid } = this.props.user
+      const { id } = this.props.flyer
+      const { liked, userAlreadyLike } = this.state
+      var thisFlyer = {}
+      thisFlyer[`${id}`] = id
+      if(liked && !userAlreadyLike){
+        update('users/' + uid + '/FlyersLiked', thisFlyer)
+        transaction('events/'+ id +'/like').then(likes => likes + 1)
+      } 
+      if(!liked && userAlreadyLike ){
+          // console.log('user unliked the flyer and user has previously liked the flyer')
+          remove('users/' + uid + '/FlyersLiked/', thisFlyer)
+          transaction('events/'+ id +'/like').then(likes => likes - 1)
       }
+      //for those flyers that are (!liked && !userAlreadyLike), do nothing with them
+    }
 
     render() {
         const {
            name,
            location,
            description,
-           date,
-           like,
-           go
+           date
          } = this.props.flyer
-
+         const btnColor = this.state.liked ? 'danger' : 'info'
+         const HeatIcon =  this.state.liked ?  FaHeart : FaHeartO 
+         const titleAndBtn = (
+            <div>
+                {name}
+                <span className='pull-right'>
+                  <Button onClick={this.onLike} bsStyle={btnColor}>
+                        <HeatIcon/>
+                  </Button>
+                </span>
+            </div>
+          )
         return(
-                <Col sm={6} md={4}>
-                 <Card style={{width: '350px', border: '10px'}} raised>
-                  <CardMedia
-                    aspectRatio="wide"
-                    children={carouselInstance}
-                  />
-                  <CardTitle
-                    title={name}
-                    subtitle={`Date: ${date} @${location}`}
-                  />
-                  <CardText>
-                    {description}
-                  </CardText>
-                  <CardActions>
-                      <Col sm={3} md={1} lg={1}>
-                        <Button onClick={this.setButtonState1} bsStyle={this.state.clicked1 ?  "primary" : "success"}>{this.state.clicked1 ?  'Unlike' : 'Like'}
-                          {this.state.clicked1 ?  <FaThumbsUp/> : <FaThumbsOUp/> }
-                          {like}
-                        </Button>&nbsp;
-                      </Col>
-                      &nbsp;
-                      <Col sm={3} md={1} mdOffset={2} lg={1}>
-                        <Button onClick={this.setButtonState2} bsStyle={this.state.clicked2 ?  "primary" : "success"}>{this.state.clicked2 ? 'Going!' : 'Going?'}
-                          {this.state.clicked2 ?  <FaCheckCircle/> : <FaCheckCircleO/> }
-                          {go}
-                        </Button>
-                      </Col>
-                  </CardActions>
-                </Card>
-
-
+                <Col sm={12} md={4}>
+                   <Card style={{color:'black'}} raised>
+                    <CardMedia
+                      aspectRatio="wide"
+                      children={carouselInstance}
+                    />
+                    <CardTitle
+                      title={titleAndBtn}
+                      subtitle={`Date: ${date} @${location}`}
+                    />
+                    <CardText>
+                      {description}
+                    </CardText>
+                  </Card>
                 </Col>
-        )
+          )
     }
 }
+
+function mapStateToProps(state){
+  return{
+    user: state.user
+  }
+}
+
+const Flyer = connect(mapStateToProps)(OneFlyer)
 
 export { Flyer }

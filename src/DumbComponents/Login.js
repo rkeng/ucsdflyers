@@ -18,7 +18,7 @@ class LoginForm extends React.Component {
             isAnonymous: user.isAnonymous,
             photoURL: user.photoURL,
             providerData: user.providerData,
-            uid: user.uid,          
+            uid: user.uid,
             isOrg: false
         }
         dispatch(LoginStudentAction(userData))

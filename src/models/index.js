@@ -93,6 +93,24 @@ export function createNew(node, item){
     return newRef.key
 }
 
+export function transaction(node){
+
+    return new Promise((resolve, reject) => {
+      return db.ref(node).transaction(currentVal => {
+        return resolve(currentVal)
+      })
+    })
+}
+
+export function update(node, data){
+    db.ref(node).update(data)
+}
+
+
+export function remove(node){
+    db.ref(node).remove()
+}
+
 export function signinOrg(provider){
     firebase.auth().signInWithPopup(provider).then(function(result) { //result has a credential and user
       // This gives you a Google Access Token. You can use it to access the Google API.

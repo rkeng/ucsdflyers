@@ -16,7 +16,7 @@ class Org extends React.Component {
       expanded: !prevState.expanded
     }));
   }
-  
+
   render () {
   	const {
   		name,
