@@ -29,7 +29,7 @@ function NavbarWrapper(props){
     var wrapper = <Navbar collapseOnSelect> {props.children} </Navbar>
     if(props.fixedTop){
         wrapper = <Navbar collapseOnSelect fixedTop> {props.children} </Navbar>
-    } 
+    }
     return(
         <div>{wrapper}</div>
     )
@@ -40,7 +40,7 @@ function TopBarItem(props){
     var icon = props.icon
     return (
         <NavItem className='navbar-btn' {...props} onClick={(e) => changeRoute(e, props)}>
-            {icon} 
+            {icon}
             {name}
         </NavItem>
     )
@@ -127,16 +127,12 @@ function TopBarRightNoState(props){
     if (isAutheticated) { //user logged in
         id='logout'
         name = 'LOGOUT'
-        icon = <FaSignOut />        
+        icon = <FaSignOut />
     } else{  //user not logged in
         id='login'
         name = 'LOGIN'
         icon = <FaSignIn />
     }
-    /* commented out for build
-    var dropDownStyle={
-    }
-    */
     return(
         <div>
             <Nav pullRight navbar>
