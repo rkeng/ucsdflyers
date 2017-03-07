@@ -1,6 +1,5 @@
 import React from 'react'
 import { Flyer } from './Flyer.js'
-//import { ColCenter } from '../Commen'
 import Masonry from 'react-masonry-component'
 import RED from '../asset/RED.jpg'
 class FlyerList extends React.Component {
@@ -32,7 +31,7 @@ class FlyerList extends React.Component {
 
 
     return (
-        //<div>
+        
           <Masonry
                 className={'my-gallery-class'} 
                 options={masonryOptions}  
@@ -41,7 +40,7 @@ class FlyerList extends React.Component {
             >
                  {renderedFlyers}
           </Masonry>
-        //</div>
+        
     )
   }
 }
