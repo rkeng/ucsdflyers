@@ -3,9 +3,10 @@ import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, 
 import { Button, Panel } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker';
-import { createNew } from '../models/index.js';
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router';
+import { createNew, getCurrentUser, uploadImages } from '../models/index.js';
+import { ImageDropzone } from './ImageDropzone.js';
 
 
 
@@ -19,17 +20,17 @@ class CreateFlyer extends React.Component {
 
 
     this.state = {
+      active: true,
       success: false,
       show: false,
       like: 0,
       go: 0,
-        name: "",
-        date: new Date().toISOString(),
-        time: "",
-        description: "",
-        location: "",
-        files: "",
-        active: true
+      name: "",
+      date: new Date().toISOString(),
+      time: "",
+      description: "",
+      location: "",
+      files: "",
     }
   }
 
@@ -60,13 +61,17 @@ class CreateFlyer extends React.Component {
 
   onCreate(event){
     event.preventDefault();
+    getCurrentUser().then((club) => {
+      const clubID = club.uid;
       const flyer = {
         name: findDOMNode(this.name).value,
         time: findDOMNode(this.time).value,
         description: findDOMNode(this.description).value,
         location: findDOMNode(this.location).value,
         date: this.state.date.substring(0,10),
-        active: true
+        active: true,
+        go: 0,
+        like: 0,
       }
 
       if(flyer.name === "")
@@ -78,9 +83,14 @@ class CreateFlyer extends React.Component {
       else if(flyer.location === "")
       NotificationManager.error('Error', 'Please enter valid location!', 2222);
       else{
-      createNew('events',flyer)
       this.setState({ success: true})
-}
+      let flyerID = createNew('events',flyer)
+
+     // image uploading
+     let files = this.refs.dropzone.state.files
+     uploadImages("events", flyerID, clubID, files)
+    }
+  })
   }
 
 
@@ -121,7 +131,7 @@ class CreateFlyer extends React.Component {
 
           <Form>
             <FormGroup>
-              <ControlLabel>name</ControlLabel>
+              <ControlLabel>Name</ControlLabel>
 
               <FormControl
                 type="text"
@@ -161,6 +171,8 @@ class CreateFlyer extends React.Component {
               <FormControl.Feedback />
             </FormGroup>
 
+            <ImageDropzone ref="dropzone"/>
+
 
           </Form>
         </Col>
@@ -185,22 +197,23 @@ class CreateFlyer extends React.Component {
           </Button>
 
           <Modal show={this.state.success} onHide={this.close}>
+              <Modal.Header>
+                 <Modal.Title>Success! </Modal.Title>
+               </Modal.Header>
 
             <Modal.Body>
-                <div> Success! Flyer was created </div>
+                <div> Flyer was created </div>
             </Modal.Body>
 
             <Modal.Footer>
-            <Button onClick={this.onClear}>Create another flyer</Button>
-
+              <Button onClick={this.onClear}>Create another flyer</Button>
               <Link className='btn' to='/' onClick={() => this.setState({success: false})}>
               Home Page</Link>
-
             </Modal.Footer>
           </Modal>
 
           <Modal show={this.state.show} onHide={this.close}>
-
+          {/*}<Flyer flyer={this.state}/>*/}
             <Modal.Body>
                 <div> { this.getFlyer() } </div>
             </Modal.Body>

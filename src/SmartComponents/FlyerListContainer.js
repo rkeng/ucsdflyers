@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
 import { connect } from 'react-redux'
-import { fetchDataAsArray, stringtoDate, compareDates, compareClubs} from '../models'
+import { fetchDataAsArray, compareDates, compareClubs} from '../models'
 import { SearchBar } from '../Commen'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Grid, Row, Col } from 'react-bootstrap';
@@ -66,7 +66,6 @@ class FlyerListContainerPage extends React.Component {
 
     fetchDataAsArray('events')
     .then(function(events){
-
         var newFlyersList = events.filter(isActive);
 
         that.setState({

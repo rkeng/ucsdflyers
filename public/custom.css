@@ -12,8 +12,26 @@
     -moz-border-radius-topright: 5px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    background: blue;
+    background: skyblue;
  }
+.topbar-items{
+    padding-top: 4px;
+}
+.icon-img{
+    padding: auto;
+}
+
+.my-topbar-collapse {
+    height: 10;
+   margin-top: 1px;
+}
+.topbar-right {
+    height: 10px;
+}
+
+.user-avatar {
+    height: 10px;
+}
 
 .btn:focus, .btn:active:focus, .btn.active:focus {
     outline: 0 none;

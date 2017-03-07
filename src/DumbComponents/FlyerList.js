@@ -1,8 +1,6 @@
 import React from 'react'
 import { Flyer } from './Flyer.js'
-import { ColCenter } from '../Commen'
-
-
+import Masonry from 'react-masonry-component'
 
 class FlyerList extends React.Component {
   
@@ -20,10 +18,28 @@ class FlyerList extends React.Component {
 
   render () {
     var renderedFlyers = this.renderFlyers();
+
+    var masonryOptions = {
+    transitionDuration: 0
+  };
+  
+  var style = {
+
+  };
+
+
+
     return (
-        <ColCenter>
-            {renderedFlyers}
-        </ColCenter>
+        
+          <Masonry
+                className={'my-gallery-class'} 
+                options={masonryOptions}  
+                style={style}
+
+            >
+                 {renderedFlyers}
+          </Masonry>
+        
     )
   }
 }
