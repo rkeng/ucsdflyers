@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flyer } from './Flyer.js'
 import Masonry from 'react-masonry-component'
-import RED from '../asset/RED.jpg'
+
 class FlyerList extends React.Component {
   
  // iterate through an array of flyers to generate jsx for each flyer
