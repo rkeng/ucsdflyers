@@ -14,7 +14,7 @@ const uiConfig = {
                 if yes, then create a datafield on db for them.
                 if not, skip~
             */
-                const userField = 'users/' + user.uid;
+                const userField = `users/${user.uid}`;
                 fetchDataOn(userField).then(userField => {     
                     if(!userField.val()){    
                         const userFieldData = {
