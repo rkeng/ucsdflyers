@@ -13,9 +13,16 @@ class FlyerListContainerPage extends React.Component {
     this.state = {
       flyers: [],
       sortDate: false,
+      sortClub: false,
+      search: ''
     }
     this.dateSort = this.dateSort.bind(this)
   }
+
+  filterSearch(event){
+      this.setState({search: event.target.value.substr(0,20)});
+  }
+  
 
   componentWillMount () {
     const that = this;
@@ -55,13 +62,23 @@ class FlyerListContainerPage extends React.Component {
   }
 
   render () {
+    let filteredFlyers=this.state.flyers.filter(
+      (flyer)=>{
+        return flyer.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+        || flyer.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+      }
+    )
     const sortByWhat = this.state.sortDate ? 'past' : 'recent'
     const sortBtnName = this.state.sortDate ? 'farthest future' : 'closest upcoming'
+
     return (
         <Grid>
           <NotificationContainer/>
           <Row>
-            <SearchBar placeholder='search for flyers'>
+            <SearchBar placeholder='search flyers' value={this.state.search || ''}
+                onChange={this.filterSearch.bind(this)}/>
+         </Row>
+         <Row>
               <DropdownButton
                 componentClass={InputGroup.Button}
                 id="input-dropdown-addon"
@@ -69,11 +86,10 @@ class FlyerListContainerPage extends React.Component {
               >
                 <MenuItem key="1" onClick={(e)=>this.dateSort(e, {sortByWhat})}>{sortBtnName}</MenuItem>
               </DropdownButton>
-            </SearchBar>
          </Row>
          <Row>
            <Col>
-              <FlyerList flyers={this.state.flyers}/>
+              <FlyerList flyers={filteredFlyers}/>
             </Col>
           </Row>
         </Grid>

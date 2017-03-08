@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal, Image } from 'react-bootstrap'
-import { Button, Panel } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker';
 import { NotificationContainer, NotificationManager } from 'react-notifications'
