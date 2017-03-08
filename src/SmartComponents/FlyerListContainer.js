@@ -1,11 +1,10 @@
 import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
 import { connect } from 'react-redux'
-import { fetchDataAsArray, compareDates, compareClubs} from '../models'
-import { SearchBar } from '../Commen'
+import { fetchDataAsArray } from '../models'
+import { SearchBar, compareDates } from '../Commen'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
-import { Grid, Row, Col } from 'react-bootstrap';
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { Grid, Row, Col, DropdownButton, MenuItem, InputGroup } from 'react-bootstrap';
 
 class FlyerListContainerPage extends React.Component {
 
@@ -14,48 +13,9 @@ class FlyerListContainerPage extends React.Component {
     this.state = {
       flyers: [],
       sortDate: false,
-      sortClub: false
     }
-
+    this.dateSort = this.dateSort.bind(this)
   }
-
-  clubSort () {
-      const that = this;
-
-      fetchDataAsArray('events')
-      .then(function(events){
-          console.log("reached 1")
-          var newFlyersList = events.sort(compareClubs)
-          console.log("reached 2")
-          console.log(newFlyersList)
-          that.setState({
-              flyers: newFlyersList,
-              sortDate: false,
-              sortClub: true
-          })
-      })
-      .catch(function(error){
-          NotificationManager.error('Something is wrong', 'Opps!', 2222);
-      })
-  }
-
-  dateSort () {
-      const that = this;
-
-      var newFlyersList = that.state.flyers
-
-
-      newFlyersList.sort(compareDates)
-
-      that.setState({
-              flyers: newFlyersList,
-              sortDate: false,
-              sortClub: false
-     })
-
-
-  }
-
 
   componentWillMount () {
     const that = this;
@@ -67,38 +27,49 @@ class FlyerListContainerPage extends React.Component {
     fetchDataAsArray('events')
     .then(function(events){
         var newFlyersList = events.filter(isActive);
-
+        newFlyersList.sort(compareDates)
         that.setState({
             flyers: newFlyersList,
-            sortDate: false,
-            sortClub: false
         })
-        console.log(this)
     })
-
     .catch(function(error){
         NotificationManager.error('Something is wrong', 'Opps!', 2222);
     })
+  }
 
+  dateSort(e, time) {
+      e.preventDefault();
+      const that = this;
 
+      var newFlyersList = that.state.flyers
+      if(time === 'recent')
+        newFlyersList.sort(compareDates)
+      else 
+        newFlyersList.sort(!compareDates)
+
+      that.setState({
+          flyers: newFlyersList,
+          sortDate: !this.state.sortDate
+      })
+    console.log('component state', this.state)
   }
 
   render () {
+    const sortByWhat = this.state.sortDate ? 'past' : 'recent'
+    const sortBtnName = this.state.sortDate ? 'farthest future' : 'closest upcoming'
     return (
         <Grid>
           <NotificationContainer/>
           <Row>
-            <SearchBar placeholder='search for flyers'/>
-         </Row>
-         <Row>
-            <ButtonGroup justified>
-                <ButtonGroup>
-                    <Button onClick={this.dateSort.bind(this)}> Sort by Date </Button>
-                </ButtonGroup>
-                <ButtonGroup>
-                    <Button> Sort by Club</Button>
-                </ButtonGroup>
-            </ButtonGroup>
+            <SearchBar placeholder='search for flyers'>
+              <DropdownButton
+                componentClass={InputGroup.Button}
+                id="input-dropdown-addon"
+                title="Sort By"
+              >
+                <MenuItem key="1" onClick={(e)=>this.dateSort(e, {sortByWhat})}>{sortBtnName}</MenuItem>
+              </DropdownButton>
+            </SearchBar>
          </Row>
          <Row>
            <Col>

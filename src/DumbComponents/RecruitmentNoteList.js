@@ -11,7 +11,6 @@ class RecruitmentNoteList extends React.Component {
             return(
               <ColCenter>
                 {this.props.recruitmentNotesList.map(function(recruitmentNote, index){
-                  console.log(recruitmentNote)
                   return <RecruitmentNote key={index} data={recruitmentNote}/>
 
                 })}
