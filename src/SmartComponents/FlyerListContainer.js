@@ -19,23 +19,6 @@ class FlyerListContainerPage extends React.Component {
     this.dateSort = this.dateSort.bind(this)
   }
 
-  dateSort () {
-      const that = this;
-
-      var newFlyersList = that.state.flyers
-
-
-      newFlyersList.sort(compareDates)
-
-      that.setState({
-              flyers: newFlyersList,
-              sortDate: false,
-              sortClub: false
-     })
-
-
-  }
-
   filterSearch(event){
       this.setState({search: event.target.value.substr(0,20)});
   }
