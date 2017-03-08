@@ -1,5 +1,5 @@
 import React from 'react'
-import { Carousel, Col, Image, Button } from 'react-bootstrap'
+import { Carousel, Col, Image, Button, ButtonGroup } from 'react-bootstrap'
 import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
 import { fetchDataOn, remove, update, set } from '../models'
 import { connect } from 'react-redux'
@@ -44,11 +44,13 @@ class OneFlyer extends React.Component{
       newData[`${flyerID}`] = flyerID
       this.state = {
         liked: false, //liked tells us whether this flyer is liked by the logged in user
-        userAlreadyLike: false
+        userAlreadyLike: false,
+        numLikes: 0
       }
       if(isAutheticated){
         fetchDataOn('users/' + uid).then(snap => {
           const userData = snap.val()
+
           if(userData.FlyersLiked && userData.FlyersLiked[`${flyerID}`]){
             this.setState({
               liked:true, //setting this will make all flyers that user already liked still appear liked
@@ -61,8 +63,20 @@ class OneFlyer extends React.Component{
     }
 
     onLike(){
+        const {liked, userAlreadyLike, numLikes} = this.state
+        var toAdd = 0
+        var isLiked = true
+        if(liked == true ){
+            toAdd = -1
+            isLiked = false
+        }
+        else{
+            toAdd = 1
+            isLiked = true
+        }
       this.setState({
-          liked: !this.state.liked
+          liked: isLiked,
+          numLikes: numLikes + toAdd
       })
     }
 
@@ -88,7 +102,7 @@ class OneFlyer extends React.Component{
         update(`users/${uid}/FlyersLiked`, thisFlyer)
         // transaction(`events/${id}/likes`).then(likes => likes + 1)
         this.updateLikes(+1)
-      } 
+      }
       if(!liked && userAlreadyLike ){
           // console.log('user unliked the flyer and user has previously liked the flyer')
           remove(`users/${uid}/FlyersLiked/`, thisFlyer)
@@ -106,14 +120,21 @@ class OneFlyer extends React.Component{
            date
          } = this.props.flyer
          const btnColor = this.state.liked ? 'danger' : 'info'
-         const HeatIcon =  this.state.liked ?  FaHeart : FaHeartO 
+         const HeatIcon =  this.state.liked ?  FaHeart : FaHeartO
          const titleAndBtn = (
             <div>
                 {name}
                 <span className='pull-right'>
-                  <Button onClick={this.onLike} bsStyle={btnColor}>
-                        <HeatIcon/>
-                  </Button>
+                  <ButtonGroup>
+                    <ButtonGroup>
+                      <Button onClick={this.onLike} bsStyle={btnColor}>
+                            <HeatIcon/>
+                      </Button>
+                    </ButtonGroup>
+                    <ButtonGroup>
+                        <Button> {this.state.numLikes} </Button>
+                    </ButtonGroup>
+                  </ButtonGroup>
                 </span>
             </div>
           )

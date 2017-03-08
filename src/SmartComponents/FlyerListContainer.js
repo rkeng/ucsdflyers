@@ -22,7 +22,7 @@ class FlyerListContainerPage extends React.Component {
   filterSearch(event){
       this.setState({search: event.target.value.substr(0,20)});
   }
-  
+
 
   componentWillMount () {
     const that = this;
@@ -51,7 +51,7 @@ class FlyerListContainerPage extends React.Component {
       var newFlyersList = that.state.flyers
       if(time === 'recent')
         newFlyersList.sort(compareDates)
-      else 
+      else
         newFlyersList.sort(!compareDates)
 
       that.setState({
@@ -70,7 +70,6 @@ class FlyerListContainerPage extends React.Component {
     )
     const sortByWhat = this.state.sortDate ? 'past' : 'recent'
     const sortBtnName = this.state.sortDate ? 'farthest future' : 'closest upcoming'
-
     return (
         <Grid>
           <NotificationContainer/>
@@ -85,6 +84,7 @@ class FlyerListContainerPage extends React.Component {
                 title="Sort By"
               >
                 <MenuItem key="1" onClick={(e)=>this.dateSort(e, {sortByWhat})}>{sortBtnName}</MenuItem>
+                <MenuItem key="2">Most popular</MenuItem>
               </DropdownButton>
          </Row>
          <Row>
