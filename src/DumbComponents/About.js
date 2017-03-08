@@ -107,7 +107,7 @@ class InfoCard extends React.Component{
 
     }
    render(){
-          const { name, role, intro, image, color } = this.props.member
+      const { role, intro, image, color} = this.props.member
       return(
 
         <Col smOffset={1} sm={11} mdOffset={2} md={3}>
