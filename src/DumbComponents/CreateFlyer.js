@@ -1,11 +1,14 @@
 import React from 'react'
-import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal } from 'react-bootstrap'
-import { Button, Panel } from 'react-bootstrap';
+import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal, Image } from 'react-bootstrap'
+import { Button } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker';
-import { createNew } from '../models/index.js';
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router';
+import { createNew, getCurrentUser, uploadImages } from '../models/index.js';
+import { ImageDropzone } from './ImageDropzone.js';
+import { Flyer } from './Flyer'
+import Logo from '../asset/logoHorizontal.png'
 
 
 
@@ -19,17 +22,17 @@ class CreateFlyer extends React.Component {
 
 
     this.state = {
+      active: true,
       success: false,
       show: false,
       like: 0,
       go: 0,
-        name: "",
-        date: new Date().toISOString(),
-        time: "",
-        description: "",
-        location: "",
-        files: "",
-        active: true
+      name: "",
+      date: new Date().toISOString(),
+      time: "",
+      description: "",
+      location: "",
+      files: "",
     }
   }
 
@@ -60,13 +63,16 @@ class CreateFlyer extends React.Component {
 
   onCreate(event){
     event.preventDefault();
+    getCurrentUser().then((club) => {
+      const clubID = club.uid;
       const flyer = {
         name: findDOMNode(this.name).value,
         time: findDOMNode(this.time).value,
         description: findDOMNode(this.description).value,
         location: findDOMNode(this.location).value,
         date: this.state.date.substring(0,10),
-        active: true
+        active: true,
+        like: 0,
       }
 
       if(flyer.name === "")
@@ -78,30 +84,43 @@ class CreateFlyer extends React.Component {
       else if(flyer.location === "")
       NotificationManager.error('Error', 'Please enter valid location!', 2222);
       else{
-      createNew('events',flyer)
       this.setState({ success: true})
-}
+      let flyerID = createNew('events',flyer)
+       // image uploading
+       let files = this.refs.dropzone.state.files
+       uploadImages("events", flyerID, clubID, files)
+      }
+  })
   }
 
 
 
   getFlyer () {
       var ourDate = this.state.date
-      var x = ourDate.substring(0,10)
-
+      var date = ourDate.substring(0,10)
+      const { name, location, description } = this.state
+      const flyerData = {
+        name: name,
+        location: location,
+        description: description,
+        date: date
+      }
       return(
-        <Panel key={this.state.name} bsStyle='success'
-            header={this.state.name}>
-          <h3>{this.state.name}</h3>
-            <p>
-              Date: {x} <br />
-              Time: {this.state.time}<br />
-              Description: {this.state.description}<br />
-              Location: {this.state.location}
-            </p>
-        </Panel>
+          <Col sm={12} md={12}>        
+              <Flyer flyer={flyerData} />
+          </Col>
       )
   }
+        // <Panel key={this.state.name} bsStyle='success'
+        //     header={this.state.name}>
+        //   <h3>{this.state.name}</h3>
+        //     <p>
+        //       Date: {x} <br />
+        //       Time: {this.state.time}<br />
+        //       Description: {this.state.description}<br />
+        //       Location: {this.state.location}
+        //     </p>
+        // </Panel>
 
 
   handleChange(value){
@@ -115,13 +134,13 @@ class CreateFlyer extends React.Component {
     return (
       <Grid>
         <Row className="create-flyer">
-          <Col md={8} mdOffset={2}>
+          <Col sm={12} md={8} mdOffset={2}>
 
           <PageHeader>Create Event <small>Name of club</small></PageHeader>
 
           <Form>
             <FormGroup>
-              <ControlLabel>name</ControlLabel>
+              <ControlLabel>What is the name of your upcoming event?</ControlLabel>
 
               <FormControl
                 type="text"
@@ -131,7 +150,7 @@ class CreateFlyer extends React.Component {
             </FormGroup>
 
             <FormGroup>
-              <ControlLabel>Date</ControlLabel>
+              <ControlLabel>When will it take place></ControlLabel>
               <DatePicker onChange={this.handleChange} value={this.state.date} />
               <ControlLabel>Time</ControlLabel>
 
@@ -143,7 +162,17 @@ class CreateFlyer extends React.Component {
             </FormGroup>
 
             <FormGroup>
-              <ControlLabel>Description</ControlLabel>
+              <ControlLabel>Where is the new event going to be?</ControlLabel>
+              <FormControl
+                componentClass="text"
+                placeholder="Enter location"
+                ref={(node) => {this.location = node}}
+              />
+              <FormControl.Feedback />
+            </FormGroup>
+
+            <FormGroup>
+              <ControlLabel>Please give students a detail description of your event</ControlLabel>
               <FormControl
                 componentClass="textarea"
                 placeholder="Enter description"
@@ -151,15 +180,8 @@ class CreateFlyer extends React.Component {
               />
             </FormGroup>
 
-            <FormGroup>
-              <ControlLabel>Location</ControlLabel>
-              <FormControl
-                componentClass="textarea"
-                placeholder="Enter location"
-                ref={(node) => {this.location = node}}
-              />
-              <FormControl.Feedback />
-            </FormGroup>
+
+            <ImageDropzone ref="dropzone"/>
 
 
           </Form>
@@ -177,32 +199,34 @@ class CreateFlyer extends React.Component {
           </Button>
         </Col>
 
-        <Col md={1} mdPush={1}>
+        <Col md={1} >
           <Button
             bsStyle="success"
             bsSize="small"
-            onClick={this.onPreview} >Preview flyer page
+            onClick={this.onPreview}>
+            Preview flyer page
           </Button>
 
           <Modal show={this.state.success} onHide={this.close}>
 
             <Modal.Body>
-                <div> Success! Flyer was created </div>
+               <Modal.Title className='text-center' style={{color: 'blue'}}>
+                  <h2>Your event is successfully created!!!</h2> 
+                </Modal.Title>
+               <Image src={Logo} style={{marginTop:100}} responsive/>
             </Modal.Body>
 
             <Modal.Footer>
-            <Button onClick={this.onClear}>Create another flyer</Button>
-
+              <Button onClick={this.onClear}>Create another flyer</Button>
               <Link className='btn' to='/' onClick={() => this.setState({success: false})}>
               Home Page</Link>
-
             </Modal.Footer>
           </Modal>
 
           <Modal show={this.state.show} onHide={this.close}>
-
+          {/*}<Flyer flyer={this.state}/>*/}
             <Modal.Body>
-                <div> { this.getFlyer() } </div>
+                { this.getFlyer() }
             </Modal.Body>
 
             <Modal.Footer>

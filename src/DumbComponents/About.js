@@ -1,94 +1,153 @@
 import React from 'react'
-import { ListGroupItem, ListGroup, Grid, Jumbotron, Image } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import logo from '../asset/logo.png'
+import { Image, Col} from 'react-bootstrap'
+// import RED from '../asset/RED.jpg'
+import AnimakitRotator from 'animakit-rotator';
 
-class AboutPage extends React.Component {
+const members = [
+    {
+      name: 'Xiqiang Lin',
+      role: 'Project Manager',
+      intro: 'Hello World!',
+      image: require("../asset/xiqiang.jpg"),
+      color:'#000000'
+    },
+    
+    {
+      name: 'Sheng Zhang',
+      role: 'Bussiness Analyst',
+      intro: 'Hello World!',
+      image: require("../asset/sheng.jpg"),
+      color:'#5B2C6F'
+    },
 
-  render(){
+    {
+      name: 'Ryan Keng',
+      role: 'Senior System Analyst',
+      intro: 'Hello World!',
+      image: require("../asset/ryan.jpg"),
+      color:'#000080'
+    },
 
-    return (
-      <Grid>        
-        <Jumbotron>
-          <div className="row text-center">
-            <Image width={400} height={400} src={logo} className="rounded mx-auto d-block" alt="" responsive/>
+    {
+      name: 'Yuqian Cheng',
+      role: 'Software Architect',
+      intro: 'Hello World!',
+      image: require("../asset/yuqian.jpg"),
+      color: '#E74C3C'
+    },
+
+    {
+      name: 'Aravind Sridhar',
+      role: 'Software Development Lead',
+      intro: 'Hello World!',
+      image: require("../asset/aravind.jpg"),
+      color: '#2E86C1'
+    },
+
+    {
+      name: 'Haoming Wang',
+      role: 'Algorithm Specialist',
+      intro: 'Hello Wolrd!',
+      image: require("../asset/haoming.jpg"),
+      color:'#008080'
+    },
+
+    {
+      name: 'Vanna Phong',
+      role: 'Database Specialist',
+      intro: 'Hello World!',
+      image: require("../asset/vanna.jpg"),
+      color: '#F39C12'  
+    },
+
+    {
+      name: 'Ying Wu',
+      role: 'Quality Assurance Lead',
+      intro: 'Hello World!',
+      image: require("../asset/ying.jpg"),
+      color: '#F08080'
+    },
+
+    {
+      name: 'Jialin Lou',
+      role: 'User Interface Specialist',
+      intro: 'Hello World!',
+      image: require("../asset/jialin.jpg"),
+      color: '#27AE60'
+    },
+
+    {
+      name: 'Xinrui Zhou',
+      role: 'User Interface Specialist',
+      intro: 'Hello World!',
+      image: require("../asset/arow.jpg"),
+      color:'#581845'
+    },
+]
+
+class InfoCard extends React.Component{
+
+    constructor (props) {
+      super(props)
+      this.state={
+        index:"image"
+      }
+    }
+
+    changeFace(event) {
+       if(this.state.index === "image"){
+         this.setState({index:"role"});
+       }
+       else if(this.state.index === "role"){
+         this.setState({index:"intro"});
+       }
+       else{
+         this.setState({index:"image"});
+       }
+
+    }
+   render(){
+      const { role, intro, image, color} = this.props.member
+      return(
+
+        <Col smOffset={1} sm={11} mdOffset={2} md={3}>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <div className="text-center">
+            <AnimakitRotator side={this.state.index} background={color} shadow>
+              <Image key="image" onClick={this.changeFace.bind(this)} width={300} height={300} alt="" src={image} /><br/>
+              <div key="role" onClick={this.changeFace.bind(this)}>
+                <h1>{name}</h1> <p style={{fontSize:'small'}}>{role}</p>
+              </div>
+              <div key="intro" onClick={this.changeFace.bind(this)}>
+                <p>{intro}</p>
+              </div>
+            </AnimakitRotator>
           </div>
-          <h2><strong>About ESL</strong></h2>
-          <br/>
-        
-          <Grid>
-            <ListGroupItem>
-                <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information. This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-            </ListGroupItem>
-          </Grid>
+        </Col>
 
-          <br/>
-          <br/>         
-          <br/>
+      )
+   }
+}
 
-          <h2><strong>Who Are We</strong></h2>
-          <br/>
-          <Grid>
-            <ListGroup>
-              <ListGroupItem header="Project Manager">
-                  <u><em>Xiqiang Lin</em></u>
-                  <br/>
-                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
-              </ListGroupItem>
-              <ListGroupItem header="Bussiness Analyst">
-                  <u><em>Sheng Zhang</em></u>
-                  <br/>
-                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
-              </ListGroupItem>
-              <ListGroupItem header="Senior System Analyst">
-                  <u><em>Ryan Keng</em></u>
-                  <br/>
-                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
-              </ListGroupItem>
-              <ListGroupItem header="Software Architect">
-                  <u><em>Yuqian Cheng</em></u>
-                  <br/>
-                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
-              </ListGroupItem>
-              <ListGroupItem header="Software Development Lead">
-                  <u><em>Aravind Sridhar</em></u>
-                  <br/>
-                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
-              </ListGroupItem>
-              <ListGroupItem header="Algorithm Specialist">
-                  <u><em>Haoming Wang</em></u>
-                  <br/>
-                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
-              </ListGroupItem>
-              <ListGroupItem header="Database Specialist">
-                  <u><em>Vanna Phong</em></u>
-                  <br/>
-                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
-              </ListGroupItem>
-              <ListGroupItem header="Quality Assurance Lead">
-                  <u><em>Ying Wu</em></u>
-                  <br/>
-                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
-              </ListGroupItem>
-              <ListGroupItem header="User Interface Specialist">
-                  <u><em>Jialin Lou</em></u>
-                  <br/>
-                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
-              </ListGroupItem>
-              <ListGroupItem header="User Interface Specialist">
-                  <u><em>Xinrui Zhou</em></u>
-                  <br/>
-                  <small>One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself, One or two or whatever sentences to introduce yourself,One or two or whatever sentences to introduce yourself!</small>
-              </ListGroupItem>
+class About extends React.Component{
+  renderMembers() {     
+    return members.map((member, index) => {      
+      return(  
+        <InfoCard key={index} member={member}/>
+      )
+    })
+  }
 
-              </ListGroup>
-              </Grid>
-
-        </Jumbotron>
-      </Grid>
+  render() {
+    return(
+      <div>
+        {this.renderMembers()}
+      </div>
     )
   }
 }
-const About = connect()(AboutPage)
 
 export { About }
