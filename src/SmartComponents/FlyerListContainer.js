@@ -14,7 +14,8 @@ class FlyerListContainerPage extends React.Component {
     this.state = {
       flyers: [],
       sortDate: false,
-      sortClub: false
+      sortClub: false,
+      search: ''
     }
 
   }
@@ -56,6 +57,10 @@ class FlyerListContainerPage extends React.Component {
 
   }
 
+  filterSearch(event){
+      this.setState({search: event.target.value.substr(0,20)});
+  }
+  
 
   componentWillMount () {
     const that = this;
@@ -84,11 +89,18 @@ class FlyerListContainerPage extends React.Component {
   }
 
   render () {
+    let filteredFlyers=this.state.flyers.filter(
+      (flyer)=>{
+        return flyer.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+        || flyer.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+      }
+    )
     return (
         <Grid>
           <NotificationContainer/>
           <Row>
-            <SearchBar placeholder='search for flyers'/>
+            <SearchBar placeholder='search flyers' value={this.state.search || ''}
+                onChange={this.filterSearch.bind(this)}/>
          </Row>
          <Row>
             <ButtonGroup justified>
@@ -102,7 +114,7 @@ class FlyerListContainerPage extends React.Component {
          </Row>
          <Row>
            <Col>
-              <FlyerList flyers={this.state.flyers}/>
+              <FlyerList flyers={filteredFlyers}/>
             </Col>
           </Row>
         </Grid>
