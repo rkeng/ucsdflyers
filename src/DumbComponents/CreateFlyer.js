@@ -106,7 +106,7 @@ class CreateFlyer extends React.Component {
         date: date
       }
       return(
-          <Col sm={12} md={12}>        
+          <Col sm={12} md={12}>
               <Flyer flyer={flyerData} />
           </Col>
       )
@@ -150,7 +150,7 @@ class CreateFlyer extends React.Component {
             </FormGroup>
 
             <FormGroup>
-              <ControlLabel>When will it take place></ControlLabel>
+              <ControlLabel>When will it take place?</ControlLabel>
               <DatePicker onChange={this.handleChange} value={this.state.date} />
               <ControlLabel>Time</ControlLabel>
 
@@ -164,7 +164,7 @@ class CreateFlyer extends React.Component {
             <FormGroup>
               <ControlLabel>Where is the new event going to be?</ControlLabel>
               <FormControl
-                componentClass="text"
+                type="text"
                 placeholder="Enter location"
                 ref={(node) => {this.location = node}}
               />
@@ -211,7 +211,7 @@ class CreateFlyer extends React.Component {
 
             <Modal.Body>
                <Modal.Title className='text-center' style={{color: 'blue'}}>
-                  <h2>Your event is successfully created!!!</h2> 
+                  <h2>Your event is successfully created!!!</h2>
                 </Modal.Title>
                <Image src={Logo} style={{marginTop:100}} responsive/>
             </Modal.Body>
