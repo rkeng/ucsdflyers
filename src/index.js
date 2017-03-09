@@ -10,7 +10,6 @@ import { Provider } from 'react-redux'
 import { OrgListContainer} from './SmartComponents/OrgListContainer'
 import { FlyerListContainer } from './SmartComponents/FlyerListContainer'
 import { RecruitmentListContainer } from './SmartComponents/RecruitmentListContainer';
-import { Register } from './DumbComponents/Register'
 import { Feedback } from './DumbComponents/Feedback'
 import { NotFound } from './DumbComponents/NotFound'
 import { Login } from './DumbComponents/Login'
@@ -41,18 +40,17 @@ ReactDOM.render(
         <Router history={history}>
             <Route path='/' component={FlyersApp}>
                 <IndexRedirect to='events'/>
-                <Route path='events' component={FlyerListContainer}/>
-                <Route path='org' component={OrgListContainer}/>
-                <Route path='about' component={About}/>
-                <Route path='register' component={Register}/>
-                <Route path='feedback' component={Feedback}/>
-                <Route path='recruitments' component={RecruitmentListContainer}/>
-                <Route path='create-recruitment' component={CreateRecruitment}/>
-                <Route path='create-flyer' component={CreateFlyer}/>
-                <Route path='login' component={Login}/>
-                <Route path='org-login' component={NewOrganizations}/>
-                <Route path='my-flyers' component={MyFlyers}/>
-                <Route path='org-profile' component={OrgProfileSelect}/>
+                <Route path='events' component={FlyerListContainer}/>                    {/*all*/}
+                <Route path='org' component={OrgListContainer}/>                         {/*all*/}
+                <Route path='about' component={About}/>                                  {/*all*/}
+                <Route path='feedback' component={Feedback}/>                            {/*all*/}
+                <Route path='recruitments' component={RecruitmentListContainer}/>        {/*all*/}
+                <Route path='create-recruitment' component={CreateRecruitment}/>         {/*org only*/}
+                <Route path='create-flyer' component={CreateFlyer}/>                     {/*org only*/}
+                <Route path='login' component={Login}/>                                  {/*all*/}
+                <Route path='org-login' component={NewOrganizations}/>                   {/*all*/}
+                <Route path='my-flyers' component={MyFlyers}/>                           {/*student only*/}
+                <Route path='org-profile' component={OrgProfileSelect}/>                 {/*org only*/}
             </Route>
             <Route path='*' component={NotFound}/>
         </Router>
