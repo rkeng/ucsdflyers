@@ -24,9 +24,10 @@ export function LoginUserAction (userData) {
   }
 }
 
-export function LogoutUserAction(){
+export function LogoutUserAction(userData){
   return {
-    type: 'LOGOUT_USER'
+    type: 'LOGOUT_USER',
+    userData
   }
 }
 

@@ -2,6 +2,7 @@ import React from 'react'
 import {ColCenter} from './ColCenter'
 import { FaSearch } from 'react-icons/lib/fa'
 import { InputGroup, FormControl } from 'react-bootstrap'
+import { AuthWrapper, STUDENT, GUEST, ORG } from './AuthWrapper'
 
 function SearchBar(props){
     var placeholder = props.placeholder
@@ -50,3 +51,4 @@ export function stringtoDate(input){
 
 
 export { ColCenter, SearchBar }
+export { AuthWrapper, STUDENT, GUEST, ORG } 
