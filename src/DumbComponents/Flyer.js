@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
 import RED from '../asset/RED.jpg'
 
+
 const carouselInstance = (
   <Carousel>
     <Carousel.Item>
@@ -32,16 +33,32 @@ const carouselInstance = (
   </Carousel>
 );
 
+
 class OneFlyer extends React.Component{
 
     constructor(props){
       super(props)
 
+
       const { id } = this.props.flyer
       const { isAutheticated, uid } = this.props.user
       const flyerID = id;
       const newData = {};
+      var initialLikes = 0;
       newData[`${flyerID}`] = flyerID
+
+
+
+     /* fetchDataOn(`events/${id}`).then(snap => {
+          var value = snap.val().likes
+          console.log(value)
+          if(typeof value === 'object'){
+            throw new Error('Single Update is only allow on non-object field of the database')
+          } else {
+            set(`events/${id}/likes`, value+update)
+          }
+      })*/
+
       this.state = {
         liked: false, //liked tells us whether this flyer is liked by the logged in user
         userAlreadyLike: false,
@@ -61,7 +78,10 @@ class OneFlyer extends React.Component{
       }
       this.onLike = this.onLike.bind(this)
     }
-
+    getLikes(likes){
+        console.log(likes , this.context)
+        this.initialLikes= likes
+    }
     onLike(){
         const {liked, userAlreadyLike, numLikes} = this.state
         var toAdd = 0
@@ -74,6 +94,7 @@ class OneFlyer extends React.Component{
             toAdd = 1
             isLiked = true
         }
+      this.updateLikes(toAdd)
       this.setState({
           liked: isLiked,
           numLikes: numLikes + toAdd
@@ -82,8 +103,9 @@ class OneFlyer extends React.Component{
 
     updateLikes(update){
       const { id } = this.props.flyer
-      fetchDataOn(`events/${id}/likes`).then(snap => {
-          var value = snap.val();
+      fetchDataOn(`events/${id}`).then(snap => {
+          var value = snap.val().likes
+          console.log(value)
           if(typeof value === 'object'){
             throw new Error('Single Update is only allow on non-object field of the database')
           } else {
@@ -91,7 +113,15 @@ class OneFlyer extends React.Component{
           }
       })
     }
-
+    componentDidMount(){
+        const { id } = this.props.flyer
+        fetchDataOn(`events/${id}`).then(snap => {
+           var numLikes = snap.val().likes
+           this.setState ({
+               numLikes: numLikes
+           })
+       })
+    }
     componentWillUnmount(){
       const { uid } = this.props.user
       const { id } = this.props.flyer
