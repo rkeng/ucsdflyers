@@ -19,13 +19,26 @@ import { NewOrganizations } from './DumbComponents/NewOrganizations'
 import { CreateRecruitment } from './DumbComponents/CreateRecruitment'
 import { CreateFlyer } from './DumbComponents/CreateFlyer'
 import { MyFlyers } from './DumbComponents/MyFlyers'
-import { OrgProfile } from './DumbComponents/OrgProfile'
-
-
+import { OrgProfileSelect } from './DumbComponents/OrgProfileSelect'
+import { listenToDataAsArray } from './models'
+import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction } from './State/actions'
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 
+listenToDataAsArray('events', function(events){
+        // console.log('fetched events data')
+        store.dispatch(GetEventsAction(events))
+})
 
+listenToDataAsArray('clubs', function(clubs){
+        // console.log('fetched clubs data')
+        store.dispatch(GetOrgsAction(clubs))
+})
+
+listenToDataAsArray('recruitmentNotes', function(recruitments){
+        // console.log('fetched recruitments data')
+        store.dispatch(GetRecruitmentsAction(recruitments))
+})
 
 ReactDOM.render(
     <Provider store={store}>
@@ -43,7 +56,7 @@ ReactDOM.render(
                 <Route path='login' component={Login}/>
                 <Route path='org-login' component={NewOrganizations}/>
                 <Route path='my-flyers' component={MyFlyers}/>
-                <Route path='org-profile' component={OrgProfile}/>
+                <Route path='org-profile' component={OrgProfileSelect}/>
             </Route>
             <Route path='*' component={NotFound}/>
         </Router>
