@@ -26,6 +26,17 @@ export function fetchDataAsArray(node){
     })
 }
 
+export function listenToDataAsArray(node, resolve, reject){
+        db.ref(node).on('value', function(snap){
+            var snapshot = snap.val();
+            var keyList = Object.keys(snapshot)
+            var dataArray = keyList.map(key => snapshot[key])
+            resolve(dataArray)
+        }, function(error){
+            reject(error)
+        })
+}
+
 //sign out user
 export function signOutUser(){
     return firebase.auth().signOut()

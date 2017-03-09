@@ -164,7 +164,7 @@ class CreateFlyer extends React.Component {
             <FormGroup>
               <ControlLabel>Where is the new event going to be?</ControlLabel>
               <FormControl
-                componentClass="text"
+                text="text"
                 placeholder="Enter location"
                 ref={(node) => {this.location = node}}
               />

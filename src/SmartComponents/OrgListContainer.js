@@ -9,7 +9,6 @@ class OrgListContainerPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      orgs: [],
       search: ''
     }
   }
@@ -19,7 +18,7 @@ class OrgListContainerPage extends React.Component {
   }
 
   render () {
-    let filteredOrgs=this.state.orgs.filter(
+    let filteredOrgs=this.props.orgs.filter(
       (org)=>{
         return org.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
         || org.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
@@ -40,6 +39,16 @@ class OrgListContainerPage extends React.Component {
   }
 }
 
-const OrgListContainer = connect()(OrgListContainerPage)
+OrgListContainerPage.defaultProps = {
+    orgs: []
+}
+
+function mapStateToProps(state){
+  return {
+    orgs: state.data.orgs
+  }
+}
+
+const OrgListContainer = connect(mapStateToProps)(OrgListContainerPage)
 
 export { OrgListContainer }
