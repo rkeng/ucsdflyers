@@ -17,6 +17,7 @@ class FlyerListContainerPage extends React.Component {
       search: ''
     }
     this.dateSort = this.dateSort.bind(this)
+    this.filterSearch = this.filterSearch.bind(this)
   }
 
   filterSearch(event){
@@ -76,9 +77,7 @@ class FlyerListContainerPage extends React.Component {
           <NotificationContainer/>
           <Row>
             <SearchBar placeholder='search flyers' value={this.state.search || ''}
-                onChange={this.filterSearch.bind(this)}/>
-         </Row>
-         <Row>
+                onChange={this.filterSearch}>
               <DropdownButton
                 componentClass={InputGroup.Button}
                 id="input-dropdown-addon"
@@ -86,6 +85,7 @@ class FlyerListContainerPage extends React.Component {
               >
                 <MenuItem key="1" onClick={(e)=>this.dateSort(e, {sortByWhat})}>{sortBtnName}</MenuItem>
               </DropdownButton>
+            </SearchBar>
          </Row>
          <Row>
            <Col>
@@ -96,6 +96,12 @@ class FlyerListContainerPage extends React.Component {
     )
   }
 }
+
+// function mapStateToProps(state){
+//   return {
+//     flyers: state.data.events
+//   }
+// }
 
 const FlyerListContainer = connect()(FlyerListContainerPage)
 

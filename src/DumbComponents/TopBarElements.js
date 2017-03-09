@@ -64,13 +64,13 @@ function TopBarIcon(props){
                 <TopBarItem id='org' name='ORGANIZATIONS' icon={<FaGroup />} />
                 <TopBarItem id='recruitments' name='RECRUITMENTS' icon={<FaStickyNoteO />} />
                 <TopBarItem id='about' name='ABOUT' icon={<FaChild />} />
+                <button onClick={() => {
+                    console.log('state?', props.state)
+                }}> show state</button>
             </Nav>
     )
 }
 /* use this print state; only for development purpose
-<Button onClick={() => {
-    console.log('state?', props.state)
-}}> show state</Button>
 */
 
 
