@@ -4,8 +4,8 @@ import { FaGooglePlusSquare, FaFacebookSquare } from 'react-icons/lib/fa'
 import { Button } from 'react-bootstrap'
 import { firebase } from '../models/FlyersFirebase'
 import { signinOrg } from '../models'
-import { getCurrentUser } from '../models'
-import { LoginOrgAction } from '../State/actions'
+import { getCurrentUser, fetchDataOn } from '../models'
+import { LoginUserAction } from '../State/actions'
 
 const wellStyles = {maxWidth: 400, margin: '0 auto 10px'};
 
@@ -36,22 +36,30 @@ class OrgLoginForm extends React.Component {
     signinOrg(provider)
   }
 
+  //TODO: store org data to state
   componentWillUnmount(){
     const { dispatch } = this.props;
     getCurrentUser().then((user) =>{
       if(user){
-        const userData = {
-            displayName: user.displayName,
-            email: user.email,
-            emailVerified: user.emailVerified,
-            isAnonymous: user.isAnonymous,
-            photoURL: user.photoURL,
-            providerData: user.providerData,
-            uid: user.uid,
-            likedFlyers: ' ',        
-            isOrg: true
-        }
-        dispatch(LoginOrgAction(userData))
+        fetchDataOn(`users/${user.uid}`)
+        .then(snap => {
+          var userData = snap.val()
+          //get the user firebase's auth data
+          const userDataOnAuth = {
+              displayName: user.displayName,
+              email: user.email,
+              emailVerified: user.emailVerified,
+              isAnonymous: user.isAnonymous,
+              photoURL: user.photoURL,
+              providerData: user.providerData,
+              uid: user.uid,
+              isOrg: true
+          }
+          //merge it with our firebase data
+          const userDataToState = Object.assign(userDataOnAuth, userData)
+          //dispatch it
+          dispatch(LoginUserAction(userDataToState))
+        })
       }
     })
   }

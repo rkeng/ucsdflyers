@@ -22,7 +22,6 @@ import { MyFlyers } from './DumbComponents/MyFlyers'
 import { OrgProfileSelect } from './DumbComponents/OrgProfileSelect'
 import { fetchDataAsArray } from './models'
 import { GetOrgsAction, GetEventsAction } from './State/actions'
-import { OrgProfileInit } from './DumbComponents/OrgProfileInit'
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 
