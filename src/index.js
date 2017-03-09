@@ -21,7 +21,7 @@ import { CreateFlyer } from './DumbComponents/CreateFlyer'
 import { MyFlyers } from './DumbComponents/MyFlyers'
 import { OrgProfileSelect } from './DumbComponents/OrgProfileSelect'
 import { listenToDataAsArray } from './models'
-import { GetOrgsAction, GetEventsAction } from './State/actions'
+import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction } from './State/actions'
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -30,7 +30,13 @@ listenToDataAsArray('events', function(events){
 })
 
 listenToDataAsArray('clubs', function(clubs){
+        // console.log('fetched clubs data')
         store.dispatch(GetOrgsAction(clubs))
+})
+
+listenToDataAsArray('recruitmentNotes', function(recruitments){
+        // console.log('fetched recruitments data')
+        store.dispatch(GetRecruitmentsAction(recruitments))
 })
 
 ReactDOM.render(

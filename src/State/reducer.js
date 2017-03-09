@@ -61,6 +61,9 @@ function dataStateReducer(state={}, action){
         case 'GET_EVENTS':{
             return Object.assign({}, state, { events: action.data })
         }
+        case 'GET_RECRUITMENTS':{
+            return Object.assign({}, state, { recruitments: action.data })
+        }
         default:
         return state
     }

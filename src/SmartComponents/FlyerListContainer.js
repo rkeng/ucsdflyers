@@ -9,6 +9,7 @@ class FlyerListContainerPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      sortDate: true,
       search: ''
     }
     this.dateSort = this.dateSort.bind(this)
@@ -27,7 +28,8 @@ class FlyerListContainerPage extends React.Component {
   }
 
   render () {
-    let filteredFlyers=this.props.flyers.filter(
+    let activeFlyers = this.props.flyers.filter((flyer) => flyer.active)
+    let filteredFlyers = activeFlyers.filter(
       (flyer)=>{
         return flyer.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
         || flyer.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
@@ -35,8 +37,7 @@ class FlyerListContainerPage extends React.Component {
     )
     if(this.state.sortDate){
       filteredFlyers.sort(compareDates)
-    }
-    else {
+    } else {
       filteredFlyers.sort(!compareDates)
     }
     const sortByWhat = this.state.sortDate ? 'past' : 'recent'
@@ -75,7 +76,6 @@ function mapStateToProps(state){
     flyers: state.data.events
   }
 }
-
 
 const FlyerListContainer = connect(mapStateToProps)(FlyerListContainerPage)
 

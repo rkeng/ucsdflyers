@@ -4,8 +4,8 @@ import Masonry from 'react-masonry-component'
 
 class FlyerList extends React.Component {
   
- // iterate through an array of flyers to generate jsx for each flyer
- renderFlyers () {
+   // iterate through an array of flyers to generate jsx for each flyer
+   renderFlyers () {
     if(this.props.flyers.length > 0){
         return this.props.flyers.map((flyer, index) =>
           (<Flyer key={index} flyer={flyer}/>)
@@ -20,22 +20,14 @@ class FlyerList extends React.Component {
     var renderedFlyers = this.renderFlyers();
 
     var masonryOptions = {
-    transitionDuration: 0
-  };
+      transitionDuration: 0
+    };
   
-  var style = {
-
-  };
-
-
-
     return (
         
           <Masonry
                 className={'my-gallery-class'} 
                 options={masonryOptions}  
-                style={style}
-
             >
                  {renderedFlyers}
           </Masonry>

@@ -57,3 +57,10 @@ export function GetEventsAction(data){
     data
   }
 }
+
+export function GetRecruitmentsAction(data){
+  return {
+    type: 'GET_RECRUITMENTS',
+    data
+  }
+}
