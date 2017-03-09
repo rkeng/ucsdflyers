@@ -31,7 +31,7 @@ function NavbarWrapper(props){
         wrapper = <Navbar collapseOnSelect fixedTop> {props.children} </Navbar>
     }
     if(props.dummy){
-        wrapper = <Navbar><TopBarIcon/></Navbar>
+        wrapper = <Navbar></Navbar>
     }
     return(
         <span>{wrapper}</span>

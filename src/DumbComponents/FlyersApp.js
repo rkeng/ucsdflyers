@@ -11,7 +11,7 @@ class FlyersAppForm extends React.Component {
                 <Row>
                     <ColCenter>
                         <TopBar fixedTop/>
-                        <TopBar dummy/>{/*This is NOT code duplication!!! It's a UI place holder!!!!!*/}
+                        <TopBar dummy={true}/>{/*This is NOT code duplication!!! It's a UI place holder!!!!!*/}
                     </ColCenter>
                 </Row>
                 <Row>
