@@ -150,7 +150,7 @@ class CreateFlyer extends React.Component {
             </FormGroup>
 
             <FormGroup>
-              <ControlLabel>When will it take place></ControlLabel>
+              <ControlLabel>When will it take place</ControlLabel>
               <DatePicker onChange={this.handleChange} value={this.state.date} />
               <ControlLabel>Time</ControlLabel>
 
@@ -164,7 +164,7 @@ class CreateFlyer extends React.Component {
             <FormGroup>
               <ControlLabel>Where is the new event going to be?</ControlLabel>
               <FormControl
-                componentClass="text"
+                type="text"
                 placeholder="Enter location"
                 ref={(node) => {this.location = node}}
               />

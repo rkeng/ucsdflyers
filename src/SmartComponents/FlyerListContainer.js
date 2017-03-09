@@ -1,9 +1,7 @@
 import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
 import { connect } from 'react-redux'
-import { fetchDataAsArray } from '../models'
 import { SearchBar, compareDates } from '../Commen'
-import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Grid, Row, Col, DropdownButton, MenuItem, InputGroup } from 'react-bootstrap';
 
 class FlyerListContainerPage extends React.Component {
@@ -11,9 +9,6 @@ class FlyerListContainerPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      flyers: [],
-      sortDate: false,
-      sortClub: false,
       search: ''
     }
     this.dateSort = this.dateSort.bind(this)
@@ -23,58 +18,32 @@ class FlyerListContainerPage extends React.Component {
   filterSearch(event){
       this.setState({search: event.target.value.substr(0,20)});
   }
-  
-
-  componentWillMount () {
-    const that = this;
-
-    function isActive (flyer) {
-      return flyer.active===true;
-    }
-
-    fetchDataAsArray('events')
-    .then(function(events){
-        var newFlyersList = events.filter(isActive);
-        newFlyersList.sort(compareDates)
-        that.setState({
-            flyers: newFlyersList,
-        })
-    })
-    .catch(function(error){
-        NotificationManager.error('Something is wrong', 'Opps!', 2222);
-    })
-  }
 
   dateSort(e, time) {
       e.preventDefault();
-      const that = this;
-
-      var newFlyersList = that.state.flyers
-      if(time === 'recent')
-        newFlyersList.sort(compareDates)
-      else 
-        newFlyersList.sort(!compareDates)
-
-      that.setState({
-          flyers: newFlyersList,
-          sortDate: !this.state.sortDate
+      this.setState({
+        sortDate: !this.state.sortDate
       })
-    console.log('component state', this.state)
   }
 
   render () {
-    let filteredFlyers=this.state.flyers.filter(
+    let filteredFlyers=this.props.flyers.filter(
       (flyer)=>{
         return flyer.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
         || flyer.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
       }
     )
+    if(this.state.sortDate){
+      filteredFlyers.sort(compareDates)
+    }
+    else {
+      filteredFlyers.sort(!compareDates)
+    }
     const sortByWhat = this.state.sortDate ? 'past' : 'recent'
     const sortBtnName = this.state.sortDate ? 'farthest future' : 'closest upcoming'
 
     return (
         <Grid>
-          <NotificationContainer/>
           <Row>
             <SearchBar placeholder='search flyers' value={this.state.search || ''}
                 onChange={this.filterSearch}>
@@ -97,12 +66,17 @@ class FlyerListContainerPage extends React.Component {
   }
 }
 
-// function mapStateToProps(state){
-//   return {
-//     flyers: state.data.events
-//   }
-// }
+FlyerListContainerPage.defaultProps = {
+    flyers: []
+}
 
-const FlyerListContainer = connect()(FlyerListContainerPage)
+function mapStateToProps(state){
+  return {
+    flyers: state.data.events
+  }
+}
+
+
+const FlyerListContainer = connect(mapStateToProps)(FlyerListContainerPage)
 
 export { FlyerListContainer }

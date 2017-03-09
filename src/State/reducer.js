@@ -53,10 +53,24 @@ function userStateReducer (state={}, action) {
     }
 }
 
+function dataStateReducer(state={}, action){
+    switch(action.type){
+        case 'GET_ORGS':{
+            return Object.assign({}, state, { orgs: action.data })
+        }
+        case 'GET_EVENTS':{
+            return Object.assign({}, state, { events: action.data })
+        }
+        default:
+        return state
+    }
+}
+
 
 const rootReducer = combineReducers({
   routing: routerReducer, // connect routing with application state
-  user: userStateReducer
+  user: userStateReducer,
+  data: dataStateReducer
 })
 
 export { rootReducer }

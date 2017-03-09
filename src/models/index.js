@@ -26,6 +26,17 @@ export function fetchDataAsArray(node){
     })
 }
 
+export function listenToDataAsArray(node, resolve, reject){
+        db.ref(node).on('value', function(snap){
+            var snapshot = snap.val();
+            var keyList = Object.keys(snapshot)
+            var dataArray = keyList.map(key => snapshot[key])
+            resolve(dataArray)
+        }, function(error){
+            reject(error)
+        })
+}
+
 //sign out user
 export function signOutUser(){
     return firebase.auth().signOut()
@@ -122,7 +133,7 @@ export function signinOrg(provider){
     firebase.auth().signInWithPopup(provider).then(function(result) { //result has a credential and user
       // This gives you a Google Access Token. You can use it to access the Google API.
       var user = result.user
-      console.log('sigin org result?', result)
+      // console.log('sigin org result?', result)
       const userField = 'users/' + user.uid;
       fetchDataOn(userField).then(userField => {
             if(!userField.val()){
