@@ -79,6 +79,7 @@ class OrgProfileInitPage extends React.Component{
         You can perfrom this action <b>ONLY ONCE</b>, selecting an orgnaization that
         you are not a staff of may result in lawsuit.
         Are you sure you want to register as a member of {this.state.value} ?
+
         </Modal.Body>
 
         <Modal.Footer>
@@ -97,4 +98,4 @@ function mapStateToProps(state){
 }
 
 const OrgProfileInit = connect(mapStateToProps)(OrgProfileInitPage)
-export { OrgProfileInit }
+export { OrgProfileInit}
