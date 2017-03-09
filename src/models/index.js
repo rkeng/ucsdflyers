@@ -10,6 +10,7 @@ Example: get all the flyers
     fetchDataOn('events').then(function(events){ ... })
 */
 export function fetchDataOn(node){
+    var x = db.ref(node).once('value')
     return db.ref(node).once('value')
 }
 
@@ -144,4 +145,3 @@ export function signinOrg(provider){
         })
       })
 }
-

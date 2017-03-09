@@ -1,10 +1,11 @@
 import React from 'react'
-import { Carousel, Col, Image, Button } from 'react-bootstrap'
+import { Carousel, Col, Image, Button, ButtonGroup } from 'react-bootstrap'
 import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
 import { fetchDataOn, remove, update, set } from '../models'
 import { connect } from 'react-redux'
 import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
 import RED from '../asset/RED.jpg'
+
 
 const carouselInstance = (
   <Carousel>
@@ -32,23 +33,41 @@ const carouselInstance = (
   </Carousel>
 );
 
+
 class OneFlyer extends React.Component{
 
     constructor(props){
       super(props)
 
+
       const { id } = this.props.flyer
       const { isAutheticated, uid } = this.props.user
       const flyerID = id;
       const newData = {};
+      var initialLikes = 0;
       newData[`${flyerID}`] = flyerID
+
+
+
+     /* fetchDataOn(`events/${id}`).then(snap => {
+          var value = snap.val().likes
+          console.log(value)
+          if(typeof value === 'object'){
+            throw new Error('Single Update is only allow on non-object field of the database')
+          } else {
+            set(`events/${id}/likes`, value+update)
+          }
+      })*/
+
       this.state = {
         liked: false, //liked tells us whether this flyer is liked by the logged in user
-        userAlreadyLike: false
+        userAlreadyLike: false,
+        numLikes: 0
       }
       if(isAutheticated){
         fetchDataOn('users/' + uid).then(snap => {
           const userData = snap.val()
+
           if(userData.FlyersLiked && userData.FlyersLiked[`${flyerID}`]){
             this.setState({
               liked:true, //setting this will make all flyers that user already liked still appear liked
@@ -59,17 +78,34 @@ class OneFlyer extends React.Component{
       }
       this.onLike = this.onLike.bind(this)
     }
-
+    getLikes(likes){
+        console.log(likes , this.context)
+        this.initialLikes= likes
+    }
     onLike(){
+        const {liked, userAlreadyLike, numLikes} = this.state
+        var toAdd = 0
+        var isLiked = true
+        if(liked == true ){
+            toAdd = -1
+            isLiked = false
+        }
+        else{
+            toAdd = 1
+            isLiked = true
+        }
+      this.updateLikes(toAdd)
       this.setState({
-          liked: !this.state.liked
+          liked: isLiked,
+          numLikes: numLikes + toAdd
       })
     }
 
     updateLikes(update){
       const { id } = this.props.flyer
-      fetchDataOn(`events/${id}/likes`).then(snap => {
-          var value = snap.val();
+      fetchDataOn(`events/${id}`).then(snap => {
+          var value = snap.val().likes
+          console.log(value)
           if(typeof value === 'object'){
             throw new Error('Single Update is only allow on non-object field of the database')
           } else {
@@ -77,7 +113,15 @@ class OneFlyer extends React.Component{
           }
       })
     }
-
+    componentDidMount(){
+        const { id } = this.props.flyer
+        fetchDataOn(`events/${id}`).then(snap => {
+           var numLikes = snap.val().likes
+           this.setState ({
+               numLikes: numLikes
+           })
+       })
+    }
     componentWillUnmount(){
       const { uid } = this.props.user
       const { id } = this.props.flyer
@@ -88,7 +132,7 @@ class OneFlyer extends React.Component{
         update(`users/${uid}/FlyersLiked`, thisFlyer)
         // transaction(`events/${id}/likes`).then(likes => likes + 1)
         this.updateLikes(+1)
-      } 
+      }
       if(!liked && userAlreadyLike ){
           // console.log('user unliked the flyer and user has previously liked the flyer')
           remove(`users/${uid}/FlyersLiked/`, thisFlyer)
@@ -106,14 +150,21 @@ class OneFlyer extends React.Component{
            date
          } = this.props.flyer
          const btnColor = this.state.liked ? 'danger' : 'info'
-         const HeatIcon =  this.state.liked ?  FaHeart : FaHeartO 
+         const HeatIcon =  this.state.liked ?  FaHeart : FaHeartO
          const titleAndBtn = (
             <div>
                 {name}
                 <span className='pull-right'>
-                  <Button onClick={this.onLike} bsStyle={btnColor}>
-                        <HeatIcon/>
-                  </Button>
+                  <ButtonGroup>
+                    <ButtonGroup>
+                      <Button onClick={this.onLike} bsStyle={btnColor}>
+                            <HeatIcon/>
+                      </Button>
+                    </ButtonGroup>
+                    <ButtonGroup>
+                        <Button> {this.state.numLikes} </Button>
+                    </ButtonGroup>
+                  </ButtonGroup>
                 </span>
             </div>
           )
