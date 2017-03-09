@@ -1,8 +1,6 @@
 import React from 'react'
 import { OrgList } from '../DumbComponents/OrgList'
 import { connect } from 'react-redux'
-import { fetchDataAsArray } from '../models'
-import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Grid, Row, Col } from 'react-bootstrap';
 import { SearchBar } from '../Commen'
 
@@ -18,20 +16,6 @@ class OrgListContainerPage extends React.Component {
 
   filterSearch(event){
       this.setState({search: event.target.value.substr(0,20)});
-  }
-
-  componentWillMount () {
-    const that = this;
-    fetchDataAsArray('clubs')
-    .then(function(clubs){
-        var newOrgList = clubs
-        that.setState({
-            orgs: newOrgList
-        })
-    })
-    .catch(function(error){
-        NotificationManager.error('Something is wrong', 'Opps!', 2222);
-    })
   }
 
   render () {
@@ -51,7 +35,6 @@ class OrgListContainerPage extends React.Component {
                   <OrgList orgs={filteredOrgs}/>
               </Col>
             </Row>
-            <NotificationContainer/>
         </Grid>
     )
   }

@@ -1,57 +1,55 @@
 import React from 'react';
 import { RecruitmentNoteList } from '../DumbComponents/RecruitmentNoteList';
 import { connect } from 'react-redux'
-import { fetchDataAsArray } from '../models'
-import { NotificationContainer, NotificationManager } from 'react-notifications'
-
-// dummy data
-// const recruitmentNotesList = [
-//     {name: 'Alpha Phi Omega', date: 'Feb 20, 2017', title: 'VP of Finance', description: 'Looking for talented individuals'},
-//     {name: 'Hack Day', date: 'Jan 31, 2017', title: 'CSE building', description: 'Hack into others computer'},
-//     {name: 'Water Fun', date: 'Feb 02, 2017', title: 'Sun God', description: 'Get wet and swag'}
-// ];
 import { Grid, Row, Col } from 'react-bootstrap';
 import { SearchBar } from '../Commen'
 
 class RecruitmentListContainerPage extends React.Component {
     constructor(props){
-        super(props);
-        this.state = {
-            recruitmentNotesList: []
-        }
+      super(props)
+      this.state = {
+        search: ''
+      }
+      this.filterSearch = this.filterSearch.bind(this)
     }
 
-    componentWillMount () {
-      const that = this;
-
-      fetchDataAsArray('recruitmentNotes')
-      .then(function(recruitmentNotes){
-          that.setState({
-              recruitmentNotesList: recruitmentNotes
-          })
-      })
-      .catch(function(error){
-          NotificationManager.error('Something is wrong', 'Opps!', 2222);
-      })
+    filterSearch(event){
+        this.setState({search: event.target.value.substr(0,20)});
     }
-
 
     render () {
+      let filteredRecruitments=this.props.recruitments.filter(
+        (recruitment)=>{
+          //TODO: after the club is implemented, search by clubName should be here
+          return recruitment.seeking.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+          || recruitment.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+        }
+      );
         return (
           <Grid>
             <Row>
-                <SearchBar/>
+              <SearchBar placeholder='search recruitments' value={this.state.search || ''}
+                 onChange={this.filterSearch}/>
             </Row>
             <Row>
               <Col>
-                <RecruitmentNoteList recruitmentNotesList={this.state.recruitmentNotesList}/>
+                <RecruitmentNoteList recruitmentNotesList={filteredRecruitments}/>
               </Col>
             </Row>
-            <NotificationContainer/>
           </Grid>
         );
     }
-
 }
-const RecruitmentListContainer = connect()(RecruitmentListContainerPage)
+
+RecruitmentListContainerPage.defaultProps = {
+    recruitments: []
+}
+
+function mapStateToProps(state){
+  return {
+    recruitments: state.data.recruitments
+  }
+}
+
+const RecruitmentListContainer = connect(mapStateToProps)(RecruitmentListContainerPage)
 export { RecruitmentListContainer };

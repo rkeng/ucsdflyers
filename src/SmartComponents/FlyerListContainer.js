@@ -59,7 +59,7 @@ class FlyerListContainerPage extends React.Component {
           flyers: newFlyersList,
           sortDate: !this.state.sortDate
       })
-    console.log('component state', this.state)
+    // console.log('component state', this.state)
   }
 
   render () {

@@ -43,3 +43,24 @@ export function LoginOrgAction(userData){
     userData
   }
 }
+
+export function GetOrgsAction(data){
+  return {
+    type: 'GET_ORGS',
+    data
+  }
+}
+
+export function GetEventsAction(data){
+  return {
+    type: 'GET_EVENTS',
+    data
+  }
+}
+
+export function GetRecruitmentsAction(data){
+  return {
+    type: 'GET_RECRUITMENTS',
+    data
+  }
+}
