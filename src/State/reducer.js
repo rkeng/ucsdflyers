@@ -39,9 +39,7 @@ function userStateReducer (state={}, action) {
         //     }, action.userData)
         // }
         case 'LOGOUT_USER': {
-            return Object.assign({}, state, {
-                isAutheticated: false
-            }) 
+            return {}
         }
         case 'LOGIN_USER':{
             return Object.assign({}, state, {

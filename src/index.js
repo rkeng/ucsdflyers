@@ -38,23 +38,6 @@ listenToDataAsArray('recruitmentNotes', function(recruitments){
         store.dispatch(GetRecruitmentsAction(recruitments))
 })
 
-// onAuthStateChanged(function(user){
-//     var userID
-//     if(user){
-//         userID = user.uid
-//         listenToData(`users/${userID}`, function(userData){
-//             // console.log('what event is my uid?', userID)
-//             console.log('what user data am i listeing to?', userData)
-//             store.dispatch(UserDataUpdateAction(userData))
-//         }, function(error){
-//             console.log('may be user not logged in yet', error)
-//         })
-//     } else {
-//         console.log('user not logged in or signed out')
-//         detachListener(`users/${userID}`)
-//     }
-// })
-
 ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
