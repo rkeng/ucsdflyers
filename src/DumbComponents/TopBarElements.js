@@ -69,9 +69,6 @@ function TopBarIcon(props){
             <TopBarItem id='org' name='ORGANIZATIONS' icon={<FaGroup />} />,
             <TopBarItem id='recruitments' name='RECRUITMENTS' icon={<FaStickyNoteO />} />,
             <TopBarItem id='about' name='ABOUT' icon={<FaChild />} /> ,
-                <button onClick={() => {
-                    console.log('state?', props.state)
-                }}> show state</button>
         ]
     if(props.user.isOrg){
         topbarItemsToRender = [
@@ -90,6 +87,9 @@ function TopBarIcon(props){
     )
 }
 /* use this print state; only for development purpose
+                <button onClick={() => {
+                    console.log('state?', props.state)
+                }}> show state</button>
 */
 
 
