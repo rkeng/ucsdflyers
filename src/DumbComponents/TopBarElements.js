@@ -65,19 +65,19 @@ function TopBarIcon(props){
 
  function TopBarLeftNoState(props){
     var topbarItemsToRender = [
-            <TopBarItem id='events' name='EVENTS' icon={<FaNewspaperO />} />,
-            <TopBarItem id='org' name='ORGANIZATIONS' icon={<FaGroup />} />,
-            <TopBarItem id='recruitments' name='RECRUITMENTS' icon={<FaStickyNoteO />} />,
-            <TopBarItem id='about' name='ABOUT' icon={<FaChild />} /> ,
+            <TopBarItem id='events' key={0} name='EVENTS' icon={<FaNewspaperO />} />,
+            <TopBarItem id='org' key={1} name='ORGANIZATIONS' icon={<FaGroup />} />,
+            <TopBarItem id='recruitments' key={2} name='RECRUITMENTS' icon={<FaStickyNoteO />} />,
+            <TopBarItem id='about' key={3} name='ABOUT' icon={<FaChild />} /> ,
         ]
     if(props.user.isOrg){
         topbarItemsToRender = [
-            <TopBarItem id='events' name='EVENTS' icon={<FaNewspaperO />} />,
-            <TopBarItem id='org' name='ORGANIZATIONS' icon={<FaGroup />} />,
-            <TopBarItem id='recruitments' name='RECRUITMENTS' icon={<FaStickyNoteO />} />,
-            <TopBarItem id='create-flyer' name='Create Flyer' icon={<FaNewspaperO />} />,
-            <TopBarItem id='create-recruitment' name='Create Recruitment' icon={<FaGroup />} />,
-            <TopBarItem id='about' name='ABOUT' icon={<FaChild />} /> 
+            <TopBarItem id='events' key={0} name='EVENTS' icon={<FaNewspaperO />} />,
+            <TopBarItem id='org' key={1} name='ORGANIZATIONS' icon={<FaGroup />} />,
+            <TopBarItem id='recruitments' key={2} name='RECRUITMENTS' icon={<FaStickyNoteO />} />,
+            <TopBarItem id='create-flyer' key={3} name='Create Flyer' icon={<FaNewspaperO />} />,
+            <TopBarItem id='create-recruitment' key={4} name='Create Recruitment' icon={<FaGroup />} />,
+            <TopBarItem id='about' key={5} name='ABOUT' icon={<FaChild />} /> 
         ]
     }
     return (
@@ -104,10 +104,10 @@ class AvatarSelectNoState extends React.Component {
 
     render(){
         var that = this
-        const { isAutheticated, displayName } = that.props.user
+        const { isAuthenticated, displayName } = that.props.user
         var newAva
         var AvaSize = 25
-        if(isAutheticated){
+        if(isAuthenticated){
             const { providerId, uid } = that.props.user.providerData[0]
             switch(providerId){
                 case'google.com':{
@@ -137,9 +137,9 @@ class AvatarSelectNoState extends React.Component {
 }
 
 function TopBarRightNoState(props){
-    const { isAutheticated, uid } = props.user
+    const { isAuthenticated, uid } = props.user
     var id, name, icon
-    if (isAutheticated) { //user logged in
+    if (isAuthenticated) { //user logged in
         id='logout'
         name = 'LOGOUT'
         icon = <FaSignOut />

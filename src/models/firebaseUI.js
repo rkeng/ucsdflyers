@@ -19,6 +19,7 @@ const uiConfig = {
                 const userField = `users/${user.uid}`;
                 fetchDataOn(userField).then(userField => {
                     var userData = userField.val()     
+                    var urlToRedirect = '/events'
                     if(!userData) {    
                         const userFieldData = {
                             displayName: user.displayName,
@@ -28,7 +29,9 @@ const uiConfig = {
                         firebase.database().ref('users/' + user.uid).set(userFieldData);
                         firebase.database().ref('students/' + user.uid).set(user.uid);
                     } 
-                    var urlToRedirect = userData.isOrg? '/org-profile' : '/events'
+                    if(userData){
+                        urlToRedirect = userData.isOrg? '/org-profile' : '/events'
+                    }
                     browserHistory.push(urlToRedirect)
                 })
             }

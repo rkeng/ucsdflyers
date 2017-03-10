@@ -8,7 +8,7 @@ class FlyerList extends React.Component {
    renderFlyers () {
     if(this.props.flyers.length > 0){
         return this.props.flyers.map((flyer, index) =>
-          (<Flyer key={index} flyer={flyer}/>)
+          (<Flyer key={index} flyer={flyer} />)
       )
     }
     else{
