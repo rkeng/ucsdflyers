@@ -19,8 +19,8 @@ import { CreateRecruitment } from './DumbComponents/CreateRecruitment'
 import { CreateFlyer } from './DumbComponents/CreateFlyer'
 import { MyFlyers } from './DumbComponents/MyFlyers'
 import { OrgProfileSelect } from './DumbComponents/OrgProfileSelect'
-import { listenToDataAsArray } from './models'
-import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction } from './State/actions'
+import { listenToDataAsArray, listenToData, onAuthStateChanged, detachListener } from './models'
+import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction, UserDataUpdateAction } from './State/actions'
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -37,6 +37,23 @@ listenToDataAsArray('recruitmentNotes', function(recruitments){
         // console.log('fetched recruitments data')
         store.dispatch(GetRecruitmentsAction(recruitments))
 })
+
+// onAuthStateChanged(function(user){
+//     var userID
+//     if(user){
+//         userID = user.uid
+//         listenToData(`users/${userID}`, function(userData){
+//             // console.log('what event is my uid?', userID)
+//             console.log('what user data am i listeing to?', userData)
+//             store.dispatch(UserDataUpdateAction(userData))
+//         }, function(error){
+//             console.log('may be user not logged in yet', error)
+//         })
+//     } else {
+//         console.log('user not logged in or signed out')
+//         detachListener(`users/${userID}`)
+//     }
+// })
 
 ReactDOM.render(
     <Provider store={store}>

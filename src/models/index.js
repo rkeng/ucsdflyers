@@ -26,6 +26,21 @@ export function fetchDataAsArray(node){
     })
 }
 
+export function listenToData(node, resolve, reject){
+    db.ref(node).on('value', 
+        function(snap){
+            var snapshot = snap.val()
+            resolve(snapshot)
+        }, 
+        function(err){
+            reject(err)
+        })
+}
+
+export function detachListenerOn(node){
+    db.ref(node).off()
+}
+
 export function listenToDataAsArray(node, resolve, reject){
         db.ref(node).on('value', function(snap){
             var snapshot = snap.val();
@@ -139,13 +154,7 @@ export function signinOrg(provider){
       fetchDataOn(userField).then(userField => {
             if(!userField.val()){
                 const userFieldData = {
-                    // displayName: user.displayName,
-                    // email: user.email,
-                    // emailVerified: user.emailVerified,
-                    // isAnonymous: user.isAnonymous,
-                    // photoURL: user.photoURL,
-                    // providerData: user.providerData,
-                    // uid: user.uid,
+                    displayName: user.displayName,
                     isOrg: true,
                     FlyersCreated: 'N/A',
                     RecruitmentNotesCreated: 'N/A'
@@ -157,8 +166,4 @@ export function signinOrg(provider){
             browserHistory.push('/org-profile')
         })
       })
-}
-
-export function getUserFromDB(uid){
-    return db.ref(`user/${uid}`).once('value')
 }

@@ -21,13 +21,7 @@ const uiConfig = {
                     var userData = userField.val()     
                     if(!userData) {    
                         const userFieldData = {
-                            // displayName: user.displayName,
-                            // email: user.email,
-                            // emailVerified: user.emailVerified,
-                            // isAnonymous: user.isAnonymous,
-                            // photoURL: user.photoURL,
-                            // providerData: user.providerData,
-                            // uid: user.uid,          
+                            displayName: user.displayName,
                             FlyersLiked: 'N/A',
                             OrgsFollowed: 'N/A'
                         }

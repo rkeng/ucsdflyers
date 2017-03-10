@@ -65,3 +65,10 @@ export function GetRecruitmentsAction(data){
     data
   }
 }
+
+export function UserDataUpdateAction(userData){
+  return {
+    type: 'USER_DATA_UPDATE',
+    userData
+  }
+}

@@ -4,19 +4,22 @@ import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Image } from 'react-bootst
 import { FaNewspaperO, FaGroup, FaStickyNoteO, FaChild, FaSignIn, FaSignOut, FaHeartO } from 'react-icons/lib/fa'
 import { connect } from 'react-redux'
 import { LogoutUserAction } from '../State/actions'
-import { signOutUser } from '../models'
+import { signOutUser, detachListenerOn } from '../models'
 import Avatar from 'react-avatar'
 import logoText from '../asset/logoText.png'
 import person from '../asset/person.jpg'
 
 
 
-function changeRoute(e, props) {
+function changeRoute(e, props, uid) {
     e.preventDefault()
     const { dispatch } = props
     const newRoute = e.target.id
     if(newRoute === 'logout'){
         signOutUser().then(_ => {
+            if(uid){
+                detachListenerOn(`users/${uid}`)
+            }
             dispatch(LogoutUserAction())
             browserHistory.push('events')
         })
@@ -67,13 +70,13 @@ function TopBarIcon(props){
                 <TopBarItem id='org' name='ORGANIZATIONS' icon={<FaGroup />} />
                 <TopBarItem id='recruitments' name='RECRUITMENTS' icon={<FaStickyNoteO />} />
                 <TopBarItem id='about' name='ABOUT' icon={<FaChild />} />
+                <button onClick={() => {
+                    console.log('state?', props.state)
+                }}> show state</button>
             </Nav>
     )
 }
 /* use this print state; only for development purpose
-                <button onClick={() => {
-                    console.log('state?', props.state)
-                }}> show state</button>
 */
 
 
@@ -121,7 +124,7 @@ class AvatarSelectNoState extends React.Component {
 }
 
 function TopBarRightNoState(props){
-    const { isAutheticated } = props
+    const { isAutheticated, uid } = props.user
     var id, name, icon
     if (isAutheticated) { //user logged in
         id='logout'
@@ -136,7 +139,7 @@ function TopBarRightNoState(props){
             <Nav pullRight>
                 <NavDropdown id='user-avatar-dropdown' title={<AvatarSelect/>} >
                         <MenuItem id='my-flyers' onClick={(e) => changeRoute(e, props)}><FaHeartO/>My Flyers</MenuItem>
-                        <MenuItem id={id} onClick={(e) => changeRoute(e, props)}>{icon}{name}</MenuItem>
+                        <MenuItem id={id} onClick={(e) => changeRoute(e, props, uid)}>{icon}{name}</MenuItem>
                 </NavDropdown>
             </Nav>
     )
@@ -145,8 +148,7 @@ function TopBarRightNoState(props){
 function mapStateToProps(state){
     return {
         state: state,
-        user: state.user,
-        isAutheticated: state.user.isAutheticated
+        user: state.user
     }
 }
 

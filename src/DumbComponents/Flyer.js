@@ -60,25 +60,9 @@ class OneFlyer extends React.Component{
       this.onLike = this.onLike.bind(this)
     }
 
-    onLike(){
-      this.setState({
-          liked: !this.state.liked
-      })
-    }
-
-    updateLikes(update){
-      const { id } = this.props.flyer
-      fetchDataOn(`events/${id}/likes`).then(snap => {
-          var value = snap.val();
-          if(typeof value === 'object'){
-            throw new Error('Single Update is only allow on non-object field of the database')
-          } else {
-            set(`events/${id}/likes`, value+update)
-          }
-      })
-    }
 
     componentWillUnmount(){
+
       const { uid } = this.props.user
       const { id } = this.props.flyer
       const { liked, userAlreadyLike, isAutheticated } = this.state
@@ -98,6 +82,23 @@ class OneFlyer extends React.Component{
       //for those flyers that are (!liked && !userAlreadyLike), do nothing with them
     }
 
+    onLike(){
+      this.setState({
+          liked: !this.state.liked
+      })
+    }
+
+    updateLikes(update){
+      const { id } = this.props.flyer
+      fetchDataOn(`events/${id}/likes`).then(snap => {
+          var value = snap.val();
+          if(typeof value === 'object'){
+            throw new Error('Single Update is only allow on non-object field of the database')
+          } else {
+            set(`events/${id}/likes`, value+update)
+          }
+      })
+    }
     render() {
         const {
            name,

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Glyphicon } from 'react-bootstrap'
 import { firebaseUI, uiConfig } from '../models/firebaseUI';
-import { getCurrentUser, fetchDataOn } from '../models'
+import { getCurrentUser, fetchDataOn, listenToData } from '../models'
 import { LoginUserAction } from '../State/actions'
 
 class LoginForm extends React.Component {
@@ -12,6 +12,10 @@ class LoginForm extends React.Component {
 
     getCurrentUser().then((user)=>{
       if(user){
+        listenToData(`users/${user.uid}`, function(userData){
+            console.log('userData listener triggered')
+        })
+
         fetchDataOn(`users/${user.uid}`)
         .then(snap => {
             var userData = snap.val()

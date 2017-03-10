@@ -48,6 +48,9 @@ function userStateReducer (state={}, action) {
                 isAutheticated: true,
             }, action.userData)
         }
+        case 'USER_DATA_UPDATE': {
+            return Object.assign({}, state, action.userData)
+        }
         default:
         return state
     }
