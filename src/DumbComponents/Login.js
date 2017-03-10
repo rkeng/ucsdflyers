@@ -13,7 +13,6 @@ class LoginForm extends React.Component {
     getCurrentUser().then((user)=>{
       if(user){
         listenToData(`users/${user.uid}`, function(userData){
-            console.log('userData listener triggered')
             dispatch(UserDataUpdateAction(userData))
         })
 

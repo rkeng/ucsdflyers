@@ -64,19 +64,32 @@ function TopBarIcon(props){
 }
 
  function TopBarLeftNoState(props){
+    var topbarItemsToRender = [
+            <TopBarItem id='events' name='EVENTS' icon={<FaNewspaperO />} />,
+            <TopBarItem id='org' name='ORGANIZATIONS' icon={<FaGroup />} />,
+            <TopBarItem id='recruitments' name='RECRUITMENTS' icon={<FaStickyNoteO />} />,
+            <TopBarItem id='about' name='ABOUT' icon={<FaChild />} /> ,
+                <button onClick={() => {
+                    console.log('state?', props.state)
+                }}> show state</button>
+        ]
+    if(props.user.isOrg){
+        topbarItemsToRender = [
+            <TopBarItem id='events' name='EVENTS' icon={<FaNewspaperO />} />,
+            <TopBarItem id='org' name='ORGANIZATIONS' icon={<FaGroup />} />,
+            <TopBarItem id='recruitments' name='RECRUITMENTS' icon={<FaStickyNoteO />} />,
+            <TopBarItem id='create-flyer' name='Create Flyer' icon={<FaNewspaperO />} />,
+            <TopBarItem id='create-recruitment' name='Create Recruitment' icon={<FaGroup />} />,
+            <TopBarItem id='about' name='ABOUT' icon={<FaChild />} /> 
+        ]
+    }
     return (
             <Nav>   
-                <TopBarItem id='events' name='EVENTS' icon={<FaNewspaperO />} />
-                <TopBarItem id='org' name='ORGANIZATIONS' icon={<FaGroup />} />
-                <TopBarItem id='recruitments' name='RECRUITMENTS' icon={<FaStickyNoteO />} />
-                <TopBarItem id='about' name='ABOUT' icon={<FaChild />} />
+                {topbarItemsToRender}
             </Nav>
     )
 }
 /* use this print state; only for development purpose
-                <button onClick={() => {
-                    console.log('state?', props.state)
-                }}> show state</button>
 */
 
 

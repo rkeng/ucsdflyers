@@ -31,6 +31,7 @@ class RecruitmentListContainerPage extends React.Component {
               <SearchBar placeholder='search recruitments' value={this.state.search || ''}
                  onChange={this.filterSearch}/>
             </Row>
+            <br/>
             <Row>
               <Col>
                 <RecruitmentNoteList recruitmentNotesList={filteredRecruitments}/>
