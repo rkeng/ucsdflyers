@@ -19,8 +19,8 @@ import { CreateRecruitment } from './DumbComponents/CreateRecruitment'
 import { CreateFlyer } from './DumbComponents/CreateFlyer'
 import { MyFlyers } from './DumbComponents/MyFlyers'
 import { OrgProfileSelect } from './DumbComponents/OrgProfileSelect'
-import { listenToDataAsArray, listenToData, onAuthStateChanged, detachListener } from './models'
-import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction, UserDataUpdateAction } from './State/actions'
+import { listenToDataAsArray } from './models'
+import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction } from './State/actions'
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 

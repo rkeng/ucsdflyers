@@ -1,7 +1,7 @@
 import React from 'react'
 import { Carousel, Col, Image, Button } from 'react-bootstrap'
 import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
-import { fetchDataOn, remove, update, set } from '../models'
+import { fetchDataOn, remove, update } from '../models'
 import { connect } from 'react-redux'
 import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
 import RED from '../asset/RED.jpg'
@@ -89,7 +89,7 @@ class OneFlyer extends React.Component{
     }
 
     updateLikes(update){
-      const { id } = this.props.flyer
+      // const { id } = this.props.flyer
       // fetchDataOn(`events/${id}/likes`).then(snap => {
       //     var value = snap.val();
       //     if(typeof value === 'object'){
