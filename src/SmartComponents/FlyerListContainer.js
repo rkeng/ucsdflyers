@@ -60,7 +60,7 @@ class FlyerListContainerPage extends React.Component {
         <br/>
          <Row>
            <Col>
-              <FlyerList flyers={filteredFlyers}/>
+              <FlyerList flyers={filteredFlyers} />
             </Col>
           </Row>
         </Grid>
@@ -74,7 +74,8 @@ FlyerListContainerPage.defaultProps = {
 
 function mapStateToProps(state){
   return {
-    flyers: state.data.events
+    flyers: state.data.events,
+    user: state.user
   }
 }
 

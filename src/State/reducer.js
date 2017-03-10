@@ -11,39 +11,12 @@ import { combineReducers } from 'redux'
 
 function userStateReducer (state={}, action) {
     switch (action.type) {
-        /* we shouldn't have the sign up funtion ever used
-        case 'SIGN_UP_USER': {
-            const email = action.state.email
-            const password = action.state.password
-
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then(function () {
-                console.log('Account Creation Succeeded')
-                })
-                .catch(function (error) {
-                console.log('Account Creation Failed', error.message)
-                })
-            return Object.assign({}, state)
-        }
-        */
-        // case 'LOGIN_STUDENT': {
-        //     return Object.assign({}, state, {
-        //         isAutheticated: true,
-        //         isOrg: false
-        //     }, action.userData)
-        // }
-        // case 'LOGIN_ORG': {
-        //     return Object.assign({}, state, {
-        //         isAutheticated: true,
-        //         isOrg: true
-        //     }, action.userData)
-        // }
         case 'LOGOUT_USER': {
             return {}
         }
         case 'LOGIN_USER':{
             return Object.assign({}, state, {
-                isAutheticated: true,
+                isAuthenticated: true,
             }, action.userData)
         }
         case 'USER_DATA_UPDATE': {

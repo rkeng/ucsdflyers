@@ -48,6 +48,13 @@ export function stringtoDate(input){
     return mydate
 }
 
+export function ObjectToArray(object){
+    if(!object){
+        return []
+    }
+    var keyList = Object.keys(object)
+    return keyList.map(key => object[key])
+}
 
 
 export { ColCenter, SearchBar }

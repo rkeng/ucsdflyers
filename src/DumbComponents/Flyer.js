@@ -1,144 +1,113 @@
 import React from 'react'
 import { Carousel, Col, Image, Button } from 'react-bootstrap'
 import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
-import { fetchDataOn, remove, update } from '../models'
+import { remove, update } from '../models'
+import { ObjectToArray } from '../Commen'
 import { connect } from 'react-redux'
 import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
-// import RED from '../asset/RED.jpg'
 
 class OneFlyer extends React.Component{
 
     constructor(props){
-      super(props)
-
-      const { id } = this.props.flyer
-      const { isAutheticated, uid } = this.props.user
-      const flyerID = id;
-      const newData = {};
-      newData[`${flyerID}`] = flyerID
-      this.state = {
-        liked: false, //liked tells us whether this flyer is liked by the logged in user
-        userAlreadyLike: false
-      }
-      if(isAutheticated){
-        fetchDataOn('users/' + uid).then(snap => {
-          const userData = snap.val()
-          if(userData.FlyersLiked && userData.FlyersLiked[`${flyerID}`]){
-            this.setState({
-              liked:true, //setting this will make all flyers that user already liked still appear liked
-              userAlreadyLike: true //used to update database => see componentWillUnmount
-            })
-          }
-        })
-      }
-      this.onLike = this.onLike.bind(this)
+        super(props)
+        this.state = {
+            liked:false
+        }
+        this.onLike = this.onLike.bind(this)
     }
 
+    userLoggedInAsStudentNotLikedFlyer(){
+        const { isAuthenticated, isOrg, FlyersLiked } = this.props.user
+        const { id } = this.props.flyer
+        return isAuthenticated && !isOrg && !FlyersLiked.hasOwnProperty(id)
+    }
 
-    componentWillUnmount(){
-
-      const { uid } = this.props.user
-      const { id } = this.props.flyer
-      const { liked, userAlreadyLike, isAutheticated } = this.state
-      var thisFlyer = {}
-      thisFlyer[`${id}`] = id
-      if(liked && !userAlreadyLike && isAutheticated){//only the loggedin user's likes are counted
-        update(`users/${uid}/FlyersLiked`, thisFlyer)
-        // transaction(`events/${id}/likes`).then(likes => likes + 1)
-        this.updateLikes(+1)
-      } 
-      if(!liked && userAlreadyLike ){
-          // console.log('user unliked the flyer and user has previously liked the flyer')
-          remove(`users/${uid}/FlyersLiked/`, thisFlyer)
-          // transaction(`events/${id}/likes`).then(likes => likes - 1)
-          this.updateLikes(-1)
-      }
-      //for those flyers that are (!liked && !userAlreadyLike), do nothing with them
+    userLoggedInAsStudentLikedFlyer(){
+        const { isAuthenticated, isOrg, FlyersLiked } = this.props.user
+        const { id } = this.props.flyer
+        return isAuthenticated && !isOrg && FlyersLiked.hasOwnProperty(id)
     }
 
     onLike(){
-      this.setState({
-          liked: !this.state.liked
-      })
-    }
+        const { uid } = this.props.user
+        const { id, likes } = this.props.flyer
+        var newFlyer = {}
+        newFlyer[`${id}`] = id
 
-    updateLikes(update){
-      // const { id } = this.props.flyer
-      // fetchDataOn(`events/${id}/likes`).then(snap => {
-      //     var value = snap.val();
-      //     if(typeof value === 'object'){
-      //       throw new Error('Single Update is only allow on non-object field of the database')
-      //     } else {
-      //       set(`events/${id}/likes`, value+update)
-      //     }
-      // })
-    }
-
-    obejctToArray(object){
-        if(!object){
-            return []
+        if(this.userLoggedInAsStudentNotLikedFlyer()){
+            //update method will only update the field, not overwriting the whol thing
+            update(`users/${uid}/FlyersLiked`, newFlyer)
+            update(`events/${id}`, {likes: likes + 1})
         }
-        var keyList = Object.keys(object)
-        return keyList.map(key => object[key])
+        if(this.userLoggedInAsStudentLikedFlyer()){
+            remove(`users/${uid}/FlyersLiked/${id}`)
+            update(`events/${id}`, {likes: likes - 1})
+        }
+
     }
 
     render() {
-        // if(this.props.flyer.name === 'Coding Party')
-        //     console.log("show me what props a flyer has", this.props)
         const {
-           name,
-           location,
-           description,
-           date,
-           images
-         } = this.props.flyer
+            name,
+            location,
+            description,
+            date,
+            images,
+            likes
+        } = this.props.flyer
 
-         const imagesArray = this.obejctToArray(images)
-         const CarouselItems = imagesArray.map(function(image){
+        //prepare the images
+        const imagesArray = ObjectToArray(images)
+        const CarouselItems = imagesArray.map(function(image){
             return (
-             <Carousel.Item key={image.imageUrl}> 
+                <Carousel.Item key={image.imageUrl}> 
                     <Image src={image.imageUrl} width={350} responsive/><br/>
-                    <Carousel.Caption>
-                    <h3>First slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                    </Carousel.Caption>
-            </Carousel.Item>
+                </Carousel.Item>
             )
-         })
-
-
+        })
         const carouselInstance = (
-          <Carousel>
-            {CarouselItems}
-          </Carousel>
-        );
+            <Carousel>
+                {CarouselItems}
+            </Carousel>
+        )
+
+        //prepare the liked state of the button
+        var isLiked = this.state.liked
+        if(this.userLoggedInAsStudentLikedFlyer()){ //don't allow org to like flyers
+            isLiked = true
+        }
+        if(this.userLoggedInAsStudentNotLikedFlyer()){
+            isLiked = false
+        }
 
         //prepare the like button
-         const btnColor = this.state.liked ? 'danger' : 'info'
-         const HeatIcon =  this.state.liked ?  FaHeart : FaHeartO 
-         const titleAndBtn = (
+        const btnColor =  isLiked ? 'danger' : 'info'
+        const HeatIcon =  isLiked ?  FaHeart : FaHeartO 
+        const titleAndBtn = (
             <div>
                 {name}
                 <span className='pull-right'>
-                  <Button onClick={this.onLike} bsStyle={btnColor}>
-                        <HeatIcon/>
-                  </Button>
-                </span>
+                    <Button onClick={this.onLike} bsStyle={btnColor}>
+                        <HeatIcon/>{likes}
+                    </Button>
+                </span> 
             </div>
-          )
+        )
+
+        //
         return(
             <Col sm={12} md={3} >
-                <Card raised={true} style={{borderStyle: 'inset'}}>
+                <Card raised={true} className='raised'>
                     <CardMedia
-                    aspectRatio="wide"
-                    children={carouselInstance}
+                        aspectRatio="wide"
+                        children={carouselInstance}
                     />
                     <CardTitle
-                    title={titleAndBtn}
-                    subtitle={`Date: ${date} @${location}`}
+                        title={titleAndBtn}
+                        subtitle={`Date: ${date} @${location}`}
                     />
                     <CardText>
-                    {description}
+                        {description}
                     </CardText>
                 </Card>
                 <br/>
@@ -148,9 +117,9 @@ class OneFlyer extends React.Component{
 }
 
 function mapStateToProps(state){
-  return{
-    user: state.user
-  }
+    return{
+        user: state.user
+    }
 }
 
 const Flyer = connect(mapStateToProps)(OneFlyer)
