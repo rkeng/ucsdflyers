@@ -88,7 +88,6 @@ export function uploadImages(databaseRef, itemID, userID, files) {
 
       return true;
   })
-
 }
 
 //onAuthStateChange:

@@ -57,6 +57,7 @@ class FlyerListContainerPage extends React.Component {
               </DropdownButton>
             </SearchBar>
          </Row>
+        <br/>
          <Row>
            <Col>
               <FlyerList flyers={filteredFlyers}/>
