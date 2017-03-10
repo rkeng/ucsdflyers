@@ -96,7 +96,7 @@ class OneFlyer extends React.Component{
          const imagesArray = this.obejctToArray(images)
          const CarouselItems = imagesArray.map(function(image){
             return (
-             <Carousel.Item>
+             <Carousel.Item key={image.imageUrl}> 
                     <Image src={image.imageUrl} width={350} responsive/><br/>
                     <Carousel.Caption>
                     <h3>First slide label</h3>
