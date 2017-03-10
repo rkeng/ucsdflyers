@@ -26,7 +26,7 @@ class CreateFlyerPage extends React.Component {
       active: true,
       success: false,
       show: false,
-      like: 0,
+      likes: 0,
       go: 0,
       name: "",
       date: new Date().toISOString(),
