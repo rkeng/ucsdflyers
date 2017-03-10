@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Glyphicon } from 'react-bootstrap'
 import { firebaseUI, uiConfig } from '../models/firebaseUI';
 import { getCurrentUser, fetchDataOn, listenToData } from '../models'
-import { LoginUserAction } from '../State/actions'
+import { LoginUserAction, UserDataUpdateAction } from '../State/actions'
 
 class LoginForm extends React.Component {
 
@@ -14,6 +14,7 @@ class LoginForm extends React.Component {
       if(user){
         listenToData(`users/${user.uid}`, function(userData){
             console.log('userData listener triggered')
+            dispatch(UserDataUpdateAction(userData))
         })
 
         fetchDataOn(`users/${user.uid}`)

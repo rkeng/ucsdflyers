@@ -90,14 +90,14 @@ class OneFlyer extends React.Component{
 
     updateLikes(update){
       const { id } = this.props.flyer
-      fetchDataOn(`events/${id}/likes`).then(snap => {
-          var value = snap.val();
-          if(typeof value === 'object'){
-            throw new Error('Single Update is only allow on non-object field of the database')
-          } else {
-            set(`events/${id}/likes`, value+update)
-          }
-      })
+      // fetchDataOn(`events/${id}/likes`).then(snap => {
+      //     var value = snap.val();
+      //     if(typeof value === 'object'){
+      //       throw new Error('Single Update is only allow on non-object field of the database')
+      //     } else {
+      //       set(`events/${id}/likes`, value+update)
+      //     }
+      // })
     }
     render() {
         const {
