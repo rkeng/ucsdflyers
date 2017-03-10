@@ -76,6 +76,7 @@ class CreateFlyerPage extends React.Component {
         like: 0,
       }
 
+      var imagesFiles = this.refs.dropzone.state.files
       if(flyer.name === "")
       NotificationManager.error('Error', 'Please enter valid name!', 2222);
       else if(flyer.time === "")
@@ -84,12 +85,14 @@ class CreateFlyerPage extends React.Component {
       NotificationManager.error('Error', 'Please enter valid description!', 2222);
       else if(flyer.location === "")
       NotificationManager.error('Error', 'Please enter valid location!', 2222);
+      else if(!imagesFiles.length)//file is not uploaded
+      NotificationManager.error('Error', 'Please upload at least one image!', 2222);
       else{
-      this.setState({ success: true})
-      let flyerID = createNew('events',flyer)
-       // image uploading
-       let files = this.refs.dropzone.state.files
-       uploadImages("events", flyerID, clubID, files)
+        this.setState({ success: true})
+        let flyerID = createNew('events',flyer)
+         // image uploading
+        let files = this.refs.dropzone.state.files
+        uploadImages("events", flyerID, clubID, files)
       }
   })
   }
