@@ -94,7 +94,7 @@ class CreateFlyerPage extends React.Component {
       let flyerID = createNew('events',flyer)
       let id = getCurrentUser()
 
-      set(`users/${id}/FlyersCreated`, flyerID)
+
 
        // image uploading
        let files = this.refs.dropzone.state.files
@@ -161,11 +161,7 @@ class CreateFlyerPage extends React.Component {
             </FormGroup>
 
             <FormGroup>
-<<<<<<< HEAD
               <ControlLabel>When will it take place?</ControlLabel>
-=======
-              <ControlLabel>When will it take place</ControlLabel>
->>>>>>> 3c8a2ef6a26e77ff817b1afa0fb50c356ca2ea23
               <DatePicker onChange={this.handleChange} value={this.state.date} />
               <ControlLabel>Time</ControlLabel>
 
@@ -179,11 +175,7 @@ class CreateFlyerPage extends React.Component {
             <FormGroup>
               <ControlLabel>Where is the new event going to be?</ControlLabel>
               <FormControl
-<<<<<<< HEAD
                 type="text"
-=======
-                text="text"
->>>>>>> 3c8a2ef6a26e77ff817b1afa0fb50c356ca2ea23
                 placeholder="Enter location"
                 ref={(node) => {this.location = node}}
               />
