@@ -26,6 +26,32 @@ export function fetchDataAsArray(node){
     })
 }
 
+export function listenToData(node, resolve, reject){
+    db.ref(node).on('value', 
+        function(snap){
+            var snapshot = snap.val()
+            resolve(snapshot)
+        }, 
+        function(err){
+            reject(err)
+        })
+}
+
+export function detachListenerOn(node){
+    db.ref(node).off()
+}
+
+export function listenToDataAsArray(node, resolve, reject){
+        db.ref(node).on('value', function(snap){
+            var snapshot = snap.val();
+            var keyList = Object.keys(snapshot)
+            var dataArray = keyList.map(key => snapshot[key])
+            resolve(dataArray)
+        }, function(error){
+            reject(error)
+        })
+}
+
 //sign out user
 export function signOutUser(){
     return firebase.auth().signOut()
@@ -62,7 +88,6 @@ export function uploadImages(databaseRef, itemID, userID, files) {
 
       return true;
   })
-
 }
 
 //onAuthStateChange:
@@ -118,23 +143,20 @@ export function remove(node){
     db.ref(node).remove()
 }
 
+//org account creating
 export function signinOrg(provider){
     firebase.auth().signInWithPopup(provider).then(function(result) { //result has a credential and user
       // This gives you a Google Access Token. You can use it to access the Google API.
       var user = result.user
-      console.log('sigin org result?', result)
+      // console.log('sigin org result?', result)
       const userField = 'users/' + user.uid;
       fetchDataOn(userField).then(userField => {
             if(!userField.val()){
                 const userFieldData = {
                     displayName: user.displayName,
-                    email: user.email,
-                    emailVerified: user.emailVerified,
-                    isAnonymous: user.isAnonymous,
-                    photoURL: user.photoURL,
-                    providerData: user.providerData,
-                    uid: user.uid,
-                    isOrg: true
+                    isOrg: true,
+                    FlyersCreated: 'N/A',
+                    RecruitmentNotesCreated: 'N/A'
                 }
                 firebase.database().ref('users/' + user.uid).set(userFieldData);
                 firebase.database().ref('organizations/' + user.uid).set(user.uid);
@@ -144,4 +166,3 @@ export function signinOrg(provider){
         })
       })
 }
-

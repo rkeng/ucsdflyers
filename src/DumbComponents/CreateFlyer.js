@@ -2,6 +2,7 @@ import React from 'react'
 import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal, Image } from 'react-bootstrap'
 import { Button } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
+import { connect } from 'react-redux'
 import DatePicker from 'react-bootstrap-date-picker';
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router';
@@ -9,10 +10,10 @@ import { createNew, getCurrentUser, uploadImages, update, set } from '../models/
 import { ImageDropzone } from './ImageDropzone.js';
 import { Flyer } from './Flyer'
 import Logo from '../asset/logoHorizontal.png'
+// import { AuthWrapper, ORG } from '../Commen'
 
 
-
-class CreateFlyer extends React.Component {
+class CreateFlyerPage extends React.Component {
   constructor (props) {
     super(props)
     this.onPreview = this.onPreview.bind(this);
@@ -76,6 +77,7 @@ class CreateFlyer extends React.Component {
         like: 0,
       }
 
+      var imagesFiles = this.refs.dropzone.state.files
       if(flyer.name === "")
       NotificationManager.error('Error', 'Please enter valid name!', 2222);
       else if(flyer.time === "")
@@ -84,7 +86,10 @@ class CreateFlyer extends React.Component {
       NotificationManager.error('Error', 'Please enter valid description!', 2222);
       else if(flyer.location === "")
       NotificationManager.error('Error', 'Please enter valid location!', 2222);
+      else if(!imagesFiles.length)//file is not uploaded
+      NotificationManager.error('Error', 'Please upload at least one image!', 2222);
       else{
+
       this.setState({ success: true})
       let flyerID = createNew('events',flyer)
       let id = getCurrentUser()
@@ -94,6 +99,7 @@ class CreateFlyer extends React.Component {
        // image uploading
        let files = this.refs.dropzone.state.files
        uploadImages("events", flyerID, clubID, files)
+
       }
   })
   }
@@ -155,7 +161,11 @@ class CreateFlyer extends React.Component {
             </FormGroup>
 
             <FormGroup>
+<<<<<<< HEAD
               <ControlLabel>When will it take place?</ControlLabel>
+=======
+              <ControlLabel>When will it take place</ControlLabel>
+>>>>>>> 3c8a2ef6a26e77ff817b1afa0fb50c356ca2ea23
               <DatePicker onChange={this.handleChange} value={this.state.date} />
               <ControlLabel>Time</ControlLabel>
 
@@ -169,7 +179,11 @@ class CreateFlyer extends React.Component {
             <FormGroup>
               <ControlLabel>Where is the new event going to be?</ControlLabel>
               <FormControl
+<<<<<<< HEAD
                 type="text"
+=======
+                text="text"
+>>>>>>> 3c8a2ef6a26e77ff817b1afa0fb50c356ca2ea23
                 placeholder="Enter location"
                 ref={(node) => {this.location = node}}
               />
@@ -256,4 +270,11 @@ class CreateFlyer extends React.Component {
 }
 
 
+function mapStateToProps(state){
+  return{
+    user: state.user
+  }
+}
+// const CreateFlyer = AuthWrapper(connect(mapStateToProps)(CreateFlyerPage), ORG)
+const CreateFlyer = connect(mapStateToProps)(CreateFlyerPage)
 export { CreateFlyer }

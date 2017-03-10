@@ -26,27 +26,44 @@ function userStateReducer (state={}, action) {
             return Object.assign({}, state)
         }
         */
-        case 'LOGIN_STUDENT': {
-            return Object.assign({}, state, {
-                isAutheticated: true,
-                isOrg: false
-            }, action.userData)
-        }
-        case 'LOGIN_ORG': {
-            return Object.assign({}, state, {
-                isAutheticated: true,
-                isOrg: true
-            }, action.userData)
-        }
+        // case 'LOGIN_STUDENT': {
+        //     return Object.assign({}, state, {
+        //         isAutheticated: true,
+        //         isOrg: false
+        //     }, action.userData)
+        // }
+        // case 'LOGIN_ORG': {
+        //     return Object.assign({}, state, {
+        //         isAutheticated: true,
+        //         isOrg: true
+        //     }, action.userData)
+        // }
         case 'LOGOUT_USER': {
-            return Object.assign({}, state, {
-                isAutheticated: false
-            }) 
+            return {}
         }
         case 'LOGIN_USER':{
             return Object.assign({}, state, {
                 isAutheticated: true,
             }, action.userData)
+        }
+        case 'USER_DATA_UPDATE': {
+            return Object.assign({}, state, action.userData)
+        }
+        default:
+        return state
+    }
+}
+
+function dataStateReducer(state={}, action){
+    switch(action.type){
+        case 'GET_ORGS':{
+            return Object.assign({}, state, { orgs: action.data })
+        }
+        case 'GET_EVENTS':{
+            return Object.assign({}, state, { events: action.data })
+        }
+        case 'GET_RECRUITMENTS':{
+            return Object.assign({}, state, { recruitments: action.data })
         }
         default:
         return state
@@ -56,7 +73,8 @@ function userStateReducer (state={}, action) {
 
 const rootReducer = combineReducers({
   routing: routerReducer, // connect routing with application state
-  user: userStateReducer
+  user: userStateReducer,
+  data: dataStateReducer
 })
 
 export { rootReducer }

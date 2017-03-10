@@ -1,36 +1,10 @@
 import React from 'react'
 import { Carousel, Col, Image, Button } from 'react-bootstrap'
 import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
-import { fetchDataOn, remove, update, set } from '../models'
+import { fetchDataOn, remove, update } from '../models'
 import { connect } from 'react-redux'
 import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
-import RED from '../asset/RED.jpg'
-
-const carouselInstance = (
-  <Carousel>
-    <Carousel.Item>
-       <Image src={RED} responsive/><br/>
-      <Carousel.Caption>
-        <h3>First slide label</h3>
-        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-      </Carousel.Caption>
-    </Carousel.Item>
-    <Carousel.Item>
-       <Image src={RED} responsive/><br/>
-      <Carousel.Caption>
-        <h3>Second slide label</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </Carousel.Caption>
-    </Carousel.Item>
-    <Carousel.Item>
-       <Image src={RED} responsive/><br/>
-      <Carousel.Caption>
-        <h3>Third slide label</h3>
-        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-      </Carousel.Caption>
-    </Carousel.Item>
-  </Carousel>
-);
+// import RED from '../asset/RED.jpg'
 
 class OneFlyer extends React.Component{
 
@@ -60,25 +34,9 @@ class OneFlyer extends React.Component{
       this.onLike = this.onLike.bind(this)
     }
 
-    onLike(){
-      this.setState({
-          liked: !this.state.liked
-      })
-    }
-
-    updateLikes(update){
-      const { id } = this.props.flyer
-      fetchDataOn(`events/${id}/likes`).then(snap => {
-          var value = snap.val();
-          if(typeof value === 'object'){
-            throw new Error('Single Update is only allow on non-object field of the database')
-          } else {
-            set(`events/${id}/likes`, value+update)
-          }
-      })
-    }
 
     componentWillUnmount(){
+
       const { uid } = this.props.user
       const { id } = this.props.flyer
       const { liked, userAlreadyLike, isAutheticated } = this.state
@@ -98,13 +56,64 @@ class OneFlyer extends React.Component{
       //for those flyers that are (!liked && !userAlreadyLike), do nothing with them
     }
 
+    onLike(){
+      this.setState({
+          liked: !this.state.liked
+      })
+    }
+
+    updateLikes(update){
+      // const { id } = this.props.flyer
+      // fetchDataOn(`events/${id}/likes`).then(snap => {
+      //     var value = snap.val();
+      //     if(typeof value === 'object'){
+      //       throw new Error('Single Update is only allow on non-object field of the database')
+      //     } else {
+      //       set(`events/${id}/likes`, value+update)
+      //     }
+      // })
+    }
+
+    obejctToArray(object){
+        if(!object){
+            return []
+        }
+        var keyList = Object.keys(object)
+        return keyList.map(key => object[key])
+    }
+
     render() {
+        // if(this.props.flyer.name === 'Coding Party')
+        //     console.log("show me what props a flyer has", this.props)
         const {
            name,
            location,
            description,
-           date
+           date,
+           images
          } = this.props.flyer
+
+         const imagesArray = this.obejctToArray(images)
+         const CarouselItems = imagesArray.map(function(image){
+            return (
+             <Carousel.Item key={image.imageUrl}> 
+                    <Image src={image.imageUrl} width={350} responsive/><br/>
+                    <Carousel.Caption>
+                    <h3>First slide label</h3>
+                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                    </Carousel.Caption>
+            </Carousel.Item>
+            )
+         })
+
+
+        const carouselInstance = (
+          <Carousel>
+            {CarouselItems}
+          </Carousel>
+        );
+
+        //prepare the like button
          const btnColor = this.state.liked ? 'danger' : 'info'
          const HeatIcon =  this.state.liked ?  FaHeart : FaHeartO 
          const titleAndBtn = (
@@ -118,22 +127,23 @@ class OneFlyer extends React.Component{
             </div>
           )
         return(
-                <Col sm={12} md={4}>
-                   <Card raised>
+            <Col sm={12} md={3} >
+                <Card raised={true} style={{borderStyle: 'inset'}}>
                     <CardMedia
-                      aspectRatio="wide"
-                      children={carouselInstance}
+                    aspectRatio="wide"
+                    children={carouselInstance}
                     />
                     <CardTitle
-                      title={titleAndBtn}
-                      subtitle={`Date: ${date} @${location}`}
+                    title={titleAndBtn}
+                    subtitle={`Date: ${date} @${location}`}
                     />
                     <CardText>
-                      {description}
+                    {description}
                     </CardText>
-                  </Card>
-                </Col>
-          )
+                </Card>
+                <br/>
+            </Col>
+        )
     }
 }
 

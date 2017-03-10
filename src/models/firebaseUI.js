@@ -13,26 +13,23 @@ const uiConfig = {
                 when user login, check if they are first time user (just signed up).
                 if yes, then create a datafield on db for them.
                 if not, skip~
+
+                simply: user account creating
             */
                 const userField = `users/${user.uid}`;
-                fetchDataOn(userField).then(userField => {     
-                    if(!userField.val()){    
+                fetchDataOn(userField).then(userField => {
+                    var userData = userField.val()     
+                    if(!userData) {    
                         const userFieldData = {
                             displayName: user.displayName,
-                            email: user.email,
-                            emailVerified: user.emailVerified,
-                            isAnonymous: user.isAnonymous,
-                            photoURL: user.photoURL,
-                            providerData: user.providerData,
-                            uid: user.uid,          
                             FlyersLiked: 'N/A',
-                            isOrg: false
+                            OrgsFollowed: 'N/A'
                         }
                         firebase.database().ref('users/' + user.uid).set(userFieldData);
                         firebase.database().ref('students/' + user.uid).set(user.uid);
-                    }
-                    //manully redict since auto-redirect is not working
-                    browserHistory.push('/events')
+                    } 
+                    var urlToRedirect = userData.isOrg? '/org-profile' : '/events'
+                    browserHistory.push(urlToRedirect)
                 })
             }
         /* use below for a custom loader!!!! we love it!
