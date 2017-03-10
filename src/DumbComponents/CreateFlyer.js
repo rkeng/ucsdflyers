@@ -5,7 +5,7 @@ import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker';
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router';
-import { createNew, getCurrentUser, uploadImages } from '../models/index.js';
+import { createNew, getCurrentUser, uploadImages, update, set } from '../models/index.js';
 import { ImageDropzone } from './ImageDropzone.js';
 import { Flyer } from './Flyer'
 import Logo from '../asset/logoHorizontal.png'
@@ -45,6 +45,7 @@ class CreateFlyer extends React.Component {
     findDOMNode(this.description).value = "";
     findDOMNode(this.location).value = "";
   }
+
 
   onPreview(event){
     event.preventDefault();
@@ -86,6 +87,10 @@ class CreateFlyer extends React.Component {
       else{
       this.setState({ success: true})
       let flyerID = createNew('events',flyer)
+      let id = getCurrentUser()
+
+      set(`users/${id}/FlyersCreated`, flyerID)
+
        // image uploading
        let files = this.refs.dropzone.state.files
        uploadImages("events", flyerID, clubID, files)
