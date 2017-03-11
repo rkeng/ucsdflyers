@@ -74,7 +74,7 @@ class CreateFlyerPage extends React.Component {
         location: findDOMNode(this.location).value,
         date: this.state.date.substring(0,10),
         active: true,
-        like: 0,
+        likes: 0,
       }
 
       var imagesFiles = this.refs.dropzone.state.files
