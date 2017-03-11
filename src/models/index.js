@@ -135,12 +135,29 @@ export function set(node, data){
 }
 
 export function update(node, data){
-    db.ref(node).update(data)
+    db.ref(node).update(data).then(_ =>{
+        db.ref(node + '/dummy').once('value')
+        .then(snap => {
+            var nodeVal = snap.val()
+            if(nodeVal){
+              remove(node + '/dummy')
+            }
+        })
+    })
 }
 
 
 export function remove(node){
-    db.ref(node).remove()
+    var parentRef = db.ref(node).parent
+    db.ref(node).remove().then(_ => {
+       parentRef.once('value').then(snap => {
+            if(!snap.val()){
+                parentRef.set({
+                    dummy: 'dummy data to keep the field'
+                })
+            }
+       })
+    })
 }
 
 //org account creating
