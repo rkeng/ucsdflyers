@@ -1,6 +1,5 @@
 import React from 'react'
 import { Image, Col} from 'react-bootstrap'
-// import RED from '../asset/RED.jpg'
 import AnimakitRotator from 'animakit-rotator';
 
 const members = [

@@ -70,6 +70,18 @@ body {
     background: white;
 }
 
+h3{
+    color: white;
+}
+
+h4{
+    color: white;
+}
+
+p{
+    color: white;
+}
+
 .col-centered{
     float: none;
     margin: 0 auto;
