@@ -140,7 +140,6 @@ export function update(node, data){
 
 
 export function remove(node){
-    var parentRef = db.ref(node).parent
     db.ref(node).remove()
 }
 
