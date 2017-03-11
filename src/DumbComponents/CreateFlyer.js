@@ -6,10 +6,11 @@ import { connect } from 'react-redux'
 import DatePicker from 'react-bootstrap-date-picker';
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router';
-import { createNew, getCurrentUser, uploadImages } from '../models/index.js';
+import { createNew, getCurrentUser, uploadImages, update, set } from '../models/index.js';
 import { ImageDropzone } from './ImageDropzone.js';
-import { Flyer } from './Flyer'
-import Logo from '../asset/logoHorizontal.png'
+import { Flyer } from './Flyer';
+import Logo from '../asset/logoHorizontal.png';
+import { IDtoObject } from '../Commen/index.js';
 // import { AuthWrapper, ORG } from '../Commen'
 
 
@@ -20,8 +21,7 @@ class CreateFlyerPage extends React.Component {
     this.onCreate = this.onCreate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onClear = this.onClear.bind(this);
-
-
+    this.getFlyer = this.getFlyer.bind(this)
     this.state = {
       active: true,
       success: false,
@@ -46,20 +46,19 @@ class CreateFlyerPage extends React.Component {
     findDOMNode(this.location).value = "";
   }
 
+
   onPreview(event){
     event.preventDefault();
     const name = findDOMNode(this.name).value;
     const time = findDOMNode(this.time).value;
     const description = findDOMNode(this.description).value;
     const location = findDOMNode(this.location).value;
-    this.setState({ 
+    this.setState({
+      show: true,
       location: location,
-      description: description,
-      time: time,
       name: name,
-      show: true
-    })
-
+      time: time,
+      description: description })
   }
 
   onCreate(event){
@@ -89,32 +88,45 @@ class CreateFlyerPage extends React.Component {
     else if(!imagesFiles.length)//file is not uploaded
       NotificationManager.error('Error', 'Please upload at least one image!', 2222);
     else{
+
       this.setState({ success: true})
       let flyerID = createNew('events',flyer)
+      let flyerIDobj = IDtoObject(flyerID)
+      // let uid = this.props.user.uid
+      update(`users/${uid}/FlyersCreated`, flyerIDobj)
+
        // image uploading
-      let files = this.refs.dropzone.state.files
-      uploadImages("events", flyerID, clubID, files)
+       // let files = this.refs.dropzone.state.files
+       uploadImages("events", flyerID, clubID, imagesFiles)
+
     }
   }
 
 
 
   getFlyer () {
-      const { name, location, description, date, files, likes } = this.state
-      var formattedData = date.substring(0,10)
-      const flyerData = {
-            name: name,
-            location: location,
-            description: description,
-            date: formattedData,
-            images: files,
-            likes: likes
+      var ourDate = this.state.date
+      var imagesFiles = []
+      if(this.refs.dropzone && this.refs.dropzone.state.files){
+        imagesFiles = this.refs.dropzone.state.files
       }
+      var date = (ourDate || new Date().toISOString() ).substring(0,10)
+      const { name, location, description, files, likes } = this.state
+      const flyerData = {
+        name: name,
+        location: location,
+        description: description,
+        date: date,
+        images: imagesFiles,
+        likes: likes,
+      }
+      console.log('this.refs?', imagesFiles)
           // <Col sm={12} md={12}>        
       return(
+          <Col sm={12} md={12}>
               <Flyer flyer={flyerData} />
+          </Col>
       )
-          // </Col>
   }
         // <Panel key={this.state.name} bsStyle='success'
         //     header={this.state.name}>
@@ -130,9 +142,10 @@ class CreateFlyerPage extends React.Component {
 
   handleChange(value){
     this.setState({
-      date:value
+      date: value,
     })
   }
+//      formattedValue: (value || new Date().toISOString() ).substring(0,10)
 
 
   render() {
@@ -155,7 +168,7 @@ class CreateFlyerPage extends React.Component {
             </FormGroup>
 
             <FormGroup>
-              <ControlLabel>When will it take place</ControlLabel>
+              <ControlLabel>When will it take place?</ControlLabel>
               <DatePicker onChange={this.handleChange} value={this.state.date} />
               <ControlLabel>Time</ControlLabel>
 
@@ -216,7 +229,7 @@ class CreateFlyerPage extends React.Component {
 
             <Modal.Body>
                <Modal.Title className='text-center' style={{color: 'blue'}}>
-                  <h2>Your event is successfully created!!!</h2> 
+                  <div>Your flyer was successfully created!!!</div>
                 </Modal.Title>
                <Image src={Logo} style={{marginTop:100}} responsive/>
             </Modal.Body>
@@ -241,10 +254,6 @@ class CreateFlyerPage extends React.Component {
 
         </Col>
       </Row>
-
-      <br/>
-      <br/>
-      <br/>
 
       <NotificationContainer/>
 
