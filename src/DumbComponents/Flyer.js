@@ -1,5 +1,5 @@
 import React from 'react'
-import { Carousel, Col, Image, Button } from 'react-bootstrap'
+import { Carousel, Col, Image, Button, Row } from 'react-bootstrap'
 import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
 import { remove, update } from '../models'
 import { ObjectToArray } from '../Commen'
@@ -97,20 +97,22 @@ class OneFlyer extends React.Component{
         //
         return(
             <Col sm={12} md={3} >
-                <Card raised={true} className='raised'>
-                    <CardMedia
-                        aspectRatio="wide"
-                        children={carouselInstance}
-                    />
-                    <CardTitle
-                        title={titleAndBtn}
-                        subtitle={`Date: ${date} @${location}`}
-                    />
-                    <CardText>
-                        {description}
-                    </CardText>
-                </Card>
-                <br/>
+                <Row>
+                    <Card raised={true} className='raised'>
+                        <CardMedia
+                            aspectRatio="wide"
+                            children={carouselInstance}
+                        />
+                        <CardTitle
+                            title={titleAndBtn}
+                            subtitle={`Date: ${date} @${location}`}
+                        />
+                        <CardText>
+                            {description}
+                        </CardText>
+                    </Card>
+                    <br/>
+                </Row>
             </Col>
         )
     }
