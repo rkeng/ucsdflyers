@@ -60,7 +60,7 @@ class OneFlyer extends React.Component{
         const imagesArray = ObjectToArray(images)
         const CarouselItems = imagesArray.map(function(image){
             return (
-                <Carousel.Item key={image.imageUrl}> 
+                <Carousel.Item key={image.imageUrl}>
                     <Image src={image.imageUrl} width={350} responsive/><br/>
                 </Carousel.Item>
             )
@@ -82,7 +82,7 @@ class OneFlyer extends React.Component{
 
         //prepare the like button
         const btnColor =  isLiked ? 'danger' : 'info'
-        const HeatIcon =  isLiked ?  FaHeart : FaHeartO 
+        const HeatIcon =  isLiked ?  FaHeart : FaHeartO
         const titleAndBtn = (
             <div>
                 {name}
@@ -90,7 +90,7 @@ class OneFlyer extends React.Component{
                     <Button onClick={this.onLike} bsStyle={btnColor}>
                         <HeatIcon/>{likes}
                     </Button>
-                </span> 
+                </span>
             </div>
         )
 

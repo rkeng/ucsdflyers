@@ -8,8 +8,9 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router';
 import { createNew, getCurrentUser, uploadImages, update, set } from '../models/index.js';
 import { ImageDropzone } from './ImageDropzone.js';
-import { Flyer } from './Flyer'
-import Logo from '../asset/logoHorizontal.png'
+import { Flyer } from './Flyer';
+import Logo from '../asset/logoHorizontal.png';
+import { IDtoObject } from '../Commen/index.js';
 // import { AuthWrapper, ORG } from '../Commen'
 
 
@@ -20,7 +21,6 @@ class CreateFlyerPage extends React.Component {
     this.onCreate = this.onCreate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onClear = this.onClear.bind(this);
-
 
     this.state = {
       active: true,
@@ -33,7 +33,7 @@ class CreateFlyerPage extends React.Component {
       time: "",
       description: "",
       location: "",
-      files: "",
+      files: [],
     }
   }
 
@@ -50,17 +50,17 @@ class CreateFlyerPage extends React.Component {
 
   onPreview(event){
     event.preventDefault();
-    this.setState({ show: true})
 
     const name = findDOMNode(this.name).value;
-    this.setState({ name: name  })
     const time = findDOMNode(this.time).value;
-    this.setState({ time: time })
     const description = findDOMNode(this.description).value;
-    this.setState({ description: description })
     const location = findDOMNode(this.location).value;
-    this.setState({ location: location})
-
+    this.setState({
+      show: true,
+      location: location,
+      name: name,
+      time: time,
+      description: description })
   }
 
   onCreate(event){
@@ -72,9 +72,7 @@ class CreateFlyerPage extends React.Component {
         time: findDOMNode(this.time).value,
         description: findDOMNode(this.description).value,
         location: findDOMNode(this.location).value,
-        date: this.state.date.substring(0,10),
-        active: true,
-        likes: 0,
+        date: (this.state.date || new Date().toISOString() ).substring(0,10)
       }
 
       var imagesFiles = this.refs.dropzone.state.files
@@ -92,9 +90,9 @@ class CreateFlyerPage extends React.Component {
 
       this.setState({ success: true})
       let flyerID = createNew('events',flyer)
-      let id = getCurrentUser()
-
-
+      let flyerIDobj = IDtoObject(flyerID)
+      let uid = this.props.user.uid
+      update(`users/${uid}/FlyersCreated`, flyerIDobj)
 
        // image uploading
        let files = this.refs.dropzone.state.files
@@ -108,13 +106,15 @@ class CreateFlyerPage extends React.Component {
 
   getFlyer () {
       var ourDate = this.state.date
-      var date = ourDate.substring(0,10)
-      const { name, location, description } = this.state
+      var date = (ourDate || new Date().toISOString() ).substring(0,10)
+      const { name, location, description, files, likes } = this.state
       const flyerData = {
         name: name,
         location: location,
         description: description,
-        date: date
+        date: date,
+        images: files,
+        likes: likes,
       }
       return(
           <Col sm={12} md={12}>
@@ -136,9 +136,10 @@ class CreateFlyerPage extends React.Component {
 
   handleChange(value){
     this.setState({
-      date:value
+      date: value,
     })
   }
+//      formattedValue: (value || new Date().toISOString() ).substring(0,10)
 
 
   render() {
@@ -222,7 +223,7 @@ class CreateFlyerPage extends React.Component {
 
             <Modal.Body>
                <Modal.Title className='text-center' style={{color: 'blue'}}>
-                  <h2>Your event is successfully created!!!</h2>
+                  <div>Your flyer was successfully created!!!</div>
                 </Modal.Title>
                <Image src={Logo} style={{marginTop:100}} responsive/>
             </Modal.Body>
