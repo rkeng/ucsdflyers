@@ -135,29 +135,13 @@ export function set(node, data){
 }
 
 export function update(node, data){
-    db.ref(node).update(data).then(_ =>{
-        db.ref(node + '/dummy').once('value')
-        .then(snap => {
-            var nodeVal = snap.val()
-            if(nodeVal){
-              remove(node + '/dummy')
-            }
-        })
-    })
+    db.ref(node).update(data)
 }
 
 
 export function remove(node){
     var parentRef = db.ref(node).parent
-    db.ref(node).remove().then(_ => {
-       parentRef.once('value').then(snap => {
-            if(!snap.val()){
-                parentRef.set({
-                    dummy: 'dummy data to keep the field'
-                })
-            }
-       })
-    })
+    db.ref(node).remove()
 }
 
 //org account creating
@@ -172,8 +156,12 @@ export function signinOrg(provider){
                 const userFieldData = {
                     displayName: user.displayName,
                     isOrg: true,
-                    FlyersCreated: 'N/A',
-                    RecruitmentNotesCreated: 'N/A'
+                    FlyersCreated: {
+                      dummy: 'dummy data to keep the field'
+                    },
+                    RecruitmentNotesCreated: {
+                      dummy: 'dummy data to keep the field'
+                    }
                 }
                 firebase.database().ref('users/' + user.uid).set(userFieldData);
                 firebase.database().ref('organizations/' + user.uid).set(user.uid);
