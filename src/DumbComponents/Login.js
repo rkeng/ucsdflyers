@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Glyphicon, Grid, Row, Col, Image } from 'react-bootstrap'
+import { Glyphicon, Image } from 'react-bootstrap'
 import { firebaseUI, uiConfig } from '../models/firebaseUI';
 import { getCurrentUser, fetchDataOn, listenToData } from '../models'
 import { LoginUserAction, UserDataUpdateAction } from '../State/actions'
