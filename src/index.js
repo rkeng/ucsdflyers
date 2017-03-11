@@ -10,7 +10,6 @@ import { Provider } from 'react-redux'
 import { OrgListContainer} from './SmartComponents/OrgListContainer'
 import { FlyerListContainer } from './SmartComponents/FlyerListContainer'
 import { RecruitmentListContainer } from './SmartComponents/RecruitmentListContainer';
-import { Register } from './DumbComponents/Register'
 import { Feedback } from './DumbComponents/Feedback'
 import { NotFound } from './DumbComponents/NotFound'
 import { Login } from './DumbComponents/Login'
@@ -18,50 +17,43 @@ import { About } from './DumbComponents/About'
 import { NewOrganizations } from './DumbComponents/NewOrganizations'
 import { CreateRecruitment } from './DumbComponents/CreateRecruitment'
 import { CreateFlyer } from './DumbComponents/CreateFlyer'
-import { onAuthStateChanged } from './models'
-import { LoginUserAction, LogoutUserAction } from './State/actions'
-
-
+import { MyFlyers } from './DumbComponents/MyFlyers'
+import { OrgProfileSelect } from './DumbComponents/OrgProfileSelect'
+import { listenToDataAsArray } from './models'
+import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction } from './State/actions'
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 
-onAuthStateChanged((user) => {
-    if(user){
-        console.log('user logged in')
-        const userData = {
-            displayName: user.displayName,
-            email: user.email,
-            emailVerified: user.emailVerified,
-            isAnonymous: user.isAnonymous,
-            photoURL: user.photoURL,
-            providerData: user.providerData,
-            uid: user.uid,
-            isOrg: true
-        }
-        store.dispatch(LoginUserAction(userData))
-    } else {
-        console.log('no user')
-        store.dispatch(LogoutUserAction())
-    }
+listenToDataAsArray('events', function(events){
+        store.dispatch(GetEventsAction(events))
 })
 
+listenToDataAsArray('clubs', function(clubs){
+        // console.log('fetched clubs data')
+        store.dispatch(GetOrgsAction(clubs))
+})
+
+listenToDataAsArray('recruitmentNotes', function(recruitments){
+        // console.log('fetched recruitments data')
+        store.dispatch(GetRecruitmentsAction(recruitments))
+})
 
 ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
             <Route path='/' component={FlyersApp}>
                 <IndexRedirect to='events'/>
-                <Route path='events' component={FlyerListContainer}/>
-                <Route path='org' component={OrgListContainer}/>
-                <Route path='about' component={About}/>
-                <Route path='register' component={Register}/>
-                <Route path='feedback' component={Feedback}/>
-                <Route path='recruitments' component={RecruitmentListContainer}/>
-                <Route path='create-recruitment' component={CreateRecruitment}/>
-                <Route path='create-flyer' component={CreateFlyer}/>
-                <Route path='login' component={Login}/>
-                <Route path='login-org' component={NewOrganizations}/>
-
+                <Route path='events' component={FlyerListContainer}/>                    {/*all*/}
+                <Route path='org' component={OrgListContainer}/>                         {/*all*/}
+                <Route path='about' component={About}/>                                  {/*all*/}
+                <Route path='feedback' component={Feedback}/>                            {/*all*/}
+                <Route path='recruitments' component={RecruitmentListContainer}/>        {/*all*/}
+                <Route path='create-recruitment' component={CreateRecruitment}/>         {/*org only*/}
+                <Route path='create-flyer' component={CreateFlyer}/>                     {/*org only*/}
+                <Route path='login' component={Login}/>                                  {/*all*/}
+                <Route path='org-login' component={NewOrganizations}/>                   {/*all*/}
+                <Route path='my-flyers' component={MyFlyers}/>                           {/*student only*/}
+                <Route path='org-profile' component={OrgProfileSelect}/>                 {/*org only*/}
             </Route>
             <Route path='*' component={NotFound}/>
         </Router>

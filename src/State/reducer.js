@@ -11,42 +11,32 @@ import { combineReducers } from 'redux'
 
 function userStateReducer (state={}, action) {
     switch (action.type) {
-        /* we shouldn't have the sign up funtion ever used
-        case 'SIGN_UP_USER': {
-            const email = action.state.email
-            const password = action.state.password
-
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then(function () {
-                console.log('Account Creation Succeeded')
-                })
-                .catch(function (error) {
-                console.log('Account Creation Failed', error.message)
-                })
-            return Object.assign({}, state)
-        }
-        */
-        case 'LOGIN_STUDENT': {
-            return Object.assign({}, state, {
-                isAutheticated: true,
-                isOrg: false
-            }, action.userData)
-        }
-        case 'LOGIN_ORG': {
-            return Object.assign({}, state, {
-                isAutheticated: true,
-                isOrg: true
-            }, action.userData)
-        }
         case 'LOGOUT_USER': {
-            return Object.assign({}, state, {
-                isAutheticated: false
-            }) 
+            return {}
         }
         case 'LOGIN_USER':{
             return Object.assign({}, state, {
-                isAutheticated: true,
+                isAuthenticated: true,
             }, action.userData)
+        }
+        case 'USER_DATA_UPDATE': {
+            return Object.assign({}, state, action.userData)
+        }
+        default:
+        return state
+    }
+}
+
+function dataStateReducer(state={}, action){
+    switch(action.type){
+        case 'GET_ORGS':{
+            return Object.assign({}, state, { orgs: action.data })
+        }
+        case 'GET_EVENTS':{
+            return Object.assign({}, state, { events: action.data })
+        }
+        case 'GET_RECRUITMENTS':{
+            return Object.assign({}, state, { recruitments: action.data })
         }
         default:
         return state
@@ -56,7 +46,8 @@ function userStateReducer (state={}, action) {
 
 const rootReducer = combineReducers({
   routing: routerReducer, // connect routing with application state
-  user: userStateReducer
+  user: userStateReducer,
+  data: dataStateReducer
 })
 
 export { rootReducer }

@@ -1,109 +1,66 @@
 import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
 import { connect } from 'react-redux'
-import { fetchDataAsArray, compareDates, compareClubs} from '../models'
-import { SearchBar } from '../Commen'
-import { NotificationContainer, NotificationManager } from 'react-notifications'
-import { Grid, Row, Col } from 'react-bootstrap';
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { SearchBar, compareDates } from '../Commen'
+import { Grid, Row, Col, DropdownButton, MenuItem, InputGroup } from 'react-bootstrap';
 
 class FlyerListContainerPage extends React.Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      flyers: [],
-      sortDate: false,
-      sortClub: false
+      sortDate: true,
+      search: ''
     }
+    this.dateSort = this.dateSort.bind(this)
+    this.filterSearch = this.filterSearch.bind(this)
   }
 
-  clubSort () {
-      const that = this;
-
-      fetchDataAsArray('events')
-      .then(function(events){
-          console.log("reached 1")
-          var newFlyersList = events.sort(compareClubs)
-          console.log("reached 2")
-          console.log(newFlyersList)
-          that.setState({
-              flyers: newFlyersList,
-              sortDate: false,
-              sortClub: true
-          })
-      })
-      .catch(function(error){
-          NotificationManager.error('Something is wrong', 'Opps!', 2222);
-      })
+  filterSearch(event){
+      this.setState({search: event.target.value.substr(0,20)});
   }
 
-  dateSort () {
-      const that = this;
-
-      fetchDataAsArray('events')
-      .then(function(events){
-          console.log("reached 1")
-          var newFlyersList = events.sort(compareDates)
-          console.log("reached 2")
-          console.log({newFlyersList})
-          that.setState({
-              flyers: newFlyersList,
-              sortDate: true,
-              sortClub: false
-          })
-         console.log("reached 3")
+  dateSort(e, time) {
+      e.preventDefault();
+      this.setState({
+        sortDate: !this.state.sortDate
       })
-      .catch(function(error){
-          NotificationManager.error('Something is wrong', 'Opps!', 2222);
-      })
-  }
-
-
-  componentWillMount () {
-    const that = this;
-
-    function isActive (flyer) {
-      return flyer.active===true;
-    }
-
-    fetchDataAsArray('events')
-    .then(function(events){
-
-        var newFlyersList = events
-        console.log(newFlyersList)
-
-        newFlyersList = events.filter(isActive);
-
-        that.setState({
-            flyers: newFlyersList
-        })
-    })
-    .catch(function(error){
-        NotificationManager.error('Something is wrong', 'Opps!', 2222);
-    })
   }
 
   render () {
+    let activeFlyers = this.props.flyers.filter((flyer) => flyer.active)
+    let filteredFlyers = activeFlyers.filter(
+      (flyer)=>{
+        return flyer.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+        || flyer.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+      }
+    )
+    if(this.state.sortDate){
+      filteredFlyers.sort(compareDates)
+    } else {
+      filteredFlyers.sort(!compareDates)
+    }
+    const sortByWhat = this.state.sortDate ? 'past' : 'recent'
+    const sortBtnName = this.state.sortDate ? 'farthest future' : 'closest upcoming'
+
     return (
         <Grid>
-          <NotificationContainer/>
           <Row>
-            <SearchBar placeholder='search for flyers'/>
+            <SearchBar placeholder='search flyers' value={this.state.search || ''}
+                onChange={this.filterSearch}>
+              <DropdownButton
+                componentClass={InputGroup.Button}
+                id="input-dropdown-addon"
+                title="Sort By"
+              >
+                <MenuItem key="1" onClick={(e)=>this.dateSort(e, {sortByWhat})}>{sortBtnName}</MenuItem>
+              </DropdownButton>
+            </SearchBar>
          </Row>
-         <Row>
-            <ButtonGroup justified>
-                <ButtonGroup>
-                    <Button onClick={this.clubSort}> Sort by Date </Button>
-                </ButtonGroup>
-                <ButtonGroup>
-                    <Button> Sort by Club</Button>
-                </ButtonGroup>
-            </ButtonGroup>
-         </Row>
+        <br/>
          <Row>
            <Col>
-              <FlyerList flyers={this.state.flyers}/>
+              <FlyerList flyers={filteredFlyers} />
             </Col>
           </Row>
         </Grid>
@@ -111,6 +68,17 @@ class FlyerListContainerPage extends React.Component {
   }
 }
 
-const FlyerListContainer = connect()(FlyerListContainerPage)
+FlyerListContainerPage.defaultProps = {
+    flyers: []
+}
+
+function mapStateToProps(state){
+  return {
+    flyers: state.data.events,
+    user: state.user
+  }
+}
+
+const FlyerListContainer = connect(mapStateToProps)(FlyerListContainerPage)
 
 export { FlyerListContainer }

@@ -1,85 +1,127 @@
 import React from 'react'
-import { Panel, Col, Button, Image, Grid, Row } from 'react-bootstrap'
-import RED from '../asset/RED.jpg'
-import { FaThumbsOUp, FaThumbsUp, FaCheckCircleO, FaCheckCircle } from 'react-icons/lib/fa';
+import { Carousel, Col, Image, Button } from 'react-bootstrap'
+import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
+import { remove, update } from '../models'
+import { ObjectToArray } from '../Commen'
+import { connect } from 'react-redux'
+import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
 
-class Flyer extends React.Component{
+class OneFlyer extends React.Component{
 
-
-      constructor(props){
+    constructor(props){
         super(props)
         this.state = {
-          clicked1: false
-        };
-        this.state = {
-          clicked2: false
-        };
-        this.setButtonState1 = this.setButtonState1.bind(this)
-        this.setButtonState2 = this.setButtonState2.bind(this)
+            liked:false
+        }
+        this.onLike = this.onLike.bind(this)
+    }
 
-      }
+    userLoggedInAsStudentNotLikedFlyer(){
+        const { isAuthenticated, isOrg, FlyersLiked } = this.props.user
+        const { id } = this.props.flyer
+        return isAuthenticated && !isOrg && !FlyersLiked.hasOwnProperty(id)
+    }
 
+    userLoggedInAsStudentLikedFlyer(){
+        const { isAuthenticated, isOrg, FlyersLiked } = this.props.user
+        const { id } = this.props.flyer
+        return isAuthenticated && !isOrg && FlyersLiked.hasOwnProperty(id)
+    }
 
+    onLike(){
+        const { uid } = this.props.user
+        const { id, likes } = this.props.flyer
+        var newFlyer = {}
+        newFlyer[`${id}`] = id
 
-      setButtonState1(){
-        this.setState({
-            clicked1: this.state.clicked1? false : true
-          }
+        if(this.userLoggedInAsStudentNotLikedFlyer()){
+            //update method will only update the field, not overwriting the whol thing
+            update(`users/${uid}/FlyersLiked`, newFlyer)
+            update(`events/${id}`, {likes: likes + 1})
+        }
+        if(this.userLoggedInAsStudentLikedFlyer()){
+            remove(`users/${uid}/FlyersLiked/${id}`)
+            update(`events/${id}`, {likes: likes - 1})
+        }
 
-        )
-      }
-      setButtonState2(){
-        this.setState({
-            clicked2: this.state.clicked2? false : true
-
-
-          }
-        )
-        //let go = this.props.flyer.go
-
-      }
+    }
 
     render() {
         const {
-           name,
-           location,
-           description,
-           date,
-           like,
-           go
-         } = this.props.flyer
-          
+            name,
+            location,
+            description,
+            date,
+            images,
+            likes
+        } = this.props.flyer
+
+        //prepare the images
+        const imagesArray = ObjectToArray(images)
+        const CarouselItems = imagesArray.map(function(image){
+            return (
+                <Carousel.Item key={image.imageUrl}> 
+                    <Image src={image.imageUrl} width={350} responsive/><br/>
+                </Carousel.Item>
+            )
+        })
+        const carouselInstance = (
+            <Carousel>
+                {CarouselItems}
+            </Carousel>
+        )
+
+        //prepare the liked state of the button
+        var isLiked = this.state.liked
+        if(this.userLoggedInAsStudentLikedFlyer()){ //don't allow org to like flyers
+            isLiked = true
+        }
+        if(this.userLoggedInAsStudentNotLikedFlyer()){
+            isLiked = false
+        }
+
+        //prepare the like button
+        const btnColor =  isLiked ? 'danger' : 'info'
+        const HeatIcon =  isLiked ?  FaHeart : FaHeartO 
+        const titleAndBtn = (
+            <div>
+                {name}
+                <span className='pull-right'>
+                    <Button onClick={this.onLike} bsStyle={btnColor}>
+                        <HeatIcon/>{likes}
+                    </Button>
+                </span> 
+            </div>
+        )
+
+        //
         return(
-                <Panel header={name} bsStyle="success">
-                  <Col sm={12} mdOffset={3} md={8}>
-                    <Image width={370} height={400} alt="400x400" src={RED} responsive/><br/>
-                    <h3>{name}</h3>
-                    <p>
-                        Location: {location}<br/>
-                        Description: {description}<br/>
-                        Date: {date}
-                    </p>
-
-                    <Grid>
-                    <Row>
-                      <Col md={1} mdOffset={0}>
-                        <Button onClick={this.setButtonState1} bsStyle={this.state.clicked1 ?  "danger" : "success"}>{this.state.clicked1 ?  'Unlike' : 'Like'}</Button>&nbsp;
-                        {this.state.clicked1 ?  <FaThumbsUp/> : <FaThumbsOUp/> }
-                        {like}
-                      </Col>
-
-                      <Col md={1} mdPush={0.5}>
-                        <Button onClick={this.setButtonState2} bsStyle={this.state.clicked2 ?  "danger" : "primary"}>{this.state.clicked2 ? 'No Longer Wanna Go' : 'Wanna Go'}</Button>
-                        {this.state.clicked2 ?  <FaCheckCircle/> : <FaCheckCircleO/> }
-                        {go}
-                        </Col>
-                    </Row>
-                      </Grid>
-
-                  </Col>
-                </Panel>
+            <Col sm={12} md={3} >
+                <Card raised={true} className='raised'>
+                    <CardMedia
+                        aspectRatio="wide"
+                        children={carouselInstance}
+                    />
+                    <CardTitle
+                        title={titleAndBtn}
+                        subtitle={`Date: ${date} @${location}`}
+                    />
+                    <CardText>
+                        {description}
+                    </CardText>
+                </Card>
+                <br/>
+            </Col>
         )
     }
 }
+
+function mapStateToProps(state){
+    return{
+        user: state.user
+    }
+}
+
+const Flyer = connect(mapStateToProps)(OneFlyer)
 
 export { Flyer }
