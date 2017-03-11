@@ -119,8 +119,7 @@ class InfoCard extends React.Component{
 
     }
    render(){
-
-      const { role, intro, image, color} = this.props.member
+          const { name, role, intro, email, image, color} = this.props.member
 
       return(
 
@@ -142,7 +141,7 @@ class InfoCard extends React.Component{
               </div>
               <div key="role" onClick={this.changeFace.bind(this)}>
 
-                <h1>{name}</h1> <p style={{fontSize:'small'}}>{role}</p>
+                <h4>{role}</h4>
 
               </div>
               <div key="intro" onClick={this.changeFace.bind(this)}>
