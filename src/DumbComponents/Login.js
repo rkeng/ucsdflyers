@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Glyphicon } from 'react-bootstrap'
+import { Glyphicon, Image } from 'react-bootstrap'
 import { firebaseUI, uiConfig } from '../models/firebaseUI';
 import { getCurrentUser, fetchDataOn, listenToData } from '../models'
 import { LoginUserAction, UserDataUpdateAction } from '../State/actions'
+import triton from '../asset/logo.png'
 
 class LoginForm extends React.Component {
 
@@ -36,15 +37,19 @@ class LoginForm extends React.Component {
     firebaseUI.reset();
   }
 
+
+
+
   render () {
     firebaseUI.start('#app', uiConfig)
     return (
-        <div className="text-center">
-            <div>
-                <Glyphicon glyph="flash" />
-                Login to UCSDFlyer
-            </div>
-        </div>
+
+
+  <div className="text-center">
+                <h2><Glyphicon glyph="flash" /> Login to UCSDFlyer</h2>
+                <Image src={triton} style={{width:120, height:120}} className='text-center'/>
+  </div>
+
     )
   }
 }
