@@ -27,13 +27,12 @@ class CreateFlyerPage extends React.Component {
       success: false,
       show: false,
       likes: 0,
-      go: 0,
       name: "",
       date: new Date().toISOString(),
       time: "",
       description: "",
       location: "",
-      files: "",
+      files: [],
     }
   }
 
@@ -49,71 +48,73 @@ class CreateFlyerPage extends React.Component {
 
   onPreview(event){
     event.preventDefault();
-    this.setState({ show: true})
-
     const name = findDOMNode(this.name).value;
-    this.setState({ name: name  })
     const time = findDOMNode(this.time).value;
-    this.setState({ time: time })
     const description = findDOMNode(this.description).value;
-    this.setState({ description: description })
     const location = findDOMNode(this.location).value;
-    this.setState({ location: location})
+    this.setState({ 
+      location: location,
+      description: description,
+      time: time,
+      name: name,
+      show: true
+    })
 
   }
 
   onCreate(event){
     event.preventDefault();
-    getCurrentUser().then((club) => {
-      const clubID = club.uid;
-      const flyer = {
-        name: findDOMNode(this.name).value,
-        time: findDOMNode(this.time).value,
-        description: findDOMNode(this.description).value,
-        location: findDOMNode(this.location).value,
-        date: this.state.date.substring(0,10),
-        active: true,
-        likes: 0,
-      }
+    const { uid } = this.props.user
+    const clubID = uid;
+    const flyer = {
+      name: findDOMNode(this.name).value,
+      time: findDOMNode(this.time).value,
+      description: findDOMNode(this.description).value,
+      location: findDOMNode(this.location).value,
+      date: this.state.date.substring(0,10),
+      active: true,
+      likes: 0,
+      belongsTo: uid
+    }
 
-      var imagesFiles = this.refs.dropzone.state.files
-      if(flyer.name === "")
+    var imagesFiles = this.refs.dropzone.state.files
+    if(flyer.name === "")
       NotificationManager.error('Error', 'Please enter valid name!', 2222);
-      else if(flyer.time === "")
+    else if(flyer.time === "")
       NotificationManager.error('Error', 'Please enter valid time!', 2222);
-      else if(flyer.description === "")
+    else if(flyer.description === "")
       NotificationManager.error('Error', 'Please enter valid description!', 2222);
-      else if(flyer.location === "")
+    else if(flyer.location === "")
       NotificationManager.error('Error', 'Please enter valid location!', 2222);
-      else if(!imagesFiles.length)//file is not uploaded
+    else if(!imagesFiles.length)//file is not uploaded
       NotificationManager.error('Error', 'Please upload at least one image!', 2222);
-      else{
-        this.setState({ success: true})
-        let flyerID = createNew('events',flyer)
-         // image uploading
-        let files = this.refs.dropzone.state.files
-        uploadImages("events", flyerID, clubID, files)
-      }
-  })
+    else{
+      this.setState({ success: true})
+      let flyerID = createNew('events',flyer)
+       // image uploading
+      let files = this.refs.dropzone.state.files
+      uploadImages("events", flyerID, clubID, files)
+    }
   }
 
 
 
   getFlyer () {
-      var ourDate = this.state.date
-      var date = ourDate.substring(0,10)
-      const { name, location, description } = this.state
+      const { name, location, description, date, files, likes } = this.state
+      var formattedData = date.substring(0,10)
       const flyerData = {
-        name: name,
-        location: location,
-        description: description,
-        date: date
+            name: name,
+            location: location,
+            description: description,
+            date: formattedData,
+            images: files,
+            likes: likes
       }
+          // <Col sm={12} md={12}>        
       return(
-          <Col sm={12} md={12}>        
               <Flyer flyer={flyerData} />
-          </Col>
       )
+          // </Col>
   }
         // <Panel key={this.state.name} bsStyle='success'
         //     header={this.state.name}>
@@ -168,7 +169,7 @@ class CreateFlyerPage extends React.Component {
             <FormGroup>
               <ControlLabel>Where is the new event going to be?</ControlLabel>
               <FormControl
-                text="text"
+                type="text"
                 placeholder="Enter location"
                 ref={(node) => {this.location = node}}
               />
