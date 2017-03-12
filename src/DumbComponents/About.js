@@ -1,5 +1,6 @@
 import React from 'react'
 import { Image, Col} from 'react-bootstrap'
+import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
 import AnimakitRotator from 'animakit-rotator';
 
 const members = [
@@ -121,36 +122,35 @@ class InfoCard extends React.Component{
           const { name, role, intro, email, image, color} = this.props.member
 
       return(
+          <Col xsOffset={1} xs={11} smOffset={1} sm={11} mdOffset={2} md={3}>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+      
+            <div className="text-center" style={{color: 'white'}}>
+              <AnimakitRotator side={this.state.index} background={color} shadow>
+                <Image key="image" onClick={this.changeFace.bind(this)} width={300} height={300} alt="" src={image} /><br/>
+                <div key="name" onClick={this.changeFace.bind(this)}>
+                  <h3> {name} </h3>
+                </div>
+                <div key="role" onClick={this.changeFace.bind(this)}>
 
-        <Col smOffset={1} sm={11} mdOffset={2} md={3}>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-    
-          <div className="text-center">
-            <AnimakitRotator side={this.state.index} background={color} shadow>
-              <Image key="image" onClick={this.changeFace.bind(this)} width={300} height={300} alt="" src={image} /><br/>
-              <div key="name" onClick={this.changeFace.bind(this)}>
-                <h3>{name}</h3>
-              </div>
-              <div key="role" onClick={this.changeFace.bind(this)}>
+                  <h4>{role}</h4>
 
-                <h4>{role}</h4>
-
-              </div>
-              <div key="intro" onClick={this.changeFace.bind(this)}>
-                <p>{intro}</p>
-                <br/>
-                <p>{email}</p>
-              </div>
-            </AnimakitRotator>
-          </div>
-        </Col>
+                </div>
+                <div key="intro" onClick={this.changeFace.bind(this)}>
+                  <p>{intro}</p>
+                  <br/>
+                  <p>{email}</p>
+                </div>
+              </AnimakitRotator>
+            </div>
+          </Col>
 
       )
    }

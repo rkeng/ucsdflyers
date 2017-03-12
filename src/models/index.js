@@ -83,7 +83,7 @@ export function uploadImages(databaseRef, itemID, userID, files) {
             data.update({imageUrl: imageToStorage.snapshot.downloadURL})
       }
       )}).catch(function(error) {
-        console.error('There was an error uploading a file to Firebase: ' + error);
+        // console.error('There was an error uploading a file to Firebase: ' + error);
       });
 
       return true;

@@ -58,18 +58,22 @@ class OneFlyer extends React.Component{
 
         //prepare the images
         const imagesArray = ObjectToArray(images)
-        const CarouselItems = imagesArray.map(function(image){
-            return (
-                <Carousel.Item key={image.imageUrl}> 
-                    <Image src={image.imageUrl} width={350} responsive/><br/>
-                </Carousel.Item>
+        var CarouselItems = <Image src={imagesArray[0].imageUrl || imagesArray[0].preview} width={350} responsive/>
+        var carouselInstance = CarouselItems;
+        if(imagesArray.length !== 1){
+            CarouselItems = imagesArray.map(function(image, index){
+                return (
+                    <Carousel.Item key={index}>
+                        <Image src={image.imageUrl || image.preview} width={350} responsive/><br/>
+                    </Carousel.Item>
+                )
+            })
+            carouselInstance = (
+                <Carousel>
+                    {CarouselItems}
+                </Carousel>
             )
-        })
-        const carouselInstance = (
-            <Carousel>
-                {CarouselItems}
-            </Carousel>
-        )
+        }
 
         //prepare the liked state of the button
         var isLiked = this.state.liked
@@ -82,7 +86,7 @@ class OneFlyer extends React.Component{
 
         //prepare the like button
         const btnColor =  isLiked ? 'danger' : 'info'
-        const HeatIcon =  isLiked ?  FaHeart : FaHeartO 
+        const HeatIcon =  isLiked ?  FaHeart : FaHeartO
         const titleAndBtn = (
             <div>
                 {name}
@@ -90,29 +94,27 @@ class OneFlyer extends React.Component{
                     <Button onClick={this.onLike} bsStyle={btnColor}>
                         <HeatIcon/>{likes}
                     </Button>
-                </span> 
+                </span>
             </div>
         )
 
         //
         return(
-            <Col sm={12} md={3} >
-                <Row>
-                    <Card raised={true} className='raised'>
-                        <CardMedia
-                            aspectRatio="wide"
-                            children={carouselInstance}
-                        />
-                        <CardTitle
-                            title={titleAndBtn}
-                            subtitle={`Date: ${date} @${location}`}
-                        />
-                        <CardText>
-                            {description}
-                        </CardText>
-                    </Card>
-                    <br/>
-                </Row>
+            <Col xs={12} sm={12} md={3} >
+                <Card raised={true} className='raised'>
+                    <CardMedia
+                        aspectRatio="wide"
+                        children={carouselInstance}
+                    />
+                    <CardTitle
+                        title={titleAndBtn}
+                        subtitle={`Date: ${date} @${location}`}
+                    />
+                    <CardText>
+                        {description}
+                    </CardText>
+                </Card>
+                <br/>
             </Col>
         )
     }

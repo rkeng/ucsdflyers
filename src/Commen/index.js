@@ -66,6 +66,11 @@ export function ObjectToArray(object){
     return keyList.map(key => object[key])
 }
 
+export function IDtoObject(id){
+  var obj = {}
+  obj[`${id}`] = id
+  return obj
+}
 
 export { ColCenter, SearchBar }
 export { AuthWrapper, STUDENT, GUEST, ORG }

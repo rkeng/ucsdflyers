@@ -21,6 +21,8 @@ import { MyFlyers } from './DumbComponents/MyFlyers'
 import { OrgProfileSelect } from './DumbComponents/OrgProfileSelect'
 import { listenToDataAsArray } from './models'
 import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction } from './State/actions'
+import 'react-grid-layout/css/styles.css'
+import 'react-resizable/css/styles.css'
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 
