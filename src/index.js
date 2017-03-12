@@ -17,10 +17,13 @@ import { About } from './DumbComponents/About'
 import { NewOrganizations } from './DumbComponents/NewOrganizations'
 import { CreateRecruitment } from './DumbComponents/CreateRecruitment'
 import { CreateFlyer } from './DumbComponents/CreateFlyer'
-import { MyFlyers } from './DumbComponents/MyFlyers'
+// import { MyFlyers } from './DumbComponents/MyFlyers'
 import { OrgProfileSelect } from './DumbComponents/OrgProfileSelect'
-import { listenToDataAsArray } from './models'
-import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction } from './State/actions'
+import { ProfileSelect } from './DumbComponents/ProfileSelect'
+import { listenToDataAsArray, listenToData, fetchDataOn, onAuthStateChanged } from './models'
+import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction, LoginUserAction, UserDataUpdateAction } from './State/actions'
+import 'react-grid-layout/css/styles.css'
+import 'react-resizable/css/styles.css'
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -38,6 +41,30 @@ listenToDataAsArray('recruitmentNotes', function(recruitments){
         store.dispatch(GetRecruitmentsAction(recruitments))
 })
 
+onAuthStateChanged(function(user){
+    if(user){
+        listenToData(`users/${user.uid}`, function(userData){
+            store.dispatch(UserDataUpdateAction(userData))
+        })
+
+        fetchDataOn(`users/${user.uid}`)
+        .then(snap => {
+            var userData = snap.val()
+            const userDataOnAuth = {
+                displayName: user.displayName,
+                email: user.email,
+                emailVerified: user.emailVerified,
+                isAnonymous: user.isAnonymous,
+                photoURL: user.photoURL,
+                providerData: user.providerData,
+                uid: user.uid,
+            }
+            var userDataToState = Object.assign(userDataOnAuth, userData)
+            store.dispatch(LoginUserAction(userDataToState))
+        })
+      }
+})
+
 ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
@@ -52,7 +79,7 @@ ReactDOM.render(
                 <Route path='create-flyer' component={CreateFlyer}/>                     {/*org only*/}
                 <Route path='login' component={Login}/>                                  {/*all*/}
                 <Route path='org-login' component={NewOrganizations}/>                   {/*all*/}
-                <Route path='my-flyers' component={MyFlyers}/>                           {/*student only*/}
+                <Route path='profile' component={ProfileSelect}/>                           {/*student only*/}
                 <Route path='org-profile' component={OrgProfileSelect}/>                 {/*org only*/}
             </Route>
             <Route path='*' component={NotFound}/>

@@ -1,6 +1,7 @@
 import React from 'react'
-import { Form, FormGroup, FormControl, ControlLabel, PageHeader, Col, Button } from 'react-bootstrap'
+import { Form, FormGroup, FormControl, ControlLabel, FieldGroup, PageHeader, Col, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import { createNew, getCurrentUser } from '../models/index.js'
 
 class FeedbackPage extends React.Component {
   constructor (props) {

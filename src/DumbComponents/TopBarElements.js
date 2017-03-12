@@ -68,7 +68,7 @@ function TopBarIcon(props){
             <TopBarItem id='events' key={0} name='EVENTS' icon={<FaNewspaperO />} />,
             <TopBarItem id='org' key={1} name='ORGANIZATIONS' icon={<FaGroup />} />,
             <TopBarItem id='recruitments' key={2} name='RECRUITMENTS' icon={<FaStickyNoteO />} />,
-            <TopBarItem id='about' key={3} name='ABOUT' icon={<FaChild />} /> ,
+            <TopBarItem id='about' key={3} name='ABOUT' icon={<FaChild />} />
         ]
     if(props.user.isOrg){
         topbarItemsToRender = [
@@ -94,45 +94,35 @@ function TopBarIcon(props){
 
 
 class AvatarSelectNoState extends React.Component {
-    constructor(props){
-        super(props)
-        var AvaSize = 25
-        this.state={
-            Ava:  <Avatar {...props} src={person} round size={AvaSize}/>
-        }
-    }
 
     render(){
-        var that = this
+        let that = this
         const { isAuthenticated, displayName } = that.props.user
-        var newAva
         var AvaSize = 25
+        var Ava = <Avatar {...that.props} src={person} round size={AvaSize}/>
         if(isAuthenticated){
             const { providerId, uid } = that.props.user.providerData[0]
             switch(providerId){
                 case'google.com':{
                     // console.log('user login with google ')
-                    newAva = <Avatar {...that.props} name={displayName} round size={AvaSize} textSizeRatio={2.5} />
+                    Ava = <Avatar {...that.props} name={displayName} round size={AvaSize} textSizeRatio={2.5} />
                     break;
                 }
                 case'facebook.com': {
                     // console.log('user login with facebook ')
-                    newAva = <Avatar {...that.props} facebookId={uid} name={displayName} round size={AvaSize} textSizeRatio={2.5}/>
+                    Ava = <Avatar {...that.props} facebookId={uid} name={displayName} round size={AvaSize} textSizeRatio={2.5}/>
                     break;
                 }
                 case'twitter.com':{
                     // console.log('user login with twitter ')
-                    newAva = <Avatar {...that.props} twitterId={uid} name={displayName} round size={AvaSize} textSizeRatio={2.5}/>
+                    Ava = <Avatar {...that.props} twitterId={uid} name={displayName} round size={AvaSize} textSizeRatio={2.5}/>
                     break;
                 }
                 default:
-                newAva = <Avatar {...that.props} src={person} round />;
-            }
-            that.state={
-                Ava:  newAva
+                Ava = <Avatar {...that.props} src={person} round />;
             }
         }
-        return <i className='user-avatar-image'>{this.state.Ava}</i>
+        return <i className='user-avatar-image'>{Ava}</i>
     }
 }
 
@@ -151,7 +141,7 @@ function TopBarRightNoState(props){
     return(
             <Nav pullRight>
                 <NavDropdown id='user-avatar-dropdown' title={<AvatarSelect/>} >
-                        <MenuItem id='my-flyers' onClick={(e) => changeRoute(e, props)}><FaHeartO/>My Flyers</MenuItem>
+                        <MenuItem id='profile' onClick={(e) => changeRoute(e, props)}><FaHeartO/>Profile</MenuItem>
                         <MenuItem id='feedback' onClick={(e) => changeRoute(e, props)}><FaPaperPlaneO/>Contact Us</MenuItem>
                         <MenuItem id={id} onClick={(e) => changeRoute(e, props, uid)}>{icon}{name}</MenuItem>
                 </NavDropdown>
