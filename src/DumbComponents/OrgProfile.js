@@ -1,9 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Row, Grid, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import { Flyer } from './Flyer'
 import { RecruitmentNote} from './RecruitmentNote'
-import { Org } from './Org'
 import { ObjectToArray } from '../Commen'
 
 class OrgProfilePage extends React.Component{
@@ -14,6 +13,7 @@ class OrgProfilePage extends React.Component{
             listOfFlyersCreated: [],
             listOfRecruitmentsCreated: []
         }
+    }
 
     componentWillMount(){
         const { FlyersCreated, RecruitmentNotesCreated } = this.props.user

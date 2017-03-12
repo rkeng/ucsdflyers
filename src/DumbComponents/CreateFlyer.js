@@ -218,7 +218,7 @@ class CreateFlyerPage extends React.Component {
               <DatePicker onChange={this.handleChange} value={this.state.date} />
             </FormGroup>
           </Col>
-          <Col md = {4} mdOffset={0.5}>
+          <Col md={4} mdOffset={0.5}>
             <FormGroup>
               <ControlLabel>Time</ControlLabel>
                 <TimePicker
