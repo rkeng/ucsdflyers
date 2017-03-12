@@ -10,6 +10,8 @@ import { createNew, getCurrentUser, uploadImages } from '../models/index.js';
 import { ImageDropzone } from './ImageDropzone.js';
 import { Flyer } from './Flyer'
 import Logo from '../asset/logoHorizontal.png'
+import TimePicker from 'react-times';
+import 'react-times/css/classic/default.css';
 // import { AuthWrapper, ORG } from '../Commen'
 
 
@@ -30,10 +32,15 @@ class CreateFlyerPage extends React.Component {
       go: 0,
       name: "",
       date: new Date().toISOString(),
-      time: "",
       description: "",
       location: "",
       files: "",
+      minute: "",
+      hour: "",
+      timefocus: false,
+      time2focus: false,
+      time: "",
+      time2: "",
     }
   }
 
@@ -97,7 +104,32 @@ class CreateFlyerPage extends React.Component {
   })
   }
 
+  onTimeChange(newtime) {
+    if(this.state.timefocus){
+      const [ hour, minute ] = newtime.split(':');
+      this.setState({hour, minute, time:newtime})
+    }
+    else if(this.state.time2focus){
+      const [ hour, minute ] = newtime.split(':');
+      this.setState({hour, minute, time2:newtime})
+    }
+  }
 
+  onFocusChange(newfocus) {
+    this.setState({timefocus:newfocus})
+  }
+  onFocusChange2(newfocus) {
+    this.setState({time2focus:newfocus})
+  }
+  timeTrigger(event){
+    const focused = this.state.timefocus;
+    this.setState({ timefocus: !focused });
+  }
+
+  timeTrigger2(event){
+    const focused = this.state.time2focus;
+    this.setState({ time2focus: !focused });
+  }
 
   getFlyer () {
       var ourDate = this.state.date
@@ -110,7 +142,7 @@ class CreateFlyerPage extends React.Component {
         date: date
       }
       return(
-          <Col sm={12} md={12}>        
+          <Col sm={12} md={12}>
               <Flyer flyer={flyerData} />
           </Col>
       )
@@ -157,18 +189,34 @@ class CreateFlyerPage extends React.Component {
               <ControlLabel>When will it take place</ControlLabel>
               <DatePicker onChange={this.handleChange} value={this.state.date} />
               <ControlLabel>Time</ControlLabel>
-
-              <FormControl
-                type="text"
-                placeholder="Enter time"
-                ref={(node) => {this.time = node}}
-              />
             </FormGroup>
-
+            <FormGroup>
+            <Col>
+            <ControlLabel>From</ControlLabel>
+            <TimePicker
+               theme="classic"
+               time={this.state.time}
+               onFocusChange={this.onFocusChange.bind(this)}
+               onTimeChange={this.onTimeChange.bind(this)}
+               focused={this.state.timefocus}
+               trigger={(<FormControl placeholder={this.state.time} onClick={this.timeTrigger.bind(this)} />)}
+            />
+            </Col>
+            <Col>
+            <ControlLabel>To</ControlLabel>
+            <TimePicker
+               theme="classic"
+               time={this.state.time2}
+               onFocusChange={this.onFocusChange2.bind(this)}
+               onTimeChange={this.onTimeChange.bind(this)}
+               focused={this.state.time2focus}
+               trigger={(<FormControl placeholder={this.state.time2} onClick={this.timeTrigger2.bind(this)} />)}
+            />
+            </Col>
+            </FormGroup>
             <FormGroup>
               <ControlLabel>Where is the new event going to be?</ControlLabel>
               <FormControl
-                text="text"
                 placeholder="Enter location"
                 ref={(node) => {this.location = node}}
               />
@@ -215,7 +263,7 @@ class CreateFlyerPage extends React.Component {
 
             <Modal.Body>
                <Modal.Title className='text-center' style={{color: 'blue'}}>
-                  <h2>Your event is successfully created!!!</h2> 
+                  <h2>Your event is successfully created!!!</h2>
                 </Modal.Title>
                <Image src={Logo} style={{marginTop:100}} responsive/>
             </Modal.Body>
