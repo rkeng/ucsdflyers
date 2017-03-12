@@ -20,8 +20,8 @@ import { CreateFlyer } from './DumbComponents/CreateFlyer'
 // import { MyFlyers } from './DumbComponents/MyFlyers'
 import { OrgProfileSelect } from './DumbComponents/OrgProfileSelect'
 import { ProfileSelect } from './DumbComponents/ProfileSelect'
-import { listenToDataAsArray } from './models'
-import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction } from './State/actions'
+import { listenToDataAsArray, listenToData, fetchDataOn, onAuthStateChanged } from './models'
+import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction, LoginUserAction, UserDataUpdateAction } from './State/actions'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 // combine store and react-router history
@@ -39,6 +39,30 @@ listenToDataAsArray('clubs', function(clubs){
 listenToDataAsArray('recruitmentNotes', function(recruitments){
         // console.log('fetched recruitments data')
         store.dispatch(GetRecruitmentsAction(recruitments))
+})
+
+onAuthStateChanged(function(user){
+    if(user){
+        listenToData(`users/${user.uid}`, function(userData){
+            store.dispatch(UserDataUpdateAction(userData))
+        })
+
+        fetchDataOn(`users/${user.uid}`)
+        .then(snap => {
+            var userData = snap.val()
+            const userDataOnAuth = {
+                displayName: user.displayName,
+                email: user.email,
+                emailVerified: user.emailVerified,
+                isAnonymous: user.isAnonymous,
+                photoURL: user.photoURL,
+                providerData: user.providerData,
+                uid: user.uid,
+            }
+            var userDataToState = Object.assign(userDataOnAuth, userData)
+            store.dispatch(LoginUserAction(userDataToState))
+        })
+      }
 })
 
 ReactDOM.render(
