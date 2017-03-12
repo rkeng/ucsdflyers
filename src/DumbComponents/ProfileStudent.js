@@ -4,7 +4,7 @@ import { Row } from 'react-bootstrap'
 import { Flyer } from './Flyer'
 import { ObjectToArray } from '../Commen'
 
-class MyFlyersPage extends React.Component{
+class StudentProfile extends React.Component{
     constructor(props){
         super(props)
         this.state={
@@ -67,5 +67,5 @@ function mapStateToProps(state){
     }
 }
 
-const MyFlyers = connect(mapStateToProps)(MyFlyersPage)
-export { MyFlyers }
+const ProfileStudent = connect(mapStateToProps)(StudentProfile)
+export { ProfileStudent }

@@ -17,8 +17,9 @@ import { About } from './DumbComponents/About'
 import { NewOrganizations } from './DumbComponents/NewOrganizations'
 import { CreateRecruitment } from './DumbComponents/CreateRecruitment'
 import { CreateFlyer } from './DumbComponents/CreateFlyer'
-import { MyFlyers } from './DumbComponents/MyFlyers'
+// import { MyFlyers } from './DumbComponents/MyFlyers'
 import { OrgProfileSelect } from './DumbComponents/OrgProfileSelect'
+import { ProfileSelect } from './DumbComponents/ProfileSelect'
 import { listenToDataAsArray } from './models'
 import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction } from './State/actions'
 import 'react-grid-layout/css/styles.css'
@@ -54,7 +55,7 @@ ReactDOM.render(
                 <Route path='create-flyer' component={CreateFlyer}/>                     {/*org only*/}
                 <Route path='login' component={Login}/>                                  {/*all*/}
                 <Route path='org-login' component={NewOrganizations}/>                   {/*all*/}
-                <Route path='my-flyers' component={MyFlyers}/>                           {/*student only*/}
+                <Route path='profile' component={ProfileSelect}/>                           {/*student only*/}
                 <Route path='org-profile' component={OrgProfileSelect}/>                 {/*org only*/}
             </Route>
             <Route path='*' component={NotFound}/>

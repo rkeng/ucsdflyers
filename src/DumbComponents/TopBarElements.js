@@ -141,7 +141,7 @@ function TopBarRightNoState(props){
     return(
             <Nav pullRight>
                 <NavDropdown id='user-avatar-dropdown' title={<AvatarSelect/>} >
-                        <MenuItem id='my-flyers' onClick={(e) => changeRoute(e, props)}><FaHeartO/>My Flyers</MenuItem>
+                        <MenuItem id='profile' onClick={(e) => changeRoute(e, props)}><FaHeartO/>Profile</MenuItem>
                         <MenuItem id='feedback' onClick={(e) => changeRoute(e, props)}><FaPaperPlaneO/>Contact Us</MenuItem>
                         <MenuItem id={id} onClick={(e) => changeRoute(e, props, uid)}>{icon}{name}</MenuItem>
                 </NavDropdown>
