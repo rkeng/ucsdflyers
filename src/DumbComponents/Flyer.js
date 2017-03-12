@@ -46,12 +46,15 @@ class OneFlyer extends React.Component{
 
     }
 
+
     render() {
+      const newline = <br/>
         const {
             name,
             location,
             description,
             date,
+            time,
             images,
             likes
         } = this.props.flyer
@@ -108,9 +111,13 @@ class OneFlyer extends React.Component{
                     />
                     <CardTitle
                         title={titleAndBtn}
-                        subtitle={`Date: ${date} @${location}`}
                     />
                     <CardText>
+                        Date: {date}  Time: {time}
+                        <br/>
+                        @{location}
+                        <br/>
+                        <br/>
                         {description}
                     </CardText>
                 </Card>

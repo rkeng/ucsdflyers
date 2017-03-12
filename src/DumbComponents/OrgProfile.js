@@ -5,7 +5,7 @@ class OrgProfilePage extends React.Component{
     render(){
         return (
             <div>
-               OrgProfilePage 
+               OrgProfilePage
             </div>
         )
     }
