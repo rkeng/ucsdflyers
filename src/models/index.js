@@ -83,7 +83,7 @@ export function uploadImages(databaseRef, itemID, userID, files) {
             data.update({imageUrl: imageToStorage.snapshot.downloadURL})
       }
       )}).catch(function(error) {
-        console.error('There was an error uploading a file to Firebase: ' + error);
+        // console.error('There was an error uploading a file to Firebase: ' + error);
       });
 
       return true;
@@ -155,8 +155,12 @@ export function signinOrg(provider){
                 const userFieldData = {
                     displayName: user.displayName,
                     isOrg: true,
-                    FlyersCreated: 'N/A',
-                    RecruitmentNotesCreated: 'N/A'
+                    FlyersCreated: {
+                      dummy: 'dummy data to keep the field'
+                    },
+                    RecruitmentNotesCreated: {
+                      dummy: 'dummy data to keep the field'
+                    }
                 }
                 firebase.database().ref('users/' + user.uid).set(userFieldData);
                 firebase.database().ref('organizations/' + user.uid).set(user.uid);

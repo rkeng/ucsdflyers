@@ -23,8 +23,12 @@ const uiConfig = {
                     if(!userData) {    
                         const userFieldData = {
                             displayName: user.displayName,
-                            FlyersLiked: 'N/A',
-                            OrgsFollowed: 'N/A'
+                            FlyersLiked: {
+                                dummy: 'dummy data to keep the field'
+                            },
+                            OrgsFollowed: {
+                                dummy: 'dummy data to keep the field'
+                            }
                         }
                         firebase.database().ref('users/' + user.uid).set(userFieldData);
                         firebase.database().ref('students/' + user.uid).set(user.uid);

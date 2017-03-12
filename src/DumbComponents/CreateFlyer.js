@@ -6,10 +6,11 @@ import { connect } from 'react-redux'
 import DatePicker from 'react-bootstrap-date-picker';
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router';
-import { createNew, getCurrentUser, uploadImages } from '../models/index.js';
+import { createNew, uploadImages, update } from '../models/index.js';
 import { ImageDropzone } from './ImageDropzone.js';
-import { Flyer } from './Flyer'
-import Logo from '../asset/logoHorizontal.png'
+import { Flyer } from './Flyer';
+import Logo from '../asset/logoHorizontal.png';
+import { IDtoObject } from '../Commen/index.js';
 // import { AuthWrapper, ORG } from '../Commen'
 
 
@@ -20,20 +21,18 @@ class CreateFlyerPage extends React.Component {
     this.onCreate = this.onCreate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onClear = this.onClear.bind(this);
-
-
+    this.getFlyer = this.getFlyer.bind(this)
     this.state = {
       active: true,
       success: false,
       show: false,
       likes: 0,
-      go: 0,
       name: "",
       date: new Date().toISOString(),
       time: "",
       description: "",
       location: "",
-      files: "",
+      files: [],
     }
   }
 
@@ -47,70 +46,84 @@ class CreateFlyerPage extends React.Component {
     findDOMNode(this.location).value = "";
   }
 
+
   onPreview(event){
     event.preventDefault();
-    this.setState({ show: true})
-
     const name = findDOMNode(this.name).value;
-    this.setState({ name: name  })
     const time = findDOMNode(this.time).value;
-    this.setState({ time: time })
     const description = findDOMNode(this.description).value;
-    this.setState({ description: description })
     const location = findDOMNode(this.location).value;
-    this.setState({ location: location})
-
+    this.setState({
+      show: true,
+      location: location,
+      name: name,
+      time: time,
+      description: description })
   }
 
   onCreate(event){
     event.preventDefault();
-    getCurrentUser().then((club) => {
-      const clubID = club.uid;
-      const flyer = {
-        name: findDOMNode(this.name).value,
-        time: findDOMNode(this.time).value,
-        description: findDOMNode(this.description).value,
-        location: findDOMNode(this.location).value,
-        date: this.state.date.substring(0,10),
-        active: true,
-        likes: 0,
-      }
+    const { uid } = this.props.user
+    const clubID = uid;
+    const flyer = {
+      name: findDOMNode(this.name).value,
+      time: findDOMNode(this.time).value,
+      description: findDOMNode(this.description).value,
+      location: findDOMNode(this.location).value,
+      date: this.state.date.substring(0,10),
+      active: true,
+      likes: 0,
+      belongsTo: uid
+    }
 
-      var imagesFiles = this.refs.dropzone.state.files
-      if(flyer.name === "")
+    var imagesFiles = this.refs.dropzone.state.files
+    if(flyer.name === "")
       NotificationManager.error('Error', 'Please enter valid name!', 2222);
-      else if(flyer.time === "")
+    else if(flyer.time === "")
       NotificationManager.error('Error', 'Please enter valid time!', 2222);
-      else if(flyer.description === "")
+    else if(flyer.description === "")
       NotificationManager.error('Error', 'Please enter valid description!', 2222);
-      else if(flyer.location === "")
+    else if(flyer.location === "")
       NotificationManager.error('Error', 'Please enter valid location!', 2222);
-      else if(!imagesFiles.length)//file is not uploaded
+    else if(!imagesFiles.length)//file is not uploaded
       NotificationManager.error('Error', 'Please upload at least one image!', 2222);
-      else{
-        this.setState({ success: true})
-        let flyerID = createNew('events',flyer)
-         // image uploading
-        let files = this.refs.dropzone.state.files
-        uploadImages("events", flyerID, clubID, files)
-      }
-  })
+    else{
+
+      this.setState({ success: true})
+      let flyerID = createNew('events',flyer)
+      let flyerIDobj = IDtoObject(flyerID)
+      // let uid = this.props.user.uid
+      update(`users/${uid}/FlyersCreated`, flyerIDobj)
+
+       // image uploading
+       // let files = this.refs.dropzone.state.files
+       uploadImages("events", flyerID, clubID, imagesFiles)
+
+    }
   }
 
 
 
   getFlyer () {
       var ourDate = this.state.date
-      var date = ourDate.substring(0,10)
-      const { name, location, description } = this.state
+      var imagesFiles = []
+      if(this.refs.dropzone && this.refs.dropzone.state.files){
+        imagesFiles = this.refs.dropzone.state.files
+      }
+      var date = (ourDate || new Date().toISOString() ).substring(0,10)
+      const { name, location, description, likes } = this.state
       const flyerData = {
         name: name,
         location: location,
         description: description,
-        date: date
+        date: date,
+        images: imagesFiles,
+        likes: likes,
       }
+      console.log('this.refs?', imagesFiles)
+          // <Col sm={12} md={12}>        
       return(
-          <Col sm={12} md={12}>        
+          <Col sm={12} md={12}>
               <Flyer flyer={flyerData} />
           </Col>
       )
@@ -129,9 +142,10 @@ class CreateFlyerPage extends React.Component {
 
   handleChange(value){
     this.setState({
-      date:value
+      date: value,
     })
   }
+//      formattedValue: (value || new Date().toISOString() ).substring(0,10)
 
 
   render() {
@@ -154,7 +168,7 @@ class CreateFlyerPage extends React.Component {
             </FormGroup>
 
             <FormGroup>
-              <ControlLabel>When will it take place</ControlLabel>
+              <ControlLabel>When will it take place?</ControlLabel>
               <DatePicker onChange={this.handleChange} value={this.state.date} />
               <ControlLabel>Time</ControlLabel>
 
@@ -168,7 +182,7 @@ class CreateFlyerPage extends React.Component {
             <FormGroup>
               <ControlLabel>Where is the new event going to be?</ControlLabel>
               <FormControl
-                text="text"
+                type="text"
                 placeholder="Enter location"
                 ref={(node) => {this.location = node}}
               />
@@ -215,7 +229,7 @@ class CreateFlyerPage extends React.Component {
 
             <Modal.Body>
                <Modal.Title className='text-center' style={{color: 'blue'}}>
-                  <h2>Your event is successfully created!!!</h2> 
+                  <div>Your flyer was successfully created!!!</div>
                 </Modal.Title>
                <Image src={Logo} style={{marginTop:100}} responsive/>
             </Modal.Body>
@@ -240,10 +254,6 @@ class CreateFlyerPage extends React.Component {
 
         </Col>
       </Row>
-
-      <br/>
-      <br/>
-      <br/>
 
       <NotificationContainer/>
 

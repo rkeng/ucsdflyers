@@ -1,13 +1,13 @@
 import React from 'react'
 import { Image, Col} from 'react-bootstrap'
-// import RED from '../asset/RED.jpg'
 import AnimakitRotator from 'animakit-rotator';
 
 const members = [
     {
       name: 'Xiqiang Lin',
       role: 'Project Manager',
-      intro: 'Hello World!',
+      intro: 'Stay awsome, always.',
+      email: 'xil307@ucsd.edu',
       image: require("../asset/xiqiang.jpg"),
       color:'#000000'
     },
@@ -15,7 +15,8 @@ const members = [
     {
       name: 'Sheng Zhang',
       role: 'Bussiness Analyst',
-      intro: 'Hello World!',
+      intro: 'If you can dream it, you can do it',
+      email: 'shz080@ucsd.edu',
       image: require("../asset/sheng.jpg"),
       color:'#5B2C6F'
     },
@@ -23,7 +24,8 @@ const members = [
     {
       name: 'Ryan Keng',
       role: 'Senior System Analyst',
-      intro: 'Hello World!',
+      intro: 'Genius is one percent inspiration and ninety-nine percent perspiration.',
+      email: 'rkeng@ucsd.edu',
       image: require("../asset/ryan.jpg"),
       color:'#000080'
     },
@@ -31,7 +33,8 @@ const members = [
     {
       name: 'Yuqian Cheng',
       role: 'Software Architect',
-      intro: 'Hello World!',
+      intro: 'Every end is a new beginning',
+      email: 'yuc259@ucsd.edu',
       image: require("../asset/yuqian.jpg"),
       color: '#E74C3C'
     },
@@ -39,7 +42,8 @@ const members = [
     {
       name: 'Aravind Sridhar',
       role: 'Software Development Lead',
-      intro: 'Hello World!',
+      intro: 'I like to eat with two spoons',
+      email: 'aravindsridhar66@gmail.com',
       image: require("../asset/aravind.jpg"),
       color: '#2E86C1'
     },
@@ -47,7 +51,8 @@ const members = [
     {
       name: 'Haoming Wang',
       role: 'Algorithm Specialist',
-      intro: 'Hello Wolrd!',
+      intro: 'Stay hungry. Stay foolish(literally).',
+      email: 'haw123@ucsd.edu',
       image: require("../asset/haoming.jpg"),
       color:'#008080'
     },
@@ -55,7 +60,7 @@ const members = [
     {
       name: 'Vanna Phong',
       role: 'Database Specialist',
-      intro: 'Hello World!',
+      intro: 'I’m just gonna be me',
       image: require("../asset/vanna.jpg"),
       color: '#F39C12'  
     },
@@ -63,7 +68,8 @@ const members = [
     {
       name: 'Ying Wu',
       role: 'Quality Assurance Lead',
-      intro: 'Hello World!',
+      intro: 'I only have dream when I sleep',
+      email: 'yiw273@ucsd.edu',
       image: require("../asset/ying.jpg"),
       color: '#F08080'
     },
@@ -72,6 +78,7 @@ const members = [
       name: 'Jialin Lou',
       role: 'User Interface Specialist',
       intro: 'Hello World!',
+      email: 'jil570@ucsd.edu',
       image: require("../asset/jialin.jpg"),
       color: '#27AE60'
     },
@@ -80,6 +87,7 @@ const members = [
       name: 'Xinrui Zhou',
       role: 'User Interface Specialist',
       intro: 'Hello World!',
+      email: 'x9zhou@ucsd.edu',
       image: require("../asset/arow.jpg"),
       color:'#581845'
     },
@@ -96,6 +104,9 @@ class InfoCard extends React.Component{
 
     changeFace(event) {
        if(this.state.index === "image"){
+         this.setState({index:"name"});
+       }
+       else if(this.state.index === "name"){
          this.setState({index:"role"});
        }
        else if(this.state.index === "role"){
@@ -107,26 +118,38 @@ class InfoCard extends React.Component{
 
     }
    render(){
-      const { role, intro, image, color} = this.props.member
-      return(
+          const { name, role, intro, email, image, color} = this.props.member
 
-        <Col smOffset={1} sm={11} mdOffset={2} md={3}>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <div className="text-center">
-            <AnimakitRotator side={this.state.index} background={color} shadow>
-              <Image key="image" onClick={this.changeFace.bind(this)} width={300} height={300} alt="" src={image} /><br/>
-              <div key="role" onClick={this.changeFace.bind(this)}>
-                <h1>{name}</h1> <p style={{fontSize:'small'}}>{role}</p>
-              </div>
-              <div key="intro" onClick={this.changeFace.bind(this)}>
-                <p>{intro}</p>
-              </div>
-            </AnimakitRotator>
-          </div>
-        </Col>
+      return(
+          <Col xsOffset={1} xs={11} smOffset={1} sm={11} mdOffset={2} md={3}>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+      
+            <div className="text-center" style={{color: 'white'}}>
+              <AnimakitRotator side={this.state.index} background={color} shadow>
+                <Image key="image" onClick={this.changeFace.bind(this)} width={300} height={300} alt="" src={image} /><br/>
+                <div key="name" onClick={this.changeFace.bind(this)}>
+                  <h3> {name} </h3>
+                </div>
+                <div key="role" onClick={this.changeFace.bind(this)}>
+
+                  <h4>{role}</h4>
+
+                </div>
+                <div key="intro" onClick={this.changeFace.bind(this)}>
+                  <p>{intro}</p>
+                  <br/>
+                  <p>{email}</p>
+                </div>
+              </AnimakitRotator>
+            </div>
+          </Col>
 
       )
    }
