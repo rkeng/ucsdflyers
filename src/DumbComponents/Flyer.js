@@ -100,7 +100,7 @@ class OneFlyer extends React.Component{
 
         //
         return(
-            <Col sm={12} md={3} >
+            <Col xs={12} sm={12} md={3} >
                 <Card raised={true} className='raised'>
                     <CardMedia
                         aspectRatio="wide"
