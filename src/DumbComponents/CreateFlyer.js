@@ -11,6 +11,10 @@ import { ImageDropzone } from './ImageDropzone.js';
 import { Flyer } from './Flyer';
 import Logo from '../asset/logoHorizontal.png';
 import { IDtoObject } from '../Commen/index.js';
+import TimePicker from 'react-times';
+import 'react-times/css/classic/default.css';
+
+
 // import { AuthWrapper, ORG } from '../Commen'
 
 
@@ -33,15 +37,17 @@ class CreateFlyerPage extends React.Component {
       description: "",
       location: "",
       files: [],
+      minute: "",
+      hour: "",
+      timefocus: false,
     }
   }
 
   onClear(event){
     event.preventDefault();
-    this.setState({ success: false})
+    this.setState({ success: false, time: ""})
 
     findDOMNode(this.name).value = "";
-    findDOMNode(this.time).value = "";
     findDOMNode(this.description).value = "";
     findDOMNode(this.location).value = "";
   }
@@ -50,30 +56,39 @@ class CreateFlyerPage extends React.Component {
   onPreview(event){
     event.preventDefault();
     const name = findDOMNode(this.name).value;
-    const time = findDOMNode(this.time).value;
     const description = findDOMNode(this.description).value;
     const location = findDOMNode(this.location).value;
+    var imagesFiles = []
+    if(this.refs.dropzone && this.refs.dropzone.state.files){
+      imagesFiles = this.refs.dropzone.state.files
+    }
+    if(!imagesFiles.length)//file is not uploaded
+     NotificationManager.error('Error', 'Please upload at least one image to preview', 2222);
+     else{
     this.setState({
       show: true,
       location: location,
       name: name,
-      time: time,
-      description: description })
+      description: description,
+      files: imagesFiles
+    })
+   }
   }
 
   onCreate(event){
     event.preventDefault();
     const { uid } = this.props.user
     const clubID = uid;
+    const { time } = this.state
     const flyer = {
       name: findDOMNode(this.name).value,
-      time: findDOMNode(this.time).value,
       description: findDOMNode(this.description).value,
       location: findDOMNode(this.location).value,
       date: this.state.date.substring(0,10),
       active: true,
       likes: 0,
-      belongsTo: uid
+      belongsTo: uid,
+      time: time
     }
 
     var imagesFiles = this.refs.dropzone.state.files
@@ -102,32 +117,56 @@ class CreateFlyerPage extends React.Component {
     }
   }
 
+  onTimeChange(newtime) {
+    if(this.state.timefocus){
+      const [ hour, minute ] = newtime.split(':');
+      this.setState({hour, minute, time:newtime})
+    }
+    else if(this.state.time2focus){
+      const [ hour, minute ] = newtime.split(':');
+      this.setState({hour, minute, time2:newtime})
+    }
+  }
+
+  onFocusChange(newfocus) {
+    this.setState({timefocus:newfocus})
+  }
+  onFocusChange2(newfocus) {
+    this.setState({time2focus:newfocus})
+  }
+  timeTrigger(event){
+    const focused = this.state.timefocus;
+    this.setState({ timefocus: !focused });
+  }
+
+  timeTrigger2(event){
+    const focused = this.state.time2focus;
+    this.setState({ time2focus: !focused });
+  }
 
 
   getFlyer () {
       var ourDate = this.state.date
-      var imagesFiles = []
-      if(this.refs.dropzone && this.refs.dropzone.state.files){
-        imagesFiles = this.refs.dropzone.state.files
-      }
       var date = (ourDate || new Date().toISOString() ).substring(0,10)
-      const { name, location, description, likes } = this.state
+      const { name, location, description, likes, files, time } = this.state
+
       const flyerData = {
         name: name,
         location: location,
         description: description,
         date: date,
-        images: imagesFiles,
+        time: time,
+        images: files,
         likes: likes,
       }
-      console.log('this.refs?', imagesFiles)
-          // <Col sm={12} md={12}>        
-      return(
+      //console.log('this.refs?', imagesFiles)
+          // <Col sm={12} md={12}>
+        return(
           <Col sm={12} md={12}>
               <Flyer flyer={flyerData} />
           </Col>
-      )
-  }
+        )
+    }
         // <Panel key={this.state.name} bsStyle='success'
         //     header={this.state.name}>
         //   <h3>{this.state.name}</h3>
@@ -161,11 +200,14 @@ class CreateFlyerPage extends React.Component {
 
     return (
       <Grid>
-       <Row className="create-flyer">
+        <Row className="header">
           <Col sm={12} md={8} mdOffset={2}>
 
           <PageHeader>Create Event <small>Name of club</small></PageHeader>
-
+          </Col>
+        </Row>
+        <Row className="name">
+          <Col sm={12} md={8} mdOffset={2}>
           <Form>
             <FormGroup>
               <ControlLabel>What is the name of your upcoming event?</ControlLabel>
@@ -176,19 +218,38 @@ class CreateFlyerPage extends React.Component {
                 ref={(node) => {this.name = node}}
               />
             </FormGroup>
-
-            <FormGroup>
+          </Form>
+          </Col>
+        </Row>
+        <Row className="time">
+          <Col md={4} mdOffset={2}>
+            <FormGroup >
               <ControlLabel>When will it take place?</ControlLabel>
               <DatePicker onChange={this.handleChange} value={this.state.date} />
-              <ControlLabel>Time</ControlLabel>
-
-              <FormControl
-                type="text"
-                placeholder="Enter time"
-                ref={(node) => {this.time = node}}
-              />
             </FormGroup>
-
+          </Col>
+          <Col md={4} mdOffset={0.5}>
+            <FormGroup>
+              <ControlLabel>Time</ControlLabel>
+                <TimePicker
+                  theme="classic"
+                  time={this.state.time}
+                  onFocusChange={this.onFocusChange.bind(this)}
+                  onTimeChange={this.onTimeChange.bind(this)}
+                  focused={this.state.timefocus}
+                  trigger={(
+                    <FormControl
+                      placeHolder="Please choose time"
+                      value={this.state.time} onClick={this.timeTrigger.bind(this)}
+                    />)}
+                />
+            </FormGroup>
+          </Col>
+        </Row>
+        <br/>
+        <Row className="location">
+          <Col sm={12} md={8} mdOffset={2}>
+          <Form>
             <FormGroup>
               <ControlLabel>Where is the new event going to be?</ControlLabel>
               <FormControl

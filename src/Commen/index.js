@@ -18,6 +18,15 @@ function SearchBar(props){
         </ColCenter>
     )
 }
+export function compareTitles(a,b){
+  var d1 = a.name
+  var d2 = b.name
+  if(d1 < d2)
+    return -1;
+  if(d1 > d2)
+    return 1;
+  return 0;
+}
 
 export function compareDates(a,b){
      var d1 = stringtoDate(a.date)
@@ -30,6 +39,60 @@ export function compareDates(a,b){
      return 0;
 }
 
+export function compareDatesReverse(a,b){
+     var d1 = stringtoDate(a.date)
+     var d2 = stringtoDate(b.date)
+    // console.log(d1 , d2)
+     if (d1 > d2)
+       return -1;
+     if (d1 < d2)
+       return 1;
+     return 0;
+}
+
+export function compareDueDates(a,b){
+     var d1 = stringtoDate(a.dueDate)
+     var d2 = stringtoDate(b.dueDate)
+    // console.log(d1 , d2)
+     if (d1 < d2)
+       return -1;
+     if (d1 > d2)
+       return 1;
+     return 0;
+}
+
+export function compareDueDatesReverse(a,b){
+     var d1 = stringtoDate(a.dueDate)
+     var d2 = stringtoDate(b.dueDate)
+    // console.log(d1 , d2)
+     if (d1 > d2)
+       return -1;
+     if (d1 < d2)
+       return 1;
+     return 0;
+}
+
+export function compareClubNames(a,b){
+    var d1 = a.clubName
+    var d2 = b.clubName
+    if (d1 < d2)
+      return -1;
+    if (d1 > d2)
+      return 1;
+    return 0;
+}
+
+export function compareSeekings(a,b){
+    var d1 = a.seeking
+    var d2 = b.seeking
+    if (d1 < d2)
+      return -1;
+    if (d1 > d2)
+      return 1;
+    return 0;
+}
+
+
 export function compareClubs(a,b){
     var d1 = a.name
     var d2 = b.name
@@ -39,6 +102,7 @@ export function compareClubs(a,b){
       return 1;
     return 0;
 }
+
 export function compareLikes(a,b){
 //    console.log(a.name , a.likes, b.name, b.likes)
     var d1 = a.likes

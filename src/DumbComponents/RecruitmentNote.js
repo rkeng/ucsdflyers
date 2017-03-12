@@ -40,6 +40,7 @@ class OneRecruitmentNote extends React.Component {
       }
       const deleteBtn = (
         <div>
+            {clubName}
             <span className='pull-right'>
                 <Button onClick={this.onDelete} bsStyle={'danger'}>
                     Delete
@@ -49,7 +50,7 @@ class OneRecruitmentNote extends React.Component {
       )
 
       return (
-            <Panel bsStyle='info' header={clubName}>
+            <Panel bsStyle='info' header={displayDelete ? deleteBtn : clubName}>
               <ColCenter>
                   <h5><FaStreetView/> {seeking}</h5>
                   <h5><FaCalendar/> Due date: {dueDate} <br/></h5>
@@ -58,7 +59,6 @@ class OneRecruitmentNote extends React.Component {
                   <p>{description}</p>
 
                   <Link className='btn btn-success'>Apply Now!</Link>
-                  {displayDelete ? deleteBtn : null}
               </ColCenter>
             </Panel>
         )

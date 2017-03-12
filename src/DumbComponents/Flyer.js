@@ -62,6 +62,7 @@ class OneFlyer extends React.Component{
 
     }
 
+
     render() {
         const { FlyersCreated } = this.props.user
         const {
@@ -69,6 +70,7 @@ class OneFlyer extends React.Component{
             location,
             description,
             date,
+            time,
             images,
             likes,
             id
@@ -97,6 +99,7 @@ class OneFlyer extends React.Component{
                     {CarouselItems}
                 </Carousel>
             )
+          
         }
 
         //prepare the liked state of the button
@@ -131,7 +134,7 @@ class OneFlyer extends React.Component{
                 </span>
             </div>
         )
-        //
+        
         return(
             <Col xs={12} sm={12} md={3} >
                 <Card raised={true} className='raised'>
@@ -144,6 +147,11 @@ class OneFlyer extends React.Component{
                         subtitle={`Date: ${date} @${location}`}
                     />
                     <CardText>
+                        Date: {date}  Time: {time}
+                        <br/>
+                        @{location}
+                        <br/>
+                        <br/>
                         {description}
                     </CardText>
                 </Card>
