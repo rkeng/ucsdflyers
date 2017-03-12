@@ -1,23 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Row } from 'react-bootstrap'
 import { Flyer } from './Flyer'
 import { ObjectToArray } from '../Commen'
 
-//You should be able to access user info through this.props.user
-//That is just static/local info. If you need to update user info on firebase, you need to
-// use functions in models/index.js
-
-//To center the UI, you can use <ColCenter>  ... </ColCenter>, 
-//It is avaiable in Commen:
-//import { ColCenter } from '../Commen'
 class MyFlyersPage extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+            listOfFlyersLiked: [],
+            listOfOrgsFollowed: []
+        }
+    }
 
-    render(){
-
+    componentWillMount(){
         const { FlyersLiked } = this.props.user
-        //flyer array
+        
+        //prepare user liked flyers
         let flyerArray = ObjectToArray(FlyersLiked)
-        console.log('this.props', this.props)
         let likedFlyers = (this.props.flyers || []).filter(
             (flyer) => {
                return flyerArray.includes(flyer.id)
@@ -29,9 +29,31 @@ class MyFlyersPage extends React.Component{
             }
         )
 
+        //prepare user followed orgs:
+
+
+        //put data upto state
+        this.setState({
+            listOfFlyersLiked: listOfFlyersLiked
+            //listOfOrgsFollowed: 
+        })
+    }
+
+    render(){
+
+
         return(
-            <div>
-                {listOfFlyersLiked}
+            <div className='container'>
+                <Row>
+                    <h1> My Liked Flyers</h1>
+                    <hr/>
+                    {this.state.listOfFlyersLiked}
+                </Row>
+                <Row>
+                    <h1> My Followed Organizations</h1>
+                    <hr/>
+                    {/*listOfOrgsLiked goes here*/}
+                </Row>
             </div>
         )
     }
@@ -40,7 +62,8 @@ class MyFlyersPage extends React.Component{
 function mapStateToProps(state){
     return{
         user: state.user,
-        flyers: state.data.events
+        flyers: state.data.events,
+        orgs: state.data.orgs
     }
 }
 

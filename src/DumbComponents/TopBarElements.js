@@ -83,13 +83,13 @@ function TopBarIcon(props){
     return (
             <Nav>   
                 {topbarItemsToRender}
+                <button onClick={() => {
+                    console.log('state?', props.state)
+                }}> show state</button>
             </Nav>
     )
 }
 /* use this print state; only for development purpose
-                <button onClick={() => {
-                    console.log('state?', props.state)
-                }}> show state</button>
 */
 
 
