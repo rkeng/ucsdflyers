@@ -1,5 +1,5 @@
 import React from 'react'
-import { Carousel, Col, Image, Button, Row } from 'react-bootstrap'
+import { Carousel, Col, Image, Button } from 'react-bootstrap'
 import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
 import { remove, update } from '../models'
 import { ObjectToArray } from '../Commen'

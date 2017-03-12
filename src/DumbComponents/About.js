@@ -1,6 +1,5 @@
 import React from 'react'
 import { Image, Col} from 'react-bootstrap'
-import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
 import AnimakitRotator from 'animakit-rotator';
 
 const members = [

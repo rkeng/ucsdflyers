@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import DatePicker from 'react-bootstrap-date-picker';
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router';
-import { createNew, getCurrentUser, uploadImages, update, set } from '../models/index.js';
+import { createNew, uploadImages, update } from '../models/index.js';
 import { ImageDropzone } from './ImageDropzone.js';
 import { Flyer } from './Flyer';
 import Logo from '../asset/logoHorizontal.png';
@@ -111,7 +111,7 @@ class CreateFlyerPage extends React.Component {
         imagesFiles = this.refs.dropzone.state.files
       }
       var date = (ourDate || new Date().toISOString() ).substring(0,10)
-      const { name, location, description, files, likes } = this.state
+      const { name, location, description, likes } = this.state
       const flyerData = {
         name: name,
         location: location,
