@@ -1,7 +1,7 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
 import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Image } from 'react-bootstrap'
-import { FaNewspaperO, FaGroup, FaStickyNoteO, FaChild, FaSignIn, FaSignOut, FaHeartO } from 'react-icons/lib/fa'
+import { FaNewspaperO, FaGroup, FaStickyNoteO, FaChild, FaSignIn, FaSignOut, FaHeartO, FaPaperPlaneO } from 'react-icons/lib/fa'
 import { connect } from 'react-redux'
 import { LogoutUserAction } from '../State/actions'
 import { signOutUser, detachListenerOn } from '../models'
@@ -46,7 +46,7 @@ function TopBarItem(props){
     var icon = props.icon
     return (
         <NavItem {...props} className='topbar-items' onClick={(e) => changeRoute(e, props)}>
-            {icon} 
+            {icon}
             {name}
         </NavItem>
     )
@@ -77,11 +77,11 @@ function TopBarIcon(props){
             <TopBarItem id='recruitments' key={2} name='RECRUITMENTS' icon={<FaStickyNoteO />} />,
             <TopBarItem id='create-flyer' key={3} name='Create Flyer' icon={<FaNewspaperO />} />,
             <TopBarItem id='create-recruitment' key={4} name='Create Recruitment' icon={<FaGroup />} />,
-            <TopBarItem id='about' key={5} name='ABOUT' icon={<FaChild />} />,
+            <TopBarItem id='about' key={5} name='ABOUT' icon={<FaChild />} />
         ]
     }
     return (
-            <Nav>   
+            <Nav>
                 {topbarItemsToRender}
             </Nav>
     )
@@ -142,6 +142,7 @@ function TopBarRightNoState(props){
             <Nav pullRight>
                 <NavDropdown id='user-avatar-dropdown' title={<AvatarSelect/>} >
                         <MenuItem id='my-flyers' onClick={(e) => changeRoute(e, props)}><FaHeartO/>My Flyers</MenuItem>
+                        <MenuItem id='feedback' onClick={(e) => changeRoute(e, props)}><FaPaperPlaneO/>Contact Us</MenuItem>
                         <MenuItem id={id} onClick={(e) => changeRoute(e, props, uid)}>{icon}{name}</MenuItem>
                 </NavDropdown>
             </Nav>

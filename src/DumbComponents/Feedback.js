@@ -1,58 +1,66 @@
 import React from 'react'
-import { Form, FormGroup, FormControl, ControlLabel, PageHeader, HelpBlock, Col, Button } from 'react-bootstrap'
-import { connect } from 'react-redux'
+import { Form, FormGroup, FormControl, ControlLabel, PageHeader, Col, Button } from 'react-bootstrap'
+// import { connect } from 'react-redux'
+import { getCurrentUser, createNew } from '../models/index.js'
 
-class FeedbackPage extends React.Component {
+export class Feedback extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { email: ''}
-    this.onEmailChange = this.onEmailChange.bind(this)
+    this.state = { submitted: false }
+    getCurrentUser().then((user) => {
+      this.setState({uid: user.uid})
+      console.log(this.state)
+    })
+    this.onButtonClick = this.onButtonClick.bind(this)
+    this.feedbackChange = this.feedbackChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
-  validateEmail () {
-    const length = this.state.email.length
-    if (length > 10) return 'success'
-    else if (length > 5) return 'warning'
-    else if (length > 0) return 'error'
+  onButtonClick(e) {
+    // e.preventDefault()
   }
 
-  onEmailChange (e) {
-    this.setState({ value: e.target.value })
+  feedbackChange(e) {
+    let that = this
+    that.setState({feedback: e.target.value})
+  }
+
+
+  onSubmit(e) {
+    if (!this.state.uid) {
+      alert("You must be logged in.")
+    } else if (!this.state.feedback) {
+      alert("You cannot send a blank message.")
+    } else {
+      let feedback = {
+        userId: this.state.uid,
+        feedback: this.state.feedback
+      }
+      createNew('feedback', feedback)
+      let that = this
+      that.setState({submitted: false})
+
+    }
+    console.log(this.state)
+    return false
   }
 
   render () {
+    var submitted = (<div className="well bg-success">Submitted.</div>)
     return (
             <div className="container">
-                <PageHeader>Feedback</PageHeader>
+                <PageHeader>Contact Us <small>Have comments or concerns? Send us feedback. </small></PageHeader>
+                {this.state.submitted ? submitted : null}
                 <Col sm={12}>
-                <Form horizontal>
-                    <FormGroup
-                        controlId="email"
-                        validationState={this.validateEmail()}>
-
-                        <Col componentClass={ControlLabel} sm={2}>
-                            <ControlLabel>E-mail Address</ControlLabel>
-                        </Col>
-                        <Col sm={10}>
-                            <FormControl
-                                type="email"
-                                value={this.state.email}
-                                onChange={this.handleChange}
-                            />
-                            <HelpBlock className="small text-muted">
-                                Validation is based on string length. TODO: E-mail validation function
-                            </HelpBlock>
-                        </Col>
-                        <FormControl.Feedback/>
-                    </FormGroup>
+                <Form horizontal onSubmit={this.onSubmit}>
                     <FormGroup>
                         <Col componentClass={ControlLabel} sm={2}>
-                            Feedback
+                            Message
                         </Col>
                         <Col sm={10}>
                             <FormControl
                                 componentClass="textarea"
-                                value={this.state.feedback}
+                                onChange={this.feedbackChange}
                                 placeholder="Write your feedback to us here."
                                 style={{height: 400}}
                             />
@@ -61,7 +69,7 @@ class FeedbackPage extends React.Component {
                     </FormGroup>
 
                     <FormGroup className="col-sm-12 text-right">
-                        <Button type="submit">Send</Button>
+                        <Button type="submit" onClick={this.onButtonClick}>Send</Button>
                     </FormGroup>
                 </Form>
                 </Col>
@@ -69,7 +77,3 @@ class FeedbackPage extends React.Component {
     )
   }
 }
-
-const Feedback = connect()(FeedbackPage)
-
-export { Feedback }
