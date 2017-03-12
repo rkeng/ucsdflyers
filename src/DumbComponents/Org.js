@@ -57,6 +57,15 @@ class OneOrg extends React.Component {
     }
   }
 
+  componentWillMount () {
+    if(this.studentUserUnfollowedOrg()){
+      this.setState({ followed: false })
+    }
+    if(this.studentUserFollowedOrg()){
+      this.setState({ followed: true })
+    }
+  }
+
   render () {
 
   	const {
