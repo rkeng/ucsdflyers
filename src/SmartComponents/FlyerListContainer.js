@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
 import { connect } from 'react-redux'
-import { SearchBar, compareDates } from '../Commen'
+import { SearchBar, compareDates, compareLikes } from '../Commen'
 import { Grid, Row, Col, DropdownButton, MenuItem, InputGroup } from 'react-bootstrap';
 
 class FlyerListContainerPage extends React.Component {
@@ -10,10 +10,12 @@ class FlyerListContainerPage extends React.Component {
     super(props)
     this.state = {
       sortDate: true,
-      search: ''
+      search: '',
+      sortLike: false
     }
     this.dateSort = this.dateSort.bind(this)
     this.filterSearch = this.filterSearch.bind(this)
+    this.likeSort = this.likeSort.bind(this)
   }
 
   filterSearch(event){
@@ -23,7 +25,16 @@ class FlyerListContainerPage extends React.Component {
   dateSort(e, time) {
       e.preventDefault();
       this.setState({
-        sortDate: !this.state.sortDate
+        sortDate: !this.state.sortDate,
+        sortLike: false
+      })
+  }
+
+  likeSort(e){
+      e.preventDefault();
+      this.setState({
+          sortLike: true,
+          sortDate: false
       })
   }
 
@@ -37,7 +48,12 @@ class FlyerListContainerPage extends React.Component {
     )
     if(this.state.sortDate){
       filteredFlyers.sort(compareDates)
-    } else {
+  } else if (this.state.sortLike) {
+      console.log(filteredFlyers)
+      filteredFlyers.sort(compareLikes)
+      console.log(filteredFlyers)
+  }
+    else{
       filteredFlyers.sort(!compareDates)
     }
     const sortByWhat = this.state.sortDate ? 'past' : 'recent'
@@ -54,6 +70,7 @@ class FlyerListContainerPage extends React.Component {
                 title="Sort By"
               >
                 <MenuItem key="1" onClick={(e)=>this.dateSort(e, {sortByWhat})}>{sortBtnName}</MenuItem>
+                <MenuItem key="2" onClick={(e)=>this.likeSort(e)}>Popularity</MenuItem>
               </DropdownButton>
             </SearchBar>
          </Row>

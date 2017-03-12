@@ -39,6 +39,16 @@ export function compareClubs(a,b){
       return 1;
     return 0;
 }
+export function compareLikes(a,b){
+//    console.log(a.name , a.likes, b.name, b.likes)
+    var d1 = a.likes
+    var d2 = b.likes
+    if (d1 > d2)
+      return -1;
+    if (d1 < d2)
+      return 1;
+    return 0;
+}
 
 export function stringtoDate(input){
     var parts = input.split('-');
@@ -58,4 +68,4 @@ export function ObjectToArray(object){
 
 
 export { ColCenter, SearchBar }
-export { AuthWrapper, STUDENT, GUEST, ORG } 
+export { AuthWrapper, STUDENT, GUEST, ORG }
