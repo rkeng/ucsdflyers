@@ -2,7 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Row } from 'react-bootstrap'
 import { Flyer } from './Flyer'
+import { Org } from './Org'
 import { ObjectToArray } from '../Commen'
+import { Panel } from 'react-bootstrap';
 
 class StudentProfile extends React.Component{
     constructor(props){
@@ -14,7 +16,7 @@ class StudentProfile extends React.Component{
     }
 
     componentWillMount(){
-        const { FlyersLiked } = this.props.user
+        const { FlyersLiked, OrgsFollowed } = this.props.user
         
         //prepare user liked flyers
         let flyerArray = ObjectToArray(FlyersLiked)
@@ -30,12 +32,24 @@ class StudentProfile extends React.Component{
         )
 
         //prepare user followed orgs:
-
+        let orgArray = ObjectToArray(OrgsFollowed)
+        let followedOrgs = (this.props.orgs || []).filter(
+            (org) => {
+                return orgArray.includes(org.id)
+            }
+        )
+        var listOfOrgsFollowed = followedOrgs.map(
+            (org, index) => (
+                <Panel header={org.name} eventKey={index} key={index}>
+                    <Org key={index} org={org}/>
+                </Panel>
+            )
+        )
 
         //put data upto state
         this.setState({
-            listOfFlyersLiked: listOfFlyersLiked
-            //listOfOrgsFollowed: 
+            listOfFlyersLiked: listOfFlyersLiked,
+            listOfOrgsFollowed: listOfOrgsFollowed
         })
     }
 
@@ -52,7 +66,7 @@ class StudentProfile extends React.Component{
                 <Row>
                     <h1> My Followed Organizations</h1>
                     <hr/>
-                    {/*listOfOrgsLiked goes here*/}
+                    {this.state.listOfOrgsFollowed}
                 </Row>
             </div>
         )
