@@ -68,7 +68,7 @@ function TopBarIcon(props){
             <TopBarItem id='events' key={0} name='EVENTS' icon={<FaNewspaperO />} />,
             <TopBarItem id='org' key={1} name='ORGANIZATIONS' icon={<FaGroup />} />,
             <TopBarItem id='recruitments' key={2} name='RECRUITMENTS' icon={<FaStickyNoteO />} />,
-            <TopBarItem id='about' key={3} name='ABOUT' icon={<FaChild />} /> 
+            <TopBarItem id='about' key={3} name='ABOUT' icon={<FaChild />} />
         ]
     if(props.user.isOrg){
         topbarItemsToRender = [
