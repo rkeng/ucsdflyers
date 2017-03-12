@@ -1,16 +1,18 @@
 import React from 'react'
 import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal } from 'react-bootstrap'
 import { Button, ButtonToolbar } from 'react-bootstrap';
+import { connect } from 'react-redux'
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
-import { createNew } from '../models/index.js';
+import { createNew, update } from '../models/index.js';
 import { RecruitmentNote } from './RecruitmentNote.js';
+import { IDtoObject } from '../Commen/index.js';
 
 const buttonStyles = {maxWidth: 800}
 const textStyles={height:200}
 
-class CreateRecruitment extends React.Component {
+class CreateRecruitmentPage extends React.Component {
   constructor (props) {
     super(props)
     this.onPreview = this.onPreview.bind(this);
@@ -47,28 +49,28 @@ class CreateRecruitment extends React.Component {
 
   onCreate(event){
     event.preventDefault();
-      const note = {
-        clubName: findDOMNode(this.clubName).value,
-        seeking: findDOMNode(this.seeking).value,
-        email: findDOMNode(this.email).value,
-        dueDate: this.state.dueDate.substring(0,10),
-        description: findDOMNode(this.description).value
-      }
-      if(note.clubName === "")
-        NotificationManager.error('Error', 'Please enter valid name!', 2222);
-      else if(note.seeking === "")
-        NotificationManager.error('Error', 'Please enter valid position!', 2222);
-      else if(note.description === "")
-        NotificationManager.error('Error', 'Please enter valid description!', 2222);
-      else if(note.email === "")
-        NotificationManager.error('Error', 'Please enter valid email!', 2222);
-      else{
-            createNew('recruitmentNotes',note)
-            /*findDOMNode(this.name).value = "";
-            findDOMNode(this.email).value = "";
-            findDOMNode(this.description).value = "";
-            findDOMNode(this.seeking).value = "";*/
-      }
+    const { uid } = this.props.user
+    const note = {
+      clubName: findDOMNode(this.clubName).value,
+      seeking: findDOMNode(this.seeking).value,
+      email: findDOMNode(this.email).value,
+      dueDate: this.state.dueDate.substring(0,10),
+      description: findDOMNode(this.description).value,
+      belongsTo: uid
+    }
+    if(note.clubName === "")
+      NotificationManager.error('Error', 'Please enter valid name!', 2222);
+    else if(note.seeking === "")
+      NotificationManager.error('Error', 'Please enter valid position!', 2222);
+    else if(note.description === "")
+      NotificationManager.error('Error', 'Please enter valid description!', 2222);
+    else if(note.email === "")
+      NotificationManager.error('Error', 'Please enter valid email!', 2222);
+    else{
+          let noteID = createNew('recruitmentNotes',note)
+          let noteIDobj = IDtoObject(noteID)
+          update(`users/${uid}/RecruitmentNotesCreated`, noteIDobj)
+    }
   }
 
   getRecruitments () {
@@ -162,4 +164,10 @@ class CreateRecruitment extends React.Component {
   }
 }
 
+function mapStateToProps(state){
+  return{
+    user: state.user
+  }
+}
+const CreateRecruitment = connect(mapStateToProps)(CreateRecruitmentPage)
 export { CreateRecruitment }
