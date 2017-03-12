@@ -21,6 +21,9 @@ import { MyFlyers } from './DumbComponents/MyFlyers'
 import { OrgProfileSelect } from './DumbComponents/OrgProfileSelect'
 import { listenToDataAsArray } from './models'
 import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction } from './State/actions'
+import MessyLayout from './DumbComponents/GridTest'
+import 'react-grid-layout/css/styles.css'
+import 'react-resizable/css/styles.css'
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -54,6 +57,7 @@ ReactDOM.render(
                 <Route path='org-login' component={NewOrganizations}/>                   {/*all*/}
                 <Route path='my-flyers' component={MyFlyers}/>                           {/*student only*/}
                 <Route path='org-profile' component={OrgProfileSelect}/>                 {/*org only*/}
+                <Route path='grid' component={MessyLayout}/>
             </Route>
             <Route path='*' component={NotFound}/>
         </Router>

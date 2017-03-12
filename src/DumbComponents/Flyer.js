@@ -97,22 +97,21 @@ class OneFlyer extends React.Component{
         //
         return(
             <Col sm={12} md={3} >
-                <Row>
-                    <Card raised={true} className='raised'>
-                        <CardMedia
-                            aspectRatio="wide"
-                            children={carouselInstance}
-                        />
-                        <CardTitle
-                            title={titleAndBtn}
-                            subtitle={`Date: ${date} @${location}`}
-                        />
-                        <CardText>
-                            {description}
-                        </CardText>
-                    </Card>
-                    <br/>
-                </Row>
+                <Card raised={true} className='raised'>
+                    <CardMedia
+                        aspectRatio="square"
+                        children={carouselInstance}
+                        contentOverlay
+                    />
+                    <CardTitle
+                        title={titleAndBtn}
+                        subtitle={`Date: ${date} @${location}`}
+                    />
+                    <CardText>
+                        {description}
+                    </CardText>
+                </Card>
+                <br/>
             </Col>
         )
     }
