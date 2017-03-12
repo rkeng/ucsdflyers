@@ -7,15 +7,15 @@ import { Org } from './Org'
 import { ObjectToArray } from '../Commen'
 
 class OrgProfilePage extends React.Component{
+
     constructor(props){
         super(props)
         this.state={
             listOfFlyersCreated: [],
             listOfRecruitmentsCreated: []
         }
-}
 
-componentWillMount(){
+    componentWillMount(){
         const { FlyersCreated, RecruitmentNotesCreated } = this.props.user
         // const { RecruitmentCreated } = this.props.recruitmentNotes
         
@@ -55,7 +55,7 @@ componentWillMount(){
         })
     }
 
-render(){
+    render(){
         return(
             <div className='container'>
                 <Row>
