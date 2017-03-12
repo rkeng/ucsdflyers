@@ -20,7 +20,7 @@ class CreateRecruitment extends React.Component {
       show: false,
       seeking: "",
       dueDate: new Date().toISOString(),
-      name: "",
+      clubName: "",
       email:"",
       description: ""
     }
@@ -28,30 +28,33 @@ class CreateRecruitment extends React.Component {
 
   onPreview(event){
     event.preventDefault();
-    const orgName = findDOMNode(this.name).value;
+    const orgName = findDOMNode(this.clubName).value;
     const seeking = findDOMNode(this.seeking).value;
     const email = findDOMNode(this.email).value;
     const description = findDOMNode(this.description).value;
     this.setState({
       show: true,
-      name: orgName,
+      clubName: orgName,
       seeking: seeking,
       email: email,
       description: description
     })
-    console.log("Name field is: ", this.state.name)
+    /*setTimeOut(
+        console.log("Name field is: ", this.state.name),
+        2000
+      )*/
   }
 
   onCreate(event){
     event.preventDefault();
       const note = {
-        name: findDOMNode(this.name).value,
+        clubName: findDOMNode(this.clubName).value,
         seeking: findDOMNode(this.seeking).value,
         email: findDOMNode(this.email).value,
-        dueDate: this.state.dueDate,
+        dueDate: this.state.dueDate.substring(0,10),
         description: findDOMNode(this.description).value
       }
-      if(note.name === "")
+      if(note.clubName === "")
         NotificationManager.error('Error', 'Please enter valid name!', 2222);
       else if(note.seeking === "")
         NotificationManager.error('Error', 'Please enter valid position!', 2222);
@@ -71,9 +74,9 @@ class CreateRecruitment extends React.Component {
   getRecruitments () {
     var ourDate = this.state.dueDate
     var dueDate = (ourDate || new Date().toISOString() ).substring(0,10)
-    const { name, email, description, seeking } = this.state
+    const { clubName, email, description, seeking } = this.state
     const noteData = {
-      name: name,
+      clubName: clubName,
       description: description,
       dueDate: dueDate,
       seeking: seeking,
@@ -103,7 +106,7 @@ class CreateRecruitment extends React.Component {
       <FormGroup>
         <Col>
           <ControlLabel>Organization Name </ControlLabel>
-          <FormControl type="text" ref={ (node)=> {this.name = node} } placeholder="Enter your organization name here" />
+          <FormControl type="text" ref={ (node)=> {this.clubName = node} } placeholder="Enter your organization name here" />
         </Col>
       </FormGroup>
 
