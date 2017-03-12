@@ -62,7 +62,7 @@ class FlyerListContainerPage extends React.Component {
       }
     )
     if(this.state.sortDate){
-      filteredFlyers.sort(compareDates)
+      filteredFlyers.sort(compareDatesReverse)
   }
     else if (this.state.sortLike) {
       console.log(filteredFlyers)
@@ -73,10 +73,10 @@ class FlyerListContainerPage extends React.Component {
       filteredFlyers.sort(compareTitles)
     }
     else{
-      filteredFlyers.sort(compareDatesReverse)
+      filteredFlyers.sort(compareDates)
     }
-    const sortByWhat = this.state.sortDate ? 'past' : 'recent'
-    const sortBtnName = this.state.sortDate ? 'Farthest Future' : 'Most Recent'
+    const sortByWhat = this.state.sortDate ? 'recent' : 'past'
+    const sortBtnName = this.state.sortDate ? 'Most Recent' : 'Farthest Future'
 
     return (
         <Grid>
