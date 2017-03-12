@@ -1,26 +1,28 @@
 import React from 'react'
 import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal } from 'react-bootstrap'
-import { Button, ButtonToolbar, Panel } from 'react-bootstrap';
+import { Button, ButtonToolbar } from 'react-bootstrap';
+import { connect } from 'react-redux'
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
-import { createNew } from '../models/index.js';
+import { createNew, update } from '../models/index.js';
+import { RecruitmentNote } from './RecruitmentNote.js';
+import { IDtoObject } from '../Commen/index.js';
 
 const buttonStyles = {maxWidth: 800}
 const textStyles={height:200}
 
-class CreateRecruitment extends React.Component {
+class CreateRecruitmentPage extends React.Component {
   constructor (props) {
     super(props)
     this.onPreview = this.onPreview.bind(this);
     this.onCreate = this.onCreate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      success: false,
       show: false,
       seeking: "",
-      date: new Date().toISOString(),
-      name: "",
+      dueDate: new Date().toISOString(),
+      clubName: "",
       email:"",
       description: ""
     }
@@ -28,60 +30,69 @@ class CreateRecruitment extends React.Component {
 
   onPreview(event){
     event.preventDefault();
-    this.setState({ show: true})
-    const name = findDOMNode(this.name).value;
-    this.setState({ name: name  })
+    const orgName = findDOMNode(this.clubName).value;
     const seeking = findDOMNode(this.seeking).value;
-    this.setState({ seeking: seeking })
     const email = findDOMNode(this.email).value;
-    this.setState({ email: email  })
     const description = findDOMNode(this.description).value;
-    this.setState({ description: description })
+    this.setState({
+      show: true,
+      clubName: orgName,
+      seeking: seeking,
+      email: email,
+      description: description
+    })
+    /*setTimeOut(
+        console.log("Name field is: ", this.state.name),
+        2000
+      )*/
   }
 
   onCreate(event){
     event.preventDefault();
-      const note = {
-        name: findDOMNode(this.name).value,
-        seeking: findDOMNode(this.seeking).value,
-        email: findDOMNode(this.email).value,
-        date: this.state.date,
-        description: findDOMNode(this.description).value,
-      }
-      if(note.name === "")
-        NotificationManager.error('Error', 'Please enter valid name!', 2222);
-      else if(note.seeking === "")
-        NotificationManager.error('Error', 'Please enter valid position!', 2222);
-      else if(note.description === "")
-        NotificationManager.error('Error', 'Please enter valid description!', 2222);
-      else if(note.email === "")
-        NotificationManager.error('Error', 'Please enter valid email!', 2222);
-      else{
-            createNew('recruitmentNotes',note)
-            this.setState({ success: true})
-      }
+    const { uid } = this.props.user
+    const note = {
+      clubName: findDOMNode(this.clubName).value,
+      seeking: findDOMNode(this.seeking).value,
+      email: findDOMNode(this.email).value,
+      dueDate: this.state.dueDate.substring(0,10),
+      description: findDOMNode(this.description).value,
+      belongsTo: uid
+    }
+    if(note.clubName === "")
+      NotificationManager.error('Error', 'Please enter valid name!', 2222);
+    else if(note.seeking === "")
+      NotificationManager.error('Error', 'Please enter valid position!', 2222);
+    else if(note.description === "")
+      NotificationManager.error('Error', 'Please enter valid description!', 2222);
+    else if(note.email === "")
+      NotificationManager.error('Error', 'Please enter valid email!', 2222);
+    else{
+          let noteID = createNew('recruitmentNotes',note)
+          let noteIDobj = IDtoObject(noteID)
+          update(`users/${uid}/RecruitmentNotesCreated`, noteIDobj)
+    }
   }
 
   getRecruitments () {
-    var ourDate = this.state.date
-    var x = ourDate.substring(0,10)
-
+    var ourDate = this.state.dueDate
+    var dueDate = (ourDate || new Date().toISOString() ).substring(0,10)
+    const { clubName, email, description, seeking } = this.state
+    const noteData = {
+      clubName: clubName,
+      description: description,
+      dueDate: dueDate,
+      seeking: seeking,
+      email: email
+    }
     return(
-    <Panel key={this.state.seeking} bsStyle='info' header={this.state.seeking}>
-      <h3>{this.state.seeking}</h3>
-      <p>
-        Date: {x} <br />
-        Name: {this.state.name}<br />
-        Email: {this.state.email} <br />
-        Description: {this.state.description}<br />
-      </p>
-    </Panel>
+      <Col sm={12} md={12}>
+          <RecruitmentNote data={noteData} />
+      </Col>
   )}
 
   handleChange(value,formattedValue){
     this.setState({
-      date:value,
-      formattedValue:formattedValue
+      dueDate:value,
     })
   }
 
@@ -97,7 +108,7 @@ class CreateRecruitment extends React.Component {
       <FormGroup>
         <Col>
           <ControlLabel>Organization Name </ControlLabel>
-          <FormControl type="text" ref={ (node)=> {this.name = node} } placeholder="Enter your organization name here" />
+          <FormControl type="text" ref={ (node)=> {this.clubName = node} } placeholder="Enter your organization name here" />
         </Col>
       </FormGroup>
 
@@ -114,13 +125,13 @@ class CreateRecruitment extends React.Component {
       </FormGroup>
 
       <FormGroup controlId="formControlsTextarea">
-        <ControlLabel>Recruitment description</ControlLabel>
-        <FormControl componentClass="textarea" ref={ (node)=> {this.description = node } } style={textStyles} placeholder="Enter your recruitment description" />
+        <ControlLabel>Date</ControlLabel>
+        <DatePicker onChange={this.handleChange} value={this.state.dueDate} />
       </FormGroup>
 
       <FormGroup controlId="formControlsTextarea">
-        <ControlLabel>Date</ControlLabel>
-        <DatePicker onChange={this.handleChange} value={this.state.date} />
+        <ControlLabel>Recruitment description</ControlLabel>
+        <FormControl componentClass="textarea" ref={ (node)=> {this.description = node } } style={textStyles} placeholder="Enter your recruitment description" />
       </FormGroup>
 
       </Form>
@@ -153,4 +164,10 @@ class CreateRecruitment extends React.Component {
   }
 }
 
+function mapStateToProps(state){
+  return{
+    user: state.user
+  }
+}
+const CreateRecruitment = connect(mapStateToProps)(CreateRecruitmentPage)
 export { CreateRecruitment }
