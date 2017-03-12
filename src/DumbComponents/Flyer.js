@@ -14,6 +14,7 @@ class OneFlyer extends React.Component{
             liked:false
         }
         this.onLike = this.onLike.bind(this)
+        this.onDelete = this.onDelete.bind(this)
     }
 
     userLoggedInAsStudentNotLikedFlyer(){
@@ -26,6 +27,21 @@ class OneFlyer extends React.Component{
         const { isAuthenticated, isOrg, FlyersLiked } = this.props.user
         const { id } = this.props.flyer
         return isAuthenticated && !isOrg && FlyersLiked.hasOwnProperty(id)
+    }
+
+    orgUserDeleteFlyer(){
+        const { isAuthenticated, isOrg, FlyersCreated } = this.props.user
+        const { id } = this.props.flyer
+        return isAuthenticated && isOrg && FlyersCreated.hasOwnProperty(id)
+    }
+
+    onDelete(){
+        const { uid } = this.props.user
+        const { id } = this.props.flyer
+        if(this.orgUserDeleteFlyer()){
+            remove(`users/${uid}/FlyersCreated/${id}`)
+            remove(`events/${id}`)
+        }
     }
 
     onLike(){
@@ -47,14 +63,22 @@ class OneFlyer extends React.Component{
     }
 
     render() {
+        const { FlyersCreated } = this.props.user
         const {
             name,
             location,
             description,
             date,
             images,
-            likes
+            likes,
+            id
         } = this.props.flyer
+
+        const flyersArray = ObjectToArray(FlyersCreated)
+        var displayDelete = false
+        if(flyersArray.includes(id)){
+            displayDelete = true
+        }
 
         //prepare the images
         const imagesArray = ObjectToArray(images)
@@ -87,7 +111,7 @@ class OneFlyer extends React.Component{
         //prepare the like button
         const btnColor =  isLiked ? 'danger' : 'info'
         const HeatIcon =  isLiked ?  FaHeart : FaHeartO
-        const titleAndBtn = (
+        const titleAndLikeBtn = (
             <div>
                 {name}
                 <span className='pull-right'>
@@ -97,7 +121,16 @@ class OneFlyer extends React.Component{
                 </span>
             </div>
         )
-
+        const titleAndDeleteBtn = (
+            <div>
+                {name}
+                <span className='pull-right'>
+                    <Button onClick={this.onDelete} bsStyle={'danger'}>
+                        Delete
+                    </Button>
+                </span>
+            </div>
+        )
         //
         return(
             <Col xs={12} sm={12} md={3} >
@@ -107,7 +140,7 @@ class OneFlyer extends React.Component{
                         children={carouselInstance}
                     />
                     <CardTitle
-                        title={titleAndBtn}
+                        title={displayDelete? titleAndDeleteBtn : titleAndLikeBtn}
                         subtitle={`Date: ${date} @${location}`}
                     />
                     <CardText>
