@@ -13,7 +13,7 @@ class RecruitmentNote extends React.Component {
               <ColCenter>
                   <h5><FaStreetView/> {seeking}</h5>
                   <h5><FaCalendar/> Due date: {dueDate} <br/></h5>
-                  <h5><FaGroup/> Organization: {name} <br/></h5>
+                  <h5><FaGroup/> Organization: {clubName} <br/></h5>
                   <h5><FaEnvelope/> Email: {email} <br/></h5>
                   <p>{description}</p>
 
