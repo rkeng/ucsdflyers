@@ -5,8 +5,9 @@ import { remove, update } from '../models'
 import { ObjectToArray } from '../Commen'
 import { connect } from 'react-redux'
 import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
+import Slider from 'react-slick'
 
-class OneFlyer extends React.Component{
+export class OneFlyer extends React.Component{
 
     constructor(props){
         super(props)
@@ -60,20 +61,32 @@ class OneFlyer extends React.Component{
         const imagesArray = ObjectToArray(images)
         var CarouselItems = <Image src={imagesArray[0].imageUrl || imagesArray[0].preview} width={350} responsive/>
         var carouselInstance = CarouselItems;
-        if(imagesArray.length !== 1){
-            CarouselItems = imagesArray.map(function(image, index){
-                return (
-                    <Carousel.Item key={index}>
-                        <Image src={image.imageUrl || image.preview} width={350} responsive/><br/>
-                    </Carousel.Item>
-                )
-            })
-            carouselInstance = (
-                <Carousel>
-                    {CarouselItems}
-                </Carousel>
-            )
-        }
+
+        if (imagesArray.length > 1) {
+          CarouselItems = imagesArray.map(function(image, index){
+                  return (
+                      <div key={index}>
+                          <Image src={image.imageUrl || image.preview} width={350} responsive/>
+                      </div>
+                  )
+          })
+          let settings = {
+            className: '',
+            dots: true,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            adaptiveHeight: true,
+            arrows: true,
+            swipe: true,
+          };
+          carouselInstance = (
+            <Slider
+            {...settings}
+            >
+            {CarouselItems}
+            </Slider>)
+       }
 
         //prepare the liked state of the button
         var isLiked = this.state.liked
@@ -98,23 +111,24 @@ class OneFlyer extends React.Component{
             </div>
         )
 
-        //
+        /**/
         return(
             <Col xs={12} sm={12} md={3} >
-                <Card raised={true} className='raised'>
-                    <CardMedia
-                        aspectRatio="wide"
-                        children={carouselInstance}
-                    />
-                    <CardTitle
-                        title={titleAndBtn}
-                        subtitle={`Date: ${date} @${location}`}
-                    />
-                    <CardText>
-                        {description}
-                    </CardText>
-                </Card>
-                <br/>
+            <Card raised={true} className='raised'>
+                <CardMedia
+                    aspectRatio="wide"
+                    children={carouselInstance}
+                />
+                <CardTitle
+                    title={titleAndBtn}
+                    subtitle={`Date: ${date} @${location}`}
+                />
+                <CardText>
+                    {description}
+                </CardText>
+            </Card>
+
+
             </Col>
         )
     }
