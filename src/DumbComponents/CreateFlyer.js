@@ -149,9 +149,19 @@ class CreateFlyerPage extends React.Component {
 
 
   render() {
+    /*
+    var ToRender = <div> insufficient persmission </div>
+    if(only login as org){
+      ToRedner = (...)
+    }
+    return(
+      <div>{To}</div>
+    )
+    */
+
     return (
       <Grid>
-        <Row className="create-flyer">
+       <Row className="create-flyer">
           <Col sm={12} md={8} mdOffset={2}>
 
           <PageHeader>Create Event <small>Name of club</small></PageHeader>

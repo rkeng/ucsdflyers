@@ -1,31 +1,80 @@
 import React from 'react';
-import { Panel } from 'react-bootstrap';
+import { Panel, Button } from 'react-bootstrap';
 import { FaCalendar, FaGroup, FaEnvelope, FaStreetView } from 'react-icons/lib/fa';
 import { Link } from 'react-router'
-import { ColCenter } from '../Commen'
+import { ColCenter, ObjectToArray } from '../Commen'
+import { remove } from '../models'
+import { connect } from 'react-redux'
 
-class RecruitmentNote extends React.Component {
+class OneRecruitmentNote extends React.Component {
+
+    constructor(props){
+        super(props)
+        this.onDelete = this.onDelete.bind(this)
+    }
+    
+    orgUserDeleteFlyer(){
+        const { isAuthenticated, isOrg, RecruitmentNotesCreated } = this.props.user
+        const { id } = this.props.data
+        return isAuthenticated && isOrg && RecruitmentNotesCreated.hasOwnProperty(id)
+    }
+    
+
+    onDelete(){
+        const { uid } = this.props.user
+        const { id } = this.props.data
+        if(this.orgUserDeleteFlyer()){
+            remove(`users/${uid}/RecruitmentNotesCreated/${id}`)
+            remove(`recruitmentNotes/${id}`)
+        }
+    }
+    
 
     render(){
-      const { clubName, seeking, dueDate, email, description } = this.props.data
+      const { RecruitmentNotesCreated } = this.props.user
+      const { seeking, clubName, dueDate, email, description, id } = this.props.data
+      const recruitmentNotesArray = ObjectToArray(RecruitmentNotesCreated)
+      var displayDelete = false
+      if(recruitmentNotesArray.includes(id)){
+        displayDelete = true
+      }
+      const deleteBtn = (
+        <div>
+            <span className='pull-right'>
+                <Button onClick={this.onDelete} bsStyle={'danger'}>
+                    Delete
+                </Button>
+            </span>
+        </div>
+      )
+
       return (
             <Panel bsStyle='info' header={clubName}>
               <ColCenter>
                   <h5><FaStreetView/> {seeking}</h5>
                   <h5><FaCalendar/> Due date: {dueDate} <br/></h5>
-                  <h5><FaGroup/> Organization: {name} <br/></h5>
+                  <h5><FaGroup/> Organization: {clubName} <br/></h5>
                   <h5><FaEnvelope/> Email: {email} <br/></h5>
                   <p>{description}</p>
 
                   <Link className='btn btn-success'>Apply Now!</Link>
+                  {displayDelete ? deleteBtn : null}
               </ColCenter>
             </Panel>
         )
     }
 }
 
-RecruitmentNote.propTypes = {
+OneRecruitmentNote.propTypes = {
     data: React.PropTypes.any.isRequired
 };
+
+function mapStateToProps(state){
+    return{
+        user: state.user
+    }
+}
+
+const RecruitmentNote = connect(mapStateToProps)(OneRecruitmentNote)
 
 export { RecruitmentNote };
