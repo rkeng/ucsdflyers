@@ -1,11 +1,10 @@
 import React from 'react'
-import { update } from '../models'
+import { remove, update } from '../models'
 import { Button } from 'react-bootstrap'
 import AnimakitExpander from 'animakit-expander';
 import { ColCenter } from '../Commen'
 //import { FaPlusSquareO, FaPlusSquare } from 'react-icons/lib/fa';
 import { connect } from 'react-redux'
-import { firebase } from '../models/FlyersFirebase'
 
 class OneOrg extends React.Component {
 
@@ -44,25 +43,14 @@ class OneOrg extends React.Component {
     var newOrg = {}
     newOrg[`${id}`] = id
 
-    const db = firebase.database();
-
     if(this.studentUserUnfollowedOrg()){
       //update method will only update the field, not overwriting the whol thing
       update(`users/${uid}/OrgsFollowed`, newOrg)
       this.setState({ followed: true })
     }
     if(this.studentUserFollowedOrg()){
-      db.ref(`users/${uid}/OrgsFollowed`).child(id).remove()
+      remove(`users/${uid}/OrgsFollowed/${id}`)
       this.setState({ followed: false })
-    }
-  }
-
-  componentWillMount () {
-    if(this.studentUserUnfollowedOrg()){
-      this.setState({ followed: false })
-    }
-    if(this.studentUserFollowedOrg()){
-      this.setState({ followed: true })
     }
   }
 
@@ -74,7 +62,6 @@ class OneOrg extends React.Component {
       website
   	} = this.props.org;
 
-    /*
     var isFollowed = this.state.followed
     if(this.studentUserFollowedOrg()){ //don't allow org to follow orgs
       isFollowed = true
@@ -82,21 +69,21 @@ class OneOrg extends React.Component {
     if(this.studentUserUnfollowedOrg()){
       isFollowed = false
     }
-    */
-
-    const btnColor = this.state.followed ? 'danger' : 'success'
+ 
+    const btnColor = isFollowed ? 'danger' : 'success'
     
     const titleAndBtn = (
       <div>
           <span className='pull-right'>
             <Button onClick={this.handleFollow} bsStyle={btnColor}>
-              {this.state.followed ? 'Unfollow' : 'Follow'} {name}
+              {isFollowed ? 'Unfollow' : 'Follow'} {name}
             </Button>
           </span>
       </div>
     )
-    
+
     return (
+      <div>
           <ColCenter>
               {description}
               {titleAndBtn}
@@ -108,6 +95,7 @@ class OneOrg extends React.Component {
                   </div>
               </AnimakitExpander>
           </ColCenter>
+      </div>
     )
   }
 }
