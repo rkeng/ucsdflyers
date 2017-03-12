@@ -63,7 +63,7 @@ class RecruitmentListContainerPage extends React.Component {
         }
       )
         if(this.state.sortDate){
-          filteredRecruitments.sort(compareDueDates)
+          filteredRecruitments.sort(compareDueDatesReverse)
       }
         else if (this.state.sortClub) {
           console.log(filteredRecruitments)
@@ -74,10 +74,10 @@ class RecruitmentListContainerPage extends React.Component {
           filteredRecruitments.sort(compareSeekings)
         }
         else{
-          filteredRecruitments.sort(compareDueDatesReverse)
+          filteredRecruitments.sort(compareDueDates)
         }
-        const sortByWhat = this.state.sortDate ? 'past' : 'recent'
-        const sortBtnName = this.state.sortDate ? 'Farthest Future' : 'Most Recent'
+        const sortByWhat = this.state.sortDate ? 'recent' : 'past'
+        const sortBtnName = this.state.sortDate ? 'Most Recent' : 'Farthest Future'
 
 
         return (
