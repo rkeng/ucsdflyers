@@ -148,23 +148,23 @@ export class OneFlyer extends React.Component{
             </div>
         )
         /**/
+        var paddingNum = "5px"
         return(
             <Col xs={12} sm={12} md={3} >
-            <Card raised={true} style={{boxShadow: "10px 10px 10px grey"}}>
-                <CardMedia
-                    aspectRatio="wide"
-                    children={carouselInstance}
-                />
-                <CardTitle
-                    title={displayDelete? titleAndDeleteBtn : titleAndLikeBtn}
-                    subtitle={`Date: ${date} @${location}`}
-                />
-                <CardText>
-                    {description}
-                </CardText>
-            </Card>
-
-
+                <Card raised={true} style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>
+                    <CardMedia
+                        aspectRatio="wide"
+                        children={carouselInstance}
+                    />
+                    <CardTitle
+                        title={displayDelete? titleAndDeleteBtn : titleAndLikeBtn}
+                        style={{padding: paddingNum}}
+                        subtitle={`Date: ${date} @${location}`}
+                    />
+                    <CardText style={{padding: paddingNum}}>
+                        {description}
+                    </CardText>
+                </Card>
             </Col>
         )
     }
