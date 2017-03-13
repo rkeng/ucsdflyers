@@ -1,13 +1,12 @@
 import React from 'react'
-import { Col, Image, Button } from 'react-bootstrap'
+import { Carousel, Col, Image, Button } from 'react-bootstrap'
 import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
 import { remove, update } from '../models'
 import { ObjectToArray } from '../Commen'
 import { connect } from 'react-redux'
 import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
-import Slider from 'react-slick'
 
-export class OneFlyer extends React.Component{
+class OneFlyer extends React.Component{
 
     constructor(props){
         super(props)
@@ -51,7 +50,6 @@ export class OneFlyer extends React.Component{
         var newFlyer = {}
         newFlyer[`${id}`] = id
 
-
         if(this.userLoggedInAsStudentNotLikedFlyer()){
             //update method will only update the field, not overwriting the whol thing
             update(`users/${uid}/FlyersLiked`, newFlyer)
@@ -64,6 +62,7 @@ export class OneFlyer extends React.Component{
 
     }
 
+
     render() {
         const { FlyersCreated } = this.props.user
         const {
@@ -71,6 +70,7 @@ export class OneFlyer extends React.Component{
             location,
             description,
             date,
+            time,
             images,
             likes,
             id
@@ -79,40 +79,28 @@ export class OneFlyer extends React.Component{
         const flyersArray = ObjectToArray(FlyersCreated)
         var displayDelete = false
         if(flyersArray.includes(id)){
-                displayDelete = true
+            displayDelete = true
         }
 
         //prepare the images
         const imagesArray = ObjectToArray(images)
         var CarouselItems = <Image src={imagesArray[0].imageUrl || imagesArray[0].preview} width={350} responsive/>
         var carouselInstance = CarouselItems;
+        if(imagesArray.length !== 1){
+            CarouselItems = imagesArray.map(function(image, index){
+                return (
+                    <Carousel.Item key={index}>
+                        <Image src={image.imageUrl || image.preview} width={350} responsive/><br/>
+                    </Carousel.Item>
+                )
+            })
+            carouselInstance = (
+                <Carousel>
+                    {CarouselItems}
+                </Carousel>
+            )
 
-        if (imagesArray.length > 1) {
-          CarouselItems = imagesArray.map(function(image, index){
-                  return (
-                      <div key={index}>
-                          <Image src={image.imageUrl || image.preview} width={350} responsive/>
-                      </div>
-                  )
-          })
-          let settings = {
-            className: '',
-            dots: true,
-            infinite: true,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            adaptiveHeight: true,
-            autoplay: true,
-            arrow: false,
-            swipe: true
-          };
-          carouselInstance = (
-            <Slider
-            {...settings}
-            >
-            {CarouselItems}
-            </Slider>)
-       }
+        }
 
         //prepare the liked state of the button
         var isLiked = this.state.liked
@@ -128,7 +116,6 @@ export class OneFlyer extends React.Component{
         const HeatIcon =  isLiked ?  FaHeart : FaHeartO
         const titleAndLikeBtn = (
             <div>
-                <br/>
                 {name}
                 <span className='pull-right'>
                     <Button onClick={this.onLike} bsStyle={btnColor}>
@@ -147,24 +134,28 @@ export class OneFlyer extends React.Component{
                 </span>
             </div>
         )
-        /**/
+
         return(
             <Col xs={12} sm={12} md={3} >
-            <Card raised={true} style={{boxShadow: "10px 10px 10px grey"}}>
-                <CardMedia
-                    aspectRatio="wide"
-                    children={carouselInstance}
-                />
-                <CardTitle
-                    title={displayDelete? titleAndDeleteBtn : titleAndLikeBtn}
-                    subtitle={`Date: ${date} @${location}`}
-                />
-                <CardText>
-                    {description}
-                </CardText>
-            </Card>
-
-
+                <Card raised={true} className='raised'>
+                    <CardMedia
+                        aspectRatio="wide"
+                        children={carouselInstance}
+                    />
+                    <CardTitle
+                        title={displayDelete? titleAndDeleteBtn : titleAndLikeBtn}
+                        subtitle={`Date: ${date} @${location}`}
+                    />
+                    <CardText>
+                        Date: {date}  Time: {time}
+                        <br/>
+                        @{location}
+                        <br/>
+                        <br/>
+                        {description}
+                    </CardText>
+                </Card>
+                <br/>
             </Col>
         )
     }

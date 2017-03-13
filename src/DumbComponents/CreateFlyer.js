@@ -25,7 +25,7 @@ class CreateFlyerPage extends React.Component {
     this.onCreate = this.onCreate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onClear = this.onClear.bind(this);
-    this.getFlyer = this.getFlyer.bind(this)
+    this.getFlyer = this.getFlyer.bind(this);
     this.state = {
       active: true,
       success: false,
@@ -40,6 +40,7 @@ class CreateFlyerPage extends React.Component {
       minute: "",
       hour: "",
       timefocus: false,
+      eventURL: "",
     }
   }
 
@@ -50,6 +51,8 @@ class CreateFlyerPage extends React.Component {
     findDOMNode(this.name).value = "";
     findDOMNode(this.description).value = "";
     findDOMNode(this.location).value = "";
+    findDOMNode(this.eventURL).value = "";
+
   }
 
 
@@ -58,6 +61,8 @@ class CreateFlyerPage extends React.Component {
     const name = findDOMNode(this.name).value;
     const description = findDOMNode(this.description).value;
     const location = findDOMNode(this.location).value;
+    const eventURL = findDOMNode(this.eventURL).value;
+
     var imagesFiles = []
     if(this.refs.dropzone && this.refs.dropzone.state.files){
       imagesFiles = this.refs.dropzone.state.files
@@ -70,6 +75,7 @@ class CreateFlyerPage extends React.Component {
       location: location,
       name: name,
       description: description,
+      eventURL: eventURL,
       files: imagesFiles
     })
    }
@@ -84,6 +90,7 @@ class CreateFlyerPage extends React.Component {
       name: findDOMNode(this.name).value,
       description: findDOMNode(this.description).value,
       location: findDOMNode(this.location).value,
+      eventURL: findDOMNode(this.eventURL).value,
       date: this.state.date.substring(0,10),
       active: true,
       likes: 0,
@@ -102,6 +109,8 @@ class CreateFlyerPage extends React.Component {
       NotificationManager.error('Error', 'Please enter valid location!', 2222);
     else if(!imagesFiles.length)//file is not uploaded
       NotificationManager.error('Error', 'Please upload at least one image!', 2222);
+    else if(!imagesFiles.length)//file is not uploaded
+      NotificationManager.error('Error', 'Please enter the eventURL!', 2222);
     else{
 
       this.setState({ success: true})
@@ -131,24 +140,16 @@ class CreateFlyerPage extends React.Component {
   onFocusChange(newfocus) {
     this.setState({timefocus:newfocus})
   }
-  onFocusChange2(newfocus) {
-    this.setState({time2focus:newfocus})
-  }
+
   timeTrigger(event){
     const focused = this.state.timefocus;
     this.setState({ timefocus: !focused });
   }
 
-  timeTrigger2(event){
-    const focused = this.state.time2focus;
-    this.setState({ time2focus: !focused });
-  }
-
-
   getFlyer () {
       var ourDate = this.state.date
       var date = (ourDate || new Date().toISOString() ).substring(0,10)
-      const { name, location, description, likes, files, time } = this.state
+      const { name, location, description, likes, files, time, eventURL } = this.state
 
       const flyerData = {
         name: name,
@@ -157,6 +158,7 @@ class CreateFlyerPage extends React.Component {
         date: date,
         time: time,
         images: files,
+        eventURL: eventURL,
         likes: likes,
       }
       //console.log('this.refs?', imagesFiles)
@@ -184,7 +186,6 @@ class CreateFlyerPage extends React.Component {
       date: value,
     })
   }
-//      formattedValue: (value || new Date().toISOString() ).substring(0,10)
 
 
   render() {
@@ -203,7 +204,7 @@ class CreateFlyerPage extends React.Component {
         <Row className="header">
           <Col sm={12} md={8} mdOffset={2}>
 
-          <PageHeader>Create Event <small>Name of club</small></PageHeader>
+          <PageHeader>Create Event Flyer</PageHeader>
           </Col>
         </Row>
         <Row className="name">
@@ -231,17 +232,17 @@ class CreateFlyerPage extends React.Component {
           <Col md={4} mdOffset={0.5}>
             <FormGroup>
               <ControlLabel>Time</ControlLabel>
-                <TimePicker
-                  theme="classic"
-                  time={this.state.time}
-                  onFocusChange={this.onFocusChange.bind(this)}
-                  onTimeChange={this.onTimeChange.bind(this)}
-                  focused={this.state.timefocus}
-                  trigger={(
-                    <FormControl
-                      placeHolder="Please choose time"
-                      value={this.state.time} onClick={this.timeTrigger.bind(this)}
-                    />)}
+              <TimePicker
+                theme="classic"
+                time={this.state.time}
+                onFocusChange={this.onFocusChange.bind(this)}
+                onTimeChange={this.onTimeChange.bind(this)}
+                focused={this.state.timefocus}
+                trigger={(
+                  <FormControl
+                    placeHolder="Please choose time"
+                    value={this.state.time} onClick={this.timeTrigger.bind(this)}
+                  />)}
                 />
             </FormGroup>
           </Col>
@@ -266,6 +267,15 @@ class CreateFlyerPage extends React.Component {
                 componentClass="textarea"
                 placeholder="Enter description"
                 ref={(node) => {this.description = node}}
+              />
+            </FormGroup>
+
+            <FormGroup>
+              <ControlLabel>Please enter the eventURL</ControlLabel>
+              <FormControl
+                type="text"
+                placeholder="Enter EventURL"
+                ref={(node) => {this.eventURL = node}}
               />
             </FormGroup>
 
