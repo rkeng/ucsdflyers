@@ -65,9 +65,9 @@ class FlyerListContainerPage extends React.Component {
       filteredFlyers.sort(compareDatesReverse)
   }
     else if (this.state.sortLike) {
-      console.log(filteredFlyers)
+      // console.log(filteredFlyers)
       filteredFlyers.sort(compareLikes)
-      console.log(filteredFlyers)
+      // console.log(filteredFlyers)
   }
     else if (this.state.sortTitle){
       filteredFlyers.sort(compareTitles)

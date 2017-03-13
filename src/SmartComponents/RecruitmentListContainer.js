@@ -66,9 +66,9 @@ class RecruitmentListContainerPage extends React.Component {
           filteredRecruitments.sort(compareDueDatesReverse)
       }
         else if (this.state.sortClub) {
-          console.log(filteredRecruitments)
+          // console.log(filteredRecruitments)
           filteredRecruitments.sort(compareClubNames)
-          console.log(filteredRecruitments)
+          // console.log(filteredRecruitments)
       }
         else if (this.state.sortTitle){
           filteredRecruitments.sort(compareSeekings)

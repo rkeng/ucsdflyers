@@ -4,8 +4,8 @@ import { Dropzone } from 'react-dropzone'
 class DropPicture extends React.Component{
 
     onDrop (acceptedFiles, rejectedFiles) {
-      console.log('Accepted files: ', acceptedFiles);
-      console.log('Rejected files: ', rejectedFiles);
+      // console.log('Accepted files: ', acceptedFiles);
+      // console.log('Rejected files: ', rejectedFiles);
     }
 
     render() {

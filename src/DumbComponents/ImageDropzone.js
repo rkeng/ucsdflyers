@@ -30,7 +30,7 @@ export class ImageDropzone extends React.Component {
     onDrop (files) {
         const that = this;
         that.setState({files: files})
-        console.log('Received files: ', files);
+        // console.log('Received files: ', files);
     }
 
     deleteFile(file, key) {
