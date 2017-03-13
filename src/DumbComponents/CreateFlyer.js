@@ -188,6 +188,16 @@ class CreateFlyerPage extends React.Component {
 
 
   render() {
+    /*
+    var ToRender = <div> insufficient persmission </div>
+    if(only login as org){
+      ToRedner = (...)
+    }
+    return(
+      <div>{To}</div>
+    )
+    */
+
     return (
       <Grid>
         <Row className="header">
