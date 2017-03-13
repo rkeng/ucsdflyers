@@ -11,7 +11,7 @@ import { ImageDropzone } from './ImageDropzone.js';
 import { Flyer } from './Flyer';
 import Logo from '../asset/logoHorizontal.png';
 import { IDtoObject } from '../Commen/index.js';
-import TimePicker from 'react-times';
+// import TimePicker from 'react-times';
 import 'react-times/css/classic/default.css';
 
 
@@ -89,7 +89,7 @@ class CreateFlyerPage extends React.Component {
     const { hasOrg, uid } = this.props.user
     const orgArray = this.props.orgs.filter((org)=>org.id === hasOrg)
     const clubID = uid;
-    const { time } = this.state
+    // const { time } = this.state
     const flyer = {
       name: findDOMNode(this.name).value,
       description: findDOMNode(this.description).value,

@@ -2,13 +2,13 @@ import React from 'react'
 import { remove, update } from '../models'
 import { Button, Row, Col } from 'react-bootstrap'
 import AnimakitExpander from 'animakit-expander';
-import { ColCenter } from '../Commen'
-import { FaPlusSquareO, FaPlusSquare } from 'react-icons/lib/fa';
+// import { ColCenter } from '../Commen'
+// import { FaPlusSquareO, FaPlusSquare } from 'react-icons/lib/fa';
 import { connect } from 'react-redux'
-import { Flyer } from './Flyer'
-import { RecruitmentNote } from './RecruitmentNote'
-import { ObjectToArray } from '../Commen'
-import { firebase } from '../models/FlyersFirebase'
+// import { Flyer } from './Flyer'
+// import { RecruitmentNote } from './RecruitmentNote'
+// import { ObjectToArray } from '../Commen'
+// import { firebase } from '../models/FlyersFirebase'
 
 
 class OneOrg extends React.Component {
@@ -96,8 +96,8 @@ class OneOrg extends React.Component {
   	const {
   		name,
   		description,
-      website,
-      belongsTo
+      website
+      // belongsTo
   	} = this.props.org;
 
     var isFollowed = this.state.followed
