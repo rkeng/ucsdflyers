@@ -1,9 +1,9 @@
 import React from 'react'
 import { remove, update } from '../models'
-import { Button, Row } from 'react-bootstrap'
+import { Button, Row, Col } from 'react-bootstrap'
 import AnimakitExpander from 'animakit-expander';
-import { ColCenter } from '../Commen'
-//import { FaPlusSquareO, FaPlusSquare } from 'react-icons/lib/fa';
+// import { ColCenter } from '../Commen'
+import { FaPlusSquareO, FaPlusSquare } from 'react-icons/lib/fa';
 import { connect } from 'react-redux'
 // import { Flyer } from './Flyer'
 // import { RecruitmentNote } from './RecruitmentNote'
@@ -17,11 +17,11 @@ class OneOrg extends React.Component {
     super(props);
     this.state = {
       expanded: false,
-      followed: false,
-      flyersOfTheOrg: [],
-      recsOfTheOrg: [],
-      masterFlyers:[],
-      masterRecruitments:[]
+      followed: false
+      // flyersOfTheOrg: [],
+      // recsOfTheOrg: [],
+      // masterFlyers:[],
+      // masterRecruitments:[]
 
     };
     this.handleClick = this.handleClick.bind(this);
@@ -65,24 +65,26 @@ class OneOrg extends React.Component {
   }
 
   // componentWillMount(){
+  //   const that = this
   //   const { belongsTo } = this.props.org
   //   var masterIDArray = ObjectToArray(belongsTo) //array of often one string
-  //   firebase.database().ref(`users/`).once('value').then(snap=>{
+  //   firebase.database().ref(`users`).once('value').then(snap=>{
   //     var allUsers = snap.val();
   //     var userArray = ObjectToArray(allUsers)
   //     var masters =  userArray.filter((user) => {
   //       return masterIDArray.includes(user.id)
   //     })
   //     masters.forEach(master => {
-  //         console.log('orgs master is:',master)
+  //         // console.log('orgs master is:',master)
   //         var { FlyersCreated, RecruitmentNotesCreated } = master;
   //         var flyerIDs = ObjectToArray(FlyersCreated)
-  //         console.log('flyers ID', flyerIDs)
-  //         var realFlyerData = this.props.flyers.filter((f) => flyerIDs.includes(f.id))
-  //         console.log('flyers datas', realFlyerData)
+  //         // console.log('flyers ID', flyerIDs)
+  //         var realFlyerData = that.props.flyers.filter((f) => flyerIDs.includes(f.id))
+  //         // console.log('flyers datas', realFlyerData)
   //         var recIDs = ObjectToArray(RecruitmentNotesCreated)
-  //         var realRecData = this.props.recs.filter(r=> recIDs.includes(r.id))
-  //         this.setState({
+  //         var realRecData = that.props.recs.filter(r=> recIDs.includes(r.id))
+  //         // console.log('rec datas', realRecData)
+  //         that.setState({
   //           masterFlyers: realFlyerData,
   //           masterRecruitments:realRecData
   //         })
@@ -118,43 +120,63 @@ class OneOrg extends React.Component {
       </div>
     )
 
-    // var orgsFlyers = (this.state.masterFlyers || []).map((flyer, index )=> <Flyer key={index} flyer={flyer}/>)
-    // var orgsRecs = (this.state.masterRecruitments || []).map((rec,index) => <RecruitmentNote key={index} data={rec}/>)
+    // var orgsFlyers = this.state.masterFlyers.map((flyer, index )=> <Flyer key={index} flyer={flyer}/>)
+    // var orgsRecs = this.state.masterRecruitments.map((rec, index) => <RecruitmentNote key={index} data={rec}/>)
+      // {belongsTo === "vjiMXeqx1BfwOdG5PePyYzPG2WQ2" ? console.log('state', this.state) : btnColor}
     return (
       <div>
-          <ColCenter>
+          <div>
               {description}
-              {titleAndBtn}
               <br/>
-              <Button onClick={this.handleClick}>{this.state.expanded ? 'See less' : 'See more'}</Button>
+              <Row>
+                <Col sm={3} mdOffset={2} md={2}>
+                  <Button onClick={this.handleClick}>{this.state.expanded ? 'See less' : 'See more'}</Button>
+                </Col>
+                <Col smOffset={1} sm={3} mdOffset={3} md={2}>
+                  {titleAndBtn}
+                </Col>
+              </Row>
               <AnimakitExpander expanded={this.state.expanded}>
-                  <div className="text">
-                    <Row>
-                      {name}'s Website: {website==='N/A'? 'N/A':<a id="link" href={website} target="_blank">{website}</a>}
-                    </Row>
-                  </div>
-              </AnimakitExpander> 
-          </ColCenter>
+                    <Col smOffset={1} mdOffset={1} lgOffset={1}>
+                        <Row>
+                          <br/>
+                          {name}'s Website: {website==='N/A'? 'N/A':<a id="link" href={website} target="_blank">{website}</a>}
+                        </Row>
+                    </Col>
+                </AnimakitExpander> 
+          </div>
       </div>
     )
   }
 }
-                    // <Row>
-                    //   <h5>Org's Flyers: </h5>
-                    //   <hr/>
-                    //   {orgsFlyers}
-                    // </Row>                    
-                    // <Row>
-                    //   <h5>Org's RecruitmentNotes: </h5>
-                      // <hr/>
-                      // {orgsFlyers}
-                    // </Row>
+//                         <Row>
+//                           <h5>Org's Flyers: </h5>
+//                           <hr/>
+//                         {belongsTo === 'vjiMXeqx1BfwOdG5PePyYzPG2WQ2' ? console.log('state data?', this.state) : console.log('skip')}
+//                           {this.state.masterFlyers.map((flyer, index ) => {
+                        //       return(
+                        //         <Flyer key={index} flyer={flyer}/>
+                        //       )
+                        //     })
+                        //   }
+                        // </Row>                    
+                        // <Row>
+                        //   <h5>Org's RecruitmentNotes: </h5>
+                        //   <hr/>
+                        //   {this.state.masterRecruitments.map(
+                        //     (rec, index) => {
+                        //       return (
+                        //         <RecruitmentNote key={index} data={rec}/>
+                        //       )
+                        //     })
+                        //   }
+                        // </Row>
 //this.props.user
 function mapStateToProps(state){
     return{
         user: state.user,
         // recs: state.data.recruitments,
-        // // flyers: state.data.events
+        // flyers: state.data.events
     }
 }
 
