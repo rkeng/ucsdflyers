@@ -9,6 +9,7 @@ import { signOutUser, detachListenerOn } from '../models'
 import Avatar from 'react-avatar'
 import logoText from '../asset/logoText.png'
 import person from '../asset/person.jpg'
+import { firebase } from '../models/FlyersFirebase'
 
 
 
@@ -90,7 +91,21 @@ function TopBarIcon(props){
 }
 /* use this print state; only for development purpose
                 <button onClick={() => {
-                    console.log('state?', props.state)
+                    // console.log('state?', props.state)
+                    firebase.database().ref('users').once('value').then(snap => {
+                        var allUsers = snap.val();
+                        var userKeys = Object.keys(allUsers)
+                        userKeys.forEach(key=>{
+                            firebase.database().ref(`users/${key}`).once('value').then(userSnap =>{
+                                var userVal = userSnap.val();
+                                if(!userVal.isOrg){
+                                    firebase.database().ref(`users/${key}/RecruitmentNotesSaved`).update({
+                                        dummy: 'dummy'
+                                    })
+                                }
+                            })
+                        })
+                    })
                 }}> show state</button>
 */
 

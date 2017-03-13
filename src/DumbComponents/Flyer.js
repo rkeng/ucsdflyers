@@ -99,7 +99,7 @@ class OneFlyer extends React.Component{
                       </div>
                   )
           })
-
+          var speed = Math.floor(Math.random()*10000);
           let settings = {
             className: '',
             dots: true,
@@ -108,6 +108,7 @@ class OneFlyer extends React.Component{
             slidesToScroll: 1,
             adaptiveHeight: true,
             autoplay: true,
+            autoplaySpeed: speed < 3000 ? 3000 : speed,
             arrow: false,
             swipe: true
           };
@@ -161,7 +162,7 @@ class OneFlyer extends React.Component{
                 <FaGroup/>:{belongsTo}
             </span>
         )
-        var paddingNum = "0px 10px 1px 10px"
+        var paddingNum = "8px 10px 1px 10px"
         return(
                 <Col xs={12} sm={6} md={3} >
                     <Card style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>

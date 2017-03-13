@@ -28,7 +28,11 @@ const uiConfig = {
                             },
                             OrgsFollowed: {
                                 dummy: 'dummy data to keep the field'
+                            },
+                            RecruitmentNotesSaved: {
+                                dummy: 'dummy data to keep the field'
                             }
+
                         }
                         firebase.database().ref('users/' + user.uid).set(userFieldData);
                         firebase.database().ref('students/' + user.uid).set(user.uid);
