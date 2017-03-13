@@ -35,6 +35,7 @@ export class OneFlyer extends React.Component{
         var newFlyer = {}
         newFlyer[`${id}`] = id
 
+
         if(this.userLoggedInAsStudentNotLikedFlyer()){
             //update method will only update the field, not overwriting the whol thing
             update(`users/${uid}/FlyersLiked`, newFlyer)
