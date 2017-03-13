@@ -143,7 +143,7 @@ class CreateRecruitmentPage extends React.Component {
         <ButtonToolbar>
           <Button onClick={this.onPreview} bsStyle="info" type='submit'>Preview</Button>
           <Button onClick={this.onCreate} bsStyle="success" type='submit'>Submit</Button>
-          <Button bsStyle="danger">Cancel</Button>
+          <Link className='btn btn-danger' to='/recruitments' >Cancel</Link>
         </ButtonToolbar>
       </div>
       <br/>
