@@ -57,7 +57,8 @@ function TopBarIcon(props){
     return (
             <Navbar.Header>
                 <Navbar.Brand>
-                    <Image className='icon-img' style={{marginTop:'3px'}} width={200} height={100} src={logoText} alt=""/>
+                    <Image id='/' onClick={changeRoute} className='icon-img' 
+                        style={{marginTop:'3px'}} width={200} height={100} src={logoText} alt=""/>
                 </Navbar.Brand>
                 <Navbar.Toggle/>
             </Navbar.Header>

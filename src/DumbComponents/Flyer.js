@@ -1,6 +1,6 @@
 import React from 'react'
 import { Col, Image, Button } from 'react-bootstrap'
-import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
+import { FaHeart, FaHeartO, FaClockO, FaFlag, FaGroup, FaCalendar } from 'react-icons/lib/fa';
 import { remove, update } from '../models'
 import { ObjectToArray } from '../Commen'
 import { connect } from 'react-redux'
@@ -73,6 +73,8 @@ export class OneFlyer extends React.Component{
             date,
             images,
             likes,
+            time,
+            belongsTo,
             id
         } = this.props.flyer
 
@@ -148,10 +150,19 @@ export class OneFlyer extends React.Component{
             </div>
         )
         /**/
-        var paddingNum = "5px"
+        const subtitle = (
+            <span>
+                <FaCalendar/>:{date}  <FaClockO/>{time}
+                <br/> 
+                <FaFlag/>:@{location}
+                <br/>
+                <FaGroup/>:{belongsTo}
+            </span>
+        )
+        var paddingNum = "0px 10px 1px 10px"
         return(
             <Col xs={12} sm={6} md={3} >
-                <Card round style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>
+                <Card style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>
                     <CardMedia
                         aspectRatio="wide"
                         children={carouselInstance}
@@ -159,7 +170,7 @@ export class OneFlyer extends React.Component{
                     <CardTitle
                         title={displayDelete? titleAndDeleteBtn : titleAndLikeBtn}
                         style={{padding: paddingNum}}
-                        subtitle={`Date: ${date} @${location}`}
+                        subtitle={subtitle}
                     />
                     <CardText style={{padding: paddingNum}}>
                         {description}
