@@ -91,7 +91,8 @@ class CreateFlyerPage extends React.Component {
 
   onCreate(event){
     event.preventDefault();
-    const { uid } = this.props.user
+    const { hasOrg, uid } = this.props.user
+    const orgArray = this.props.orgs.filter((org)=>org.id === hasOrg)
     const clubID = uid;
     const { time } = this.state
     const flyer = {
@@ -103,7 +104,7 @@ class CreateFlyerPage extends React.Component {
       date: this.state.date.substring(0,10),
       active: true,
       likes: 0,
-      belongsTo: uid,
+      belongsTo: orgArray[0].name,
       time: time
     }
 
@@ -361,7 +362,8 @@ class CreateFlyerPage extends React.Component {
 
 function mapStateToProps(state){
   return{
-    user: state.user
+    user: state.user,
+    orgs: state.data.orgs
   }
 }
 // const CreateFlyer = AuthWrapper(connect(mapStateToProps)(CreateFlyerPage), ORG)

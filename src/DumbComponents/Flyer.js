@@ -1,17 +1,19 @@
 import React from 'react'
-import { Carousel, Col, Image, Button } from 'react-bootstrap'
-import { FaHeart, FaHeartO } from 'react-icons/lib/fa';
+import { Col, Image, Button, Modal } from 'react-bootstrap'
+import { FaHeart, FaHeartO, FaClockO, FaFlag, FaGroup, FaCalendar } from 'react-icons/lib/fa';
 import { remove, update } from '../models'
 import { ObjectToArray } from '../Commen'
 import { connect } from 'react-redux'
 import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
+import Slider from 'react-slick'
 
 class OneFlyer extends React.Component{
 
     constructor(props){
         super(props)
         this.state = {
-            liked:false
+            liked:false,
+            showModel: false
         }
         this.onLike = this.onLike.bind(this)
         this.onDelete = this.onDelete.bind(this)
@@ -42,6 +44,7 @@ class OneFlyer extends React.Component{
             remove(`users/${uid}/FlyersCreated/${id}`)
             remove(`events/${id}`)
         }
+        this.setState({showModel:false})
     }
 
     onLike(){
@@ -73,6 +76,7 @@ class OneFlyer extends React.Component{
             time,
             images,
             likes,
+            belongsTo,
             id
         } = this.props.flyer
 
@@ -86,22 +90,36 @@ class OneFlyer extends React.Component{
         const imagesArray = ObjectToArray(images)
         var CarouselItems = <Image src={imagesArray[0].imageUrl || imagesArray[0].preview} width={350} responsive/>
         var carouselInstance = CarouselItems;
-        if(imagesArray.length !== 1){
-            CarouselItems = imagesArray.map(function(image, index){
-                return (
-                    <Carousel.Item key={index}>
-                        <Image src={image.imageUrl || image.preview} width={350} responsive/><br/>
-                    </Carousel.Item>
-                )
-            })
-            carouselInstance = (
-                <Carousel>
-                    {CarouselItems}
-                </Carousel>
-            )
 
+        if (imagesArray.length > 1) {
+          CarouselItems = imagesArray.map(function(image, index){
+                  return (
+                      <div key={index} >
+                          <Image src={image.imageUrl || image.preview} width={350} responsive />
+                      </div>
+                  )
+          })
+          var speed = Math.floor(Math.random()*10000);
+          let settings = {
+            className: '',
+            dots: true,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            adaptiveHeight: true,
+            autoplay: true,
+            autoplaySpeed: speed < 3000 ? 3000 : speed,
+            arrow: false,
+            swipe: true
+          };
+          carouselInstance = (
+            <Slider
+            {...settings}
+            >
+            {CarouselItems}
+            </Slider>
+          )
         }
-
         //prepare the liked state of the button
         var isLiked = this.state.liked
         if(this.userLoggedInAsStudentLikedFlyer()){ //don't allow org to like flyers
@@ -128,36 +146,56 @@ class OneFlyer extends React.Component{
             <div>
                 {name}
                 <span className='pull-right'>
-                    <Button onClick={this.onDelete} bsStyle={'danger'}>
+                    <Button onClick={()=>this.setState({showModel:true})} bsStyle={'danger'}>
                         Delete
                     </Button>
                 </span>
             </div>
         )
 
-        return(
-            <Col xs={12} sm={12} md={3} >
-                <Card raised={true} className='raised'>
-                    <CardMedia
-                        aspectRatio="wide"
-                        children={carouselInstance}
-                    />
-                    <CardTitle
-                        title={displayDelete? titleAndDeleteBtn : titleAndLikeBtn}                    />
-                    <CardText>
-                        Date: {date}  Time: {time}
-                        <br/>
-                        @{location}
-                        <br/>
-                        <br/>
-                        {description}
-                    </CardText>
-                </Card>
+        /**/
+        const subtitle = (
+            <span>
+                <FaCalendar/>:{date}  <FaClockO/>{time}
+                <br/> 
+                <FaFlag/>:@{location}
                 <br/>
-            </Col>
+                <FaGroup/>:{belongsTo}
+            </span>
+        )
+        var paddingNum = "8px 10px 1px 10px"
+        return(
+                <Col xs={12} sm={6} md={3} >
+                    <Card style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>
+                        <CardMedia
+                            aspectRatio="wide"
+                            children={carouselInstance}
+                        />
+                        <CardTitle
+                            title={displayDelete? titleAndDeleteBtn : titleAndLikeBtn}
+                            style={{padding: paddingNum}}
+                            subtitle={subtitle}
+                        />
+                        <CardText style={{padding: paddingNum}}>
+                            {description}
+                        </CardText>
+                    </Card>
+                    <div>
+                        <Modal show={this.state.showModel}>
+                            <Modal.Title>
+                                <p style={{color:'darkRed', fontWeight:'bold'}} className="text-center"> Are you sure you want to delete this?</p>
+                            </Modal.Title>
+                            <Modal.Footer>
+                                <Button bsStyle='success' onClick={()=>this.setState({showModel:false})}>Cancel</Button>
+                                <Button bsStyle='danger' onClick={this.onDelete}>DELETE</Button>
+                            </Modal.Footer>
+                        </Modal>
+                    </div>
+                </Col>
         )
     }
 }
+
 
 function mapStateToProps(state){
     return{
