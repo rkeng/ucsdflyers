@@ -1,7 +1,7 @@
 import React from 'react';
 import { Panel, Button, Modal } from 'react-bootstrap';
 import { FaCalendar, FaGroup, FaEnvelope, FaStreetView } from 'react-icons/lib/fa';
-import { Link } from 'react-router'
+// import { Link } from 'react-router'
 import { ColCenter, ObjectToArray } from '../Commen'
 import { remove, update } from '../models'
 import { connect } from 'react-redux'

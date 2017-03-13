@@ -154,6 +154,7 @@ export function signinOrg(provider){
             if(!userField.val()){
                 const userFieldData = {
                     displayName: user.displayName,
+                    uid: user.uid,
                     isOrg: true,
                     FlyersCreated: {
                       dummy: 'dummy data to keep the field'

@@ -23,6 +23,7 @@ const uiConfig = {
                     if(!userData) {    
                         const userFieldData = {
                             displayName: user.displayName,
+                            id: user.uid,
                             FlyersLiked: {
                                 dummy: 'dummy data to keep the field'
                             },

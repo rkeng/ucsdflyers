@@ -1,10 +1,15 @@
 import React from 'react'
 import { remove, update } from '../models'
-import { Button } from 'react-bootstrap'
+import { Button, Row } from 'react-bootstrap'
 import AnimakitExpander from 'animakit-expander';
 import { ColCenter } from '../Commen'
 //import { FaPlusSquareO, FaPlusSquare } from 'react-icons/lib/fa';
 import { connect } from 'react-redux'
+// import { Flyer } from './Flyer'
+// import { RecruitmentNote } from './RecruitmentNote'
+// import { ObjectToArray } from '../Commen'
+// import { firebase } from '../models/FlyersFirebase'
+
 
 class OneOrg extends React.Component {
 
@@ -12,7 +17,12 @@ class OneOrg extends React.Component {
     super(props);
     this.state = {
       expanded: false,
-      followed: false
+      followed: false,
+      flyersOfTheOrg: [],
+      recsOfTheOrg: [],
+      masterFlyers:[],
+      masterRecruitments:[]
+
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleFollow = this.handleFollow.bind(this);
@@ -54,12 +64,38 @@ class OneOrg extends React.Component {
     }
   }
 
+  // componentWillMount(){
+  //   const { belongsTo } = this.props.org
+  //   var masterIDArray = ObjectToArray(belongsTo) //array of often one string
+  //   firebase.database().ref(`users/`).once('value').then(snap=>{
+  //     var allUsers = snap.val();
+  //     var userArray = ObjectToArray(allUsers)
+  //     var masters =  userArray.filter((user) => {
+  //       return masterIDArray.includes(user.id)
+  //     })
+  //     masters.forEach(master => {
+  //         console.log('orgs master is:',master)
+  //         var { FlyersCreated, RecruitmentNotesCreated } = master;
+  //         var flyerIDs = ObjectToArray(FlyersCreated)
+  //         console.log('flyers ID', flyerIDs)
+  //         var realFlyerData = this.props.flyers.filter((f) => flyerIDs.includes(f.id))
+  //         console.log('flyers datas', realFlyerData)
+  //         var recIDs = ObjectToArray(RecruitmentNotesCreated)
+  //         var realRecData = this.props.recs.filter(r=> recIDs.includes(r.id))
+  //         this.setState({
+  //           masterFlyers: realFlyerData,
+  //           masterRecruitments:realRecData
+  //         })
+  //     })
+  //   })
+  // }
   render () {
 
   	const {
   		name,
   		description,
       website
+      // belongsTo
   	} = this.props.org;
 
     var isFollowed = this.state.followed
@@ -82,6 +118,8 @@ class OneOrg extends React.Component {
       </div>
     )
 
+    // var orgsFlyers = (this.state.masterFlyers || []).map((flyer, index )=> <Flyer key={index} flyer={flyer}/>)
+    // var orgsRecs = (this.state.masterRecruitments || []).map((rec,index) => <RecruitmentNote key={index} data={rec}/>)
     return (
       <div>
           <ColCenter>
@@ -91,18 +129,32 @@ class OneOrg extends React.Component {
               <Button onClick={this.handleClick}>{this.state.expanded ? 'See less' : 'See more'}</Button>
               <AnimakitExpander expanded={this.state.expanded}>
                   <div className="text">
-                    {name}'s Website: {website==='N/A'? 'N/A':<a id="link" href={website} target="_blank">{website}</a>}
+                    <Row>
+                      {name}'s Website: {website==='N/A'? 'N/A':<a id="link" href={website} target="_blank">{website}</a>}
+                    </Row>
                   </div>
-              </AnimakitExpander>
+              </AnimakitExpander> 
           </ColCenter>
       </div>
     )
   }
 }
+                    // <Row>
+                    //   <h5>Org's Flyers: </h5>
+                    //   <hr/>
+                    //   {orgsFlyers}
+                    // </Row>                    
+                    // <Row>
+                    //   <h5>Org's RecruitmentNotes: </h5>
+                      // <hr/>
+                      // {orgsFlyers}
+                    // </Row>
 //this.props.user
 function mapStateToProps(state){
     return{
-        user: state.user
+        user: state.user,
+        // recs: state.data.recruitments,
+        // // flyers: state.data.events
     }
 }
 
