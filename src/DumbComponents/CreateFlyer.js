@@ -230,7 +230,7 @@ class CreateFlyerPage extends React.Component {
           <Col md={4} mdOffset={2}>
             <FormGroup >
               <ControlLabel>When will it take place?</ControlLabel>
-              <DatePicker onChange={this.handleChange} value={this.state.date} />
+              <DatePicker onChange={this.handleChange} value={this.state.date} showClearButton={false}/>
             </FormGroup>
           </Col>
           <Col md={4} mdOffset={0.5}>
