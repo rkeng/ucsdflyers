@@ -150,7 +150,7 @@ export class OneFlyer extends React.Component{
         /**/
         var paddingNum = "5px"
         return(
-            <Col xs={12} sm={12} md={3} >
+            <Col xs={12} sm={6} md={3} >
                 <Card raised={true} style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>
                     <CardMedia
                         aspectRatio="wide"
