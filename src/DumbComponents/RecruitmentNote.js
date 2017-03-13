@@ -35,7 +35,7 @@ class RecruitmentNote extends React.Component {
               <Button onClick={this.handleClick}>{this.state.expanded ? 'Cancel' : 'Apply Now'}</Button>
               <AnimakitExpander expanded={this.state.expanded}>
                   <div className="text">
-                    Send Email to <a href="mailto:">{email}</a>
+                    Send Email to <a href=`mailto:${email}`>{email}</a>
                   </div>
               </AnimakitExpander>
           </ColCenter>
