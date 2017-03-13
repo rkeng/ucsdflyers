@@ -173,11 +173,6 @@ class OneFlyer extends React.Component{
                         subtitle={subtitle}
                     />
                     <CardText style={{padding: paddingNum}}>
-                        Date: {date}  Time: {time}
-                        <br/>
-                        @{location}
-                        <br/>
-                        <br/>
                         {description}
                     </CardText>
                 </Card>
