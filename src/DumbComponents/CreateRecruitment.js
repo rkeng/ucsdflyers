@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
+import { Link } from 'react-router';
 import { createNew, update } from '../models/index.js';
 import { RecruitmentNote } from './RecruitmentNote.js';
 import { IDtoObject } from '../Commen/index.js';
@@ -41,10 +42,6 @@ class CreateRecruitmentPage extends React.Component {
       email: email,
       description: description
     })
-    /*setTimeOut(
-        console.log("Name field is: ", this.state.name),
-        2000
-      )*/
   }
 
   onCreate(event){
@@ -67,9 +64,14 @@ class CreateRecruitmentPage extends React.Component {
     else if(note.email === "")
       NotificationManager.error('Error', 'Please enter valid email!', 2222);
     else{
-          let noteID = createNew('recruitmentNotes',note)
-          let noteIDobj = IDtoObject(noteID)
-          update(`users/${uid}/RecruitmentNotesCreated`, noteIDobj)
+      let noteID = createNew('recruitmentNotes',note)
+      let noteIDobj = IDtoObject(noteID)
+      update(`users/${uid}/RecruitmentNotesCreated`, noteIDobj)
+      NotificationManager.success('Sweet', 'You have successfully created a recruitment note', 2222);
+      findDOMNode(this.clubName).value = "";
+      findDOMNode(this.seeking).value = "";
+      findDOMNode(this.description).value = "";
+      findDOMNode(this.email).value = "";
     }
   }
 
