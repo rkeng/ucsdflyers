@@ -1,4 +1,5 @@
 import React from 'react'
+import { ColCenter } from '../Commen'
 import { connect } from 'react-redux'
 import { Row } from 'react-bootstrap'
 import { Flyer } from './Flyer'
@@ -42,9 +43,11 @@ class StudentProfile extends React.Component{
         )
         var listOfOrgsFollowed = followedOrgs.map(
             (org, index) => (
-                <Panel header={org.name} eventKey={index} key={index}>
-                    <Org key={index} org={org}/>
-                </Panel>
+                <ColCenter>
+                    <Panel header={org.name} eventKey={index} key={index}>
+                        <Org key={index} org={org}/>
+                    </Panel>
+                </ColCenter>
             )
         )
         // prepare user followed orgs:
@@ -56,7 +59,9 @@ class StudentProfile extends React.Component{
         )
         var listOfRecruitmentsSaved = savedRec.map(
             (rec, index) => (
+            <ColCenter>
                <RecruitmentNote data={rec} key={index}/>
+            </ColCenter>
             )
         )
 

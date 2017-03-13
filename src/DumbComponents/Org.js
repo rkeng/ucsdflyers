@@ -2,13 +2,13 @@ import React from 'react'
 import { remove, update } from '../models'
 import { Button, Row, Col } from 'react-bootstrap'
 import AnimakitExpander from 'animakit-expander';
-// import { ColCenter } from '../Commen'
+import { ColCenter } from '../Commen'
 import { FaPlusSquareO, FaPlusSquare } from 'react-icons/lib/fa';
 import { connect } from 'react-redux'
-// import { Flyer } from './Flyer'
-// import { RecruitmentNote } from './RecruitmentNote'
-// import { ObjectToArray } from '../Commen'
-// import { firebase } from '../models/FlyersFirebase'
+import { Flyer } from './Flyer'
+import { RecruitmentNote } from './RecruitmentNote'
+import { ObjectToArray } from '../Commen'
+import { firebase } from '../models/FlyersFirebase'
 
 
 class OneOrg extends React.Component {
@@ -17,7 +17,7 @@ class OneOrg extends React.Component {
     super(props);
     this.state = {
       expanded: false,
-      followed: false
+      followed: false,
       // flyersOfTheOrg: [],
       // recsOfTheOrg: [],
       // masterFlyers:[],
@@ -71,7 +71,7 @@ class OneOrg extends React.Component {
   //   firebase.database().ref(`users`).once('value').then(snap=>{
   //     var allUsers = snap.val();
   //     var userArray = ObjectToArray(allUsers)
-  //     var masters =  userArray.filter((user) => {
+  //     var masters =  (userArray || []).filter((user) => {
   //       return masterIDArray.includes(user.id)
   //     })
   //     masters.forEach(master => {
@@ -96,8 +96,8 @@ class OneOrg extends React.Component {
   	const {
   		name,
   		description,
-      website
-      // belongsTo
+      website,
+      belongsTo
   	} = this.props.org;
 
     var isFollowed = this.state.followed
@@ -114,7 +114,7 @@ class OneOrg extends React.Component {
       <div>
           <span className='pull-right'>
             <Button onClick={this.handleFollow} bsStyle={btnColor}>
-              {isFollowed ? 'Unfollow' : 'Follow'} {name}
+              {isFollowed ? 'Unfollow' : 'Follow'}
             </Button>
           </span>
       </div>
@@ -129,15 +129,15 @@ class OneOrg extends React.Component {
               {description}
               <br/>
               <Row>
-                <Col sm={3} mdOffset={2} md={2}>
+                <Col sm={1} md={1}>
                   <Button onClick={this.handleClick}>{this.state.expanded ? 'See less' : 'See more'}</Button>
                 </Col>
-                <Col smOffset={1} sm={3} mdOffset={3} md={2}>
+                <Col smOffset={2} sm={1}  md={1}>
                   {titleAndBtn}
                 </Col>
               </Row>
               <AnimakitExpander expanded={this.state.expanded}>
-                    <Col smOffset={1} mdOffset={1} lgOffset={1}>
+                    <Col smOffset={1} mdOffset={2} lgOffset={1}>
                         <Row>
                           <br/>
                           {name}'s Website: {website==='N/A'? 'N/A':<a id="link" href={website} target="_blank">{website}</a>}
@@ -149,20 +149,21 @@ class OneOrg extends React.Component {
     )
   }
 }
-//                         <Row>
-//                           <h5>Org's Flyers: </h5>
-//                           <hr/>
-//                         {belongsTo === 'vjiMXeqx1BfwOdG5PePyYzPG2WQ2' ? console.log('state data?', this.state) : console.log('skip')}
-//                           {this.state.masterFlyers.map((flyer, index ) => {
+                        // <Row>
+                        //   <h5>Org's Flyers: </h5>
+                        //   <hr/>
+                        //   {orgsFlyers}
+                        //   {/*this.state.masterFlyers.map((flyer, index ) => {
                         //       return(
                         //         <Flyer key={index} flyer={flyer}/>
                         //       )
                         //     })
-                        //   }
+                        //   */}
                         // </Row>                    
                         // <Row>
                         //   <h5>Org's RecruitmentNotes: </h5>
                         //   <hr/>
+                        //   {orgsRecs}
                         //   {this.state.masterRecruitments.map(
                         //     (rec, index) => {
                         //       return (
@@ -171,6 +172,7 @@ class OneOrg extends React.Component {
                         //     })
                         //   }
                         // </Row>
+                        // {belongsTo === 'vjiMXeqx1BfwOdG5PePyYzPG2WQ2' ? console.log('state data?', this.state) : console.log('skip')}
 //this.props.user
 function mapStateToProps(state){
     return{

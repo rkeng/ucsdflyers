@@ -94,7 +94,7 @@ class OneRecruitmentNote extends React.Component {
         }
         const btnColor =  isLiked ? 'danger' : 'info'
         // const HeatIcon =  isLiked ?  FaHeart : FaHeartO
-        const title = isLiked ? 'Delete' : 'Save'
+        const title = isLiked ? 'Unsave' : 'Save'
         const titleAndLikeBtn = (
             <div>
                 {name}
