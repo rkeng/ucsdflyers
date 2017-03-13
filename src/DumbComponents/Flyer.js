@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
 import Slider from 'react-slick'
 
-export class OneFlyer extends React.Component{
+class OneFlyer extends React.Component{
 
     constructor(props){
         super(props)
@@ -51,7 +51,6 @@ export class OneFlyer extends React.Component{
         var newFlyer = {}
         newFlyer[`${id}`] = id
 
-
         if(this.userLoggedInAsStudentNotLikedFlyer()){
             //update method will only update the field, not overwriting the whol thing
             update(`users/${uid}/FlyersLiked`, newFlyer)
@@ -64,6 +63,7 @@ export class OneFlyer extends React.Component{
 
     }
 
+
     render() {
         const { FlyersCreated } = this.props.user
         const {
@@ -71,9 +71,9 @@ export class OneFlyer extends React.Component{
             location,
             description,
             date,
+            time,
             images,
             likes,
-            time,
             belongsTo,
             id
         } = this.props.flyer
@@ -81,7 +81,7 @@ export class OneFlyer extends React.Component{
         const flyersArray = ObjectToArray(FlyersCreated)
         var displayDelete = false
         if(flyersArray.includes(id)){
-                displayDelete = true
+            displayDelete = true
         }
 
         //prepare the images
@@ -97,6 +97,7 @@ export class OneFlyer extends React.Component{
                       </div>
                   )
           })
+
           let settings = {
             className: '',
             dots: true,
@@ -113,9 +114,9 @@ export class OneFlyer extends React.Component{
             {...settings}
             >
             {CarouselItems}
-            </Slider>)
-       }
-
+            </Slider>
+          )
+        }
         //prepare the liked state of the button
         var isLiked = this.state.liked
         if(this.userLoggedInAsStudentLikedFlyer()){ //don't allow org to like flyers
@@ -130,7 +131,6 @@ export class OneFlyer extends React.Component{
         const HeatIcon =  isLiked ?  FaHeart : FaHeartO
         const titleAndLikeBtn = (
             <div>
-                <br/>
                 {name}
                 <span className='pull-right'>
                     <Button onClick={this.onLike} bsStyle={btnColor}>
@@ -173,6 +173,11 @@ export class OneFlyer extends React.Component{
                         subtitle={subtitle}
                     />
                     <CardText style={{padding: paddingNum}}>
+                        Date: {date}  Time: {time}
+                        <br/>
+                        @{location}
+                        <br/>
+                        <br/>
                         {description}
                     </CardText>
                 </Card>
@@ -180,6 +185,7 @@ export class OneFlyer extends React.Component{
         )
     }
 }
+
 
 function mapStateToProps(state){
     return{
