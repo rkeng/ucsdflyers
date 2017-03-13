@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Image, Button } from 'react-bootstrap'
+import { Col, Image, Button, Modal } from 'react-bootstrap'
 import { FaHeart, FaHeartO, FaClockO, FaFlag, FaGroup, FaCalendar } from 'react-icons/lib/fa';
 import { remove, update } from '../models'
 import { ObjectToArray } from '../Commen'
@@ -12,7 +12,8 @@ class OneFlyer extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            liked:false
+            liked:false,
+            showModel: false
         }
         this.onLike = this.onLike.bind(this)
         this.onDelete = this.onDelete.bind(this)
@@ -43,6 +44,7 @@ class OneFlyer extends React.Component{
             remove(`users/${uid}/FlyersCreated/${id}`)
             remove(`events/${id}`)
         }
+        this.setState({showModel:false})
     }
 
     onLike(){
@@ -143,7 +145,7 @@ class OneFlyer extends React.Component{
             <div>
                 {name}
                 <span className='pull-right'>
-                    <Button onClick={this.onDelete} bsStyle={'danger'}>
+                    <Button onClick={()=>this.setState({showModel:true})} bsStyle={'danger'}>
                         Delete
                     </Button>
                 </span>
@@ -161,22 +163,33 @@ class OneFlyer extends React.Component{
         )
         var paddingNum = "0px 10px 1px 10px"
         return(
-            <Col xs={12} sm={6} md={3} >
-                <Card style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>
-                    <CardMedia
-                        aspectRatio="wide"
-                        children={carouselInstance}
-                    />
-                    <CardTitle
-                        title={displayDelete? titleAndDeleteBtn : titleAndLikeBtn}
-                        style={{padding: paddingNum}}
-                        subtitle={subtitle}
-                    />
-                    <CardText style={{padding: paddingNum}}>
-                        {description}
-                    </CardText>
-                </Card>
-            </Col>
+                <Col xs={12} sm={6} md={3} >
+                    <Card style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>
+                        <CardMedia
+                            aspectRatio="wide"
+                            children={carouselInstance}
+                        />
+                        <CardTitle
+                            title={displayDelete? titleAndDeleteBtn : titleAndLikeBtn}
+                            style={{padding: paddingNum}}
+                            subtitle={subtitle}
+                        />
+                        <CardText style={{padding: paddingNum}}>
+                            {description}
+                        </CardText>
+                    </Card>
+                    <div>
+                        <Modal show={this.state.showModel}>
+                            <Modal.Title>
+                                <p style={{color:'darkRed', fontWeight:'bold'}} className="text-center"> Are you sure you want to delete this?</p>
+                            </Modal.Title>
+                            <Modal.Footer>
+                                <Button bsStyle='success' onClick={()=>this.setState({showModel:false})}>Cancel</Button>
+                                <Button bsStyle='danger' onClick={this.onDelete}>DELETE</Button>
+                            </Modal.Footer>
+                        </Modal>
+                    </div>
+                </Col>
         )
     }
 }

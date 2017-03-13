@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel, Button } from 'react-bootstrap';
+import { Panel, Button, Modal } from 'react-bootstrap';
 import { FaCalendar, FaGroup, FaEnvelope, FaStreetView } from 'react-icons/lib/fa';
 import { Link } from 'react-router'
 import { ColCenter, ObjectToArray } from '../Commen'
@@ -10,6 +10,9 @@ class OneRecruitmentNote extends React.Component {
 
     constructor(props){
         super(props)
+        this.state={
+          showModel:false
+        }
         this.onDelete = this.onDelete.bind(this)
     }
     
@@ -27,6 +30,7 @@ class OneRecruitmentNote extends React.Component {
             remove(`users/${uid}/RecruitmentNotesCreated/${id}`)
             remove(`recruitmentNotes/${id}`)
         }
+        this.setState({showModel:false})
     }
     
 
@@ -42,7 +46,7 @@ class OneRecruitmentNote extends React.Component {
         <div>
             {clubName}
             <span className='pull-right'>
-                <Button onClick={this.onDelete} bsStyle={'danger'}>
+                <Button onClick={()=>this.setState({showModel:true})} bsStyle={'danger'}>
                     Delete
                 </Button>
             </span>
@@ -58,8 +62,18 @@ class OneRecruitmentNote extends React.Component {
                   <h5><FaEnvelope/> Email: {email} <br/></h5>
                   <p>{description}</p>
 
-                  <Link className='btn btn-success'>Apply Now!</Link>
               </ColCenter>
+              <div>
+                  <Modal show={this.state.showModel}>
+                      <Modal.Title>
+                      <p style={{color:'darkRed', fontWeight:'bold'}} className="text-center"> Are you sure you want to delete this?</p>
+                      </Modal.Title>
+                      <Modal.Footer>
+                          <Button bsStyle='success' onClick={()=>this.setState({showModel:false})}>Cancel</Button>
+                          <Button bsStyle='danger' onClick={this.onDelete}>DELETE</Button>
+                      </Modal.Footer>
+                  </Modal>
+              </div>
             </Panel>
         )
     }
