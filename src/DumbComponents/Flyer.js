@@ -78,8 +78,9 @@ export class OneFlyer extends React.Component{
             slidesToShow: 1,
             slidesToScroll: 1,
             adaptiveHeight: true,
-            arrows: true,
-            swipe: true,
+            autoplay: true,
+            arrow: false,
+            swipe: true
           };
           carouselInstance = (
             <Slider
@@ -103,6 +104,7 @@ export class OneFlyer extends React.Component{
         const HeatIcon =  isLiked ?  FaHeart : FaHeartO
         const titleAndBtn = (
             <div>
+                <br/>
                 {name}
                 <span className='pull-right'>
                     <Button onClick={this.onLike} bsStyle={btnColor}>
@@ -115,7 +117,7 @@ export class OneFlyer extends React.Component{
         /**/
         return(
             <Col xs={12} sm={12} md={3} >
-            <Card raised={true} className='raised'>
+            <Card raised={true} style={{boxShadow: "10px 10px 10px grey"}}>
                 <CardMedia
                     aspectRatio="wide"
                     children={carouselInstance}
