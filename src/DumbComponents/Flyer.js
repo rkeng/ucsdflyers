@@ -152,6 +152,7 @@ class OneFlyer extends React.Component{
                 </span>
             </div>
         )
+
         /**/
         const subtitle = (
             <span>
