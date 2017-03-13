@@ -1,7 +1,8 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
 import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Image } from 'react-bootstrap'
-import { FaNewspaperO, FaGroup, FaStickyNoteO, FaChild, FaSignIn, FaSignOut, FaHeartO, FaPaperPlaneO } from 'react-icons/lib/fa'
+import { FaNewspaperO, FaGroup, FaStickyNoteO, FaChild, 
+         FaSignIn, FaSignOut, FaHeartO, FaPaperPlaneO, FaPlus, FaTag } from 'react-icons/lib/fa'
 import { connect } from 'react-redux'
 import { LogoutUserAction } from '../State/actions'
 import { signOutUser, detachListenerOn } from '../models'
@@ -75,8 +76,8 @@ function TopBarIcon(props){
             <TopBarItem id='events' key={0} name='EVENTS' icon={<FaNewspaperO />} />,
             <TopBarItem id='org' key={1} name='ORGANIZATIONS' icon={<FaGroup />} />,
             <TopBarItem id='recruitments' key={2} name='RECRUITMENTS' icon={<FaStickyNoteO />} />,
-            <TopBarItem id='create-flyer' key={3} name='Create Flyer' icon={<FaNewspaperO />} />,
-            <TopBarItem id='create-recruitment' key={4} name='Create Recruitment' icon={<FaGroup />} />,
+            <TopBarItem id='create-flyer' key={3} name='CREATE EVENT' icon={<FaPlus />} />,
+            <TopBarItem id='create-recruitment' key={4} name='CREATE RECRUITMENT' icon={<FaTag />} />,
             <TopBarItem id='about' key={5} name='ABOUT' icon={<FaChild />} />
         ]
     }

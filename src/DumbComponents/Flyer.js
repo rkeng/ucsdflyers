@@ -90,8 +90,8 @@ export class OneFlyer extends React.Component{
         if (imagesArray.length > 1) {
           CarouselItems = imagesArray.map(function(image, index){
                   return (
-                      <div key={index}>
-                          <Image src={image.imageUrl || image.preview} width={350} responsive/>
+                      <div key={index} >
+                          <Image src={image.imageUrl || image.preview} width={350} responsive />
                       </div>
                   )
           })
@@ -151,7 +151,7 @@ export class OneFlyer extends React.Component{
         var paddingNum = "5px"
         return(
             <Col xs={12} sm={6} md={3} >
-                <Card raised={true} style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>
+                <Card round style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>
                     <CardMedia
                         aspectRatio="wide"
                         children={carouselInstance}
