@@ -52,6 +52,7 @@ class CreateFlyerPage extends React.Component {
     findDOMNode(this.description).value = "";
     findDOMNode(this.location).value = "";
     findDOMNode(this.eventURL).value = "";
+    findDOMNode(this.time).value = "";
 
   }
 
@@ -62,6 +63,7 @@ class CreateFlyerPage extends React.Component {
     const description = findDOMNode(this.description).value;
     const location = findDOMNode(this.location).value;
     const eventURL = findDOMNode(this.eventURL).value;
+    const time = findDOMNode(this.time).value;
 
     var imagesFiles = []
     if(this.refs.dropzone && this.refs.dropzone.state.files){
@@ -74,6 +76,7 @@ class CreateFlyerPage extends React.Component {
       show: true,
       location: location,
       name: name,
+      time: time,
       description: description,
       eventURL: eventURL,
       files: imagesFiles
@@ -92,11 +95,11 @@ class CreateFlyerPage extends React.Component {
       description: findDOMNode(this.description).value,
       location: findDOMNode(this.location).value,
       eventURL: findDOMNode(this.eventURL).value,
+      time: findDOMNode(this.time).value,
       date: this.state.date.substring(0,10),
       active: true,
       likes: 0,
       belongsTo: orgArray[0].name,
-      time: time
     }
 
     var imagesFiles = this.refs.dropzone.state.files
@@ -233,7 +236,7 @@ class CreateFlyerPage extends React.Component {
           <Col md={4} mdOffset={0.5}>
             <FormGroup>
               <ControlLabel>Time</ControlLabel>
-              <TimePicker
+              {/*}<TimePicker
                 theme="classic"
                 time={this.state.time}
                 onFocusChange={this.onFocusChange.bind(this)}
@@ -244,6 +247,12 @@ class CreateFlyerPage extends React.Component {
                     placeHolder="Please choose time"
                     value={this.state.time} onClick={this.timeTrigger.bind(this)}
                   />)}
+                />*/}
+
+                <FormControl
+                  type="text"
+                  placeholder="Enter time"
+                  ref={(node) => {this.time = node}}
                 />
             </FormGroup>
           </Col>
