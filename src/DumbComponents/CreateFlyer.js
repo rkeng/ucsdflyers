@@ -26,6 +26,10 @@ class CreateFlyerPage extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onClear = this.onClear.bind(this);
     this.getFlyer = this.getFlyer.bind(this);
+    this.onFocusChange = this.onFocusChange.bind(this);
+    this.onTimeChange = this.onTimeChange.bind(this);
+
+
     this.state = {
       active: true,
       success: false,
@@ -52,6 +56,8 @@ class CreateFlyerPage extends React.Component {
     findDOMNode(this.description).value = "";
     findDOMNode(this.location).value = "";
     findDOMNode(this.eventURL).value = "";
+    findDOMNode(this.time).value = "";
+
 
   }
 
@@ -62,6 +68,7 @@ class CreateFlyerPage extends React.Component {
     const description = findDOMNode(this.description).value;
     const location = findDOMNode(this.location).value;
     const eventURL = findDOMNode(this.eventURL).value;
+    const time = findDOMNode(this.time).value;
 
     var imagesFiles = []
     if(this.refs.dropzone && this.refs.dropzone.state.files){
@@ -74,6 +81,7 @@ class CreateFlyerPage extends React.Component {
       show: true,
       location: location,
       name: name,
+      time: time,
       description: description,
       eventURL: eventURL,
       files: imagesFiles
@@ -91,6 +99,7 @@ class CreateFlyerPage extends React.Component {
       description: findDOMNode(this.description).value,
       location: findDOMNode(this.location).value,
       eventURL: findDOMNode(this.eventURL).value,
+      time: findDOMNode(this.time).value,
       date: this.state.date.substring(0,10),
       active: true,
       likes: 0,
@@ -131,10 +140,6 @@ class CreateFlyerPage extends React.Component {
       const [ hour, minute ] = newtime.split(':');
       this.setState({hour, minute, time:newtime})
     }
-    else if(this.state.time2focus){
-      const [ hour, minute ] = newtime.split(':');
-      this.setState({hour, minute, time2:newtime})
-    }
   }
 
   onFocusChange(newfocus) {
@@ -145,7 +150,7 @@ class CreateFlyerPage extends React.Component {
     const focused = this.state.timefocus;
     this.setState({ timefocus: !focused });
   }
-
+//(ourDate || new Date().toISOString() ).substring(0,10)
   getFlyer () {
       var ourDate = this.state.date
       var date = (ourDate || new Date().toISOString() ).substring(0,10)
@@ -183,7 +188,7 @@ class CreateFlyerPage extends React.Component {
 
   handleChange(value){
     this.setState({
-      date: value,
+      date: value
     })
   }
 
@@ -223,27 +228,35 @@ class CreateFlyerPage extends React.Component {
           </Col>
         </Row>
         <Row className="time">
-          <Col md={4} mdOffset={2}>
+          <Col sm={6}>
+          <Form>
             <FormGroup >
               <ControlLabel>When will it take place?</ControlLabel>
-              <DatePicker onChange={this.handleChange} value={this.state.date} />
+              <DatePicker onChange={this.handleChange} placeholder="Placeholder"  value={this.state.date} />
             </FormGroup>
+          </Form>
           </Col>
-          <Col md={4} mdOffset={0.5}>
+          <Col sm={6} >
             <FormGroup>
               <ControlLabel>Time</ControlLabel>
-              <TimePicker
+              {/*<TimePicker
                 theme="classic"
                 time={this.state.time}
-                onFocusChange={this.onFocusChange.bind(this)}
-                onTimeChange={this.onTimeChange.bind(this)}
+                onFocusChange={this.onFocusChange}
+                onTimeChange={this.onTimeChange}
                 focused={this.state.timefocus}
                 trigger={(
                   <FormControl
-                    placeHolder="Please choose time"
+                  placeholder="Please choose time"
                     value={this.state.time} onClick={this.timeTrigger.bind(this)}
                   />)}
+                />*/}
+                <FormControl
+                  type="text"
+                  placeholder="Enter time"
+                  ref={(node) => {this.time = node}}
                 />
+
             </FormGroup>
           </Col>
         </Row>

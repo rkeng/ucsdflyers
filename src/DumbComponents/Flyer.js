@@ -143,9 +143,7 @@ class OneFlyer extends React.Component{
                         children={carouselInstance}
                     />
                     <CardTitle
-                        title={displayDelete? titleAndDeleteBtn : titleAndLikeBtn}
-                        subtitle={`Date: ${date} @${location}`}
-                    />
+                        title={displayDelete? titleAndDeleteBtn : titleAndLikeBtn}                    />
                     <CardText>
                         Date: {date}  Time: {time}
                         <br/>
