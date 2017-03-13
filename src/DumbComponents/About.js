@@ -77,7 +77,7 @@ const members = [
     {
       name: 'Jialin Lou',
       role: 'User Interface Specialist',
-      intro: 'Hello World!',
+      intro: '2nd year CS student',
       email: 'jil570@ucsd.edu',
       image: require("../asset/jialin.jpg"),
       color: '#27AE60'
@@ -86,7 +86,7 @@ const members = [
     {
       name: 'Xinrui Zhou',
       role: 'User Interface Specialist',
-      intro: 'Hello World!',
+      intro: 'Let us make difference',
       email: 'x9zhou@ucsd.edu',
       image: require("../asset/arow.jpg"),
       color:'#581845'
