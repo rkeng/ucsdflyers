@@ -88,16 +88,16 @@ function TopBarIcon(props){
                 {topbarItemsToRender}
                 <button onClick={() => {
                     console.log('state?', props.state)
-                    firebase.database().ref('users').once('value').then(snap => {
-                        var allInstance = snap.val();
-                        var allKeys = Object.keys(allInstance)
-                        allKeys.forEach(key=>{
-                            if(!allInstance[`${key}`].id){
-                                firebase.database().ref(`users/${key}`).remove()
-                            }
+                    // firebase.database().ref('users').once('value').then(snap => {
+                    //     var allInstance = snap.val();
+                    //     var allKeys = Object.keys(allInstance)
+                    //     allKeys.forEach(key=>{
+                    //         if(!allInstance[`${key}`].id){
+                    //             firebase.database().ref(`users/${key}`).remove()
+                    //         }
                         
-                        })
-                    })
+                    //     })
+                    // })
                     // var ELSorg = {
                     //     belongsTo: 'N/A',
                     //     descrription: 'In ESL, we strive to make students life easier and better',

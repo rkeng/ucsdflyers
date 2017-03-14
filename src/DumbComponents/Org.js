@@ -1,14 +1,13 @@
 import React from 'react'
 import { remove, update } from '../models'
-import { Button, Row, Col } from 'react-bootstrap'
+import { Button, Row, Col, Well } from 'react-bootstrap'
 import AnimakitExpander from 'animakit-expander';
 // import { ColCenter } from '../Commen'
 // import { FaPlusSquareO, FaPlusSquare } from 'react-icons/lib/fa';
 import { connect } from 'react-redux'
-// import { Flyer } from './Flyer'
-// import { RecruitmentNote } from './RecruitmentNote'
-// import { ObjectToArray } from '../Commen'
-// import { firebase } from '../models/FlyersFirebase'
+import { Flyer } from './Flyer'
+import { RecruitmentNote } from './RecruitmentNote'
+import { ObjectToArray } from '../Commen'
 
 
 class OneOrg extends React.Component {
@@ -18,8 +17,6 @@ class OneOrg extends React.Component {
     this.state = {
       expanded: false,
       followed: false,
-      // flyersOfTheOrg: [],
-      // recsOfTheOrg: [],
       // masterFlyers:[],
       // masterRecruitments:[]
 
@@ -96,10 +93,11 @@ class OneOrg extends React.Component {
   	const {
   		name,
   		description,
-      website
-      // belongsTo
+      website,
+      belongsTo
   	} = this.props.org;
 
+    //prepare the follow or unfollor button
     var isFollowed = this.state.followed
     if(this.studentUserFollowedOrg()){ //don't allow org to follow orgs
       isFollowed = true
@@ -120,6 +118,38 @@ class OneOrg extends React.Component {
       </div>
     )
 
+    //prepare the flyers or recruitments of the org
+    var master = belongsTo //belongsTo being true means the org is claimed by a org;     
+    var orgsFlyers = []
+    var ogrsRecruitments = []
+    if(master){ //if the org's master
+
+        //prepare the org's created flyers
+        var flyerArray = ObjectToArray(master.FlyersCreated)
+        let createdFlyers = (this.props.flyers || []).filter(
+            (flyer) => {
+               return flyerArray.includes(flyer.id)
+            }
+        )
+        orgsFlyers = createdFlyers.map(
+          (flyer, index) => {
+            return <Flyer key={index} flyer={flyer}/>
+          }
+        )
+
+        //prepare the org's created recruitmentNotes
+        var recArray = ObjectToArray(master.RecruitmentNotesCreated)
+        let createdRecs = (this.props.recs || []).filter(
+            (rec) => {
+              return recArray.includes(rec.id)
+            }
+        )
+        ogrsRecruitments = createdRecs.map(
+            (rec, index) => {
+              return <RecruitmentNote key={index} data={rec}/>
+            }
+        )
+    }
     // var orgsFlyers = this.state.masterFlyers.map((flyer, index )=> <Flyer key={index} flyer={flyer}/>)
     // var orgsRecs = this.state.masterRecruitments.map((rec, index) => <RecruitmentNote key={index} data={rec}/>)
       // {belongsTo === "vjiMXeqx1BfwOdG5PePyYzPG2WQ2" ? console.log('state', this.state) : btnColor}
@@ -136,49 +166,53 @@ class OneOrg extends React.Component {
                   {titleAndBtn}
                 </Col>
               </Row>
+          </div>
+          <div>
               <AnimakitExpander expanded={this.state.expanded}>
-                    <Col smOffset={1} mdOffset={2} lgOffset={1}>
+                  <Col smOffset={1} mdOffset={2} lgOffset={1}>
+                      <Row>
+                        <br/>
+                        {name}'s Website: {website==='N/A'? 'N/A':<a id="link" href={website} target="_blank">{website}</a>}
+                      </Row>
+                      <Well>
                         <Row>
-                          <br/>
-                          {name}'s Website: {website==='N/A'? 'N/A':<a id="link" href={website} target="_blank">{website}</a>}
+                          <h5>Org's Flyers: </h5>
+                          <hr/>
+                          {orgsFlyers}
+                          {/*this.state.masterFlyers.map((flyer, index ) => {
+                              return(
+                                <Flyer key={index} flyer={flyer}/>
+                              )
+                            })
+                          */}
+                        </Row>                    
+                        <Row>
+                          <h5>Org's RecruitmentNotes: </h5>
+                          <hr/>
+                          {ogrsRecruitments}
+                          {/*this.state.masterRecruitments.map(
+                            (rec, index) => {
+                              return (
+                                <RecruitmentNote key={index} data={rec}/>
+                              )
+                            })
+                          */}
                         </Row>
-                    </Col>
+                      </Well>
+                  </Col>
                 </AnimakitExpander> 
           </div>
       </div>
     )
   }
 }
-                        // <Row>
-                        //   <h5>Org's Flyers: </h5>
-                        //   <hr/>
-                        //   {orgsFlyers}
-                        //   {/*this.state.masterFlyers.map((flyer, index ) => {
-                        //       return(
-                        //         <Flyer key={index} flyer={flyer}/>
-                        //       )
-                        //     })
-                        //   */}
-                        // </Row>                    
-                        // <Row>
-                        //   <h5>Org's RecruitmentNotes: </h5>
-                        //   <hr/>
-                        //   {orgsRecs}
-                        //   {this.state.masterRecruitments.map(
-                        //     (rec, index) => {
-                        //       return (
-                        //         <RecruitmentNote key={index} data={rec}/>
-                        //       )
-                        //     })
-                        //   }
-                        // </Row>
                         // {belongsTo === 'vjiMXeqx1BfwOdG5PePyYzPG2WQ2' ? console.log('state data?', this.state) : console.log('skip')}
 //this.props.user
 function mapStateToProps(state){
     return{
         user: state.user,
-        // recs: state.data.recruitments,
-        // flyers: state.data.events
+        recs: state.data.recruitments,
+        flyers: state.data.events
     }
 }
 
