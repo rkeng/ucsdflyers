@@ -1,5 +1,4 @@
 import React from 'react'
-import { Col } from 'react-bootstrap'
 import { Flyer } from './Flyer.js'
 import Masonry from 'react-masonry-component'
 
