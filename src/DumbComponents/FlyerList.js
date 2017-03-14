@@ -12,9 +12,7 @@ class FlyerList extends React.Component {
         (flyer, index) => {
 
           return(
-            <Col xs={12} sm={6} md={3} >
               <Flyer key={index} flyer={flyer} />
-            </Col>
           )
         }
       )

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel, Button, Modal } from 'react-bootstrap';
+import { Panel, Button, Modal, Row, Col } from 'react-bootstrap';
 import { FaCalendar, FaGroup, FaEnvelope, FaStreetView } from 'react-icons/lib/fa';
 // import { Link } from 'react-router'
 import { ColCenter, ObjectToArray } from '../Commen'
@@ -75,7 +75,6 @@ class OneRecruitmentNote extends React.Component {
       }
       const deleteBtn = (
         <div>
-            {clubName}
             <span className='pull-right'>
                 <Button onClick={()=>this.setState({showModel:true})} bsStyle={'danger'}>
                     Delete
@@ -107,14 +106,23 @@ class OneRecruitmentNote extends React.Component {
         )
 
       return (
-            <Panel bsStyle='info' header={displayDelete ? deleteBtn : clubName}>
+            <Panel bsStyle='info' header={clubName + ' seeking ' + seeking}>
               <ColCenter>
                   <h5><FaStreetView/> {seeking}</h5>
                   <h5><FaCalendar/> Due date: {dueDate} <br/></h5>
                   <h5><FaGroup/> Organization: {clubName} <br/></h5>
                   <h5><FaEnvelope/> Email: {email} <br/></h5>
                   <p>{description}</p>
-                  {titleAndLikeBtn}
+                  <Row >
+                    <Col sm={1} md={1}>
+                      {titleAndLikeBtn}
+                    </Col>
+                    {displayDelete ? 
+                      <Col smOffset={2} sm={1}  md={1}>
+                        {deleteBtn}
+                      </Col>
+                        : " "}
+                  </Row>
               </ColCenter>
               <div>
                   <Modal show={this.state.showModel}>
