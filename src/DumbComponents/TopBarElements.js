@@ -9,8 +9,8 @@ import { signOutUser, detachListenerOn } from '../models'
 import Avatar from 'react-avatar'
 import logoText from '../asset/logoText.png'
 import person from '../asset/person.jpg'
-// import { firebase } from '../models/FlyersFirebase'
-
+import { firebase } from '../models/FlyersFirebase'
+import { createNew } from '../models'
 
 
 function changeRoute(e, props, uid) {
@@ -86,21 +86,31 @@ function TopBarIcon(props){
     return (
             <Nav>
                 {topbarItemsToRender}
+                <button onClick={() => {
+                    console.log('state?', props.state)
+                    firebase.database().ref('users').once('value').then(snap => {
+                        var allInstance = snap.val();
+                        var allKeys = Object.keys(allInstance)
+                        allKeys.forEach(key=>{
+                            if(!allInstance[`${key}`].id){
+                                firebase.database().ref(`users/${key}`).remove()
+                            }
+                        
+                        })
+                    })
+                    // var ELSorg = {
+                    //     belongsTo: 'N/A',
+                    //     descrription: 'In ESL, we strive to make students life easier and better',
+                    //     id: '',
+                    //     name: 'Enriching Student Life',
+                    //     website: 'https://ucsd-flyers.firebaseapp.com/about'
+                    // }
+                    // createNew('clubs', ELSorg)
+                }}> show state</button>
             </Nav>
     )
 }
 /* use this print state; only for development purpose
-                <button onClick={() => {
-                    // console.log('state?', props.state)
-                    firebase.database().ref('users').once('value').then(snap => {
-                        var allUsers = snap.val();
-                        var userKeys = Object.keys(allUsers)
-                        userKeys.forEach(key=>{
-                            firebase.database().ref(`users/${key}`).update({id: key})
-                        
-                        })
-                    })
-                }}> show state</button>
 */
 
 

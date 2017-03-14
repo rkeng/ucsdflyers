@@ -122,7 +122,9 @@ class CreateFlyerPage extends React.Component {
       let flyerIDobj = IDtoObject(flyerID)
       // let uid = this.props.user.uid
       update(`users/${uid}/FlyersCreated`, flyerIDobj)
-
+      if(hasOrg){
+        update(`clubs/${hasOrg}/belongsTo/FlyersCreated`, flyerIDobj)
+      }
        // image uploading
        // let files = this.refs.dropzone.state.files
        uploadImages("events", flyerID, clubID, imagesFiles)

@@ -58,7 +58,9 @@ class OrgProfileInitPage extends React.Component{
         const { uid } = this.props.user
         const userIDObj = IDtoObject(uid)
         firebase.database().ref(`users/${uid}`).update({hasOrg: `${theOrg.id}`})
-        firebase.database().ref(`clubs/${theOrg.id}/belongsTo`).update(userIDObj)
+        firebase.database().ref(`clubs/${theOrg.id}`).update({
+          belongsTo: this.props.user
+        })
         .then(_ => {
             browserHistory.push('/create-flyer')
         })

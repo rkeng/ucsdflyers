@@ -46,14 +46,15 @@ class CreateRecruitmentPage extends React.Component {
 
   onCreate(event){
     event.preventDefault();
-    const { uid } = this.props.user
+    const { uid, hasOrg, email } = this.props.user
     const note = {
       clubName: findDOMNode(this.clubName).value,
       seeking: findDOMNode(this.seeking).value,
       email: findDOMNode(this.email).value,
       dueDate: this.state.dueDate.substring(0,10),
       description: findDOMNode(this.description).value,
-      belongsTo: uid
+      belongsTo: uid,
+      orgEmail: email
     }
     if(note.clubName === "")
       NotificationManager.error('Error', 'Please enter valid name!', 2222);
@@ -67,6 +68,9 @@ class CreateRecruitmentPage extends React.Component {
       let noteID = createNew('recruitmentNotes',note)
       let noteIDobj = IDtoObject(noteID)
       update(`users/${uid}/RecruitmentNotesCreated`, noteIDobj)
+      if(hasOrg){
+        update(`clubs/${hasOrg}/belongsTo/RecruitmentNotesCreated`, noteIDobj)
+      }
       NotificationManager.success('You have successfully created a recruitment note', 'How Lovely', 2222);
       findDOMNode(this.clubName).value = "";
       findDOMNode(this.seeking).value = "";
