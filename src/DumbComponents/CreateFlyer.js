@@ -113,15 +113,15 @@ class CreateFlyerPage extends React.Component {
       Alert.error('Please enter valid location!');
     else if(!imagesFiles.length)//file is not uploaded
       Alert.error('Please upload at least one image!');
-    else if(!imagesFiles.length)//file is not uploaded
+    else if(flyer.eventURL === "")
       Alert.error('Please enter the eventURL!');
     else{
-
-      this.setState({ success: true})
       let flyerID = createNew('events',flyer)
       let flyerIDobj = IDtoObject(flyerID)
       // let uid = this.props.user.uid
-      update(`users/${uid}/FlyersCreated`, flyerIDobj)
+      update(`users/${uid}/FlyersCreated`, flyerIDobj).then(
+        this.setState({ success: true})
+      )
       if(hasOrg){
         update(`clubs/${hasOrg}/belongsTo/FlyersCreated`, flyerIDobj)
       }
