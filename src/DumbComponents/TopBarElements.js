@@ -150,14 +150,14 @@ class AvatarSelectNoState extends React.Component {
 function TopBarRightNoState(props){
     const { isAuthenticated, uid } = props.user
     var DropDownToRender = [
-        <MenuItem id='feedback' onClick={(e) => changeRoute(e, props)}><FaPaperPlaneO/>Contact Us</MenuItem>,
-        <MenuItem id='login' onClick={(e) => changeRoute(e, props, uid)}><FaSignIn />LOGIN</MenuItem>
+        <MenuItem key={0} id='feedback' onClick={(e) => changeRoute(e, props)}><FaPaperPlaneO/>Contact Us</MenuItem>,
+        <MenuItem key={1} id='login' onClick={(e) => changeRoute(e, props, uid)}><FaSignIn />LOGIN</MenuItem>
     ]
     if (isAuthenticated) { //user logged in
         DropDownToRender = [
-            <MenuItem id='profile' onClick={(e) => changeRoute(e, props)}><FaHeartO/>Profile</MenuItem>,
-            <MenuItem id='feedback' onClick={(e) => changeRoute(e, props)}><FaPaperPlaneO/>Contact Us</MenuItem>,
-            <MenuItem id='logout' onClick={(e) => changeRoute(e, props, uid)}><FaSignOut />LOGOUT</MenuItem>
+            <MenuItem key={0} id='profile' onClick={(e) => changeRoute(e, props)}><FaHeartO/>Profile</MenuItem>,
+            <MenuItem key={1} id='feedback' onClick={(e) => changeRoute(e, props)}><FaPaperPlaneO/>Contact Us</MenuItem>,
+            <MenuItem key={2} id='logout' onClick={(e) => changeRoute(e, props, uid)}><FaSignOut />LOGOUT</MenuItem>
         ]
     } 
     return(

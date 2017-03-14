@@ -177,17 +177,6 @@ class CreateFlyerPage extends React.Component {
             </Col>
         )
     }
-        // <Panel key={this.state.name} bsStyle='success'
-        //     header={this.state.name}>
-        //   <h3>{this.state.name}</h3>
-        //     <p>
-        //       Date: {x} <br />
-        //       Time: {this.state.time}<br />
-        //       Description: {this.state.description}<br />
-        //       Location: {this.state.location}
-        //     </p>
-        // </Panel>
-
 
   handleChange(value){
     this.setState({
@@ -197,15 +186,7 @@ class CreateFlyerPage extends React.Component {
 
 
   render() {
-    /*
-    var ToRender = <div> insufficient persmission </div>
-    if(only login as org){
-      ToRedner = (...)
-    }
-    return(
-      <div>{To}</div>
-    )
-    */   
+ 
     const { isAuthenticated, isOrg } = this.props.user
     var ToRender = <NoPersmission/>
     if(isAuthenticated && isOrg){
@@ -339,8 +320,8 @@ class CreateFlyerPage extends React.Component {
                 </Modal.Footer>
               </Modal>
 
-                <Modal show={this.state.show} onHide={this.close} bsSize='large'>
-                  <Modal.Body>
+                <Modal show={this.state.show} onHide={this.close}>
+                  <Modal.Body style={{height:600}}>
                       { this.getFlyer() }
                       <br/>
                       <br/>
