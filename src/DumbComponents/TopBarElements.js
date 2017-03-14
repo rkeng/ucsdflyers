@@ -86,6 +86,10 @@ function TopBarIcon(props){
     return (
             <Nav>
                 {topbarItemsToRender}
+            </Nav>
+    )
+}
+/* use this print state; only for development purpose
                 <button onClick={() => {
                     console.log('state?', props.state)
                     // firebase.database().ref('users').once('value').then(snap => {
@@ -107,10 +111,6 @@ function TopBarIcon(props){
                     // }
                     // createNew('clubs', ELSorg)
                 }}> show state</button>
-            </Nav>
-    )
-}
-/* use this print state; only for development purpose
 */
 
 
