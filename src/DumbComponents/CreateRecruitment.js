@@ -9,6 +9,7 @@ import { createNew, update } from '../models/index.js';
 import { RecruitmentNote } from './RecruitmentNote.js';
 import { IDtoObject } from '../Commen/index.js';
 import Alert from 'react-s-alert';
+import { NoPersmission } from './NoPermission'
 
 
 const buttonStyles = {maxWidth: 800}
@@ -105,67 +106,76 @@ class CreateRecruitmentPage extends React.Component {
 
 
   render() {
+    const { isAuthenticated, isOrg } = this.props.user
+    var ToRender = <NoPersmission/>
+
+    if(isAuthenticated && isOrg){
+       ToRender = (
+            <Grid>
+            <Row className="CreateRecruitment">
+            <Col md={8} mdOffset={2}>
+
+            <PageHeader>Post Recruitment Notes <small>Name of organization</small></PageHeader>
+            <Form>
+            <FormGroup>
+              <Col>
+                <ControlLabel>Organization Name </ControlLabel>
+                <FormControl type="text" ref={ (node)=> {this.clubName = node} } placeholder="Enter your organization name here" />
+              </Col>
+            </FormGroup>
+
+            <FormGroup>
+              <Col>
+                <ControlLabel>Seeking for: </ControlLabel>
+                <FormControl type="text" ref={ (node)=> {this.seeking = node} } placeholder="Enter your title here" />
+              </Col>
+            </FormGroup>
+
+            <FormGroup controlId="formControlsTextarea">
+              <ControlLabel>Contact Email</ControlLabel>
+              <FormControl type="text" ref={ (node)=> {this.email = node } } placeholder="Enter your contact email" />
+            </FormGroup>
+
+            <FormGroup controlId="formControlsTextarea">
+              <ControlLabel>Date</ControlLabel>
+              <DatePicker onChange={this.handleChange} value={this.state.dueDate} showClearButton={false}/>
+            </FormGroup>
+
+            <FormGroup controlId="formControlsTextarea">
+              <ControlLabel>Recruitment description</ControlLabel>
+              <FormControl componentClass="textarea" ref={ (node)=> {this.description = node } } style={textStyles} placeholder="Enter your recruitment description" />
+            </FormGroup>
+
+            </Form>
+
+            <br/>
+            <div className="Button" style={buttonStyles}>
+              <ButtonToolbar>
+                <Button onClick={this.onPreview} bsStyle="info" type='submit'>Preview</Button>
+                <Button onClick={this.onCreate} bsStyle="success" type='submit'>Submit</Button>
+                <Link className='btn btn-danger' to='/recruitments' >Cancel</Link>
+              </ButtonToolbar>
+            </div>
+            <br/>
+
+            <Modal show={this.state.show} onHide={this.close}>
+              <Modal.Body>
+                <div>
+                  {this.getRecruitments()}
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={() => this.setState({show: false})}>Close</Button>
+              </Modal.Footer>
+            </Modal>
+            </Col>
+            </Row>
+            </Grid>
+
+        )
+    }
     return (
-      <Grid>
-      <Row className="CreateRecruitment">
-      <Col md={8} mdOffset={2}>
-
-      <PageHeader>Post Recruitment Notes <small>Name of organization</small></PageHeader>
-      <Form>
-      <FormGroup>
-        <Col>
-          <ControlLabel>Organization Name </ControlLabel>
-          <FormControl type="text" ref={ (node)=> {this.clubName = node} } placeholder="Enter your organization name here" />
-        </Col>
-      </FormGroup>
-
-      <FormGroup>
-        <Col>
-          <ControlLabel>Seeking for: </ControlLabel>
-          <FormControl type="text" ref={ (node)=> {this.seeking = node} } placeholder="Enter your title here" />
-        </Col>
-      </FormGroup>
-
-      <FormGroup controlId="formControlsTextarea">
-        <ControlLabel>Contact Email</ControlLabel>
-        <FormControl type="text" ref={ (node)=> {this.email = node } } placeholder="Enter your contact email" />
-      </FormGroup>
-
-      <FormGroup controlId="formControlsTextarea">
-        <ControlLabel>Date</ControlLabel>
-        <DatePicker onChange={this.handleChange} value={this.state.dueDate} showClearButton={false}/>
-      </FormGroup>
-
-      <FormGroup controlId="formControlsTextarea">
-        <ControlLabel>Recruitment description</ControlLabel>
-        <FormControl componentClass="textarea" ref={ (node)=> {this.description = node } } style={textStyles} placeholder="Enter your recruitment description" />
-      </FormGroup>
-
-      </Form>
-
-      <br/>
-      <div className="Button" style={buttonStyles}>
-        <ButtonToolbar>
-          <Button onClick={this.onPreview} bsStyle="info" type='submit'>Preview</Button>
-          <Button onClick={this.onCreate} bsStyle="success" type='submit'>Submit</Button>
-          <Link className='btn btn-danger' to='/recruitments' >Cancel</Link>
-        </ButtonToolbar>
-      </div>
-      <br/>
-
-      <Modal show={this.state.show} onHide={this.close}>
-        <Modal.Body>
-          <div>
-            {this.getRecruitments()}
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => this.setState({show: false})}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-      </Col>
-      </Row>
-      </Grid>
+      <div> {ToRender} </div>
     );
   }
 }

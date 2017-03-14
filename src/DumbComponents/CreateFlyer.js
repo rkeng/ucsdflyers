@@ -13,7 +13,8 @@ import { IDtoObject } from '../Commen/index.js';
 // import TimePicker from 'react-times';
 import 'react-times/css/classic/default.css';
 import Alert from 'react-s-alert';
-
+import { browserHistory } from 'react-router'
+import { NoPersmission } from './NoPermission'
 
 // import { AuthWrapper, ORG } from '../Commen'
 
@@ -205,156 +206,162 @@ class CreateFlyerPage extends React.Component {
     return(
       <div>{To}</div>
     )
-    */      
-    return (
-      <Grid>
-        <Row className="header">
-          <Col sm={12} md={8} mdOffset={2}>
+    */   
+    const { isAuthenticated, isOrg } = this.props.user
+    var ToRender = <NoPersmission/>
+    if(isAuthenticated && isOrg){
 
-          <PageHeader>Create Event Flyer</PageHeader>
-          </Col>
-        </Row>
-        <Row className="name">
-          <Col sm={12} md={8} mdOffset={2}>
-          <Form>
-            <FormGroup>
-              <ControlLabel>What is the name of your upcoming event?</ControlLabel>
+     ToRender=( 
+          <Grid>
+            <Row className="header">
+              <Col sm={12} md={8} mdOffset={2}>
 
-              <FormControl
-                type="text"
-                placeholder="Enter name"
-                ref={(node) => {this.name = node}}
-              />
-            </FormGroup>
-          </Form>
-          </Col>
-        </Row>
-        <Row className="time">
-          <Col md={4} mdOffset={2}>
-            <FormGroup >
-              <ControlLabel>When will it take place?</ControlLabel>
-              <DatePicker onChange={this.handleChange} value={this.state.date} showClearButton={false}/>
-            </FormGroup>
-          </Col>
-          <Col md={4} mdOffset={0.5}>
-            <FormGroup>
-              <ControlLabel>Time</ControlLabel>
-              {/*}<TimePicker
-                theme="classic"
-                time={this.state.time}
-                onFocusChange={this.onFocusChange.bind(this)}
-                onTimeChange={this.onTimeChange.bind(this)}
-                focused={this.state.timefocus}
-                trigger={(
+              <PageHeader>Create Event Flyer</PageHeader>
+              </Col>
+            </Row>
+            <Row className="name">
+              <Col sm={12} md={8} mdOffset={2}>
+              <Form>
+                <FormGroup>
+                  <ControlLabel>What is the name of your upcoming event?</ControlLabel>
+
                   <FormControl
-                    placeHolder="Please choose time"
-                    value={this.state.time} onClick={this.timeTrigger.bind(this)}
-                  />)}
-                />*/}
+                    type="text"
+                    placeholder="Enter name"
+                    ref={(node) => {this.name = node}}
+                  />
+                </FormGroup>
+              </Form>
+              </Col>
+            </Row>
+            <Row className="time">
+              <Col md={4} mdOffset={2}>
+                <FormGroup >
+                  <ControlLabel>When will it take place?</ControlLabel>
+                  <DatePicker onChange={this.handleChange} value={this.state.date} showClearButton={false}/>
+                </FormGroup>
+              </Col>
+              <Col md={4} mdOffset={0.5}>
+                <FormGroup>
+                  <ControlLabel>Time</ControlLabel>
+                  {/*}<TimePicker
+                    theme="classic"
+                    time={this.state.time}
+                    onFocusChange={this.onFocusChange.bind(this)}
+                    onTimeChange={this.onTimeChange.bind(this)}
+                    focused={this.state.timefocus}
+                    trigger={(
+                      <FormControl
+                        placeHolder="Please choose time"
+                        value={this.state.time} onClick={this.timeTrigger.bind(this)}
+                      />)}
+                    />*/}
 
-                <FormControl
-                  type="text"
-                  placeholder="Enter time"
-                  ref={(node) => {this.time = node}}
-                />
-            </FormGroup>
-          </Col>
-        </Row>
-        <br/>
-        <Row className="location">
-          <Col sm={12} md={8} mdOffset={2}>
-          <Form>
-            <FormGroup>
-              <ControlLabel>Where is the new event going to be?</ControlLabel>
-              <FormControl
-                type="text"
-                placeholder="Enter location"
-                ref={(node) => {this.location = node}}
-              />
-              <FormControl.Feedback />
-            </FormGroup>
+                    <FormControl
+                      type="text"
+                      placeholder="Enter time"
+                      ref={(node) => {this.time = node}}
+                    />
+                </FormGroup>
+              </Col>
+            </Row>
+            <br/>
+            <Row className="location">
+              <Col sm={12} md={8} mdOffset={2}>
+              <Form>
+                <FormGroup>
+                  <ControlLabel>Where is the new event going to be?</ControlLabel>
+                  <FormControl
+                    type="text"
+                    placeholder="Enter location"
+                    ref={(node) => {this.location = node}}
+                  />
+                  <FormControl.Feedback />
+                </FormGroup>
 
-            <FormGroup>
-              <ControlLabel>Please give students a detail description of your event</ControlLabel>
-              <FormControl
-                componentClass="textarea"
-                placeholder="Enter description"
-                ref={(node) => {this.description = node}}
-              />
-            </FormGroup>
+                <FormGroup>
+                  <ControlLabel>Please give students a detail description of your event</ControlLabel>
+                  <FormControl
+                    componentClass="textarea"
+                    placeholder="Enter description"
+                    ref={(node) => {this.description = node}}
+                  />
+                </FormGroup>
 
-            <FormGroup>
-              <ControlLabel>Please enter the eventURL</ControlLabel>
-              <FormControl
-                type="text"
-                placeholder="Enter EventURL"
-                ref={(node) => {this.eventURL = node}}
-              />
-            </FormGroup>
-
-
-            <ImageDropzone ref="dropzone"/>
-
-
-          </Form>
-        </Col>
-      </Row>
-
-      <br/>
-
-      <Row className="newButton">
-        <Col md={1} mdOffset={2}>
-          <Button
-            bsStyle="primary"
-            bsSize="small"
-            onClick={this.onCreate}>CreateFlyer
-          </Button>
-        </Col>
-
-        <Col md={1} >
-          <Button
-            bsStyle="success"
-            bsSize="small"
-            onClick={this.onPreview}>
-            Preview flyer page
-          </Button>
-
-          <Modal show={this.state.success} onHide={this.close}>
-
-            <Modal.Body>
-               <Modal.Title className='text-center' style={{color: 'blue'}}>
-                  <div>Your flyer was successfully created!!!</div>
-                </Modal.Title>
-               <Image src={Logo} style={{marginTop:100}} responsive/>
-            </Modal.Body>
-
-            <Modal.Footer>
-              <Button onClick={this.onClear}>Create another flyer</Button>
-              <Link className='btn' to='/' onClick={() => this.setState({success: false})}>
-              Home Page</Link>
-            </Modal.Footer>
-          </Modal>
-
-            <Modal show={this.state.show} onHide={this.close} bsSize='large'>
-              <Modal.Body>
-                  { this.getFlyer() }
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-              </Modal.Body>
-
-              <Modal.Footer>
-                <Button onClick={() => this.setState({show: false})}>Close</Button>
-              </Modal.Footer>
-            </Modal>
-
-        </Col>
-      </Row>
-    </Grid>
+                <FormGroup>
+                  <ControlLabel>Please enter the eventURL</ControlLabel>
+                  <FormControl
+                    type="text"
+                    placeholder="Enter EventURL"
+                    ref={(node) => {this.eventURL = node}}
+                  />
+                </FormGroup>
 
 
-    );
+                <ImageDropzone ref="dropzone"/>
+
+
+              </Form>
+            </Col>
+          </Row>
+
+          <br/>
+
+          <Row className="newButton">
+            <Col md={1} mdOffset={2}>
+              <Button
+                bsStyle="primary"
+                bsSize="small"
+                onClick={this.onCreate}>CreateFlyer
+              </Button>
+            </Col>
+
+            <Col md={1} >
+              <Button
+                bsStyle="success"
+                bsSize="small"
+                onClick={this.onPreview}>
+                Preview flyer page
+              </Button>
+
+              <Modal show={this.state.success} onHide={this.close}>
+
+                <Modal.Body>
+                   <Modal.Title className='text-center' style={{color: 'blue'}}>
+                      <div>Your flyer was successfully created!!!</div>
+                    </Modal.Title>
+                   <Image src={Logo} style={{marginTop:100}} responsive/>
+                </Modal.Body>
+
+                <Modal.Footer>
+                  <Button onClick={this.onClear}>Create another flyer</Button>
+                  <Link className='btn' to='/' onClick={() => this.setState({success: false})}>
+                  Home Page</Link>
+                </Modal.Footer>
+              </Modal>
+
+                <Modal show={this.state.show} onHide={this.close} bsSize='large'>
+                  <Modal.Body>
+                      { this.getFlyer() }
+                      <br/>
+                      <br/>
+                      <br/>
+                      <br/>
+                  </Modal.Body>
+
+                  <Modal.Footer>
+                    <Button onClick={() => this.setState({show: false})}>Close</Button>
+                  </Modal.Footer>
+                </Modal>
+
+            </Col>
+          </Row>
+        </Grid>)
+    }
+
+    return (
+      <div> {ToRender} </div>
+    ) 
   }
 }
 

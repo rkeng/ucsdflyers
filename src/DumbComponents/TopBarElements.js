@@ -150,21 +150,21 @@ class AvatarSelectNoState extends React.Component {
 function TopBarRightNoState(props){
     const { isAuthenticated, uid } = props.user
     var id, name, icon
+    var DropDownToRender = [
+        <MenuItem id='feedback' onClick={(e) => changeRoute(e, props)}><FaPaperPlaneO/>Contact Us</MenuItem>,
+        <MenuItem id='login' onClick={(e) => changeRoute(e, props, uid)}><FaSignIn />LOGIN</MenuItem>
+    ]
     if (isAuthenticated) { //user logged in
-        id='logout'
-        name = 'LOGOUT'
-        icon = <FaSignOut />
-    } else{  //user not logged in
-        id='login'
-        name = 'LOGIN'
-        icon = <FaSignIn />
-    }
+        DropDownToRender = [
+            <MenuItem id='profile' onClick={(e) => changeRoute(e, props)}><FaHeartO/>Profile</MenuItem>,
+            <MenuItem id='feedback' onClick={(e) => changeRoute(e, props)}><FaPaperPlaneO/>Contact Us</MenuItem>,
+            <MenuItem id='logout' onClick={(e) => changeRoute(e, props, uid)}><FaSignOut />LOGOUT</MenuItem>
+        ]
+    } 
     return(
             <Nav pullRight>
                 <NavDropdown id='user-avatar-dropdown' title={<AvatarSelect/>} >
-                        <MenuItem id='profile' onClick={(e) => changeRoute(e, props)}><FaHeartO/>Profile</MenuItem>
-                        <MenuItem id='feedback' onClick={(e) => changeRoute(e, props)}><FaPaperPlaneO/>Contact Us</MenuItem>
-                        <MenuItem id={id} onClick={(e) => changeRoute(e, props, uid)}>{icon}{name}</MenuItem>
+                    {DropDownToRender}
                 </NavDropdown>
             </Nav>
     )
