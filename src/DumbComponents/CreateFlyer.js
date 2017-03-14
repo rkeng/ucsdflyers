@@ -13,7 +13,6 @@ import { IDtoObject } from '../Commen/index.js';
 // import TimePicker from 'react-times';
 import 'react-times/css/classic/default.css';
 import Alert from 'react-s-alert';
-import { browserHistory } from 'react-router'
 import { NoPersmission } from './NoPermission'
 
 // import { AuthWrapper, ORG } from '../Commen'

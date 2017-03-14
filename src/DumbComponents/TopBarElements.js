@@ -149,7 +149,6 @@ class AvatarSelectNoState extends React.Component {
 
 function TopBarRightNoState(props){
     const { isAuthenticated, uid } = props.user
-    var id, name, icon
     var DropDownToRender = [
         <MenuItem id='feedback' onClick={(e) => changeRoute(e, props)}><FaPaperPlaneO/>Contact Us</MenuItem>,
         <MenuItem id='login' onClick={(e) => changeRoute(e, props, uid)}><FaSignIn />LOGIN</MenuItem>
