@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { ColCenter, IDtoObject } from '../Commen'
+import { ColCenter } from '../Commen'
 import { FormGroup, FormControl, Button, Modal } from 'react-bootstrap'
 import { firebase } from '../models/FlyersFirebase'
 import { browserHistory } from 'react-router'
@@ -56,7 +56,7 @@ class OrgProfileInitPage extends React.Component{
         const orgName = this.state.value
         const theOrg = this.props.orgs.filter(orgs => orgs.name === orgName)[0]
         const { uid } = this.props.user
-        const userIDObj = IDtoObject(uid)
+        // const userIDObj = IDtoObject(uid)
         firebase.database().ref(`users/${uid}`).update({hasOrg: `${theOrg.id}`})
         firebase.database().ref(`clubs/${theOrg.id}`).update({
           belongsTo: this.props.user

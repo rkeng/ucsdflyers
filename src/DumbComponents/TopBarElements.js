@@ -9,8 +9,8 @@ import { signOutUser, detachListenerOn } from '../models'
 import Avatar from 'react-avatar'
 import logoText from '../asset/logoText.png'
 import person from '../asset/person.jpg'
-import { firebase } from '../models/FlyersFirebase'
-import { createNew } from '../models'
+// import { firebase } from '../models/FlyersFirebase'
+// import { createNew } from '../models'
 
 
 function changeRoute(e, props, uid) {
