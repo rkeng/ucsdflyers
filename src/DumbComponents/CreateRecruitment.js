@@ -4,11 +4,12 @@ import { Button, ButtonToolbar } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker'
-import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router';
 import { createNew, update } from '../models/index.js';
 import { RecruitmentNote } from './RecruitmentNote.js';
 import { IDtoObject } from '../Commen/index.js';
+import Alert from 'react-s-alert';
+
 
 const buttonStyles = {maxWidth: 800}
 const textStyles={height:200}
@@ -57,13 +58,13 @@ class CreateRecruitmentPage extends React.Component {
       orgEmail: email
     }
     if(note.clubName === "")
-      NotificationManager.error('Error', 'Please enter valid name!', 2222);
+      Alert.error('Please enter valid name!');
     else if(note.seeking === "")
-      NotificationManager.error('Error', 'Please enter valid position!', 2222);
+      Alert.error('Please enter valid position!');
     else if(note.description === "")
-      NotificationManager.error('Error', 'Please enter valid description!', 2222);
+      Alert.error('Please enter valid description!');
     else if(note.email === "")
-      NotificationManager.error('Error', 'Please enter valid email!', 2222);
+      Alert.error('Please enter valid email!');
     else{
       let noteID = createNew('recruitmentNotes',note)
       let noteIDobj = IDtoObject(noteID)
@@ -71,7 +72,7 @@ class CreateRecruitmentPage extends React.Component {
       if(hasOrg){
         update(`clubs/${hasOrg}/belongsTo/RecruitmentNotesCreated`, noteIDobj)
       }
-      NotificationManager.success('You have successfully created a recruitment note', 'How Lovely', 2222);
+      Alert.success('You have successfully created a recruitment note How Lovely');
       findDOMNode(this.clubName).value = "";
       findDOMNode(this.seeking).value = "";
       findDOMNode(this.description).value = "";
@@ -132,7 +133,7 @@ class CreateRecruitmentPage extends React.Component {
 
       <FormGroup controlId="formControlsTextarea">
         <ControlLabel>Date</ControlLabel>
-        <DatePicker onChange={this.handleChange} value={this.state.dueDate} />
+        <DatePicker onChange={this.handleChange} value={this.state.dueDate} showClearButton={false}/>
       </FormGroup>
 
       <FormGroup controlId="formControlsTextarea">
@@ -164,7 +165,6 @@ class CreateRecruitmentPage extends React.Component {
       </Modal>
       </Col>
       </Row>
-      <NotificationContainer/>
       </Grid>
     );
   }

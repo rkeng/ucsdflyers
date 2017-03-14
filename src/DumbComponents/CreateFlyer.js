@@ -4,7 +4,6 @@ import { Button, Well } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux'
 import DatePicker from 'react-bootstrap-date-picker';
-import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router';
 import { createNew, uploadImages, update } from '../models/index.js';
 import { ImageDropzone } from './ImageDropzone.js';
@@ -13,6 +12,7 @@ import Logo from '../asset/logoHorizontal.png';
 import { IDtoObject } from '../Commen/index.js';
 // import TimePicker from 'react-times';
 import 'react-times/css/classic/default.css';
+import Alert from 'react-s-alert';
 
 
 // import { AuthWrapper, ORG } from '../Commen'
@@ -70,7 +70,7 @@ class CreateFlyerPage extends React.Component {
       imagesFiles = this.refs.dropzone.state.files
     }
     if(!imagesFiles.length)//file is not uploaded
-     NotificationManager.error('Error', 'Please upload at least one image to preview', 2222);
+     Alert.error('Please upload at least one image to preview');
      else{
     this.setState({
       show: true,
@@ -104,17 +104,17 @@ class CreateFlyerPage extends React.Component {
 
     var imagesFiles = this.refs.dropzone.state.files
     if(flyer.name === "")
-      NotificationManager.error('Error', 'Please enter valid name!', 2222);
+      Alert.error('Please enter valid name!');
     else if(flyer.time === "")
-      NotificationManager.error('Error', 'Please enter valid time!', 2222);
+      Alert.error('Please enter valid time!');
     else if(flyer.description === "")
-      NotificationManager.error('Error', 'Please enter valid description!', 2222);
+      Alert.error('Please enter valid description!');
     else if(flyer.location === "")
-      NotificationManager.error('Error', 'Please enter valid location!', 2222);
+      Alert.error('Please enter valid location!');
     else if(!imagesFiles.length)//file is not uploaded
-      NotificationManager.error('Error', 'Please upload at least one image!', 2222);
+      Alert.error('Please upload at least one image!');
     else if(!imagesFiles.length)//file is not uploaded
-      NotificationManager.error('Error', 'Please enter the eventURL!', 2222);
+      Alert.error('Please enter the eventURL!');
     else{
 
       this.setState({ success: true})
@@ -205,8 +205,7 @@ class CreateFlyerPage extends React.Component {
     return(
       <div>{To}</div>
     )
-    */
-
+    */      
     return (
       <Grid>
         <Row className="header">
@@ -336,22 +335,22 @@ class CreateFlyerPage extends React.Component {
             </Modal.Footer>
           </Modal>
 
-          <Modal show={this.state.show} onHide={this.close}>
-          {/*}<Flyer flyer={this.state}/>*/}
-            <Modal.Body>
-                { this.getFlyer() }
-            </Modal.Body>
+            <Modal show={this.state.show} onHide={this.close} bsSize='large'>
+              <Modal.Body>
+                  { this.getFlyer() }
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+              </Modal.Body>
 
-            <Modal.Footer>
-              <Button onClick={() => this.setState({show: false})}>Close</Button>
-            </Modal.Footer>
-          </Modal>
+              <Modal.Footer>
+                <Button onClick={() => this.setState({show: false})}>Close</Button>
+              </Modal.Footer>
+            </Modal>
 
         </Col>
       </Row>
-
-      <NotificationContainer/>
-
     </Grid>
 
 

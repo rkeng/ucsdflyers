@@ -1,13 +1,15 @@
 import React from 'react'
 import { remove, update } from '../models'
-import { Button, Row, Col, Well } from 'react-bootstrap'
+import { Button, Row, Col, Well, Modal } from 'react-bootstrap'
 import AnimakitExpander from 'animakit-expander';
 // import { ColCenter } from '../Commen'
 // import { FaPlusSquareO, FaPlusSquare } from 'react-icons/lib/fa';
 import { connect } from 'react-redux'
-import { Flyer } from './Flyer'
+import { PureFlyer } from './Flyer'
 import { RecruitmentNote } from './RecruitmentNote'
 import { ObjectToArray } from '../Commen'
+import { Link } from 'react-router'
+import Alert from 'react-s-alert';
 
 
 class OneOrg extends React.Component {
@@ -17,9 +19,7 @@ class OneOrg extends React.Component {
     this.state = {
       expanded: false,
       followed: false,
-      // masterFlyers:[],
-      // masterRecruitments:[]
-
+      showLogin: false
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleFollow = this.handleFollow.bind(this);
@@ -45,7 +45,14 @@ class OneOrg extends React.Component {
 
   handleFollow () {
 
-    const { uid } = this.props.user
+    const { uid, isAuthenticated, isOrg } = this.props.user
+    if(!isAuthenticated){
+       return this.setState({showLogin: true})
+    }
+    if(isAuthenticated && isOrg){
+        Alert.error('Come on! What\'s the point for a org to follow another org? Orgs don\'t follow other org', 1111);
+        return null
+    }
     const { id } = this.props.org
     var newOrg = {}
     newOrg[`${id}`] = id
@@ -61,33 +68,6 @@ class OneOrg extends React.Component {
     }
   }
 
-  // componentWillMount(){
-  //   const that = this
-  //   const { belongsTo } = this.props.org
-  //   var masterIDArray = ObjectToArray(belongsTo) //array of often one string
-  //   firebase.database().ref(`users`).once('value').then(snap=>{
-  //     var allUsers = snap.val();
-  //     var userArray = ObjectToArray(allUsers)
-  //     var masters =  (userArray || []).filter((user) => {
-  //       return masterIDArray.includes(user.id)
-  //     })
-  //     masters.forEach(master => {
-  //         // console.log('orgs master is:',master)
-  //         var { FlyersCreated, RecruitmentNotesCreated } = master;
-  //         var flyerIDs = ObjectToArray(FlyersCreated)
-  //         // console.log('flyers ID', flyerIDs)
-  //         var realFlyerData = that.props.flyers.filter((f) => flyerIDs.includes(f.id))
-  //         // console.log('flyers datas', realFlyerData)
-  //         var recIDs = ObjectToArray(RecruitmentNotesCreated)
-  //         var realRecData = that.props.recs.filter(r=> recIDs.includes(r.id))
-  //         // console.log('rec datas', realRecData)
-  //         that.setState({
-  //           masterFlyers: realFlyerData,
-  //           masterRecruitments:realRecData
-  //         })
-  //     })
-  //   })
-  // }
   render () {
 
   	const {
@@ -131,9 +111,14 @@ class OneOrg extends React.Component {
                return flyerArray.includes(flyer.id)
             }
         )
+        // let activeFlyers = createdFlyers.filter(flyer => activeDate(flyer.date))
         orgsFlyers = createdFlyers.map(
           (flyer, index) => {
-            return <Flyer key={index} flyer={flyer}/>
+            return (
+              <Col xs={12} sm={12} md={6} key={index}>
+                <PureFlyer flyer={flyer}/>
+              </Col>
+            )
           }
         )
 
@@ -169,38 +154,36 @@ class OneOrg extends React.Component {
           </div>
           <div>
               <AnimakitExpander expanded={this.state.expanded}>
-                  <Col smOffset={1} mdOffset={2} lgOffset={1}>
+                <Col smOffset={1} mdOffset={2} lgOffset={1}>
+                    <Row>
+                      <br/>
+                      {name}'s Website: {website==='N/A'? 'N/A':<a id="link" href={website} target="_blank">{website}</a>}
+                    </Row>
+                    <Well>
                       <Row>
-                        <br/>
-                        {name}'s Website: {website==='N/A'? 'N/A':<a id="link" href={website} target="_blank">{website}</a>}
+                        <h5>Org's Flyers: </h5>
+                        <hr/>
+                        {orgsFlyers}
+                      </Row>                    
+                      <Row>
+                        <h5>Org's RecruitmentNotes: </h5>
+                        <hr/>
+                        {ogrsRecruitments}
                       </Row>
-                      <Well>
-                        <Row>
-                          <h5>Org's Flyers: </h5>
-                          <hr/>
-                          {orgsFlyers}
-                          {/*this.state.masterFlyers.map((flyer, index ) => {
-                              return(
-                                <Flyer key={index} flyer={flyer}/>
-                              )
-                            })
-                          */}
-                        </Row>                    
-                        <Row>
-                          <h5>Org's RecruitmentNotes: </h5>
-                          <hr/>
-                          {ogrsRecruitments}
-                          {/*this.state.masterRecruitments.map(
-                            (rec, index) => {
-                              return (
-                                <RecruitmentNote key={index} data={rec}/>
-                              )
-                            })
-                          */}
-                        </Row>
-                      </Well>
-                  </Col>
-                </AnimakitExpander> 
+                    </Well>
+                </Col>
+              </AnimakitExpander> 
+          </div>
+          <div>
+              <Modal show={this.state.showLogin}>
+                  <Modal.Title>
+                      <p className="text-center">Following Orgs requires being logged in.<br/> Would you like to be our user?</p>
+                  </Modal.Title>
+                  <Modal.Footer>
+                      <Link to='login' className='btn btn-success'>Login</Link>
+                      <Button onClick={()=>this.setState({showLogin:false})}>Cancel</Button>
+                  </Modal.Footer>
+              </Modal>
           </div>
       </div>
     )

@@ -3,6 +3,7 @@ import { TopBar } from './TopBar'
 import { connect } from 'react-redux'
 import { Grid, Row } from 'react-bootstrap'
 import { ColCenter } from '../Commen'
+import Alert from 'react-s-alert';
 
 class FlyersAppForm extends React.Component {
   render () {
@@ -17,6 +18,7 @@ class FlyersAppForm extends React.Component {
                 <Row>
                         {this.props.children}
                 </Row>
+                <Alert stack={{limit: 4, spacing: 10}} timeout={1333} position='bottom-right' effect='jelly'/>
             </Grid>
     )
   }

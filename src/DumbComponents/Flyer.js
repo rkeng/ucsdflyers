@@ -6,6 +6,9 @@ import { ObjectToArray } from '../Commen'
 import { connect } from 'react-redux'
 import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
 import Slider from 'react-slick'
+import { Link } from 'react-router'
+import { activeDate } from '../Commen'
+import Alert from 'react-s-alert';
 
 class OneFlyer extends React.Component{
 
@@ -13,7 +16,8 @@ class OneFlyer extends React.Component{
         super(props)
         this.state = {
             liked:false,
-            showModel: false
+            showModel: false,
+            showLogin: false
         }
         this.onLike = this.onLike.bind(this)
         this.onDelete = this.onDelete.bind(this)
@@ -48,7 +52,14 @@ class OneFlyer extends React.Component{
     }
 
     onLike(){
-        const { uid } = this.props.user
+        const { uid, isAuthenticated, isOrg } = this.props.user
+        if(!isAuthenticated){
+           return this.setState({showLogin: true})
+        }
+        if(isAuthenticated && isOrg){
+            Alert.warning('Orgs don\'t save flyers. Only students do')
+            return null
+        }
         const { id, likes } = this.props.flyer
         var newFlyer = {}
         newFlyer[`${id}`] = id
@@ -64,7 +75,6 @@ class OneFlyer extends React.Component{
         }
 
     }
-
 
     render() {
         const { FlyersCreated } = this.props.user
@@ -155,7 +165,9 @@ class OneFlyer extends React.Component{
         /**/
         const subtitle = (
             <span>
-                <FaCalendar/>:{date}  <FaClockO/>{time}
+                <FaCalendar/>:{date}  
+                <br/>
+                <FaClockO/>{time}
                 <br/> 
                 <FaFlag/>:@{location}
                 <br/>
@@ -163,7 +175,11 @@ class OneFlyer extends React.Component{
             </span>
         )
         var paddingNum = "8px 10px 1px 10px"
-        return(
+        var ToRender = <span/>
+
+        var isActive = activeDate(this.props.flyer.date)
+        if(isActive){
+            ToRender = (
                 <span>
                     <Card style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>
                         <CardMedia
@@ -190,7 +206,22 @@ class OneFlyer extends React.Component{
                             </Modal.Footer>
                         </Modal>
                     </div>
+                    <div>
+                        <Modal show={this.state.showLogin}>
+                            <Modal.Title>
+                                <p className="text-center">Liking requires being logged in.<br/> Would you like to be our user?</p>
+                            </Modal.Title>
+                            <Modal.Footer>
+                                <Link to='login' className='btn btn-success'>Login</Link>
+                                <Button onClick={()=>this.setState({showLogin:false})}>Cancel</Button>
+                            </Modal.Footer>
+                        </Modal>
+                    </div>
                 </span>
+            )
+        }
+        return(
+            <span> {ToRender}</span>
         )
     }
 }

@@ -52,8 +52,9 @@ class FlyerListContainerPage extends React.Component {
   }
 
   render () {
-    let activeFlyers = this.props.flyers.filter((flyer) => flyer.active)
-    let filteredFlyers = activeFlyers.filter(
+    // let activeFlyers = this.props.flyers.filter((flyer) => activeDate(flyer.date))
+    let allFlyers = this.props.flyers
+    let filteredFlyers = allFlyers.filter(
       (flyer)=>{
         return flyer.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
         || flyer.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1

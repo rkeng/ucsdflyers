@@ -1,6 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import 'react-notifications/lib/notifications.css' // css for notification
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
+import 'react-s-alert/dist/s-alert-css-effects/scale.css';
+import 'react-s-alert/dist/s-alert-css-effects/bouncyflip.css';
+import 'react-s-alert/dist/s-alert-css-effects/flip.css';
+import 'react-s-alert/dist/s-alert-css-effects/genie.css';
+import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
+import 'react-s-alert/dist/s-alert-css-effects/stackslide.css';
 import 'firebaseui/dist/firebaseui.css'
 import { FlyersApp } from './DumbComponents/FlyersApp'
 import { store } from './State/store'
@@ -17,13 +24,10 @@ import { About } from './DumbComponents/About'
 import { NewOrganizations } from './DumbComponents/NewOrganizations'
 import { CreateRecruitment } from './DumbComponents/CreateRecruitment'
 import { CreateFlyer } from './DumbComponents/CreateFlyer'
-// import { MyFlyers } from './DumbComponents/MyFlyers'
 import { OrgProfileSelect } from './DumbComponents/OrgProfileSelect'
 import { ProfileSelect } from './DumbComponents/ProfileSelect'
 import { listenToDataAsArray, listenToData, fetchDataOn, onAuthStateChanged } from './models'
 import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction, LoginUserAction, UserDataUpdateAction } from './State/actions'
-import 'react-grid-layout/css/styles.css'
-import 'react-resizable/css/styles.css'
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 

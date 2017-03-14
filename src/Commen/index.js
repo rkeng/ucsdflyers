@@ -136,5 +136,11 @@ export function IDtoObject(id){
   return obj
 }
 
+export function activeDate(date){
+    var givenDate = Date.parse(date)
+    var today = Date.parse(new Date().toISOString().substring(0, 10))
+    return givenDate >= today
+}
+
 export { ColCenter, SearchBar }
 export { AuthWrapper, STUDENT, GUEST, ORG }

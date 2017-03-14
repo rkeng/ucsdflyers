@@ -5,6 +5,10 @@ import { FaCalendar, FaGroup, FaEnvelope, FaStreetView } from 'react-icons/lib/f
 import { ColCenter, ObjectToArray } from '../Commen'
 import { remove, update } from '../models'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
+import { activeDate } from '../Commen'
+import Alert from 'react-s-alert';
+
 
 class OneRecruitmentNote extends React.Component {
 
@@ -12,7 +16,8 @@ class OneRecruitmentNote extends React.Component {
         super(props)
         this.state={
           liked: false,
-          showModel:false
+          showModel:false,
+          showLogin: false
         }
         this.onDelete = this.onDelete.bind(this)
         this.onLike = this.onLike.bind(this)
@@ -37,7 +42,14 @@ class OneRecruitmentNote extends React.Component {
     } 
 
     onLike(){
-        const { uid } = this.props.user
+        const { uid, isAuthenticated, isOrg } = this.props.user
+        if(!isAuthenticated){
+           return this.setState({showLogin: true})
+        }
+        if(isAuthenticated && isOrg){
+          Alert.warning('Orgs don\'t save recruitmentNote. Only students do');
+          return null
+        }
         const { id } = this.props.data
         var newRec = {}
         newRec[`${id}`] = id
@@ -104,38 +116,55 @@ class OneRecruitmentNote extends React.Component {
                 </span>
             </div>
         )
-
+        var ToRender = <span/>
+        const isActive = activeDate(dueDate)
+        if(isActive){
+            ToRender = (
+                <Panel bsStyle='info' header={clubName + ' seeking ' + seeking}>
+                  <ColCenter>
+                      <h5><FaStreetView/> {seeking}</h5>
+                      <h5><FaCalendar/> Due date: {dueDate} <br/></h5>
+                      <h5><FaGroup/> Organization: {clubName} <br/></h5>
+                      <h5><FaEnvelope/> Email: {email} <br/></h5>
+                      <p>{description}</p>
+                      <Row >
+                        <Col sm={1} md={1}>
+                          {titleAndLikeBtn}
+                        </Col>
+                        {displayDelete ? 
+                          <Col smOffset={2} sm={1}  md={1}>
+                            {deleteBtn}
+                          </Col>
+                            : " "}
+                      </Row>
+                  </ColCenter>
+                  <div>
+                      <Modal show={this.state.showModel}>
+                          <Modal.Title>
+                          <p style={{color:'darkRed', fontWeight:'bold'}} className="text-center"> Are you sure you want to delete this?</p>
+                          </Modal.Title>
+                          <Modal.Footer>
+                              <Button bsStyle='success' onClick={()=>this.setState({showModel:false})}>Cancel</Button>
+                              <Button bsStyle='danger' onClick={this.onDelete}>DELETE</Button>
+                          </Modal.Footer>
+                      </Modal>
+                  </div>
+                  <div>
+                      <Modal show={this.state.showLogin}>
+                          <Modal.Title>
+                              <p className="text-center">Save RecruitmentNotes requires being logged in.<br/> Would you like to be our user?</p>
+                          </Modal.Title>
+                          <Modal.Footer>
+                              <Link to='login' className='btn btn-success'>Login</Link>
+                              <Button onClick={()=>this.setState({showLogin:false})}>Cancel</Button>
+                          </Modal.Footer>
+                      </Modal>
+                  </div>
+                </Panel>
+            )
+        }
       return (
-            <Panel bsStyle='info' header={clubName + ' seeking ' + seeking}>
-              <ColCenter>
-                  <h5><FaStreetView/> {seeking}</h5>
-                  <h5><FaCalendar/> Due date: {dueDate} <br/></h5>
-                  <h5><FaGroup/> Organization: {clubName} <br/></h5>
-                  <h5><FaEnvelope/> Email: {email} <br/></h5>
-                  <p>{description}</p>
-                  <Row >
-                    <Col sm={1} md={1}>
-                      {titleAndLikeBtn}
-                    </Col>
-                    {displayDelete ? 
-                      <Col smOffset={2} sm={1}  md={1}>
-                        {deleteBtn}
-                      </Col>
-                        : " "}
-                  </Row>
-              </ColCenter>
-              <div>
-                  <Modal show={this.state.showModel}>
-                      <Modal.Title>
-                      <p style={{color:'darkRed', fontWeight:'bold'}} className="text-center"> Are you sure you want to delete this?</p>
-                      </Modal.Title>
-                      <Modal.Footer>
-                          <Button bsStyle='success' onClick={()=>this.setState({showModel:false})}>Cancel</Button>
-                          <Button bsStyle='danger' onClick={this.onDelete}>DELETE</Button>
-                      </Modal.Footer>
-                  </Modal>
-              </div>
-            </Panel>
+        <span> {ToRender} </span>
         )
     }
 }
