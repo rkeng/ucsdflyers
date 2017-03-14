@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormGroup, Form, ControlLabel, FormControl, Grid,Row, Col, PageHeader, Modal, Image } from 'react-bootstrap'
-import { Button } from 'react-bootstrap';
+import { Button, Well } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux'
 import DatePicker from 'react-bootstrap-date-picker';
@@ -8,7 +8,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Link } from 'react-router';
 import { createNew, uploadImages, update } from '../models/index.js';
 import { ImageDropzone } from './ImageDropzone.js';
-import { Flyer } from './Flyer';
+import { PureFlyer } from './Flyer';
 import Logo from '../asset/logoHorizontal.png';
 import { IDtoObject } from '../Commen/index.js';
 // import TimePicker from 'react-times';
@@ -170,9 +170,11 @@ class CreateFlyerPage extends React.Component {
       //console.log('this.refs?', imagesFiles)
           // <Col sm={12} md={12}>
         return(
-          <Col sm={12} md={12}>
-              <Flyer flyer={flyerData} />
-          </Col>
+            <Col sm={12} mdOffset={1} md={8} >
+              <Well>
+                <PureFlyer flyer={flyerData} />
+              </Well>
+            </Col>
         )
     }
         // <Panel key={this.state.name} bsStyle='success'

@@ -164,7 +164,7 @@ class OneFlyer extends React.Component{
         )
         var paddingNum = "8px 10px 1px 10px"
         return(
-                <Col xs={12} sm={6} md={3} >
+                <span>
                     <Card style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>
                         <CardMedia
                             aspectRatio="wide"
@@ -190,7 +190,7 @@ class OneFlyer extends React.Component{
                             </Modal.Footer>
                         </Modal>
                     </div>
-                </Col>
+                </span>
         )
     }
 }
@@ -202,6 +202,14 @@ function mapStateToProps(state){
     }
 }
 
-const Flyer = connect(mapStateToProps)(OneFlyer)
+const PureFlyer = connect(mapStateToProps)(OneFlyer)
 
-export { Flyer }
+function Flyer(props){
+    return(
+            <Col xs={12} sm={6} md={3} >
+                <PureFlyer {...props}/>
+            </Col>
+    )
+}
+
+export { Flyer, PureFlyer }

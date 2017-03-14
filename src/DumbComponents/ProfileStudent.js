@@ -30,7 +30,9 @@ class StudentProfile extends React.Component{
         )
         var listOfFlyersLiked = likedFlyers.map(
             (flyer, index) => {
-                return <Flyer flyer={flyer} key={index}/>
+                return (
+                        <Flyer flyer={flyer} key={index}/>
+                )
             }
         )
 

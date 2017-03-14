@@ -1,4 +1,5 @@
 import React from 'react'
+import { Col } from 'react-bootstrap'
 import { Flyer } from './Flyer.js'
 import Masonry from 'react-masonry-component'
 
@@ -7,8 +8,15 @@ class FlyerList extends React.Component {
    // iterate through an array of flyers to generate jsx for each flyer
    renderFlyers () {
     if(this.props.flyers.length > 0){
-        return this.props.flyers.map((flyer, index) =>
-          (<Flyer key={index} flyer={flyer} />)
+      return this.props.flyers.map(
+        (flyer, index) => {
+
+          return(
+            <Col xs={12} sm={6} md={3} >
+              <Flyer key={index} flyer={flyer} />
+            </Col>
+          )
+        }
       )
     }
     else{

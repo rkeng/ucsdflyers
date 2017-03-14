@@ -28,7 +28,9 @@ class OrgProfilePage extends React.Component{
         )
         var listOfFlyersCreated = createdFlyers.map(
             (flyer, index) => {
-                return <Flyer flyer={flyer} key={index}/>
+                return(
+                        <Flyer flyer={flyer} key={index}/>
+                )
             }
         )
 
