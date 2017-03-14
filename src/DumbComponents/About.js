@@ -131,18 +131,16 @@ class InfoCard extends React.Component{
             <br/>
             <br/>
       
-            <div className="text-center" style={{color: 'white'}}>
+            <div className="text-center" style={{color: 'white'}} onClick={this.changeFace.bind(this)}>
               <AnimakitRotator side={this.state.index} background={color} shadow>
-                <Image key="image" onClick={this.changeFace.bind(this)} width={300} height={300} alt="" src={image} /><br/>
-                <div key="name" onClick={this.changeFace.bind(this)}>
+                <Image key="image" width={300} height={300} alt="" src={image} /><br/>
+                <div key="name">
                   <h3> {name} </h3>
                 </div>
-                <div key="role" onClick={this.changeFace.bind(this)}>
-
+                <div key="role">
                   <h4>{role}</h4>
-
                 </div>
-                <div key="intro" onClick={this.changeFace.bind(this)}>
+                <div key="intro">
                   <p>{intro}</p>
                   <br/>
                   <p>{email}</p>
