@@ -10,10 +10,8 @@ import { createNew, getCurrentUser, uploadImages } from '../models/index.js';
 import { ImageDropzone } from './ImageDropzone.js';
 import { Flyer } from './Flyer'
 import Logo from '../asset/logoHorizontal.png'
-import TimePicker from 'react-times';
-import 'react-times/css/classic/default.css';
-// import { AuthWrapper, ORG } from '../Commen'
-
+import TimePicker from 'rc-time-picker';
+import 'rc-time-picker/assets/index.css';
 
 class CreateFlyerPage extends React.Component {
   constructor (props) {
@@ -22,7 +20,6 @@ class CreateFlyerPage extends React.Component {
     this.onCreate = this.onCreate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onClear = this.onClear.bind(this);
-
 
     this.state = {
       active: true,
@@ -35,12 +32,15 @@ class CreateFlyerPage extends React.Component {
       description: "",
       location: "",
       files: "",
-      minute: "",
-      hour: "",
-      timefocus: false,
-      time2focus: false,
       time: "",
-      time2: "",
+      /*New*/
+      times: ['00:00', '00:30','01:00', '01:30','02:00', '02:30','03:00', '03:30',
+              '04:00', '04:30','05:00', '05:30','06:00', '06:30','07:00', '07:30',
+              '08:00', '08:30','09:00', '09:30','10:00', '10:30','11:00', '11:30',
+              '12:00', '12:30','13:00', '13:30','14:00', '14:30','15:00', '15:30',
+              '16:00', '16:30','17:00', '17:30','18:00', '18:30','19:00', '19:30',
+              '20:00', '20:30','21:00', '21:30','22:00', '22:30','23:00', '23:30',]
+
     }
   }
 
@@ -104,33 +104,30 @@ class CreateFlyerPage extends React.Component {
   })
   }
 
-  onTimeChange(newtime) {
-    if(this.state.timefocus){
-      const [ hour, minute ] = newtime.split(':');
-      this.setState({hour, minute, time:newtime})
-    }
-    else if(this.state.time2focus){
-      const [ hour, minute ] = newtime.split(':');
-      this.setState({hour, minute, time2:newtime})
-    }
+  /*New*/
+  onTimeChange(event) {
+    this.setState({
+      time: event.target.value
+    });
+    console.log(this.state.time)
   }
-
-  onFocusChange(newfocus) {
-    this.setState({timefocus:newfocus})
+  /*New*/
+  getTimes(){
+    var options = this.state.times.map((time, index) => (
+      <option value={time} key={index}>{time}</option>
+    ))
+    return(
+        <FormGroup controlId="formControlsSelect">
+          <FormControl
+              componentClass="select"
+              placeholder="select"
+              onChange={this.onTimeChange.bind(this)}
+          >
+            {options}
+          </FormControl>
+        </FormGroup>
+    )
   }
-  onFocusChange2(newfocus) {
-    this.setState({time2focus:newfocus})
-  }
-  timeTrigger(event){
-    const focused = this.state.timefocus;
-    this.setState({ timefocus: !focused });
-  }
-
-  timeTrigger2(event){
-    const focused = this.state.time2focus;
-    this.setState({ time2focus: !focused });
-  }
-
   getFlyer () {
       var ourDate = this.state.date
       var date = ourDate.substring(0,10)
@@ -191,28 +188,9 @@ class CreateFlyerPage extends React.Component {
               <ControlLabel>Time</ControlLabel>
             </FormGroup>
             <FormGroup>
-            <Col>
-            <ControlLabel>From</ControlLabel>
-            <TimePicker
-               theme="classic"
-               time={this.state.time}
-               onFocusChange={this.onFocusChange.bind(this)}
-               onTimeChange={this.onTimeChange.bind(this)}
-               focused={this.state.timefocus}
-               trigger={(<FormControl placeholder={this.state.time} onClick={this.timeTrigger.bind(this)} />)}
-            />
-            </Col>
-            <Col>
-            <ControlLabel>To</ControlLabel>
-            <TimePicker
-               theme="classic"
-               time={this.state.time2}
-               onFocusChange={this.onFocusChange2.bind(this)}
-               onTimeChange={this.onTimeChange.bind(this)}
-               focused={this.state.time2focus}
-               trigger={(<FormControl placeholder={this.state.time2} onClick={this.timeTrigger2.bind(this)} />)}
-            />
-            </Col>
+            {/*New*/}
+            {this.getTimes()}
+
             </FormGroup>
             <FormGroup>
               <ControlLabel>Where is the new event going to be?</ControlLabel>

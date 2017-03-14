@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
 import { connect } from 'react-redux'
-import { SearchBar, compareDates } from '../Commen'
+import { SearchBar, compareDates, stringtoDate } from '../Commen'
 import { Grid, Row, Col, DropdownButton, MenuItem, InputGroup } from 'react-bootstrap';
 
 class FlyerListContainerPage extends React.Component {
@@ -28,7 +28,12 @@ class FlyerListContainerPage extends React.Component {
   }
 
   render () {
-    let activeFlyers = this.props.flyers.filter((flyer) => flyer.active)
+    var activeFlyers = this.props.flyers.filter(
+      (flyer) => {
+        var currDate = new Date();
+        console.log(flyer.date)
+        return stringtoDate(flyer.date) > currDate
+      })
     let filteredFlyers = activeFlyers.filter(
       (flyer)=>{
         return flyer.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
