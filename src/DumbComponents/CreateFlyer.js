@@ -11,12 +11,19 @@ import { ImageDropzone } from './ImageDropzone.js';
 import { Flyer } from './Flyer';
 import Logo from '../asset/logoHorizontal.png';
 import { IDtoObject } from '../Commen/index.js';
-import TimePicker from 'react-times';
 import 'react-times/css/classic/default.css';
-
+import 'rc-time-picker/assets/index.css';
+import TimePicker from 'rc-time-picker';
+import moment from 'moment';
 
 // import { AuthWrapper, ORG } from '../Commen'
-
+// const format = 'h:mm a';
+// const now = moment().hour(0).minute(0);
+//
+// function onChange(value) {
+//
+//   console.log(value && value.format(format));
+// }
 
 class CreateFlyerPage extends React.Component {
   constructor (props) {
@@ -26,8 +33,8 @@ class CreateFlyerPage extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onClear = this.onClear.bind(this);
     this.getFlyer = this.getFlyer.bind(this);
-    this.onFocusChange = this.onFocusChange.bind(this);
-    this.onTimeChange = this.onTimeChange.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.getTimePicker = this.getTimePicker.bind(this);
 
 
     this.state = {
@@ -56,9 +63,6 @@ class CreateFlyerPage extends React.Component {
     findDOMNode(this.description).value = "";
     findDOMNode(this.location).value = "";
     findDOMNode(this.eventURL).value = "";
-    findDOMNode(this.time).value = "";
-
-
   }
 
 
@@ -68,7 +72,6 @@ class CreateFlyerPage extends React.Component {
     const description = findDOMNode(this.description).value;
     const location = findDOMNode(this.location).value;
     const eventURL = findDOMNode(this.eventURL).value;
-    const time = findDOMNode(this.time).value;
 
     var imagesFiles = []
     if(this.refs.dropzone && this.refs.dropzone.state.files){
@@ -81,7 +84,6 @@ class CreateFlyerPage extends React.Component {
       show: true,
       location: location,
       name: name,
-      time: time,
       description: description,
       eventURL: eventURL,
       files: imagesFiles
@@ -91,7 +93,8 @@ class CreateFlyerPage extends React.Component {
 
   onCreate(event){
     event.preventDefault();
-    const { uid } = this.props.user
+    const { hasOrg, uid } = this.props.user
+    const orgArray = this.props.orgs.filter((org)=>org.id === hasOrg)
     const clubID = uid;
     const { time } = this.state
     const flyer = {
@@ -99,18 +102,17 @@ class CreateFlyerPage extends React.Component {
       description: findDOMNode(this.description).value,
       location: findDOMNode(this.location).value,
       eventURL: findDOMNode(this.eventURL).value,
-      time: findDOMNode(this.time).value,
       date: this.state.date.substring(0,10),
       active: true,
       likes: 0,
-      belongsTo: uid,
-      time: time
+      time: time,
+      belongsTo: orgArray[0].name,
     }
 
     var imagesFiles = this.refs.dropzone.state.files
     if(flyer.name === "")
       NotificationManager.error('Error', 'Please enter valid name!', 2222);
-    else if(flyer.time === "")
+    else if(flyer.time === "12:00am")
       NotificationManager.error('Error', 'Please enter valid time!', 2222);
     else if(flyer.description === "")
       NotificationManager.error('Error', 'Please enter valid description!', 2222);
@@ -135,27 +137,34 @@ class CreateFlyerPage extends React.Component {
     }
   }
 
-  onTimeChange(newtime) {
-    if(this.state.timefocus){
-      const [ hour, minute ] = newtime.split(':');
-      this.setState({hour, minute, time:newtime})
-    }
+  onChange(value) {
+    const format = 'h:mm a';
+     this.setState({time: value && value.format(format)})
+     console.log(value && value.format(format));
+
+   }
+
+  getTimePicker(){
+    const format = 'h:mm a';
+    const now = moment().hour(0).minute(0);
+    return(
+
+      <TimePicker
+         showSecond={false}
+         defaultValue={now}
+         className="xxx"
+         onChange={this.onChange}
+         format={format}
+         use12Hours
+       />
+
+   )
   }
 
-  onFocusChange(newfocus) {
-    this.setState({timefocus:newfocus})
-  }
-
-  timeTrigger(event){
-    const focused = this.state.timefocus;
-    this.setState({ timefocus: !focused });
-  }
-//(ourDate || new Date().toISOString() ).substring(0,10)
   getFlyer () {
       var ourDate = this.state.date
       var date = (ourDate || new Date().toISOString() ).substring(0,10)
       const { name, location, description, likes, files, time, eventURL } = this.state
-
       const flyerData = {
         name: name,
         location: location,
@@ -217,7 +226,6 @@ class CreateFlyerPage extends React.Component {
           <Form>
             <FormGroup>
               <ControlLabel>What is the name of your upcoming event?</ControlLabel>
-
               <FormControl
                 type="text"
                 placeholder="Enter name"
@@ -228,39 +236,20 @@ class CreateFlyerPage extends React.Component {
           </Col>
         </Row>
         <Row className="time">
-          <Col sm={6}>
+          <Col md={4} mdOffset={2}>
           <Form>
-            <FormGroup >
+            <FormGroup bsSize="small">
               <ControlLabel>When will it take place?</ControlLabel>
               <DatePicker onChange={this.handleChange} placeholder="Placeholder"  value={this.state.date} />
             </FormGroup>
           </Form>
           </Col>
-          <Col sm={6} >
-            <FormGroup>
+          <Col md={6} >
               <ControlLabel>Time</ControlLabel>
-              {/*<TimePicker
-                theme="classic"
-                time={this.state.time}
-                onFocusChange={this.onFocusChange}
-                onTimeChange={this.onTimeChange}
-                focused={this.state.timefocus}
-                trigger={(
-                  <FormControl
-                  placeholder="Please choose time"
-                    value={this.state.time} onClick={this.timeTrigger.bind(this)}
-                  />)}
-                />*/}
-                <FormControl
-                  type="text"
-                  placeholder="Enter time"
-                  ref={(node) => {this.time = node}}
-                />
-
-            </FormGroup>
+              <br/>
+              {this.getTimePicker()}
           </Col>
         </Row>
-        <br/>
         <Row className="location">
           <Col sm={12} md={8} mdOffset={2}>
           <Form>
