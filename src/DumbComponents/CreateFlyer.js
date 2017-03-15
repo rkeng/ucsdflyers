@@ -14,6 +14,9 @@ import { IDtoObject } from '../Commen/index.js';
 import 'react-times/css/classic/default.css';
 import Alert from 'react-s-alert';
 import { NoPersmission } from './NoPermission'
+import 'rc-time-picker/assets/index.css';
+import TimePicker from 'rc-time-picker';
+import moment from 'moment';
 
 // import { AuthWrapper, ORG } from '../Commen'
 
@@ -26,6 +29,9 @@ class CreateFlyerPage extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onClear = this.onClear.bind(this);
     this.getFlyer = this.getFlyer.bind(this);
+    this.onTimeChange = this.onTimeChange.bind(this);
+    this.getTimePicker = this.getTimePicker.bind(this);
+
     this.state = {
       active: true,
       success: false,
@@ -46,13 +52,12 @@ class CreateFlyerPage extends React.Component {
 
   onClear(event){
     event.preventDefault();
-    this.setState({ success: false, time: ""})
+    this.setState({ success: false })
 
     findDOMNode(this.name).value = "";
     findDOMNode(this.description).value = "";
     findDOMNode(this.location).value = "";
     findDOMNode(this.eventURL).value = "";
-    findDOMNode(this.time).value = "";
 
   }
 
@@ -63,7 +68,6 @@ class CreateFlyerPage extends React.Component {
     const description = findDOMNode(this.description).value;
     const location = findDOMNode(this.location).value;
     const eventURL = findDOMNode(this.eventURL).value;
-    const time = findDOMNode(this.time).value;
 
     var imagesFiles = []
     if(this.refs.dropzone && this.refs.dropzone.state.files){
@@ -76,7 +80,6 @@ class CreateFlyerPage extends React.Component {
       show: true,
       location: location,
       name: name,
-      time: time,
       description: description,
       eventURL: eventURL,
       files: imagesFiles
@@ -89,24 +92,23 @@ class CreateFlyerPage extends React.Component {
     const { hasOrg, uid } = this.props.user
     const orgArray = this.props.orgs.filter((org)=>org.id === hasOrg)
     const clubID = uid;
-    // const { time } = this.state
+    const { time } = this.state
+
     const flyer = {
       name: findDOMNode(this.name).value,
       description: findDOMNode(this.description).value,
       location: findDOMNode(this.location).value,
       eventURL: findDOMNode(this.eventURL).value,
-      time: findDOMNode(this.time).value,
       date: this.state.date.substring(0,10),
       active: true,
       likes: 0,
       belongsTo: orgArray[0].name,
+      time: time
     }
 
     var imagesFiles = this.refs.dropzone.state.files
     if(flyer.name === "")
       Alert.error('Please enter valid name!');
-    else if(flyer.time === "")
-      Alert.error('Please enter valid time!');
     else if(flyer.description === "")
       Alert.error('Please enter valid description!');
     else if(flyer.location === "")
@@ -132,24 +134,28 @@ class CreateFlyerPage extends React.Component {
     }
   }
 
-  onTimeChange(newtime) {
-    if(this.state.timefocus){
-      const [ hour, minute ] = newtime.split(':');
-      this.setState({hour, minute, time:newtime})
-    }
-    else if(this.state.time2focus){
-      const [ hour, minute ] = newtime.split(':');
-      this.setState({hour, minute, time2:newtime})
-    }
-  }
+  onTimeChange(value) {
+    const format = 'h:mm a';
+     this.setState({time: value && value.format(format)})
+     console.log(value && value.format(format));
 
-  onFocusChange(newfocus) {
-    this.setState({timefocus:newfocus})
-  }
+   }
 
-  timeTrigger(event){
-    const focused = this.state.timefocus;
-    this.setState({ timefocus: !focused });
+  getTimePicker(){
+    const format = 'h:mm a';
+    const now = moment().hour(0).minute(0);
+    return(
+
+      <TimePicker
+         showSecond={false}
+         defaultValue={now}
+         className="xxx"
+         onChange={this.onTimeChange}
+         format={format}
+         use12Hours
+       />
+
+   )
   }
 
   getFlyer () {
@@ -186,12 +192,12 @@ class CreateFlyerPage extends React.Component {
 
 
   render() {
- 
+
     const { isAuthenticated, isOrg } = this.props.user
     var ToRender = <NoPersmission/>
     if(isAuthenticated && isOrg){
 
-     ToRender=( 
+     ToRender=(
           <Grid>
             <Row className="header">
               <Col sm={12} md={8} mdOffset={2}>
@@ -214,38 +220,23 @@ class CreateFlyerPage extends React.Component {
               </Form>
               </Col>
             </Row>
+
             <Row className="time">
               <Col md={4} mdOffset={2}>
-                <FormGroup >
+              <Form>
+                <FormGroup bsSize="small">
                   <ControlLabel>When will it take place?</ControlLabel>
-                  <DatePicker onChange={this.handleChange} value={this.state.date} showClearButton={false}/>
+                  <DatePicker onChange={this.handleChange} placeholder="Placeholder"  value={this.state.date} />
                 </FormGroup>
+              </Form>
               </Col>
-              <Col md={4} mdOffset={0.5}>
-                <FormGroup>
+              <Col md={6} >
                   <ControlLabel>Time</ControlLabel>
-                  {/*}<TimePicker
-                    theme="classic"
-                    time={this.state.time}
-                    onFocusChange={this.onFocusChange.bind(this)}
-                    onTimeChange={this.onTimeChange.bind(this)}
-                    focused={this.state.timefocus}
-                    trigger={(
-                      <FormControl
-                        placeHolder="Please choose time"
-                        value={this.state.time} onClick={this.timeTrigger.bind(this)}
-                      />)}
-                    />*/}
-
-                    <FormControl
-                      type="text"
-                      placeholder="Enter time"
-                      ref={(node) => {this.time = node}}
-                    />
-                </FormGroup>
+                  <br/>
+                  {this.getTimePicker()}
               </Col>
             </Row>
-            <br/>
+
             <Row className="location">
               <Col sm={12} md={8} mdOffset={2}>
               <Form>
@@ -341,7 +332,7 @@ class CreateFlyerPage extends React.Component {
 
     return (
       <div> {ToRender} </div>
-    ) 
+    )
   }
 }
 
