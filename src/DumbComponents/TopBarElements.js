@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { LogoutUserAction } from '../State/actions'
 import { signOutUser, detachListenerOn } from '../models'
 import Avatar from 'react-avatar'
-import logoText from '../asset/logoText.png'
+import logoHorizontal from '../asset/logoHorizontal.png'
 import person from '../asset/person.jpg'
 // import { firebase } from '../models/FlyersFirebase'
 // import { createNew } from '../models'
@@ -59,7 +59,7 @@ function TopBarIcon(props){
             <Navbar.Header>
                 <Navbar.Brand>
                     <Image id='/' onClick={changeRoute} className='icon-img' 
-                        style={{marginTop:'3px'}} width={200} height={100} src={logoText} alt=""/>
+                        style={{marginTop:'3px'}} width={180} height={120} src={logoHorizontal} alt=""/>
                 </Navbar.Brand>
                 <Navbar.Toggle/>
             </Navbar.Header>
