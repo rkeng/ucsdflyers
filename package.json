@@ -52,6 +52,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "firebase:login": "firebase login",
-    "firebase:serve": "firebase login && npm run build && firebase serve"
+    "firebase:serve": "firebase login && npm run build && firebase serve",
+    "firebase:deploy": "npm run build && firebase deploy --project ucsd-flyers"
   }
 }

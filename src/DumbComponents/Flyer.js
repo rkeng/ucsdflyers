@@ -78,6 +78,7 @@ class OneFlyer extends React.Component{
     }
 
     render() {
+        const that = this
         const { FlyersCreated } = this.props.user
         const {
             name,
@@ -104,11 +105,7 @@ class OneFlyer extends React.Component{
 
         if (imagesArray.length > 1) {
           CarouselItems = imagesArray.map(function(image, index){
-                  return (
-                      <div key={index} >
-                          <Image src={image.imageUrl || image.preview} width={350} responsive />
-                      </div>
-                  )
+                  return <Image key={index} src={image.imageUrl || image.preview} width={350} responsive onLoad={()=>that.forceUpdate()}/>        
           })
           var speed = Math.floor(Math.random()*10000);
           let settings = {
@@ -120,7 +117,9 @@ class OneFlyer extends React.Component{
             adaptiveHeight: true,
             autoplay: true,
             autoplaySpeed: speed < 3000 ? 3000 : speed,
-            arrow: false,
+            arrows: false,
+            draggable: true,
+            lazyLoad: true,
             swipe: true
           };
           carouselInstance = (
