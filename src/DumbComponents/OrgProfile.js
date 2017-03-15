@@ -4,18 +4,11 @@ import { Row, Col } from 'react-bootstrap'
 import { Flyer } from './Flyer'
 import { RecruitmentNote} from './RecruitmentNote'
 import { ObjectToArray } from '../Commen'
+import { activeDate } from '../Commen'
 
 class OrgProfilePage extends React.Component{
 
-    constructor(props){
-        super(props)
-        this.state={
-            listOfFlyersCreated: [],
-            listOfRecruitmentsCreated: []
-        }
-    }
-
-    componentWillMount(){
+    render(){
         const { FlyersCreated, RecruitmentNotesCreated } = this.props.user
         // const { RecruitmentCreated } = this.props.recruitmentNotes
         
@@ -26,6 +19,7 @@ class OrgProfilePage extends React.Component{
                return flyerArray.includes(flyer.id)
             }
         )
+        createdFlyers = createdFlyers.filter(f => activeDate(f.date))
         var listOfFlyersCreated = createdFlyers.map(
             (flyer, index) => {
                 return(
@@ -42,35 +36,25 @@ class OrgProfilePage extends React.Component{
                 return recruitmentArray.includes(recruitment.id)
             }
         )
-
+        createdRecruitments = createdRecruitments.filter(r => activeDate(r.dueDate))
         var listOfRecruitmentsCreated = createdRecruitments.map(
             (recruitment, index) => {
                 return <RecruitmentNote data={recruitment} key={index}/>
             }
         )
-
-
-        //put data upto state
-        this.setState({
-            listOfFlyersCreated: listOfFlyersCreated,
-            listOfRecruitmentsCreated: listOfRecruitmentsCreated
-        })
-    }
-
-    render(){
         return(
             <div className='container'>
                 <Row>
                     <h1> My Created Flyers </h1>
                     <hr/>
-                    {this.state.listOfFlyersCreated}
+                    {listOfFlyersCreated}
                 </Row>
 
                 <Row>
                     <h1> My Created Recruitments </h1>
                     <hr/>
                     <Col md={5}>
-                        {this.state.listOfRecruitmentsCreated}
+                        {listOfRecruitmentsCreated}
                     </Col>
                 </Row>
             </div>

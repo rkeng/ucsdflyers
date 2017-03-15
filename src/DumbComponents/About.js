@@ -6,7 +6,7 @@ const members = [
     {
       name: 'Xiqiang Lin',
       role: 'Project Manager',
-      intro: 'Stay awsome, always.',
+      intro: 'Stay awesome, always.',
       email: 'xil307@ucsd.edu',
       image: require("../asset/xiqiang.jpg"),
       color:'#000000'
@@ -61,6 +61,7 @@ const members = [
       name: 'Vanna Phong',
       role: 'Database Specialist',
       intro: 'I’m just gonna be me',
+      email: 'vphong@ucsd.edu',
       image: require("../asset/vanna.jpg"),
       color: '#F39C12'  
     },

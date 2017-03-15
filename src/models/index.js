@@ -131,16 +131,16 @@ export function transaction(node, newData){
 }
 
 export function set(node, data){
-    db.ref(node).set(data)
+    return db.ref(node).set(data)
 }
 
 export function update(node, data){
-    db.ref(node).update(data)
+    return db.ref(node).update(data)
 }
 
 
 export function remove(node){
-    db.ref(node).remove()
+    return db.ref(node).remove()
 }
 
 //org account creating
