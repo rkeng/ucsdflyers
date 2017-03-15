@@ -67,11 +67,12 @@ class OneRecruitmentNote extends React.Component {
     }
 
     onDelete(){
-        const { uid } = this.props.user
+        const { hasOrg, uid } = this.props.user
         const { id } = this.props.data
         if(this.orgUserDeleteFlyer()){
             remove(`users/${uid}/RecruitmentNotesCreated/${id}`)
             remove(`recruitmentNotes/${id}`)
+            remove(`clubs/${hasOrg}/belongsTo/RecruitmentNotesCreated/${id}`)
         }
         this.setState({showModel:false})
     }
