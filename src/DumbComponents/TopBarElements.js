@@ -1,13 +1,15 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
 import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Image } from 'react-bootstrap'
-import { FaNewspaperO, FaGroup, FaStickyNoteO, FaChild, FaSignIn, FaSignOut, FaHeartO, FaPaperPlaneO } from 'react-icons/lib/fa'
+import { FaNewspaperO, FaGroup, FaStickyNoteO, FaChild, 
+         FaSignIn, FaSignOut, FaHeartO, FaPaperPlaneO, FaPlus, FaTag } from 'react-icons/lib/fa'
 import { connect } from 'react-redux'
 import { LogoutUserAction } from '../State/actions'
 import { signOutUser, detachListenerOn } from '../models'
 import Avatar from 'react-avatar'
 import logoText from '../asset/logoText.png'
 import person from '../asset/person.jpg'
+// import { firebase } from '../models/FlyersFirebase'
 
 
 
@@ -56,7 +58,8 @@ function TopBarIcon(props){
     return (
             <Navbar.Header>
                 <Navbar.Brand>
-                    <Image className='icon-img' style={{marginTop:'3px'}} width={200} height={100} src={logoText} alt=""/>
+                    <Image id='/' onClick={changeRoute} className='icon-img' 
+                        style={{marginTop:'3px'}} width={200} height={100} src={logoText} alt=""/>
                 </Navbar.Brand>
                 <Navbar.Toggle/>
             </Navbar.Header>
@@ -75,8 +78,8 @@ function TopBarIcon(props){
             <TopBarItem id='events' key={0} name='EVENTS' icon={<FaNewspaperO />} />,
             <TopBarItem id='org' key={1} name='ORGANIZATIONS' icon={<FaGroup />} />,
             <TopBarItem id='recruitments' key={2} name='RECRUITMENTS' icon={<FaStickyNoteO />} />,
-            <TopBarItem id='create-flyer' key={3} name='Create Flyer' icon={<FaNewspaperO />} />,
-            <TopBarItem id='create-recruitment' key={4} name='Create Recruitment' icon={<FaGroup />} />,
+            <TopBarItem id='create-flyer' key={3} name='CREATE EVENT' icon={<FaPlus />} />,
+            <TopBarItem id='create-recruitment' key={4} name='CREATE RECRUITMENT' icon={<FaTag />} />,
             <TopBarItem id='about' key={5} name='ABOUT' icon={<FaChild />} />
         ]
     }
@@ -88,7 +91,15 @@ function TopBarIcon(props){
 }
 /* use this print state; only for development purpose
                 <button onClick={() => {
-                    console.log('state?', props.state)
+                    // console.log('state?', props.state)
+                    firebase.database().ref('users').once('value').then(snap => {
+                        var allUsers = snap.val();
+                        var userKeys = Object.keys(allUsers)
+                        userKeys.forEach(key=>{
+                            firebase.database().ref(`users/${key}`).update({id: key})
+                        
+                        })
+                    })
                 }}> show state</button>
 */
 

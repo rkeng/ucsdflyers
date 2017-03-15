@@ -67,7 +67,7 @@ class CreateRecruitmentPage extends React.Component {
       let noteID = createNew('recruitmentNotes',note)
       let noteIDobj = IDtoObject(noteID)
       update(`users/${uid}/RecruitmentNotesCreated`, noteIDobj)
-      NotificationManager.success('Sweet', 'You have successfully created a recruitment note', 2222);
+      NotificationManager.success('You have successfully created a recruitment note', 'How Lovely', 2222);
       findDOMNode(this.clubName).value = "";
       findDOMNode(this.seeking).value = "";
       findDOMNode(this.description).value = "";

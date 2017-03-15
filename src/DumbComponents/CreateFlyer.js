@@ -105,8 +105,8 @@ class CreateFlyerPage extends React.Component {
       date: this.state.date.substring(0,10),
       active: true,
       likes: 0,
-      time: time,
       belongsTo: orgArray[0].name,
+      time: time
     }
 
     var imagesFiles = this.refs.dropzone.state.files
@@ -350,7 +350,8 @@ class CreateFlyerPage extends React.Component {
 
 function mapStateToProps(state){
   return{
-    user: state.user
+    user: state.user,
+    orgs: state.data.orgs
   }
 }
 // const CreateFlyer = AuthWrapper(connect(mapStateToProps)(CreateFlyerPage), ORG)
