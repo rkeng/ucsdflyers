@@ -42,11 +42,12 @@ class OneFlyer extends React.Component{
     }
 
     onDelete(){
-        const { uid } = this.props.user
+        const { hasOrg, uid } = this.props.user
         const { id } = this.props.flyer
         if(this.orgUserDeleteFlyer()){
             remove(`users/${uid}/FlyersCreated/${id}`)
             remove(`events/${id}`)
+            remove(`clubs/${hasOrg}/belongsTo/FlyersCreated/${id}`)
         }
         this.setState({showModel:false})
     }
