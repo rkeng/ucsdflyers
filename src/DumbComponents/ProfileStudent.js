@@ -6,15 +6,14 @@ import { Flyer } from './Flyer'
 import { Org } from './Org'
 import { RecruitmentNote } from './RecruitmentNote'
 import { ObjectToArray } from '../Commen'
-import { Panel } from 'react-bootstrap';
 
 class StudentProfile extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            listOfFlyersLiked: [],
-            listOfOrgsFollowed: [],
-            listOfRecruitmentsSaved: []
+            listOfFlyersLikedData: [],
+            listOfOrgsFollowedData: [],
+            listOfRecruitmentsSavedData: []
         }
     }
 
@@ -27,12 +26,13 @@ class StudentProfile extends React.Component{
         // prepare user followed orgs data 
         let orgArray = ObjectToArray(OrgsFollowed)
 
-        // prepare user followed orgs data 
+        // prepare user followed orgs data
         let recArray = ObjectToArray(RecruitmentNotesSaved)
 
 
         //put data upto state
         this.setState({
+            // listOfFlyersLiked: listOfFlyersLiked,
             listOfFlyersLikedData: flyerArray,
             listOfOrgsFollowedData: orgArray,
             listOfRecruitmentsSavedData: recArray
@@ -64,9 +64,7 @@ class StudentProfile extends React.Component{
         var listOfOrgsFollowed = followedOrgs.map(
             (org, index) => (
                 <ColCenter>
-                    <Panel header={org.name} eventKey={index} key={index}>
                         <Org key={index} org={org}/>
-                    </Panel>
                 </ColCenter>
             )
         )

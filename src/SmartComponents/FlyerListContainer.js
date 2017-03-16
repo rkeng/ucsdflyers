@@ -59,7 +59,9 @@ class FlyerListContainerPage extends React.Component {
         return flyer.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
         || flyer.description.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
         || flyer.location.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
-        || flyer.date.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+        || flyer.date.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+        || (flyer.belongsTo || '').toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+        || (flyer.time || '').toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
       }
     )
     if(this.state.sortDate){
