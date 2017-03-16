@@ -15,7 +15,6 @@ class FlyerList extends React.Component {
 
   render () {
     // var renderedFlyers = this.renderFlyers();
-    const that = this
 
     var flyersToRender = this.props.flyers.map((flyer, index) => <Flyer key={index} flyer={flyer} />)
 

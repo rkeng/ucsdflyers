@@ -6,7 +6,7 @@ const members = [
     {
       name: 'Xiqiang Lin',
       role: 'Project Manager',
-      intro: 'Stay awesome, always.',
+      intro: 'Stay AWESOME, always.',
       email: 'xil307@ucsd.edu',
       image: require("../asset/xiqiang.jpg"),
       color:'#000000'

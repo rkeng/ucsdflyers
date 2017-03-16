@@ -11,6 +11,7 @@ import logoHorizontal from '../asset/logoHorizontal.png'
 import person from '../asset/person.jpg'
 // import { firebase } from '../models/FlyersFirebase'
 // import { createNew } from '../models'
+import { getWindowSize, windowIs } from '../Commen'
 
 
 function changeRoute(e, props, uid) {
@@ -90,6 +91,9 @@ function TopBarIcon(props){
     )
 }
 /* use this print state; only for development purpose
+                 <button onClick={()=>{
+
+                }}> show me </button>
                 <button onClick={() => {
                     console.log('state?', props.state)
                     // firebase.database().ref('users').once('value').then(snap => {

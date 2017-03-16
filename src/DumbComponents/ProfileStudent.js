@@ -23,6 +23,7 @@ class StudentProfile extends React.Component{
         
         //prepare user liked flyers
         let flyerArray = ObjectToArray(FlyersLiked)
+
         let likedFlyers = (this.props.flyers || []).filter(
             (flyer) => {
                return flyerArray.includes(flyer.id)
@@ -38,9 +39,40 @@ class StudentProfile extends React.Component{
 
         // prepare user followed orgs:
         let orgArray = ObjectToArray(OrgsFollowed)
+
+        // prepare user followed orgs:
+        let recArray = ObjectToArray(RecruitmentNotesSaved)
+
+
+        //put data upto state
+        this.setState({
+            // listOfFlyersLiked: listOfFlyersLiked,
+            listOfFlyersLikedData: flyerArray,
+            listOfOrgsFollowedData: orgArray,
+            listOfRecruitmentsSavedData: recArray
+        })
+    }
+
+    render(){
+        //prepare liked flyers UI
+        let likedFlyers = (this.props.flyers || []).filter(
+            (flyer) => {
+               return this.state.listOfFlyersLikedData.includes(flyer.id)
+            }
+        )
+        var listOfFlyersLiked = likedFlyers.map(
+            (flyer, index) => {
+                return (
+                        <Flyer flyer={flyer} key={index}/>
+                )
+            }
+        )
+
+
+        //prepare liked org UI
         let followedOrgs = (this.props.orgs || []).filter(
             (org) => {
-                return orgArray.includes(org.id)
+                return this.state.listOfOrgsFollowedData.includes(org.id)
             }
         )
         var listOfOrgsFollowed = followedOrgs.map(
@@ -52,48 +84,37 @@ class StudentProfile extends React.Component{
                 </ColCenter>
             )
         )
-        // prepare user followed orgs:
-        let recArray = ObjectToArray(RecruitmentNotesSaved)
+
+        //prepare save rec UI
         let savedRec = (this.props.rec|| []).filter(
             (rec) => {
-                return recArray.includes(rec.id)
+                return this.state.listOfRecruitmentsSavedData.includes(rec.id)
             }
         )
         var listOfRecruitmentsSaved = savedRec.map(
             (rec, index) => (
-            <ColCenter>
-               <RecruitmentNote data={rec} key={index}/>
-            </ColCenter>
+                <ColCenter>
+                   <RecruitmentNote data={rec} key={index}/>
+                </ColCenter>
             )
         )
-
-        //put data upto state
-        this.setState({
-            listOfFlyersLiked: listOfFlyersLiked,
-            listOfOrgsFollowed: listOfOrgsFollowed,
-            listOfRecruitmentsSaved: listOfRecruitmentsSaved
-        })
-    }
-
-    render(){
-
 
         return(
             <div className='container'>
                 <Row>
                     <h1> My Liked Flyers</h1>
                     <hr/>
-                    {this.state.listOfFlyersLiked}
+                    {listOfFlyersLiked}
                 </Row>
                 <Row>
                     <h1> My Save RecruitmentNote</h1>
                     <hr/>
-                    {this.state.listOfRecruitmentsSaved}
+                    {listOfRecruitmentsSaved}
                 </Row>
                 <Row>
                     <h1> My Followed Organizations</h1>
                     <hr/>
-                    {this.state.listOfOrgsFollowed}
+                    {listOfOrgsFollowed}
                 </Row>
             </div>
         )

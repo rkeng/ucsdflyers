@@ -1,6 +1,6 @@
 import React from 'react'
 import { remove, update } from '../models'
-import { Button, Row, Col, Well, Modal } from 'react-bootstrap'
+import { Button, Row, Col, Well, Modal, Panel } from 'react-bootstrap'
 import AnimakitExpander from 'animakit-expander';
 // import { ColCenter } from '../Commen'
 // import { FaPlusSquareO, FaPlusSquare } from 'react-icons/lib/fa';
@@ -90,11 +90,9 @@ class OneOrg extends React.Component {
     
     const titleAndBtn = (
       <div>
-          <span className='pull-right'>
             <Button onClick={this.handleFollow} bsStyle={btnColor}>
               {isFollowed ? 'Unfollow' : 'Follow'}
             </Button>
-          </span>
       </div>
     )
 
@@ -102,11 +100,12 @@ class OneOrg extends React.Component {
     var master = belongsTo //belongsTo being true means the org is claimed by a org;     
     var orgsFlyers = []
     var ogrsRecruitments = []
+    var createdFlyers = []
     if(master){ //if the org's master
 
         //prepare the org's created flyers
         var flyerArray = ObjectToArray(master.FlyersCreated)
-        let createdFlyers = (this.props.flyers || []).filter(
+        createdFlyers = (this.props.flyers || []).filter(
             (flyer) => {
                return flyerArray.includes(flyer.id)
             }
@@ -115,7 +114,7 @@ class OneOrg extends React.Component {
         orgsFlyers = createdFlyers.map(
           (flyer, index) => {
             return (
-              <Col xs={12} sm={12} md={6} key={index}>
+              <Col xs={12} sm={12} mdOffset={2} md={6} key={index}>
                 <PureFlyer flyer={flyer}/>
               </Col>
             )
@@ -139,53 +138,52 @@ class OneOrg extends React.Component {
     // var orgsRecs = this.state.masterRecruitments.map((rec, index) => <RecruitmentNote key={index} data={rec}/>)
       // {belongsTo === "vjiMXeqx1BfwOdG5PePyYzPG2WQ2" ? console.log('state', this.state) : btnColor}
     return (
-      <div>
-          <div>
-              {description}
-              <br/>
-              <Row>
-                <Col sm={1} md={1}>
-                  <Button onClick={this.handleClick}>{this.state.expanded ? 'See less' : 'See more'}</Button>
-                </Col>
-                <Col smOffset={2} sm={1}  md={1}>
-                  {titleAndBtn}
-                </Col>
-              </Row>
-          </div>
-          <div>
-              <AnimakitExpander expanded={this.state.expanded}>
-                <Col smOffset={1} mdOffset={2} lgOffset={1}>
-                    <Row>
-                      <br/>
-                      {name}'s Website: {website==='N/A'? 'N/A':<a id="link" href={website} target="_blank">{website}</a>}
-                    </Row>
-                    <Well>
-                      <Row>
-                        <h5>Org's Flyers: </h5>
-                        <hr/>
-                        {orgsFlyers}
-                      </Row>                    
-                      <Row>
-                        <h5>Org's RecruitmentNotes: </h5>
-                        <hr/>
-                        {ogrsRecruitments}
-                      </Row>
-                    </Well>
-                </Col>
-              </AnimakitExpander> 
-          </div>
-          <div>
-              <Modal show={this.state.showLogin}>
-                  <Modal.Title>
-                      <p className="text-center">Following Orgs requires being logged in.<br/> Would you like to be our user?</p>
-                  </Modal.Title>
-                  <Modal.Footer>
-                      <Link to='login' className='btn btn-success'>Login</Link>
-                      <Button onClick={()=>this.setState({showLogin:false})}>Cancel</Button>
-                  </Modal.Footer>
-              </Modal>
-          </div>
-      </div>
+      <Row>
+        <Panel collapsible header={name} eventKey={this.props.eventKey}> 
+            <div>
+                {description}
+                <br/>
+                <Row>
+                  <Col sm={1} md={1}>
+                    {titleAndBtn}
+                  </Col>
+                  <Col smOffset={1} sm={1} md={1}>
+                    <Button onClick={this.handleClick}>{this.state.expanded ? 'See less' : 'See more'}</Button>
+                  </Col>
+                </Row>
+            </div>
+            <div>
+                <Modal show={this.state.showLogin}>
+                    <Modal.Title>
+                        <p className="text-center">Following Orgs requires being logged in.<br/> Would you like to be our user?</p>
+                    </Modal.Title>
+                    <Modal.Footer>
+                        <Link to='login' className='btn btn-success'>Login</Link>
+                        <Button onClick={()=>this.setState({showLogin:false})}>Cancel</Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
+        </Panel>
+        <AnimakitExpander expanded={this.state.expanded}>
+          <Col>
+              <Well>
+                <div className='text-center'>
+                  {`${name}'s Website: ${website==='N/A'? 'N/A':<a id="link" href={website} target="_blank">{website}</a>}`}
+                </div>
+                <Row>
+                  <h5>{`${name}'s Flyers: `}</h5>
+                  <hr/>
+                  {orgsFlyers}
+                </Row>                    
+                <Row>
+                  <h5>{`${name}'s RecruitmentNotes: `}</h5>
+                  <hr/>
+                  {ogrsRecruitments}
+                </Row>
+              </Well>
+          </Col>
+        </AnimakitExpander> 
+      </Row>
     )
   }
 }

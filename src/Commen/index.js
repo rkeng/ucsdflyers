@@ -1,5 +1,6 @@
 import React from 'react'
-import {ColCenter} from './ColCenter'
+import { Col } from 'react-bootstrap'
+import { ColCenter } from './ColCenter'
 import { FaSearch } from 'react-icons/lib/fa'
 import { InputGroup, FormControl } from 'react-bootstrap'
 import { AuthWrapper, STUDENT, GUEST, ORG } from './AuthWrapper'
@@ -18,6 +19,37 @@ function SearchBar(props){
         </ColCenter>
     )
 }
+
+function getWindowSize(){
+   var d= document, root= d.documentElement, body= d.body;
+   var width= window.innerWidth || root.clientWidth || body.clientWidth, 
+   height= window.innerHeight || root.clientHeight || body.clientHeight ;
+   return {width, height}
+}
+
+// function windowIsXm(){
+//     const { width } = getWindowSize()
+//     return width < 768
+// }
+
+// function windowIs(size){
+//     const { width } = getWindowSize()
+//     var xs, sm, md, lg
+//         xs = width < 768
+//         sm = width >= 768 && width < 992
+//         md = width >= 992 && width < 1200
+//         lg = width >= 1200
+//     return { xs, sm, md, lg }
+// }
+
+function ColFull(props){
+    return(
+        <Col xs={12} sm={12} md={12} lg={12}>
+            {props.children}
+        </Col>
+    )
+}
+
 export function compareTitles(a,b){
   var d1 = a.name
   var d2 = b.name
@@ -142,5 +174,5 @@ export function activeDate(date){
     return givenDate >= today
 }
 
-export { ColCenter, SearchBar }
+export { ColCenter, SearchBar, ColFull, getWindowSize }
 export { AuthWrapper, STUDENT, GUEST, ORG }

@@ -1,27 +1,30 @@
 import React from 'react';
-import { Panel, PanelGroup } from 'react-bootstrap';
+import { Col, PanelGroup } from 'react-bootstrap'
 import { Org } from './Org';
-import { ColCenter } from '../Commen'
+import { ColCenter, ColFull } from '../Commen'
+import Masonry from 'react-masonry-component'
+
 
 class OrgList extends React.Component {
 
     getOrgList () {
         return this.props.orgs.map((org, index) => (
-            <Panel header={org.name} eventKey={index} key={index}>
-                <Org key={index} org={org}/>
-            </Panel>
+            <ColFull key={index}>
+                <Org org={org} eventKey={index}/>
+            </ColFull>
         ))
     }
 
     render (){
         return (
             <ColCenter>
-                <h1>UCSD Student Orgs</h1>
-                <p>Click on the orgs to see details.</p>
-                <hr/>
-                <PanelGroup defaultActiveKey accordion>
+                 <Masonry
+                className={'my-gallery-class'}
+                options={{transitionDuration: 800}}
+                enableResizableChildren={true} 
+                >
                     {this.getOrgList()}
-                </PanelGroup>
+                </Masonry>
             </ColCenter>
         )
     }
