@@ -9,9 +9,9 @@ class FlyerListContainerPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      sortDate: true,
+      sortDate: false,
       search: '',
-      sortLike: false,
+      sortLike: true,
       sortTitle: false
     }
     this.dateSort = this.dateSort.bind(this)

@@ -172,6 +172,7 @@ class OneFlyer extends React.Component{
                 <FaFlag/>:@{location}
                 <br/>
                 <FaGroup/>:{belongsTo || '<Your Org\'s Name>'}
+                {this.props.user.isOrg ? <span><br/> <FaHeart/>:{likes}</span> : <span/>}
             </span>
         )
         var paddingNum = "8px 10px 1px 10px"
