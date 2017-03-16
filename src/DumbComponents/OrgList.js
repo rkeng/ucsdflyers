@@ -2,6 +2,7 @@ import React from 'react';
 import { PanelGroup } from 'react-bootstrap'
 import { Org } from './Org';
 import { ColCenter, ColFull } from '../Commen'
+import Masonry from 'react-masonry-component'
 
 
 class OrgList extends React.Component {
@@ -17,9 +18,13 @@ class OrgList extends React.Component {
     render (){
         return (
             <ColCenter>
-                <PanelGroup>
+                <Masonry
+                className={'my-gallery-class'}
+                options={{transitionDuration: 800}}
+                enableResizableChildren={true} 
+                >
                     {this.getOrgList()}
-                </PanelGroup>
+                </Masonry>
             </ColCenter>
         )
     }
