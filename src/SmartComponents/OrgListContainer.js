@@ -1,7 +1,7 @@
 import React from 'react'
 import { OrgList } from '../DumbComponents/OrgList'
 import { connect } from 'react-redux'
-import { Grid, Row, Col, Pagination } from 'react-bootstrap';
+import { Grid, Row, Pagination } from 'react-bootstrap';
 import { SearchBar, ColCenter } from '../Commen'
 
 class OrgListContainerPage extends React.Component {

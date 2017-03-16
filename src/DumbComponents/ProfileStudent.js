@@ -21,32 +21,18 @@ class StudentProfile extends React.Component{
     componentWillMount(){
         const { FlyersLiked, OrgsFollowed, RecruitmentNotesSaved } = this.props.user
         
-        //prepare user liked flyers
+        //prepare user liked flyers data
         let flyerArray = ObjectToArray(FlyersLiked)
 
-        let likedFlyers = (this.props.flyers || []).filter(
-            (flyer) => {
-               return flyerArray.includes(flyer.id)
-            }
-        )
-        var listOfFlyersLiked = likedFlyers.map(
-            (flyer, index) => {
-                return (
-                        <Flyer flyer={flyer} key={index}/>
-                )
-            }
-        )
-
-        // prepare user followed orgs:
+        // prepare user followed orgs data 
         let orgArray = ObjectToArray(OrgsFollowed)
 
-        // prepare user followed orgs:
+        // prepare user followed orgs data 
         let recArray = ObjectToArray(RecruitmentNotesSaved)
 
 
         //put data upto state
         this.setState({
-            // listOfFlyersLiked: listOfFlyersLiked,
             listOfFlyersLikedData: flyerArray,
             listOfOrgsFollowedData: orgArray,
             listOfRecruitmentsSavedData: recArray

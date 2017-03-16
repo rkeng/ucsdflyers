@@ -1,5 +1,4 @@
 import React from 'react';
-import { Row } from 'react-bootstrap'
 import { RecruitmentNote } from './RecruitmentNote'
 import { ColCenter } from '../Commen'
 import Masonry from 'react-masonry-component'

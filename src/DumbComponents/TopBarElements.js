@@ -11,7 +11,6 @@ import logoHorizontal from '../asset/logoHorizontal.png'
 import person from '../asset/person.jpg'
 // import { firebase } from '../models/FlyersFirebase'
 // import { createNew } from '../models'
-import { getWindowSize, windowIs } from '../Commen'
 
 
 function changeRoute(e, props, uid) {
