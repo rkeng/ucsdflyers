@@ -7,7 +7,7 @@ import AnimakitExpander from 'animakit-expander';
 import { connect } from 'react-redux'
 import { PureFlyer } from './Flyer'
 import { RecruitmentNote } from './RecruitmentNote'
-import { ObjectToArray } from '../Commen'
+import { ObjectToArray, activeDate } from '../Commen'
 import { Link } from 'react-router'
 import Alert from 'react-s-alert';
 
@@ -107,14 +107,14 @@ class OneOrg extends React.Component {
         var flyerArray = ObjectToArray(master.FlyersCreated)
         createdFlyers = (this.props.flyers || []).filter(
             (flyer) => {
-               return flyerArray.includes(flyer.id)
+               return activeDate(flyer.date) && flyerArray.includes(flyer.id)
             }
         )
         // let activeFlyers = createdFlyers.filter(flyer => activeDate(flyer.date))
         orgsFlyers = createdFlyers.map(
           (flyer, index) => {
             return (
-              <Col xs={12} sm={12} mdOffset={2} md={6} key={index}>
+              <Col xs={12} sm={12} md={6} key={index}>
                 <PureFlyer flyer={flyer}/>
               </Col>
             )
