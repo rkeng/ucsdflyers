@@ -167,11 +167,11 @@ class OneFlyer extends React.Component{
             <span>
                 <FaCalendar/>:{date}  
                 <br/>
-                <FaClockO/>{time}
+                <FaClockO/>:{time}
                 <br/> 
                 <FaFlag/>:@{location}
                 <br/>
-                <FaGroup/>:{belongsTo}
+                <FaGroup/>:{belongsTo || '<Your Org\'s Name>'}
             </span>
         )
         var paddingNum = "8px 10px 1px 10px"

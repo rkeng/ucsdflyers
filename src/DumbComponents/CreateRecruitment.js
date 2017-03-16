@@ -115,7 +115,7 @@ class CreateRecruitmentPage extends React.Component {
             <Row className="CreateRecruitment">
             <Col md={8} mdOffset={2}>
 
-            <PageHeader>Post Recruitment Notes <small>Name of organization</small></PageHeader>
+            <PageHeader>Post Recruitment Notes</PageHeader>
             <Form>
             <FormGroup>
               <Col>
