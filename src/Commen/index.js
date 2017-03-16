@@ -137,13 +137,14 @@ export function compareClubs(a,b){
 
 export function compareLikes(a,b){
 //    console.log(a.name , a.likes, b.name, b.likes)
-    var d1 = a.likes
-    var d2 = b.likes
-    if (d1 > d2)
-      return -1;
-    if (d1 < d2)
-      return 1;
-    return 0;
+    // var d1 = a.likes
+    // var d2 = b.likes
+    // if (d1 > d2)
+    //   return -1;
+    // if (d1 < d2)
+    //   return 1;
+    // return 0;
+    return -(a.likes - b.likes)
 }
 
 export function stringtoDate(input){
