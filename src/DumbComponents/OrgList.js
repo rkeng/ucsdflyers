@@ -18,13 +18,9 @@ class OrgList extends React.Component {
     render (){
         return (
             <ColCenter>
-                 <Masonry
-                className={'my-gallery-class'}
-                options={{transitionDuration: 800}}
-                enableResizableChildren={true} 
-                >
+                <PanelGroup>
                     {this.getOrgList()}
-                </Masonry>
+                </PanelGroup>
             </ColCenter>
         )
     }
