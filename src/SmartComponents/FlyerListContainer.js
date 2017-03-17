@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlyerList } from '../DumbComponents/FlyerList'
 import { connect } from 'react-redux'
-import { SearchBar, compareDates, compareLikes, compareTitles, compareDatesReverse } from '../Commen'
+import { SearchBar, compareDates, compareTitles } from '../Commen'
 import { Grid, Row, Col, DropdownButton, MenuItem, InputGroup } from 'react-bootstrap';
 
 var SortType = {
@@ -54,10 +54,11 @@ class FlyerListContainerPage extends React.Component {
         filteredFlyers.sort(compareTitles)
         break;
       } 
+      default:{
+        break;
+      }
     }
 
-    const sortBtnName = this.state.sortDate ? 'Farthest Future' : 'Most Recent'
-    const newDateSort = this.state.sortBy === SortType.Future ? SortType.Recent : SortType.Future
 
     return (
         <Grid>
