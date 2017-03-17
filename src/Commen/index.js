@@ -61,14 +61,16 @@ export function compareTitles(a,b){
 }
 
 export function compareDates(a,b){
-     var d1 = stringtoDate(a.date)
-     var d2 = stringtoDate(b.date)
-    // console.log(d1 , d2)
-     if (d1 < d2)
-       return -1;
-     if (d1 > d2)
-       return 1;
-     return 0;
+
+    //  var d1 = stringtoDate(a.date)
+    //  var d2 = stringtoDate(b.date)
+    // // console.log(d1 , d2)
+    //  if (d1 < d2)
+    //    return -1;
+    //  if (d1 > d2)
+    //    return 1;
+    //  return 0;
+     return Date.parse(a.date) - Date.parse(b.date)
 }
 
 export function compareDatesReverse(a,b){

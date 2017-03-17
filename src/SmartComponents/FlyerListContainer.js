@@ -4,52 +4,28 @@ import { connect } from 'react-redux'
 import { SearchBar, compareDates, compareLikes, compareTitles, compareDatesReverse } from '../Commen'
 import { Grid, Row, Col, DropdownButton, MenuItem, InputGroup } from 'react-bootstrap';
 
+var SortType = {
+    Recent: 'Most Recent',
+    Popularity: 'Popularity',
+    Title: 'Title'
+}
+
+
 class FlyerListContainerPage extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      sortDate: false,
       search: '',
-      sortLike: true,
-      sortTitle: false
+      sortBy: 'most recent' 
     }
-    this.dateSort = this.dateSort.bind(this)
     this.filterSearch = this.filterSearch.bind(this)
-    this.likeSort = this.likeSort.bind(this)
-    this.titleSort = this.titleSort.bind(this)
   }
 
   filterSearch(event){
-      this.setState({search: event.target.value.substr(0,20)});
+      this.setState({search: event.target.value});
   }
 
-  dateSort(e, time) {
-      e.preventDefault();
-      this.setState({
-        sortDate: !this.state.sortDate,
-        sortLike: false,
-        sortTitle: false
-      })
-  }
-
-  likeSort(e){
-      e.preventDefault();
-      this.setState({
-          sortLike: true,
-          sortDate: false,
-          sortTitle: false
-      })
-  }
-
-  titleSort(e){
-      e.preventDefault();
-      this.setState({
-          sortLike: false,
-          sortDate: false,
-          sortTitle: true
-      })
-  }
 
   render () {
     // let activeFlyers = this.props.flyers.filter((flyer) => activeDate(flyer.date))
@@ -64,22 +40,24 @@ class FlyerListContainerPage extends React.Component {
         || (flyer.time || '').toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
       }
     )
-    if(this.state.sortDate){
-      filteredFlyers.sort(compareDatesReverse)
-  }
-    else if (this.state.sortLike) {
-      // console.log(filteredFlyers)
-      filteredFlyers.sort(compareLikes)
-      // console.log(filteredFlyers)
-  }
-    else if (this.state.sortTitle){
-      filteredFlyers.sort(compareTitles)
+
+    switch(this.state.sortBy){
+      case SortType.Recent:{
+        filteredFlyers.sort(compareDates)
+        break;
+      }
+      case SortType.Popularity:{
+        filteredFlyers.sort((a, b)=> -(a.likes - b.likes))
+        break;
+      }
+      case SortType.Title:{
+        filteredFlyers.sort(compareTitles)
+        break;
+      } 
     }
-    else{
-      filteredFlyers.sort(compareDates)
-    }
-    const sortByWhat = this.state.sortDate ? 'recent' : 'past'
-    const sortBtnName = this.state.sortDate ? 'Most Recent' : 'Farthest Future'
+
+    const sortBtnName = this.state.sortDate ? 'Farthest Future' : 'Most Recent'
+    const newDateSort = this.state.sortBy === SortType.Future ? SortType.Recent : SortType.Future
 
     return (
         <Grid>
@@ -89,11 +67,11 @@ class FlyerListContainerPage extends React.Component {
               <DropdownButton
                 componentClass={InputGroup.Button}
                 id="input-dropdown-addon"
-                title="Sort By"
+                title='Sort By'
               >
-                <MenuItem key="1" onClick={(e)=>this.dateSort(e, {sortByWhat})}>{sortBtnName}</MenuItem>
-                <MenuItem key="2" onClick={(e)=>this.likeSort(e)}>Popularity</MenuItem>
-                <MenuItem key="3" onClick={(e)=>this.titleSort(e)}>Title</MenuItem>
+                <MenuItem key="1" onClick={(e)=>this.setState({sortBy: SortType.Recent})}>Most Recent</MenuItem>
+                <MenuItem key="3" onClick={(e)=>this.setState({sortBy: SortType.Popularity})}>Popularity</MenuItem>
+                <MenuItem key="4" onClick={(e)=>this.setState({sortBy: SortType.Title})}>Title</MenuItem>
               </DropdownButton>
             </SearchBar>
          </Row>
