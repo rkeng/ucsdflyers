@@ -5,11 +5,10 @@ import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux'
 import DatePicker from 'react-bootstrap-date-picker';
 import { Link } from 'react-router';
-import { createNew, uploadImages, update } from '../models/index.js';
+import { uploadImages } from '../models/index.js';
 import { ImageDropzone } from './ImageDropzone.js';
 import { PureFlyer } from './Flyer';
 import Logo from '../asset/logoHorizontal.png';
-import { IDtoObject } from '../Commen/index.js';
 // import TimePicker from 'react-times';
 import 'react-times/css/classic/default.css';
 import Alert from 'react-s-alert';
@@ -89,9 +88,8 @@ class CreateFlyerPage extends React.Component {
 
   onCreate(event){
     event.preventDefault();
-    const { hasOrg, uid } = this.props.user
+    const { hasOrg } = this.props.user
     const orgArray = this.props.orgs.filter((org)=>org.id === hasOrg)
-    const clubID = uid;
     const { time } = this.state
 
     const flyer = {
@@ -103,7 +101,8 @@ class CreateFlyerPage extends React.Component {
       active: true,
       likes: 0,
       belongsTo: orgArray[0].name,
-      time: time
+      time: time,
+      images: {}
     }
 
     var imagesFiles = this.refs.dropzone.state.files
@@ -118,19 +117,19 @@ class CreateFlyerPage extends React.Component {
     else if(flyer.eventURL === "")
       Alert.error('Please enter the eventURL!');
     else{
-      let flyerID = createNew('events',flyer)
-      let flyerIDobj = IDtoObject(flyerID)
-      // let uid = this.props.user.uid
-      update(`users/${uid}/FlyersCreated`, flyerIDobj).then(
-        this.setState({ success: true})
-      )
-      if(hasOrg){
-        update(`clubs/${hasOrg}/belongsTo/FlyersCreated`, flyerIDobj)
-      }
+      // let flyerID = createNew('events',flyer)
+      // let flyerIDobj = IDtoObject(flyerID)
+      // // let uid = this.props.user.uid
+      // update(`users/${uid}/FlyersCreated`, flyerIDobj).then(
+      // )
+      // if(hasOrg){
+      //   update(`clubs/${hasOrg}/belongsTo/FlyersCreated`, flyerIDobj)
+      // }
        // image uploading
        // let files = this.refs.dropzone.state.files
-       uploadImages("events", flyerID, clubID, imagesFiles)
-
+       // uploadImages("events", flyerID, clubID, imagesFiles)
+        uploadImages("events", flyer, this.props.user, imagesFiles)
+        this.setState({ success: true})
     }
   }
 

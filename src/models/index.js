@@ -1,14 +1,26 @@
 import { firebase } from './FlyersFirebase';
 import { browserHistory } from 'react-router'
+import { IDtoObject } from '../Commen/index.js';
+
 
 const db = firebase.database();
 let storage = firebase.storage();
 
+export { db, storage }
 
-/* fetch data from database
-Example: get all the flyers
-    fetchDataOn('events').then(function(events){ ... })
-*/
+export function set(node, data){
+    return db.ref(node).set(data)
+}
+
+export function update(node, data){
+    return db.ref(node).update(data)
+}
+
+
+export function remove(node){
+    return db.ref(node).remove()
+}
+
 export function fetchDataOn(node){
     return db.ref(node).once('value')
 }
@@ -57,19 +69,68 @@ export function signOutUser(){
     return firebase.auth().signOut()
 }
 
+import myPic from '../asset/xiqiang.jpg'
+export function createNewFlyer(flyerData, flyerImages, creator){
+    //   let flyerID = createNew('events',flyer)
+    //   let flyerIDobj = IDtoObject(flyerID)
+    //   // let uid = this.props.user.uid
+    //   update(`users/${uid}/FlyersCreated`, flyerIDobj).then(
+    //     this.setState({ success: true})
+    //   )
+    //   if(hasOrg){
+    //     update(`clubs/${hasOrg}/belongsTo/FlyersCreated`, flyerIDobj)
+    //   }
+    //    // image uploading
+    //    // let files = this.refs.dropzone.state.files
+    //    uploadImages("events", flyerID, clubID, imagesFiles)
+    // }
+    // flyerImages.map(
+    //     img => {
+            storage.ref(`myPic/${myPic.name}`).put(myPic).then( (snap) =>{
+                console.log('what is my snap?', snap)
+            } );
+        // }
+    // )
+}
+
 // linked to ImageDropzone
-export function uploadImages(databaseRef, itemID, userID, files) {
-  // let dbRef = db.ref(databaseRef )
-  let dbRef = db.ref(databaseRef + '/' + itemID + '/images')
-  let storageFilePath = userID + '/' + databaseRef + '/' + itemID
+// export function uploadImages(databaseRef, itemID, userID, files) {
+//   // let dbRef = db.ref(databaseRef )
+//   let dbRef = db.ref(databaseRef + '/' + itemID + '/images')
+//   let storageFilePath = userID + '/' + databaseRef + '/' + itemID
 
-  // add image to db
-  files.map((file, index) => {
-      dbRef.push({}).then(function(data) {
+//   // add image to db
+//   files.map((file, index) => {
+//       dbRef.push({}).then(function(data) {
 
-        // Upload the image to Firebase Storage.
-        var filePath = storageFilePath + data.key + '/' + file.name;
-        var imageToStorage = storage.ref(filePath).put(file);
+//         // Upload the image to Firebase Storage.
+//         var filePath = storageFilePath + data.key + '/' + file.name;
+//         var imageToStorage = storage.ref(filePath).put(file);
+//         console.log("is imageToStorage a promise?", imageToStorage)
+//         imageToStorage.on('state_changed', function(snapshot) {
+//               // in-progress state changes
+//               // let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+//               // that.setState({uploadProgress: percentage + "%"})
+//         }, function(error) {
+//               // unsuccessful upload
+//         }, function() {
+//             // successful upload
+
+//             // update in Firebase DB
+//             data.update({imageUrl: imageToStorage.snapshot.downloadURL})
+//       }
+//       )}).catch(function(error) {
+//         // console.error('There was an error uploading a file to Firebase: ' + error);
+//       });
+
+//       return true;
+//   })
+// }
+export function uploadImages(databaseRef, item, user, files) {
+    // let dbRef = db.ref(databaseRef )
+    // let storageFilePath = userID + '/' + databaseRef + '/' + itemID
+    files.forEach((file, index) => {
+        var imageToStorage = storage.ref(user.uid + '/' + file.name).put(file);
         imageToStorage.on('state_changed', function(snapshot) {
               // in-progress state changes
               // let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
@@ -78,16 +139,19 @@ export function uploadImages(databaseRef, itemID, userID, files) {
               // unsuccessful upload
         }, function() {
             // successful upload
-
-            // update in Firebase DB
-            data.update({imageUrl: imageToStorage.snapshot.downloadURL})
-      }
-      )}).catch(function(error) {
-        // console.error('There was an error uploading a file to Firebase: ' + error);
-      });
-
-      return true;
-  })
+            item.images[`index${index}`] = {imageUrl: ''}
+            item.images[`index${index}`].imageUrl = imageToStorage.snapshot.downloadURL
+            if(index === (files.length - 1) ){
+                const { uid, hasOrg } = user
+                var newFlyerID = createNew('events', item)
+                var newFlyerIDobj = IDtoObject(newFlyerID) 
+                update(`users/${uid}/FlyersCreated`, newFlyerIDobj)
+                if(user.hasOrg){
+                    update(`clubs/${hasOrg}/belongsTo/FlyersCreated`, newFlyerIDobj)
+                }
+            }
+        }
+    )})
 }
 
 //onAuthStateChange:
@@ -118,30 +182,6 @@ export function createNew(node, item){
     return newRef.key
 }
 
-export function transaction(node, newData){
-    //don't use it
-    /*
-    return new Promise((resolve, reject) => {
-      return db.ref(node).transaction((currentVal) => {
-        console.log('what is my currentVal that I am transactioning?', currentVal)
-        return resolve(currentVal)
-      }, function(){}, true)
-    })
-    */
-}
-
-export function set(node, data){
-    return db.ref(node).set(data)
-}
-
-export function update(node, data){
-    return db.ref(node).update(data)
-}
-
-
-export function remove(node){
-    return db.ref(node).remove()
-}
 
 //org account creating
 export function signinOrg(provider){

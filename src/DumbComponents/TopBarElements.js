@@ -10,7 +10,7 @@ import Avatar from 'react-avatar'
 import logoHorizontal from '../asset/logoHorizontal.png'
 import person from '../asset/person.jpg'
 // import { firebase } from '../models/FlyersFirebase'
-// import { createNew } from '../models'
+import { createNewFlyer } from '../models'
 
 
 function changeRoute(e, props, uid) {
@@ -86,13 +86,11 @@ function TopBarIcon(props){
     return (
             <Nav>
                 {topbarItemsToRender}
+                 <button onClick={()=> createNewFlyer()}> show me </button>
             </Nav>
     )
 }
 /* use this print state; only for development purpose
-                 <button onClick={()=>{
-
-                }}> show me </button>
                 <button onClick={() => {
                     console.log('state?', props.state)
                     // firebase.database().ref('users').once('value').then(snap => {

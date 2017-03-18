@@ -28,10 +28,12 @@ import { OrgProfileSelect } from './DumbComponents/OrgProfileSelect'
 import { ProfileSelect } from './DumbComponents/ProfileSelect'
 import { listenToDataAsArray, listenToData, fetchDataOn, onAuthStateChanged } from './models'
 import { GetOrgsAction, GetEventsAction, GetRecruitmentsAction, LoginUserAction, UserDataUpdateAction } from './State/actions'
+import { activeDate } from './Commen'
 // combine store and react-router history
 const history = syncHistoryWithStore(browserHistory, store);
 
 listenToDataAsArray('events', function(events){
+        events.filter(e => activeDate(e.date))
         store.dispatch(GetEventsAction(events))
 })
 
@@ -41,6 +43,7 @@ listenToDataAsArray('clubs', function(clubs){
 })
 
 listenToDataAsArray('recruitmentNotes', function(recruitments){
+        recruitments.filter(e => activeDate(e.date))
         // console.log('fetched recruitments data')
         store.dispatch(GetRecruitmentsAction(recruitments))
 })

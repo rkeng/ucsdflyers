@@ -19,7 +19,7 @@ class FlyerList extends React.Component {
     var flyersToRender = this.props.flyers.map((flyer, index) => <Flyer key={index} flyer={flyer} />)
 
     var masonryOptions = {
-      transitionDuration: 400,
+      transitionDuration: 300,
     };
 
     return (
