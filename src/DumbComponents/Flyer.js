@@ -8,6 +8,7 @@ import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
 import Slider from 'react-slick'
 import { Link } from 'react-router'
 import Alert from 'react-s-alert';
+import { activeDate } from '../Commen'
 
 class OneFlyer extends React.Component{
 
@@ -175,8 +176,11 @@ class OneFlyer extends React.Component{
             </span>
         )
         var paddingNum = "8px 10px 1px 10px"
+        var ToRender = <span/>
+        var isActive = activeDate(date)
+        if(activeDate(date)){
 
-        return(
+        ToRender = (
                 <span>
                     <Card style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>
                         <CardMedia
@@ -215,6 +219,10 @@ class OneFlyer extends React.Component{
                         </Modal>
                     </div>
                 </span>
+                )
+        }
+        return(
+            <span> {ToRender}</span>
         )
     }
 }
