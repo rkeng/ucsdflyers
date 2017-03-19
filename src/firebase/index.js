@@ -135,6 +135,16 @@ export function createNew(node, item){
     return newRef.key
 }
 
+export function LikeFlyer(flyer){
+    return createNew('users/likedFlyer', flyer)
+}
+
+export function SaveRecruitment(rec){
+    return createNew('users/savedRecruitment', rec)
+}
+export function FollowOrg(org){
+    return createNew('users/followedOrg', org)
+}
 
 //org account creating
 export function signinOrg(provider){

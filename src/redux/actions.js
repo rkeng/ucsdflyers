@@ -68,3 +68,24 @@ export function CreateRecruitmentAction(note, user){
     data: { note, user }
   }
 }
+
+export function LikeFlyerAction(flyer){
+  return {
+    type: 'LIKE_FLYER',
+    flyer
+  }
+}
+
+export function SaveRecruitmentAction(recruitment){
+  return {
+    type: 'SAVE_RECRUITMENT',
+    recruitment
+  }
+}
+
+export function FollowOrgAction(org){
+  return {
+    type: 'FOLLOW_ORG',
+    org
+  }
+}
