@@ -1,7 +1,7 @@
 import React from 'react'
-import { FlyerList } from '../DumbComponents/FlyerList'
+import { FlyerList } from './FlyerList'
 import { connect } from 'react-redux'
-import { SearchBar, compareDates, compareTitles } from '../Commen'
+import { SearchBar, compareDates, compareTitles } from '../commons'
 import { Grid, Row, Col, DropdownButton, MenuItem, InputGroup } from 'react-bootstrap';
 
 var SortType = {

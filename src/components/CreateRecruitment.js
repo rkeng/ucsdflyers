@@ -5,11 +5,11 @@ import { connect } from 'react-redux'
 import { findDOMNode } from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker'
 import { Link } from 'react-router';
-import { createNew, update } from '../models/index.js';
+import { createRecruitment } from '../firebase/index.js';
 import { RecruitmentNote } from './RecruitmentNote.js';
-import { IDtoObject } from '../Commen/index.js';
 import Alert from 'react-s-alert';
 import { NoPersmission } from './NoPermission'
+// import { CreateRecruitmentAction } from '../State/actions'
 
 
 const buttonStyles = {maxWidth: 800}
@@ -31,15 +31,20 @@ class CreateRecruitmentPage extends React.Component {
     }
   }
 
+  getOrgName(){
+    const { hasOrg } = this.props.user
+    var orgArray = this.props.orgs.filter((org)=>org.id === hasOrg)
+    return orgArray[0].name
+  }
+
   onPreview(event){
     event.preventDefault();
-    const orgName = findDOMNode(this.clubName).value;
     const seeking = findDOMNode(this.seeking).value;
     const email = findDOMNode(this.email).value;
     const description = findDOMNode(this.description).value;
     this.setState({
       show: true,
-      clubName: orgName,
+      clubName: this.getOrgName(),
       seeking: seeking,
       email: email,
       description: description
@@ -48,9 +53,9 @@ class CreateRecruitmentPage extends React.Component {
 
   onCreate(event){
     event.preventDefault();
-    const { uid, hasOrg, email } = this.props.user
+    const { uid, email } = this.props.user
     const note = {
-      clubName: findDOMNode(this.clubName).value,
+      clubName: this.getOrgName(),
       seeking: findDOMNode(this.seeking).value,
       email: findDOMNode(this.email).value,
       dueDate: this.state.dueDate.substring(0,10),
@@ -67,17 +72,12 @@ class CreateRecruitmentPage extends React.Component {
     else if(note.email === "")
       Alert.error('Please enter valid email!');
     else{
-      let noteID = createNew('recruitmentNotes',note)
-      let noteIDobj = IDtoObject(noteID)
-      update(`users/${uid}/RecruitmentNotesCreated`, noteIDobj)
-      if(hasOrg){
-        update(`clubs/${hasOrg}/belongsTo/RecruitmentNotesCreated`, noteIDobj)
-      }
-      Alert.success('You have successfully created a recruitment note How Lovely');
-      findDOMNode(this.clubName).value = "";
-      findDOMNode(this.seeking).value = "";
-      findDOMNode(this.description).value = "";
-      findDOMNode(this.email).value = "";
+      createRecruitment(note, this.props.user).then(_ => {
+        Alert.success('You have successfully created a recruitment note How Lovely');
+        findDOMNode(this.seeking).value = "";
+        findDOMNode(this.description).value = "";
+        findDOMNode(this.email).value = "";
+      })
     }
   }
 
@@ -117,13 +117,6 @@ class CreateRecruitmentPage extends React.Component {
 
             <PageHeader>Post Recruitment Notes</PageHeader>
             <Form>
-            <FormGroup>
-              <Col>
-                <ControlLabel>Organization Name </ControlLabel>
-                <FormControl type="text" ref={ (node)=> {this.clubName = node} } placeholder="Enter your organization name here" />
-              </Col>
-            </FormGroup>
-
             <FormGroup>
               <Col>
                 <ControlLabel>Seeking for: </ControlLabel>
@@ -182,7 +175,8 @@ class CreateRecruitmentPage extends React.Component {
 
 function mapStateToProps(state){
   return{
-    user: state.user
+    user: state.user,
+    orgs: state.data.orgs
   }
 }
 const CreateRecruitment = connect(mapStateToProps)(CreateRecruitmentPage)

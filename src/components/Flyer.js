@@ -1,14 +1,14 @@
 import React from 'react'
 import { Col, Image, Button, Modal } from 'react-bootstrap'
 import { FaHeart, FaHeartO, FaClockO, FaFlag, FaGroup, FaCalendar } from 'react-icons/lib/fa';
-import { remove, update } from '../models'
-import { ObjectToArray } from '../Commen'
+import { remove, update } from '../firebase'
+import { ObjectToArray } from '../commons'
 import { connect } from 'react-redux'
 import { Card, CardMedia, CardTitle, CardText } from 'react-toolbox/lib/card';
 import Slider from 'react-slick'
 import { Link } from 'react-router'
 import Alert from 'react-s-alert';
-import { activeDate } from '../Commen'
+import { activeDate } from '../commons'
 
 class OneFlyer extends React.Component{
 
@@ -177,7 +177,7 @@ class OneFlyer extends React.Component{
         )
         var paddingNum = "8px 10px 1px 10px"
         var ToRender = <span/>
-        var isActive = activeDate(date)
+        // var isActive = activeDate(date)
         if(activeDate(date)){
 
         ToRender = (

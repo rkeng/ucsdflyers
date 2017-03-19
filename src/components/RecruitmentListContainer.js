@@ -1,8 +1,8 @@
 import React from 'react';
-import { RecruitmentNoteList } from '../DumbComponents/RecruitmentNoteList';
+import { RecruitmentNoteList } from './RecruitmentNoteList';
 import { connect } from 'react-redux'
 import { Grid, Row, Col, DropdownButton, MenuItem, InputGroup } from 'react-bootstrap';
-import { SearchBar, compareDueDates, compareClubNames, compareSeekings, compareDueDatesReverse } from '../Commen'
+import { SearchBar, compareDueDates, compareClubNames, compareSeekings, compareDueDatesReverse } from '../commons'
 
 class RecruitmentListContainerPage extends React.Component {
     constructor(props){

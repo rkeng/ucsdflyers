@@ -1,6 +1,6 @@
 import { firebase } from './FlyersFirebase';
 import { browserHistory } from 'react-router'
-import { IDtoObject } from '../Commen/index.js';
+import { IDtoObject } from '../commons';
 
 
 const db = firebase.database();
@@ -69,64 +69,10 @@ export function signOutUser(){
     return firebase.auth().signOut()
 }
 
-import myPic from '../asset/xiqiang.jpg'
-export function createNewFlyer(flyerData, flyerImages, creator){
-    //   let flyerID = createNew('events',flyer)
-    //   let flyerIDobj = IDtoObject(flyerID)
-    //   // let uid = this.props.user.uid
-    //   update(`users/${uid}/FlyersCreated`, flyerIDobj).then(
-    //     this.setState({ success: true})
-    //   )
-    //   if(hasOrg){
-    //     update(`clubs/${hasOrg}/belongsTo/FlyersCreated`, flyerIDobj)
-    //   }
-    //    // image uploading
-    //    // let files = this.refs.dropzone.state.files
-    //    uploadImages("events", flyerID, clubID, imagesFiles)
-    // }
-    // flyerImages.map(
-    //     img => {
-            storage.ref(`myPic/${myPic.name}`).put(myPic).then( (snap) =>{
-                console.log('what is my snap?', snap)
-            } );
-        // }
-    // )
-}
+// import myPic from '../asset/xiqiang.jpg'
 
-// linked to ImageDropzone
-// export function uploadImages(databaseRef, itemID, userID, files) {
-//   // let dbRef = db.ref(databaseRef )
-//   let dbRef = db.ref(databaseRef + '/' + itemID + '/images')
-//   let storageFilePath = userID + '/' + databaseRef + '/' + itemID
 
-//   // add image to db
-//   files.map((file, index) => {
-//       dbRef.push({}).then(function(data) {
-
-//         // Upload the image to Firebase Storage.
-//         var filePath = storageFilePath + data.key + '/' + file.name;
-//         var imageToStorage = storage.ref(filePath).put(file);
-//         console.log("is imageToStorage a promise?", imageToStorage)
-//         imageToStorage.on('state_changed', function(snapshot) {
-//               // in-progress state changes
-//               // let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-//               // that.setState({uploadProgress: percentage + "%"})
-//         }, function(error) {
-//               // unsuccessful upload
-//         }, function() {
-//             // successful upload
-
-//             // update in Firebase DB
-//             data.update({imageUrl: imageToStorage.snapshot.downloadURL})
-//       }
-//       )}).catch(function(error) {
-//         // console.error('There was an error uploading a file to Firebase: ' + error);
-//       });
-
-//       return true;
-//   })
-// }
-export function uploadImages(databaseRef, item, user, files) {
+export function createFlyer(databaseRef, item, user, files) {
     // let dbRef = db.ref(databaseRef )
     // let storageFilePath = userID + '/' + databaseRef + '/' + itemID
     files.forEach((file, index) => {
@@ -154,7 +100,14 @@ export function uploadImages(databaseRef, item, user, files) {
     )})
 }
 
-//onAuthStateChange:
+export function createRecruitment(note, user){
+    const { hasOrg, uid } = user
+    let noteID = createNew('recruitmentNotes', note)
+    let noteIDobj = IDtoObject(noteID)
+    update(`users/${uid}/RecruitmentNotesCreated`, noteIDobj)
+    return update(`clubs/${hasOrg}/belongsTo/RecruitmentNotesCreated`, noteIDobj)
+}
+
 //if you handler uses "this", you need to do binding
 export function onAuthStateChanged(handler){
     firebase.auth().onAuthStateChanged(function(user){
@@ -190,24 +143,29 @@ export function signinOrg(provider){
       var user = result.user
       // console.log('sigin org result?', result)
       const userField = 'users/' + user.uid;
-      fetchDataOn(userField).then(userField => {
-            if(!userField.val()){
-                const userFieldData = {
-                    displayName: user.displayName,
-                    uid: user.uid,
-                    isOrg: true,
-                    FlyersCreated: {
-                      dummy: 'dummy data to keep the field'
-                    },
-                    RecruitmentNotesCreated: {
-                      dummy: 'dummy data to keep the field'
-                    }
+            fetchDataOn(userField).then(userField => {
+                if(userField.val().FlyersLiked){
+                    return browserHistory.push('/events')
                 }
-                firebase.database().ref('users/' + user.uid).set(userFieldData);
-                firebase.database().ref('organizations/' + user.uid).set(user.uid);
-            }
-            //manully redict since auto-redirect is not working
-            browserHistory.push('/org-profile')
-        })
+                if(!userField.val()){
+                    const userFieldData = {
+                        displayName: user.displayName,
+                        uid: user.uid,
+                        isOrg: true,
+                        FlyersCreated: {
+                          dummy: 'dummy data to keep the field'
+                        },
+                        RecruitmentNotesCreated: {
+                          dummy: 'dummy data to keep the field'
+                        }
+                    }
+                    firebase.database().ref('users/' + user.uid).set(userFieldData);
+                    firebase.database().ref('organizations/' + user.uid).set(user.uid);
+                }
+                //manully redict since auto-redirect is not working
+                browserHistory.push('/org-profile')
+            })
+        
       })
+    
 }

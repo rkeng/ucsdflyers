@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Glyphicon, Image } from 'react-bootstrap'
-import { firebaseUI, uiConfig } from '../models/firebaseUI';
+import { firebaseUI, uiConfig } from '../firebase/firebaseUI';
 import triton from '../asset/logo.png'
 
 class LoginForm extends React.Component {

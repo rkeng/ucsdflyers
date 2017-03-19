@@ -1,7 +1,7 @@
 import React from 'react';
 import { PanelGroup } from 'react-bootstrap'
 import { Org } from './Org';
-import { ColCenter, ColFull } from '../Commen'
+import { ColCenter, ColFull } from '../commons'
 
 
 class OrgList extends React.Component {

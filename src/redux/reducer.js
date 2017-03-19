@@ -1,5 +1,6 @@
 import { routerReducer } from 'react-router-redux'
 import { combineReducers } from 'redux'
+import { createFlyer, createRecruitment } from '../firebase'
 /*
     A reducer is a function that takes the existing state and an action and then
     generate a new state;
@@ -37,6 +38,16 @@ function dataStateReducer(state={}, action){
         }
         case 'GET_RECRUITMENTS':{
             return Object.assign({}, state, { recruitments: action.data })
+        }
+        case 'CREATE_FLYER':{
+            const { flyer, user, imagesFiles } = action.data
+            createFlyer("events", flyer, user, imagesFiles)
+            return state
+        }
+        case 'CREATE_RECRUITMENT':{
+            const { note, user } = action.data
+            createRecruitment(note, user)
+            return state
         }
         default:
         return state

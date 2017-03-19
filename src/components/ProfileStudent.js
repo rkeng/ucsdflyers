@@ -1,11 +1,11 @@
 import React from 'react'
-import { ColCenter } from '../Commen'
+import { ColCenter } from '../commons'
 import { connect } from 'react-redux'
 import { Row } from 'react-bootstrap'
 import { Flyer } from './Flyer'
 import { Org } from './Org'
 import { RecruitmentNote } from './RecruitmentNote'
-import { ObjectToArray } from '../Commen'
+import { ObjectToArray } from '../commons'
 
 class StudentProfile extends React.Component{
     constructor(props){

@@ -1,5 +1,5 @@
 import React from 'react'
-import { remove, update } from '../models'
+import { remove, update } from '../firebase'
 import { Button, Row, Col, Well, Modal, Panel } from 'react-bootstrap'
 import AnimakitExpander from 'animakit-expander';
 // import { ColCenter } from '../Commen'
@@ -7,7 +7,7 @@ import AnimakitExpander from 'animakit-expander';
 import { connect } from 'react-redux'
 import { PureFlyer } from './Flyer'
 import { RecruitmentNote } from './RecruitmentNote'
-import { ObjectToArray, activeDate } from '../Commen'
+import { ObjectToArray, activeDate } from '../commons'
 import { Link } from 'react-router'
 import Alert from 'react-s-alert';
 
@@ -168,7 +168,7 @@ class OneOrg extends React.Component {
           <Col>
               <Well>
                 <div className='text-center'>
-                  {`${name}'s Website: ${website==='N/A'? 'N/A':<a id="link" href={website} target="_blank">{website}</a>}`}
+                  {`${name}'s Website: ${website==='N/A'? 'N/A': website}`}
                 </div>
                 <Row>
                   <h5>{`${name}'s Flyers: `}</h5>

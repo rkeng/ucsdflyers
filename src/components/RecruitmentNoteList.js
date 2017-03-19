@@ -1,6 +1,6 @@
 import React from 'react';
 import { RecruitmentNote } from './RecruitmentNote'
-import { ColCenter } from '../Commen'
+import { ColCenter } from '../commons'
 import Masonry from 'react-masonry-component'
 
 

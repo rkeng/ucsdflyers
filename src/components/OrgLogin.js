@@ -2,10 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { FaGooglePlusSquare, FaFacebookSquare } from 'react-icons/lib/fa'
 import { Button } from 'react-bootstrap'
-import { firebase } from '../models/FlyersFirebase'
-import { signinOrg } from '../models'
-import { getCurrentUser, fetchDataOn } from '../models'
-import { LoginUserAction } from '../State/actions'
+import { firebase } from '../firebase/FlyersFirebase'
+import { getCurrentUser, fetchDataOn, signinOrg } from '../firebase'
+import { LoginUserAction } from '../redux/actions'
 
 const wellStyles = {maxWidth: 400, margin: '0 auto 10px'};
 
@@ -53,7 +52,7 @@ class OrgLoginForm extends React.Component {
               photoURL: user.photoURL,
               providerData: user.providerData,
               uid: user.uid,
-              isOrg: true
+              isOrg: userData.isOrg ? true : false
           }
           //merge it with our firebase data
           const userDataToState = Object.assign(userDataOnAuth, userData)

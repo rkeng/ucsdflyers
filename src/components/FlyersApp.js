@@ -2,7 +2,7 @@ import React from 'react'
 import { TopBar } from './TopBar'
 import { connect } from 'react-redux'
 import { Grid, Row } from 'react-bootstrap'
-import { ColCenter } from '../Commen'
+import { ColCenter } from '../commons'
 import Alert from 'react-s-alert';
 
 class FlyersAppForm extends React.Component {

@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { ColCenter } from '../Commen'
+import { ColCenter } from '../commons'
 import { FormGroup, FormControl, Button, Modal } from 'react-bootstrap'
-import { firebase } from '../models/FlyersFirebase'
+import { firebase } from '../firebase/FlyersFirebase'
 import { browserHistory } from 'react-router'
 
 class OrgProfileInitPage extends React.Component{

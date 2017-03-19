@@ -4,13 +4,13 @@ import { Nav, Navbar, NavItem, NavDropdown, MenuItem, Image } from 'react-bootst
 import { FaNewspaperO, FaGroup, FaStickyNoteO, FaChild, 
          FaSignIn, FaSignOut, FaHeartO, FaPaperPlaneO, FaPlus, FaTag } from 'react-icons/lib/fa'
 import { connect } from 'react-redux'
-import { LogoutUserAction } from '../State/actions'
-import { signOutUser, detachListenerOn } from '../models'
+import { LogoutUserAction } from '../redux/actions'
+import { signOutUser, detachListenerOn } from '../firebase'
 import Avatar from 'react-avatar'
 import logoHorizontal from '../asset/logoHorizontal.png'
 import person from '../asset/person.jpg'
 // import { firebase } from '../models/FlyersFirebase'
-import { createNewFlyer } from '../models'
+// import { createNew } from '../models'
 
 
 function changeRoute(e, props, uid) {
@@ -86,7 +86,6 @@ function TopBarIcon(props){
     return (
             <Nav>
                 {topbarItemsToRender}
-                 <button onClick={()=> createNewFlyer()}> show me </button>
             </Nav>
     )
 }
@@ -102,16 +101,17 @@ function TopBarIcon(props){
                     //         }
                         
                     //     })
-                    // })
+                    // // })
                     // var ELSorg = {
                     //     belongsTo: 'N/A',
-                    //     descrription: 'In ESL, we strive to make students life easier and better',
+                    //     descrription: 'Gary is AWESOMEEEEEE!!!! His TAs and tutors are event AWESOMEEEEEERRRR',
                     //     id: '',
-                    //     name: 'Enriching Student Life',
-                    //     website: 'https://ucsd-flyers.firebaseapp.com/about'
+                    //     name: 'Gary Rocks',
+                    //     website: 'https://autograder.ucsd.edu/login'
                     // }
                     // createNew('clubs', ELSorg)
                 }}> show state</button>
+                 <button onClick={()=> createNewFlyer()}> show me </button>
 */
 
 

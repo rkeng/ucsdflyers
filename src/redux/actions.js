@@ -54,3 +54,17 @@ export function UserDataUpdateAction(userData){
     userData
   }
 }
+
+export function CreateFlyerAction(flyer, user, imagesFiles){
+  return {
+    type: 'CREATE_FLYER',
+    data: { flyer, user, imagesFiles }
+  }
+}
+
+export function CreateRecruitmentAction(note, user){
+  return {
+    type: 'CREATE_RECRUITMENT',
+    data: { note, user }
+  }
+}

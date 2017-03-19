@@ -2,11 +2,11 @@ import React from 'react';
 import { Panel, Button, Modal, Row, Col } from 'react-bootstrap';
 import { FaCalendar, FaGroup, FaEnvelope, FaStreetView } from 'react-icons/lib/fa';
 // import { Link } from 'react-router'
-import { ColCenter, ObjectToArray } from '../Commen'
-import { remove, update } from '../models'
+import { ColCenter, ObjectToArray } from '../commons'
+import { remove, update } from '../firebase'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { activeDate } from '../Commen'
+import { activeDate } from '../commons'
 import Alert from 'react-s-alert';
 
 

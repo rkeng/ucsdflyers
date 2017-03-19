@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
 import { Flyer } from './Flyer'
 import { RecruitmentNote} from './RecruitmentNote'
-import { ObjectToArray } from '../Commen'
-import { activeDate } from '../Commen'
+import { ObjectToArray, activeDate } from '../commons'
 
 class OrgProfilePage extends React.Component{
 

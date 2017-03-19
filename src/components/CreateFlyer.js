@@ -5,7 +5,7 @@ import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux'
 import DatePicker from 'react-bootstrap-date-picker';
 import { Link } from 'react-router';
-import { uploadImages } from '../models/index.js';
+import { createFlyer } from '../firebase/index.js';
 import { ImageDropzone } from './ImageDropzone.js';
 import { PureFlyer } from './Flyer';
 import Logo from '../asset/logoHorizontal.png';
@@ -16,9 +16,9 @@ import { NoPersmission } from './NoPermission'
 import 'rc-time-picker/assets/index.css';
 import TimePicker from 'rc-time-picker';
 import moment from 'moment';
+// import { CreateFlyerAction } from '../State/actions'
 
 // import { AuthWrapper, ORG } from '../Commen'
-
 
 class CreateFlyerPage extends React.Component {
   constructor (props) {
@@ -30,7 +30,6 @@ class CreateFlyerPage extends React.Component {
     this.getFlyer = this.getFlyer.bind(this);
     this.onTimeChange = this.onTimeChange.bind(this);
     this.getTimePicker = this.getTimePicker.bind(this);
-
     this.state = {
       active: true,
       success: false,
@@ -38,16 +37,16 @@ class CreateFlyerPage extends React.Component {
       likes: 0,
       name: "",
       date: new Date().toISOString(),
-      time: "",
+      time: '12:00 am',
       description: "",
       location: "",
       files: [],
       minute: "",
       hour: "",
       timefocus: false,
-      eventURL: "",
     }
   }
+
 
   onClear(event){
     event.preventDefault();
@@ -56,7 +55,6 @@ class CreateFlyerPage extends React.Component {
     findDOMNode(this.name).value = "";
     findDOMNode(this.description).value = "";
     findDOMNode(this.location).value = "";
-    findDOMNode(this.eventURL).value = "";
 
   }
 
@@ -66,7 +64,6 @@ class CreateFlyerPage extends React.Component {
     const name = findDOMNode(this.name).value;
     const description = findDOMNode(this.description).value;
     const location = findDOMNode(this.location).value;
-    const eventURL = findDOMNode(this.eventURL).value;
 
     var imagesFiles = []
     if(this.refs.dropzone && this.refs.dropzone.state.files){
@@ -80,7 +77,6 @@ class CreateFlyerPage extends React.Component {
       location: location,
       name: name,
       description: description,
-      eventURL: eventURL,
       files: imagesFiles
     })
    }
@@ -96,7 +92,6 @@ class CreateFlyerPage extends React.Component {
       name: findDOMNode(this.name).value,
       description: findDOMNode(this.description).value,
       location: findDOMNode(this.location).value,
-      eventURL: findDOMNode(this.eventURL).value,
       date: this.state.date.substring(0,10),
       active: true,
       likes: 0,
@@ -114,21 +109,8 @@ class CreateFlyerPage extends React.Component {
       Alert.error('Please enter valid location!');
     else if(!imagesFiles.length)//file is not uploaded
       Alert.error('Please upload at least one image!');
-    else if(flyer.eventURL === "")
-      Alert.error('Please enter the eventURL!');
     else{
-      // let flyerID = createNew('events',flyer)
-      // let flyerIDobj = IDtoObject(flyerID)
-      // // let uid = this.props.user.uid
-      // update(`users/${uid}/FlyersCreated`, flyerIDobj).then(
-      // )
-      // if(hasOrg){
-      //   update(`clubs/${hasOrg}/belongsTo/FlyersCreated`, flyerIDobj)
-      // }
-       // image uploading
-       // let files = this.refs.dropzone.state.files
-       // uploadImages("events", flyerID, clubID, imagesFiles)
-        uploadImages("events", flyer, this.props.user, imagesFiles)
+        createFlyer("events", flyer, this.props.user, imagesFiles)
         this.setState({ success: true})
     }
   }
@@ -160,7 +142,7 @@ class CreateFlyerPage extends React.Component {
   getFlyer () {
       var ourDate = this.state.date
       var date = (ourDate || new Date().toISOString() ).substring(0,10)
-      const { name, location, description, likes, files, time, eventURL } = this.state
+      const { name, location, description, likes, files, time } = this.state
 
       const flyerData = {
         name: name,
@@ -169,18 +151,17 @@ class CreateFlyerPage extends React.Component {
         date: date,
         time: time,
         images: files,
-        eventURL: eventURL,
         likes: likes,
+        belongsTo: this.state.orgName
       }
-      //console.log('this.refs?', imagesFiles)
-          // <Col sm={12} md={12}>
-        return(
-            <Col sm={12} mdOffset={1} md={8} >
-              <Well>
-                <PureFlyer flyer={flyerData} />
-              </Well>
-            </Col>
-        )
+
+      return(
+          <Col sm={12} mdOffset={1} md={8} >
+            <Well>
+              <PureFlyer flyer={flyerData} />
+            </Well>
+          </Col>
+      )
     }
 
   handleChange(value){
@@ -258,16 +239,6 @@ class CreateFlyerPage extends React.Component {
                   />
                 </FormGroup>
 
-                <FormGroup>
-                  <ControlLabel>Please enter the eventURL</ControlLabel>
-                  <FormControl
-                    type="text"
-                    placeholder="Enter EventURL"
-                    ref={(node) => {this.eventURL = node}}
-                  />
-                </FormGroup>
-
-
                 <ImageDropzone ref="dropzone"/>
 
 
@@ -342,6 +313,5 @@ function mapStateToProps(state){
     orgs: state.data.orgs
   }
 }
-// const CreateFlyer = AuthWrapper(connect(mapStateToProps)(CreateFlyerPage), ORG)
 const CreateFlyer = connect(mapStateToProps)(CreateFlyerPage)
 export { CreateFlyer }
