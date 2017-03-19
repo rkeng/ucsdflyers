@@ -33,8 +33,8 @@ import { activeDate } from './commons'
 const history = syncHistoryWithStore(browserHistory, store);
 
 listenToDataAsArray('events', function(events){
-        events.filter(e => activeDate(e.date))
-        store.dispatch(GetEventsAction(events))
+        var filtered = events.filter(e => activeDate(e.date))
+        store.dispatch(GetEventsAction(filtered))
 })
 
 listenToDataAsArray('clubs', function(clubs){

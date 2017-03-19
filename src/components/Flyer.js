@@ -180,7 +180,7 @@ class OneFlyer extends React.Component{
         // var isActive = activeDate(date)
         if(activeDate(date)){
 
-        ToRender = (
+        var ToRender = (
                 <span>
                     <Card style={{boxShadow: "0 0 1em grey", marginBottom: "20px"}}>
                         <CardMedia
