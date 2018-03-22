@@ -72,6 +72,7 @@ onAuthStateChanged(function(user){
       }
 })
 
+console.log("before render tho"); 
 ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>

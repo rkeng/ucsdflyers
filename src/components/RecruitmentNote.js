@@ -109,7 +109,7 @@ class OneRecruitmentNote extends React.Component {
         const title = isLiked ? 'Unsave' : 'Save'
         const titleAndLikeBtn = (
             <div>
-                {name}
+                {/*name*/}
                 <span className='pull-right'>
                     <Button onClick={this.onLike} bsStyle={btnColor}>
                         {title}
